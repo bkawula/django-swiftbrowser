@@ -17,7 +17,15 @@ setup(
     url='http://www.cschwede.com/',
     author='Christian Schwede',
     author_email='info@cschwede.de',
-    install_requires=['django>=1.5', 'python-swiftclient'],
+    dependency_links = [
+        'https://github.com/bkawula/django-storage-swift/tarball/master#egg=django-storage-swift',
+    ],
+    install_requires=[
+        'django>=1.5', 
+        'python-swiftclient',
+        'django-storage-swift',
+        'django-jfu',
+    ],
     zip_safe=False,
     classifiers=[
         'Environment :: Web Environment',
