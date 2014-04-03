@@ -3,12 +3,6 @@ django-swiftbrowser
 
 This is a fork of [cschwede / django-swiftbrowser](https://github.com/cschwede/django-swiftbrowser) that uses [django-storage-swift](https://github.com/wecreatepixels/django-storage-swift) instead of the formpost middleware.
 
-Simple web app build with Django and Twitter Bootstrap to access Openstack Swift.
-
-* Works with keystone, tempauth & swauth
-* Support for public containers. ACL support in the works
-* Minimal interface, usable on your desktop as well as on your smartphone
-
 Quick Install
 -------------
 
@@ -39,11 +33,15 @@ Quick Install
         url(r'^', include(swiftbrowser.urls)),
     )
 
-5) Collect static files:
+5) Sync Database
+
+	python manage.py syncdb
+
+6) Collect static files:
 
     python manage.py collectstatic
 
-6) Run development server:
+7) Run development server:
    
     python manage.py runserver
 
