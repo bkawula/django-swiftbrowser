@@ -4,7 +4,7 @@ from django.conf.urls import patterns, include, url
 from swiftbrowser.views import containerview, objectview, download,\
     delete_object, login, tempurl, upload, create_pseudofolder,\
     create_container, delete_container, public_objectview, toggle_public,\
-    edit_acl, put, upload_form, upload_delete, objecttable
+    edit_acl, upload_form, upload_delete, objecttable
 
 urlpatterns = patterns('swiftbrowser.views',
     url(r'^login/$', login, name="login"),
@@ -15,8 +15,6 @@ urlpatterns = patterns('swiftbrowser.views',
         name="toggle_public"),
     url(r'^tempurl/(?P<container>.+?)/(?P<objectname>.+?)$', tempurl,
         name="tempurl"),
-    url(r'^upload/(?P<container>.+?)/(?P<prefix>.+)?$', upload, name="upload"),
-    url(r'^put/(?P<container>.+?)/(?P<prefix>.+)?$', put, name="put"),
     url(r'^create_pseudofolder/(?P<container>.+?)/(?P<prefix>.+)?$',
         create_pseudofolder, name="create_pseudofolder"),
     url(r'^create_container$', create_container, name="create_container"),
