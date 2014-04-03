@@ -19,8 +19,8 @@
                 <th style="width: 5em;" class="hidden-phone">{% trans 'Size' %}</th>
                 <th style="width: 1em;">
 
-                <a href="{% url "create_container" %}" class="btn btn-mini btn-danger">
-                    <i class="icon-plus icon-white"></i> 
+                <a href="{% url "create_container" %}" class="btn btn-success">
+                     <span class="glyphicon glyphicon-plus"></span>
                 </a>
 
                 </th>
@@ -29,24 +29,26 @@
         <tbody>
         {% for container in containers %}
             <tr>
-            <td class="hidden-phone"><i class="icon-inbox"></i></td>
+            <td class="hidden-phone"><span class="glyphicon glyphicon-folder-close"></span></td>
             <td><strong><a href="{% url "objectview" container=container.name %}" class="block">{{container.name}}</a></strong></td>
     	    <td class="hidden-phone">{{container.count}}</td>
     	    <td class="hidden-phone">{{container.bytes|filesizeformat}}</td>
 
             <td>
-                <div class="dropdown pull-right">
-                    <a class="dropdown-toggle btn btn-mini btn-danger" data-toggle="dropdown"><i class="icon-chevron-down icon-white"></i></a>
+                <div class="btn-group pull-right">
+					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					    <span class="caret"></span>
+					  </button>
                     <ul class="dropdown-menu">
                         {% url "edit_acl" container=container.name as edit_acl_url %}
                         {% if edit_acl_url %}
-                            <li><a href="{{ edit_acl_url }}"><i class="icon-user"></i> {% trans 'Sharing' %}</a></li>
+                            <li><a href="{{ edit_acl_url }}"><span class="glyphicon glyphicon-folder-user"></span> {% trans 'Sharing' %}</a></li>
                             <li class="divider" />
                         {% endif %}
  
                         <li>
                             <a href="{% url "delete_container" container=container.name %}" onclick="return confirm('{% trans 'Delete container' %} {{container.name}}?');">
-                                <i class="icon-trash"></i> {% trans 'Delete container' %}
+                                <span class="glyphicon glyphicon-trash"></span> {% trans 'Delete container' %}
                             </a>
                         </li>
                     </ul>

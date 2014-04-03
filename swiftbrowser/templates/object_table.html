@@ -1,0 +1,76 @@
+{% load i18n %}
+{% load dateconv %}
+{% load lastpart %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 0.5em;" class="hidden-phone"></th>
+            <th>{% trans 'Name' %}</th>
+            <th style="width: 12.5em;" class="hidden-phone">{% trans 'Created' %}</th>
+            <th style="width: 6em;" class="hidden-phone">{% trans 'Size' %}</th>
+            <th style="width: 1em;">
+                
+                        {% if prefix %}
+                        <a href="{% url "create_pseudofolder" container=container prefix=prefix %}" class="btn btn-success" role="button">
+                        {% else %}
+                        <a href="{% url "create_pseudofolder" container=container %}" class="btn btn-success" role="button">
+                        {% endif %}
+                        <span class="glyphicon glyphicon-plus"></span>
+                        </a>
+             
+              
+            </th>
+        </tr>
+        </thead>
+        {% if folders or objects %} 
+        <tbody>
+        {% for folder in folders %}
+            <tr>
+                <td class="hidden-phone"><span class="glyphicon glyphicon-folder-close"></span></td>
+                <td> 
+                    <a href="{% url "objectview" container=container prefix=folder.0 %}"><strong>{{folder.0|lastpart}}</strong></a>
+                </td>
+                <td class="hidden-phone"></td>
+                <td class="hidden-phone"></td>
+
+                    <td>
+                    <a href="{% url "delete_object" container=container objectname=folder.1 %}" class="btn btn-danger" onclick="return confirm('{% trans 'Delete object' %} {{key.name}}?');" role="button"><span class="glyphicon glyphicon-trash"></span></a>
+                    </td>
+            </tr>
+        {% endfor %}
+
+        {% for key in objects %}
+            <tr>
+                <td class="hidden-phone"><span class="glyphicon glyphicon-file"></span></td>
+                <td><a href="{% url "download" container=container objectname=key.name %}" class="block">{{key.name|lastpart}}</a></td>
+                <td class="hidden-phone">{{key.last_modified|dateconv|date:"SHORT_DATETIME_FORMAT"}}</td>
+	            <td class="hidden-phone">{{key.bytes|filesizeformat}}</td>
+                    <td>
+					<div class="btn-group pull-right">
+					  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+					     <span class="caret"></span>
+					  </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{% url "tempurl" container=container objectname=key.name %}"><span class="glyphicon glyphicon-time"></span> {% trans 'Temporary URL' %}</a></li>
+                            <li class="divider" />
+                            <li><a href="{% url "delete_object" container=container objectname=key.name  %}" onclick="return confirm('{% trans 'Delete object' %} {{key.name}}?');" ><span class="glyphicon glyphicon-trash"></span> Delete object</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+
+        {% endfor %}
+        </tbody> 
+        {% else %}
+        <tbody>
+            <tr>
+                <th colspan="5" class="center">
+                    <strong><center>{% trans 'There are no objects in this container yet. Upload new objects by clicking the red button.' %}<center></strong>
+                </th>
+            </tr>
+        </tbody>
+        {% endif %}
+        <tfoot><tr><td colspan="5"></td></tr></tfoot>
+    </table>
+{% endblock %}

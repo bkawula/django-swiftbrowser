@@ -3,7 +3,6 @@
 #pylint:disable=R0924
 from django import forms
 
-
 class CreateContainerForm(forms.Form):
     """ Simple form for container creation """
     containername = forms.CharField(max_length=100)
@@ -25,3 +24,8 @@ class LoginForm(forms.Form):
     """ Login form """
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
+
+class DocumentForm(forms.Form):
+    docfile = forms.FileField(
+        label='Select a file'
+    )

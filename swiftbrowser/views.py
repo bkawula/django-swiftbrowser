@@ -8,16 +8,20 @@ import hmac
 from hashlib import sha1
 
 from swiftclient import client
-
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect, render
 from django.template import RequestContext
 from django.contrib import messages
 from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.views import generic
+from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
-
+from jfu.http import upload_receive, UploadResponse, JFUResponse
+from swiftbrowser.models import Photo
+from swiftbrowser.models import Document
 from swiftbrowser.forms import CreateContainerForm, PseudoFolderForm, \
-                               LoginForm, AddACLForm
+                               LoginForm, AddACLForm, DocumentForm
 from swiftbrowser.utils import replace_hyphens, prefix_list, \
                                pseudofolder_object_list, get_temp_key,\
                                get_base_url, get_temp_url
@@ -32,14 +36,17 @@ def login(request):
     if form.is_valid():
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
+        tenant = settings.SWIFT_TENANT_NAME + ":" + username
         try:
             auth_version = settings.SWIFT_AUTH_VERSION or 1
             (storage_url, auth_token) = client.get_auth(
-                settings.SWIFT_AUTH_URL, username, password,
+                settings.SWIFT_AUTH_URL, tenant, password,
                 auth_version=auth_version)
             request.session['auth_token'] = auth_token
             request.session['storage_url'] = storage_url
-            request.session['username'] = username
+            request.session['username'] = tenant
+            request.session['user'] = username
+           
             return redirect(containerview)
 
         except client.ClientException:
@@ -47,7 +54,6 @@ def login(request):
 
     return render_to_response('login.html', {'form': form, },
                               context_instance=RequestContext(request))
-
 
 def containerview(request):
     """ Returns a list of all containers in current account. """
@@ -88,6 +94,7 @@ def create_container(request):
         return redirect(containerview)
 
     return render_to_response('create_container.html', {
+                    'session': request.session,
                               }, context_instance=RequestContext(request))
 
 
@@ -115,7 +122,10 @@ def objectview(request, container, prefix=None):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-
+    
+    request.session['container'] = container   
+    request.session['prefix'] = prefix
+           
     try:
         meta, objects = client.get_container(storage_url, auth_token,
                                              container, delimiter='/',
@@ -149,7 +159,47 @@ def objectview(request, container, prefix=None):
         },
         context_instance=RequestContext(request))
 
+def objecttable(request):
+    """ Returns list of all objects in current container. """
 
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    container = request.session.get('container')
+    prefix = request.session.get('prefix')
+    try:
+        meta, objects = client.get_container(storage_url, auth_token,
+                                             container, delimiter='/',
+                                             prefix=prefix)
+
+    except client.ClientException:
+        messages.add_message(request, messages.ERROR, _("Access denied."))
+        return redirect(containerview)
+
+    prefixes = prefix_list(prefix)
+    pseudofolders, objs = pseudofolder_object_list(objects, prefix)
+    base_url = get_base_url(request)
+    account = storage_url.split('/')[-1]
+
+    read_acl = meta.get('x-container-read', '').split(',')
+    public = False
+    required_acl = ['.r:*', '.rlistings']
+    if [x for x in read_acl if x in required_acl]:
+        public = True
+
+    return render_to_response("object_table.html", {
+        'container': container,
+        'objects': objs,
+        'folders': pseudofolders,
+        'session': request.session,
+        'prefix': prefix,
+        'prefixes': prefixes,
+        'base_url': base_url,
+        'account': account,
+        'public': public,
+        },
+        context_instance=RequestContext(request))
+
+'''
 def upload(request, container, prefix=None):
     """ Display upload form using swift formpost """
 
@@ -194,8 +244,59 @@ def upload(request, container, prefix=None):
                               'container': container,
                               'prefix': prefix,
                               'prefixes': prefixes,
+                              
                               }, context_instance=RequestContext(request))
+'''
+def put(request, container, prefix):
+    # Handle file upload
+    redirect_url = get_base_url(request)
+    redirect_url += reverse('objectview', kwargs={'container': container, 'prefix':prefix,})
+    prefixes = prefix_list(prefix)
+    if request.method == 'POST':
+       
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            for f in request.FILES.getlist('docfile'):
+                newdoc = Document(docfile = f)
+                if prefix:
+                    newdoc.path = os.path.join(container,prefix)
+                else:
+                    newdoc.path = os.path.join(container)              
+                    newdoc.save()
+                    newdoc.delete()
+            # Redirect to the document list after POST
+            if prefix:
+                return HttpResponseRedirect(reverse('objectview', kwargs={'container': container, 'prefix':prefix,}))
+            else:
+                return HttpResponseRedirect(reverse('objectview', kwargs={'container': container,}))
+            
+    else:
+        form = DocumentForm() # A empty, unbound form
 
+    # Load documents for the list page
+    documents = Document.objects.all()
+
+    # Render list page with the documents and the form
+    return render_to_response(
+        'put.html',
+        {'documents': documents, 
+        'form': form,
+         'container': container,
+         'prefix':prefix,
+         'redirect_url':redirect_url,
+         
+     },
+        context_instance=RequestContext(request)
+    )
+
+def upload_form(request, container, prefix):
+    
+    return render_to_response('upload_form.html',{
+        'container': container,
+        'prefix':prefix,
+    },context_instance=RequestContext(request)
+    )
+  
 
 def download(request, container, objectname):
     """ Download an object from Swift """
@@ -475,3 +576,42 @@ def edit_acl(request, container):
         'public': public,
         'base_url': base_url,
     }, context_instance=RequestContext(request))
+
+@require_POST
+def upload(request):
+    file = upload_receive( request )
+    container = request.session.get('container')
+    prefix = request.session.get('prefix')    
+    instance = Photo(file = file)
+    
+    if prefix:
+        instance.path = os.path.join(container,prefix)
+    else:
+        instance.path = os.path.join(container)
+    
+    instance.save()
+
+    basename = os.path.basename( instance.file.path )
+    
+    file_dict = {
+        'name' : basename,
+        'size' : file.size,        
+        'url': settings.MEDIA_URL + basename,
+        'thumbnailUrl': settings.MEDIA_URL + basename,
+        'deleteUrl': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
+        'deleteType': 'POST',
+    }
+
+    return UploadResponse( request, file_dict )
+
+@require_POST
+def upload_delete( request, pk ):
+    success = True
+    try:
+        instance = Photo.objects.get( pk = pk )
+        os.unlink( instance.file.path )
+        instance.delete()
+    except Photo.DoesNotExist:
+        success = False
+
+    return JFUResponse( request, success )

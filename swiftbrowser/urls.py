@@ -1,8 +1,10 @@
-from django.conf.urls import patterns, url
+from django.conf import settings
+from django.conf.urls import patterns, include, url
+
 from swiftbrowser.views import containerview, objectview, download,\
     delete_object, login, tempurl, upload, create_pseudofolder,\
     create_container, delete_container, public_objectview, toggle_public,\
-    edit_acl
+    edit_acl, put, upload_form, upload_delete, objecttable
 
 urlpatterns = patterns('swiftbrowser.views',
     url(r'^login/$', login, name="login"),
@@ -14,6 +16,7 @@ urlpatterns = patterns('swiftbrowser.views',
     url(r'^tempurl/(?P<container>.+?)/(?P<objectname>.+?)$', tempurl,
         name="tempurl"),
     url(r'^upload/(?P<container>.+?)/(?P<prefix>.+)?$', upload, name="upload"),
+    url(r'^put/(?P<container>.+?)/(?P<prefix>.+)?$', put, name="put"),
     url(r'^create_pseudofolder/(?P<container>.+?)/(?P<prefix>.+)?$',
         create_pseudofolder, name="create_pseudofolder"),
     url(r'^create_container$', create_container, name="create_container"),
@@ -25,5 +28,11 @@ urlpatterns = patterns('swiftbrowser.views',
         name="delete_object"),
     url(r'^objects/(?P<container>.+?)/(?P<prefix>(.+)+)?$', objectview,
         name="objectview"),
+    url(r'^object_table/', objecttable, name="objecttable"),
     url(r'^acls/(?P<container>.+?)/$', edit_acl, name="edit_acl"),
+    url(r'^upload_form/(?P<container>.+?)/(?P<prefix>.+)?$', upload_form, name="upload_form"),
+    url( r'upload/', upload, name = 'jfu_upload' ),
+    url( r'^delete/(?P<pk>.+)$', upload_delete, name = 'jfu_delete' ),
+      
     )
+

@@ -1,38 +1,51 @@
 {% extends "core.html" %}
 {% load i18n %}
     {% block head %}
-    <div class="navbar navbar-inver navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <a class="brand" href="{% url "containerview" %}">Swiftbrowser</a>
-                    <ul class="nav pull-right">
-                    {% if session.username %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <strong class="hidden-phone">{{session.username}}</strong>
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                {% block menu_addons %}{% endblock %}
-                                <li>
-                                    <a href="{% url "login" %}">
-                                    <i class="icon-remove-sign"></i>
-                                    {% trans 'Logout' %}
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    {% else %}
+	<header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	      </button>
+	      <a href="/" class="navbar-brand"><span class="glyphicon glyphicon-cloud-upload"></span> Ontario Digital Library Research Cloud</a>
+	    </div>
+	    <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+	      <ul class="nav navbar-nav navbar-right">
+           
+            {% if session.username %}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <strong class="hidden-phone">{{session.username}}</strong>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% block menu_addons %}{% endblock %}
                         <li>
                             <a href="{% url "login" %}">
-                                <strong> {% trans 'Login' %}</strong>
+                            <span class="glyphicon glyphicon-arrow-left"></span>
+                            {% trans 'Logout' %}
                             </a>
-                            </li>
-                    {% endif %}
+                        </li>
                     </ul>
-                </div>
-            </div>
-        </div>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url "login" %}">
+                        <strong> {% trans 'Login' %}</strong>
+                    </a>
+                    </li>
+            {% endif %}
+          
+	      </ul>
+	      
+	    </nav>
+	  </div>
+	</header>
+	
+
 
         <noscript>
             <div class="container">
