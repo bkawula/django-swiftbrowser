@@ -37,7 +37,29 @@
 		}
 		);
 		
-	
+	    function servercheck(path) {			
+
+			$.ajax({
+			     type: "GET",
+				 url: "{{ MEDIA_URL }}tmp/" + path,
+				 dataType: "text",
+			      
+			}).done(function(data){
+				if(data) {
+				$( ".server-progress" ).html( data );
+				
+			} else { }
+			}).always(function(data){
+				if(data != 100) {
+					//setTimeout(function(){servercheck},1000);
+				} else {}
+			})
+			;
+
+			
+			
+			
+        }
 		
 		function loadTable() {
 		$.ajax({
@@ -48,7 +70,20 @@
 		});
 	}
 	</script> 
-
+<!--
+	<form 
+	    id="fileupload" action="{{ swift_url }}" 
+	    method="POST" enctype="multipart/form-data">
+	
+				<input type="hidden" name="redirect" value="{{redirect_url}}" />
+			    <input type="hidden" name="max_file_size" value="{{ max_file_size }}" />
+			    <input type="hidden" name="max_file_count" value="{{ max_file_count }}" />
+			    <input type="hidden" name="expires" value="{{ expires }}" />
+			    <input type="hidden" name="signature" value="{{ signature }}" />
+				<input type="file" name="file1" /><br />
+				<input type="submit" />
+			</form>
+-->
 {% load jfutags %} 
 {% jfu 'upload_form.html' %}
 

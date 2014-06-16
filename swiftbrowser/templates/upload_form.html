@@ -66,18 +66,15 @@ Bootstrap CSS Toolkit styles
  The file upload form used as target for the file upload widget 
 {% endcomment %}
 <form 
-    id="fileupload" action="{{ upload_handler_url }}" 
+    id="fileupload" action="{{ swift_url }}" 
     method="POST" enctype="multipart/form-data">
-
-    {% csrf_token %}
-
+	{% csrf_token %}
     {% comment %}
      Redirect browsers with JavaScript disabled to the origin page 
     {% endcomment %}
     <noscript>
         <input type="hidden" name="redirect" value="{{ request.path }}">
     </noscript>
-
 
     {% block UPLOAD_FORM_BUTTON_BAR %}
     <div class="row fileupload-buttonbar">
@@ -102,13 +99,15 @@ Bootstrap CSS Toolkit styles
                 {% comment %}
                     The file input for the upload form.
                 {% endcomment %}
-                <input 
-                    type="file" name="files[]" multiple
+				
+				<input 
+                    id="file" type="file" name="FILE_NAME" multiple
 
                     {% if accepted_mime_types %}
                         accept = '{{ accepted_mime_types|join:"," }}'
                     {% endif %}
-                >
+                />
+				
                 {% endblock %}
 
             </span>
@@ -123,7 +122,6 @@ Bootstrap CSS Toolkit styles
                 <i class="glyphicon glyphicon-ban-circle"></i>
                 <span>Cancel upload</span>
             </button>
-            
             {% endblock %}
 
         </div>
@@ -147,6 +145,7 @@ Bootstrap CSS Toolkit styles
              The extended global progress information 
             {% endcomment %}
             <div class="progress-extended">&nbsp;</div>
+			
         </div>
         {% endblock %}
 
@@ -174,9 +173,6 @@ Bootstrap CSS Toolkit styles
 </form>
 {% endblock %}
 
-
-
-
 {% block MODAL_GALLERY %}
 {% endblock %}
 
@@ -190,12 +186,15 @@ Bootstrap CSS Toolkit styles
 {% block JS_UPLOAD_TEMPLATE %}
 <script id="template-upload" type="text/x-tmpl">
 {{ JQ_OPEN }} for (var i=0, file; file=o.files[i]; i++) { {{ JQ_CLOSE }}
+	{{ JQ_OPEN }}var p = window.location.pathname.substring(9) + file.name;{{ JQ_CLOSE }}
+	{{ JQ_OPEN }}var path = p.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");{{ JQ_CLOSE }}
     <tr class="template-upload fade">
         <td>
             <span class="preview"></span>
         </td>
         <td>
-            <p class="name">{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</p>
+            <p class="filename">{{ JQ_OPEN }}=path {{ JQ_CLOSE }}</p>
+			<p class="name">{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</p>
             <strong class="error text-danger"></strong>
         </td>
         <td>
@@ -217,6 +216,7 @@ Bootstrap CSS Toolkit styles
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     <span>Cancel</span>
                 </button>
+				
             {{ JQ_OPEN }} } {{ JQ_CLOSE }}
         </td>
     </tr>
@@ -237,7 +237,6 @@ Bootstrap CSS Toolkit styles
 </script>
 {% endblock %}
 {% endblock %}
-
 
 {% block JS_SCRIPTS %}
 {% block JS_JQUERY %}
@@ -280,7 +279,7 @@ Bootstrap CSS Toolkit styles
 {% endblock %}
 
 {% block JS_BLUEIMP_GALLERY %}
-
+<script src="{{ STATIC_URL }}demo/jquery.blueimp-gallery.min.js"></script>
 {% endblock %}
 
 {% block JS_BOOTSTRAP_IFRAME_TRANSPORT %}
@@ -362,11 +361,22 @@ The File Upload validation plugin
 
         {% block JS_INIT %}
 
-        $('#fileupload').fileupload({
+		var formData = $('#fileupload').serializeArray();
+		        formData.push( 
+		            
+					{name:"redirect",value:"{{redirect_url}}"},
+					{name:"max_file_size",value:"{{ max_file_size }}"},
+					{name:"max_file_count",value:"{{ max_file_count }}"},
+					{name:"expires",value:"{{ expires }}"},
+					{name:"signature",value:"{{ signature }}"}
+		        );
 
-            formData: [
-                { name: "csrfmiddlewaretoken", value: "{{ csrf_token }}"}
-            ],
+		    $('#fileupload').fileupload({
+
+		            formData: formData,
+        
+					
+          
 
 
             {% block JS_OPTS %}
@@ -376,13 +386,16 @@ The File Upload validation plugin
         });
         {% endblock %}
 
-
+		
+		    
+	
         {% block JS_FORM %}
 
         {% comment %}
         Load existing files.
         {% endcomment %}
-
+		
+		
         $('#fileupload').addClass('fileupload-processing');
         $.ajax({
             {% comment %}
@@ -392,12 +405,16 @@ The File Upload validation plugin
             url: $('#fileupload').fileupload('option', 'url'),
             dataType: 'json',
             context: $('#fileupload')[0]
-        }).always(function () {
-            $(this).removeClass('fileupload-processing');
+        }).always(function () {			
+		 
+			$(this).removeClass('fileupload-processing');
+			
         }).done(function (result) {
             $(this).fileupload('option', 'done')
                 .call(this, $.Event('done'), {result: result});
+				
         });
+		
         {% endblock %}
 
     });

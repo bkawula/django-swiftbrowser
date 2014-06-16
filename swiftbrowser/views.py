@@ -123,18 +123,30 @@ def objectview(request, container, prefix=None):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
     
+    key = 'MYKEY'
     request.session['container'] = container   
     request.session['prefix'] = prefix
+      
+    redirect_url = get_base_url(request)
+    redirect_url += reverse('objectview', kwargs={'container': container, })
+
+    swift_url = storage_url + '/' + container + '/'
+    if prefix:
+        swift_url += prefix
+        redirect_url += prefix 
+
+    url_parts = urlparse.urlparse(swift_url)
+    path = url_parts.path
            
     try:
         meta, objects = client.get_container(storage_url, auth_token,
                                              container, delimiter='/',
                                              prefix=prefix)
-
+    
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
-
+    redirect_url = 'http://192.168.0.110:8000/objects/test3/'
     prefixes = prefix_list(prefix)
     pseudofolders, objs = pseudofolder_object_list(objects, prefix)
     base_url = get_base_url(request)
@@ -143,10 +155,29 @@ def objectview(request, container, prefix=None):
     read_acl = meta.get('x-container-read', '').split(',')
     public = False
     required_acl = ['.r:*', '.rlistings']
+    
+    max_file_size = 5368709122
+    max_file_count = 1
+    expires = int(time.time() + 15 * 60)
+    
+    hmac_body = '%s\n%s\n%s\n%s\n%s' % (path, redirect_url,
+        max_file_size, max_file_count, expires)
+    signature = hmac.new(key, hmac_body, sha1).hexdigest()
+   
+    if not key:
+        messages.add_message(request, messages.ERROR, _("Access denied."))
+        if prefix:
+            return redirect(objectview, container=container, prefix=prefix)
+        else:
+            return redirect(objectview, container=container)
+            
     if [x for x in read_acl if x in required_acl]:
         public = True
 
     return render_to_response("objectview.html", {
+        'swift_url': swift_url,
+        'signature': signature,
+        'redirect_url': redirect_url,
         'container': container,
         'objects': objs,
         'folders': pseudofolders,
@@ -156,6 +187,9 @@ def objectview(request, container, prefix=None):
         'base_url': base_url,
         'account': account,
         'public': public,
+        'max_file_size': max_file_size,
+        'max_file_count': max_file_count,
+        'expires': expires,
         },
         context_instance=RequestContext(request))
 
@@ -166,6 +200,7 @@ def objecttable(request):
     auth_token = request.session.get('auth_token', '')
     container = request.session.get('container')
     prefix = request.session.get('prefix')
+    
     try:
         meta, objects = client.get_container(storage_url, auth_token,
                                              container, delimiter='/',
@@ -198,7 +233,58 @@ def objecttable(request):
         'public': public,
         },
         context_instance=RequestContext(request))
+"""
+def upload_form(request, container, prefix=None):
+    
 
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    redirect_url = get_base_url(request)
+    redirect_url += reverse('objectview', kwargs={'container': container, })
+
+    swift_url = storage_url + '/' + container + '/'
+    if prefix:
+        swift_url += prefix
+        redirect_url += prefix
+
+    url_parts = urlparse.urlparse(swift_url)
+    path = url_parts.path
+
+    max_file_size = 5 * 1024 * 1024 * 1024
+    max_file_count = 1
+    expires = int(time.time() + 15 * 60)
+    key = '123456'
+    if not key:
+        messages.add_message(request, messages.ERROR, _("Access denied."))
+        if prefix:
+            return redirect(objectview, container=container, prefix=prefix)
+        else:
+            return redirect(objectview, container=container)
+
+    hmac_body = '%s\n%s\n%s\n%s\n%s' % (path, redirect_url,
+        max_file_size, max_file_count, expires)
+    signature = hmac.new(key, hmac_body, sha1).hexdigest()
+
+    prefixes = prefix_list(prefix)
+
+    return render_to_response('upload_form.html', {
+                              'swift_url': swift_url,
+                              'redirect_url': redirect_url,
+                              'max_file_size': max_file_size,
+                              'max_file_count': max_file_count,
+                              'expires': expires,
+                              'signature': signature,
+                              'container': container,
+                              'prefix': prefix,
+                              'prefixes': prefixes,
+                              }, context_instance=RequestContext(request))
+
+
+
+
+"""
+"""
 def upload_form(request, container, prefix):
     
     return render_to_response('upload_form.html',{
@@ -206,7 +292,7 @@ def upload_form(request, container, prefix):
         'prefix':prefix,
     },context_instance=RequestContext(request)
     )
-  
+"""  
 
 def download(request, container, objectname):
     """ Download an object from Swift """
@@ -494,6 +580,8 @@ def upload(request):
     file = upload_receive( request )
     container = request.session.get('container')
     prefix = request.session.get('prefix')    
+
+    
     instance = Photo(file = file)
     
     if prefix:
@@ -506,10 +594,11 @@ def upload(request):
     basename = os.path.basename( instance.file.path )
     
     file_dict = {
+        'path' : instance.file.path,
         'name' : basename,
         'size' : file.size,        
-        'url': settings.MEDIA_URL + basename,
-        'thumbnailUrl': settings.MEDIA_URL + basename,
+        'url': swift_url + basename,
+        'thumbnailUrl': swift_url + basename,
         'deleteUrl': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
         'deleteType': 'POST',
     }
