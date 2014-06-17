@@ -50,12 +50,11 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
    
 )
-TEMPLATE_CONTEXT_PROCESSORS = {
+TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.static',
-}
+)
 FILE_UPLOAD_HANDLERS = (
-    'progressbarupload.uploadhandler.ProgressBarUploadHandler',
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
     'django.core.files.uploadhandler.TemporaryFileUploadHandler',    
 )
@@ -86,11 +85,11 @@ LOGGING = {
 }
 DEFAULT_FILE_STORAGE='swift.storage.SwiftStorage'
 
-SWIFT_AUTH_URL = 'http://127.0.0.1:8080/auth/v2.0/'
+SWIFT_AUTH_URL = 'http://127.0.0.1:5000/v2.0/'
 SWIFT_AUTH_VERSION = 2 # 2 for keystone
 STORAGE_URL = 'http://127.0.0.1:8080/v1/'
-BASE_URL = 'http://127.0.0.1'
-SWAUTH_URL = 'http://127.0.0.1:8080/auth/v2'
+BASE_URL = 'http://127.0.0.1:8080'
+SWAUTH_URL = 'http://127.0.0.1:5000/auth/v2'
 STATIC_DIR = '/var/www/myproj/static'
 
 TIME_ZONE = 'America/Toronto'
