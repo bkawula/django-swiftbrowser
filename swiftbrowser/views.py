@@ -146,7 +146,6 @@ def objectview(request, container, prefix=None):
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
-    redirect_url = 'http://192.168.0.110:8000/objects/test3/'
     prefixes = prefix_list(prefix)
     pseudofolders, objs = pseudofolder_object_list(objects, prefix)
     base_url = get_base_url(request)
