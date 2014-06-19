@@ -36,15 +36,15 @@ def login(request):
     if form.is_valid():
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
-        tenant = settings.SWIFT_TENANT_NAME + ":" + username
+        """ tenant = settings.SWIFT_TENANT_NAME + ":" + username """
         try:
             auth_version = settings.SWIFT_AUTH_VERSION or 1
             (storage_url, auth_token) = client.get_auth(
-                settings.SWIFT_AUTH_URL, tenant, password,
+                settings.SWIFT_AUTH_URL, username, password,
                 auth_version=auth_version)
             request.session['auth_token'] = auth_token
             request.session['storage_url'] = storage_url
-            request.session['username'] = tenant
+            request.session['username'] = username
             request.session['user'] = username
            
             return redirect(containerview)
