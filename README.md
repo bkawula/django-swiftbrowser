@@ -16,12 +16,16 @@ Quick Install
 
     python runtests.py
 
-2) Create a new Django project:
+2.1) Create a new Django project:
 
     django-admin.py startproject myproj
     cd myproj
     cp ~/django-swiftbrowser/example/settings.py myproj/settings.py
 	mkdir myproj/database
+
+2.2) For development make symlink to the swiftbrowser folder
+
+	ln -s ../swiftbrowser swiftbrowser
 
 3) Adopt myproj/settings.py to your needs, especially settings for Swift and static file directories.
 
