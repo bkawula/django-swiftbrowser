@@ -47,4 +47,20 @@ Quick Install
 
    *Important*: Either use 'python manage.py runserver --insecure' or set DEBUG = True in myproj/settings.py if you want to use the
    local development server. Don't use these settings in production!
+   
+IMPORTANT CORS INFORMATION!!!
+-----------------------------
 
+This browser uses the formpost.py swift middleware. Currently you need to set Access-Control-Allow-Origin header for containers in order to upload as well as set the Temp-URL-Key on your swift account to 'MYKEY'. 
+
+Setting the Temp-URL-Key:
+
+	swift post -m "X-Account-Meta-Temp-URL-Key:MYKEY" -A http://127.0.0.1:5000/v2.0 -V 2 -U tenantID:username -K password
+
+Setting the Access-Control-Allow-Origin header on a container:
+
+	curl -i -XPUT -H "X-Auth-Token: TOKEN" -H "X-Container-Meta-Access-Control-Expose-Headers: Access-Control-Allow-Origin" -H "X-Container-Meta-Access-Control-Allow-Origin: http://127.0.0.1(swiftbrowser server)" http://127.0.0.1(openstack server):8080/v1/AUTH_TenantID/ContainerName/
+
+You can get the X-Auth-Token with this:
+
+	curl -d '{ "auth":{ "passwordCredentials":{ "username":"username", "password":"password" }, "tenantName":"tenantName" }}' -H "Content-type: application/json" http://127.0.0.1:5000/v2.0/tokens
