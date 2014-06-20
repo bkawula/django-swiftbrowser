@@ -23,7 +23,6 @@ setup(
     install_requires=[
         'django>=1.5', 
         'python-swiftclient',
-        'django-storage-swift',
         'django-jfu',
     ],
     zip_safe=False,

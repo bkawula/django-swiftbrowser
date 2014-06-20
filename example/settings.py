@@ -83,7 +83,7 @@ LOGGING = {
         },
     }
 }
-DEFAULT_FILE_STORAGE='swift.storage.SwiftStorage'
+
 
 SWIFT_AUTH_URL = 'http://127.0.0.1:5000/v2.0/'
 SWIFT_AUTH_VERSION = 2 # 2 for keystone
@@ -98,12 +98,9 @@ SECRET_KEY = 'DONT_USE_THIS_IN_PRODUCTION'
 STATIC_URL = "/static/"
 STATIC_ROOT = "/var/www/myproj/static/"
 
-# For django-storage-swift. 
-SWIFT_USERNAME = 'username'
+
 SWIFT_TENANT_NAME = 'TENANT'
-SWIFT_BASE_URL = BASE_URL
-SWIFT_KEY = 'yourkey'
-SWIFT_CONTAINER_NAME = '/'
+
 
 ALLOWED_HOSTS = ['127.0.0.1', 'insert_your_hostname_here']
 
