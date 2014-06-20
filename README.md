@@ -1,7 +1,7 @@
 django-swiftbrowser
 ===================
 
-This is a fork of [cschwede / django-swiftbrowser](https://github.com/cschwede/django-swiftbrowser) that uses [django-storage-swift](https://github.com/wecreatepixels/django-storage-swift) instead of the formpost middleware. It also adds [django-jfu](https://github.com/Alem/django-jfu) as the file upload form. 
+This is a fork of [cschwede / django-swiftbrowser](https://github.com/cschwede/django-swiftbrowser) that adds [django-jfu](https://github.com/Alem/django-jfu) as the file upload form. 
 
 Quick Install
 -------------
