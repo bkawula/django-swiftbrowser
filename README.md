@@ -60,6 +60,7 @@ This browser uses the formpost.py swift middleware. Currently you need to set Ac
 Setting the Temp-URL-Key:
 
 	swift post -m "Temp-URL-Key:MYKEY" -A http://127.0.0.1:5000/v2.0 -V 2 -U tenantID:username -K password
+	swift post -m "X-Account-Meta-Temp-URL-Key:MYKEY" -A http://127.0.0.1:5000/v2.0 -V 2 -U tenantID:username -K
 
 Setting the Access-Control-Allow-Origin header on a container:
 
