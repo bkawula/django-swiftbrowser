@@ -1,5 +1,5 @@
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 README = open(os.path.join(os.path.dirname(__file__), 'README.md')).read()
 
@@ -21,6 +21,8 @@ setup(
         'django>=1.5', 
         'python-swiftclient',
         'django-jfu',
+        'django-icons-mimetypes>=1.0', 
+        'PIL'
     ],
     zip_safe=False,
     classifiers=[

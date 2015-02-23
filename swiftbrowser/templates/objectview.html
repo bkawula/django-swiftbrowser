@@ -4,7 +4,7 @@
 {% load dateconv %}
 {% load lastpart %}
 {% block content %}
-<div class="container">
+<div id='containerdiv' class="container">
 {% include "messages.html" %}
 
         <ul class="breadcrumb">
@@ -83,11 +83,13 @@
 				<input type="file" name="file1" /><br />
 				<input type="submit" />
 			</form>
+	{% include "cors.html" %}
 -->
 {% load jfutags %} 
 {% jfu 'upload_form.html' %}
 
 	</div>
+
 <div id="objecttable">
 </div>
 </div>
