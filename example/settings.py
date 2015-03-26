@@ -36,6 +36,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'myproj.urls'
 
 INSTALLED_APPS = (
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -48,15 +49,16 @@ INSTALLED_APPS = (
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-   
+
 )
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',
     'django.core.context_processors.static',
+    'django.contrib.auth.context_processors.auth',
 )
 FILE_UPLOAD_HANDLERS = (
     'django.core.files.uploadhandler.MemoryFileUploadHandler',
-    'django.core.files.uploadhandler.TemporaryFileUploadHandler',    
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
 )
 
 
