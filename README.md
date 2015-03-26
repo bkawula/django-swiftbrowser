@@ -1,7 +1,7 @@
 django-swiftbrowser
 ===================
 
-This is a fork of [cschwede / django-swiftbrowser](https://github.com/cschwede/django-swiftbrowser) that adds [django-jfu](https://github.com/Alem/django-jfu) as the file upload form. 
+This is a fork of [cschwede / django-swiftbrowser](https://github.com/cschwede/django-swiftbrowser) that adds [django-jfu](https://github.com/Alem/django-jfu) as the file upload form.
 
 Quick Install
 -------------
@@ -20,7 +20,7 @@ Quick Install
 
     django-admin.py startproject myproj
     cd myproj
-    cp ~/django-swiftbrowser/example/settings.py myproj/settings.py
+    cp ../example/settings.py myproj/settings.py
 	mkdir myproj/database
 
 2.2) For development make symlink to the swiftbrowser folder
@@ -46,16 +46,16 @@ Quick Install
     python manage.py collectstatic
 
 7) Run development server:
-   
+
     python manage.py runserver
 
    *Important*: Either use 'python manage.py runserver --insecure' or set DEBUG = True in myproj/settings.py if you want to use the
    local development server. Don't use these settings in production!
-   
+
 IMPORTANT CORS INFORMATION!!!
 -----------------------------
 
-This browser uses the formpost.py swift middleware. Currently you need to set Access-Control-Allow-Origin header for containers in order to upload as well as set the Temp-URL-Key on your swift account to 'MYKEY'. 
+This browser uses the formpost.py swift middleware. Currently you need to set Access-Control-Allow-Origin header for containers in order to upload as well as set the Temp-URL-Key on your swift account to 'MYKEY'.
 
 Setting the Temp-URL-Key:
 
