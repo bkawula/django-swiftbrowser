@@ -27,9 +27,9 @@ Quick Install
 
 	ln -s ../swiftbrowser swiftbrowser
 
-3) Adopt myproj/settings.py to your needs, especially settings for Swift and static file directories.
+3) Adopt myproj/settings.py to your needs, especially settings for Swift.
 
-4) Update myproj/urls.py and include swiftbrowser.urls:
+4) Update myproj/urls.py and include swiftbrowser.urls and add it to the url patterns.
 
     import swiftbrowser.urls
 

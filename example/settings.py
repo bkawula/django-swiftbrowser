@@ -92,13 +92,13 @@ SWIFT_AUTH_VERSION = 2 # 2 for keystone
 STORAGE_URL = 'http://127.0.0.1:8080/v1/'
 BASE_URL = 'http://127.0.0.1:8080'
 SWAUTH_URL = 'http://127.0.0.1:5000/auth/v2'
-STATIC_DIR = '/var/www/myproj/static'
+STATIC_DIR = 'swiftbrowser/static'
 
 TIME_ZONE = 'America/Toronto'
 LANGUAGE_CODE = 'en-en'
 SECRET_KEY = 'DONT_USE_THIS_IN_PRODUCTION'
 STATIC_URL = "/static/"
-STATIC_ROOT = "/var/www/myproj/static/"
+STATIC_ROOT = "static"
 
 
 SWIFT_TENANT_NAME = 'TENANT'
