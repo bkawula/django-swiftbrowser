@@ -18,10 +18,9 @@ setup(
     author='Christian Schwede',
     author_email='info@cschwede.de',
     install_requires=[
-        'django>=1.5', 
+        'django>=1.5',
         'python-swiftclient',
         'django-jfu',
-        'django-icons-mimetypes>=1.0', 
         'PIL'
     ],
     zip_safe=False,
