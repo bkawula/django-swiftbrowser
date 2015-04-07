@@ -1,7 +1,6 @@
 {% load i18n %}
 {% load dateconv %}
 {% load lastpart %}
-{% load mimetypes %}
 {% block content %}
     <table class="table table-striped">
         <thead>
@@ -11,80 +10,123 @@
             <th style="width: 12.5em;" class="hidden-phone">{% trans 'Created' %}</th>
             <th style="width: 6em;" class="hidden-phone">{% trans 'Size' %}</th>
             <th style="width: 1em;">
-                
-                        {% if prefix %}
-                        <a href="{% url "create_pseudofolder" container=container prefix=prefix %}" class="btn btn-success" role="button">
-                        {% else %}
-                        <a href="{% url "create_pseudofolder" container=container %}" class="btn btn-success" role="button">
-                        {% endif %}
+
+                {% if prefix %}
+                    <a href="{% url "create_pseudofolder" container=container prefix=prefix %}" class="btn btn-success" role="button">
+                {% else %}
+                    <a href="{% url "create_pseudofolder" container=container %}" class="btn btn-success" role="button">
+                {% endif %}
                         <span class="glyphicon glyphicon-plus"></span>
-                        </a>
-             
-              
+                    </a>
             </th>
         </tr>
         </thead>
-        {% if folders or objects %} 
-        <tbody>
-        {% for folder in folders %}
-            <tr>
-                <td class="hidden-phone"><span class="glyphicon glyphicon-folder-close"></span></td>
-                <td> 
-                    <a href="{% url "objectview" container=container prefix=folder.0 %}"><strong>{{folder.0|lastpart}}</strong></a>
-                </td>
-                <td class="hidden-phone"></td>
-                <td class="hidden-phone"></td>
+        {% if folders or objects %}
+            <tbody>
+                {% for folder in folders %}
+                    <tr>
+                        <td class="hidden-phone">
+                            <span class="glyphicon glyphicon-folder-close">
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{% url "objectview" container=container prefix=folder.0 %}">
+                                <strong>{{folder.0|lastpart}}</strong>
+                            </a>
+                        </td>
+                        <td class="hidden-phone"></td>
+                        <td class="hidden-phone"></td>
+                        <td>
+                           <div class="dropdown pull-right">
+                                <a class="dropdown-toggle btn btn-mini btn-danger" data-toggle="dropdown">
+                                    <span class="glyphicon glyphicon-chevron-down"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{% url "download_collection" container=container prefix=folder.0 %}">
+                                            <span class="glyphicon glyphicon-download"></span> {% trans 'Download' %}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url "download_collection_nonrec" container=container prefix=folder.0  %}">
+                                            <span class="glyphicon glyphicon-download"></span> {% trans 'Download nonrecursive' %}
+                                        </a>
+                                    </li>
+                                    <li class="divider" />
+                                    <li>
+                                        <a href="{% url "delete_object" container=container objectname=folder.1  %}" onclick="return confirm('{% trans 'Delete folder' %} {{folder.1}}?');" >
+                                            <span class="glyphicon glyphicon-fire"></span> {% trans 'Delete folder' %}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url "move_collection_to_trash" container=container prefix=folder.1  %}">
+                                            <span class="glyphicon glyphicon-trash"></span> {% trans 'Move to trash' %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
 
-                    <td>
-				   <div class="dropdown pull-right">
-				                            <a class="dropdown-toggle btn btn-mini btn-danger" data-toggle="dropdown"><span class="glyphicon glyphicon-chevron-down"></span></a>
-				                            <ul class="dropdown-menu">
-				                               <li><a href="{% url "download_collection" container=container prefix=folder.0 %}"><span class="glyphicon glyphicon-download"></span> {% trans 'Download' %}</a></li>
-				                               <li><a href="{% url "download_collection_nonrec" container=container prefix=folder.0  %}"><span class="glyphicon glyphicon-download"></span> {% trans 'Download nonrecursive' %}</a></li>
-				                               <li class="divider" />
-				                                <li><a href="{% url "delete_object" container=container objectname=folder.1  %}" onclick="return confirm('{% trans 'Delete folder' %} {{folder.1}}?');" ><span class="glyphicon glyphicon-fire"></span> {% trans 'Delete folder' %}</a></li>
-				                                <li><a href="{% url "move_collection_to_trash" container=container prefix=folder.1  %}"  ><span class="glyphicon glyphicon-trash"></span> {% trans 'Move to trash' %}</a></li>
-				                            </ul>
-										</div>
-                    </td>
-            </tr>
-        {% endfor %}
-        
-        {% for key in objects %}
-            <tr draggable="true">
-                <td class="hidden-phone"><img src={% ifequal  key.content_type|slice:":6" "image/" %}"{% url "serve_thumbnail"  container=container objectname=key.name %}"{% else %}"{% icon key.content_type "32x32" %}"{% endifequal %} width="32" height="32"></td>
-                <td><a href="{% url "download" container=container objectname=key.name %}" class="block">{{key.name|lastpart}}</a></td>
-                <td class="hidden-phone">{{key.last_modified|dateconv|date:"SHORT_DATETIME_FORMAT"}}</td>
-	            <td class="hidden-phone">{{key.bytes|filesizeformat}}</td>
-                    <td>
-					<div class="btn-group pull-right">
-					  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					     <span class="caret"></span>
-					  </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{% url "tempurl" container=container objectname=key.name %}" id="tempurllink"><i class="icon-time"></i> {% trans 'Temporary URL' %}</a></li>
-                            <li class="divider" />
-							<li><a href="{% url "delete_object" container=container objectname=key.name  %}" onclick="return confirm('{% trans 'Delete object' %} {{key.name}}?');" ><span class="glyphicon glyphicon-fire"></span> {% trans 'Delete Object' %}</a></li>
-							                            <li><a href="{% url "move_to_trash" container=container objectname=key.name  %}"><span class="glyphicon glyphicon-trash"></span> {% trans 'Move to trash' %}</a></li>
-                            
-							
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-
-        {% endfor %}
-        </tbody> 
+                {% for key in objects %}
+                    <tr draggable="true">
+                        <td class="hidden-phone">
+                            <img src={% ifequal  key.content_type|slice:":6" "image/" %}"{% url "serve_thumbnail"  container=container objectname=key.name %}"{% else %}"{% icon key.content_type "32x32" %}"{% endifequal %} width="32" height="32">
+                        </td>
+                        <td>
+                            <a href="{% url "download" container=container objectname=key.name %}" class="block">{{key.name|lastpart}}</a>
+                        </td>
+                        <td class="hidden-phone">{{key.last_modified|dateconv|date:"SHORT_DATETIME_FORMAT"}}</td>
+                        <td class="hidden-phone">{{key.bytes|filesizeformat}}</td>
+                        <td>
+                            <div class="btn-group pull-right">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{% url "tempurl" container=container objectname=key.name %}" id="tempurllink">
+                                            <i class="icon-time"></i> {% trans 'Temporary URL' %}
+                                        </a>
+                                    </li>
+                                    <li class="divider" />
+                                    <li>
+                                        <a href="{% url "delete_object" container=container objectname=key.name  %}" onclick="return confirm('{% trans 'Delete object' %} {{key.name}}?');" >
+                                            <span class="glyphicon glyphicon-fire"></span> {% trans 'Delete Object' %}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url "move_to_trash" container=container objectname=key.name  %}">
+                                            <span class="glyphicon glyphicon-trash"></span> {% trans 'Move to trash' %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
         {% else %}
-        <tbody>
-            <tr>
-                <th colspan="5" class="center">
-                    <strong><center>{% trans 'There are no objects in this container yet. Upload new objects by clicking the red button.' %}<center></strong>
-                </th>
-            </tr>
-        </tbody>
+            <tbody>
+                <tr>
+                    <th colspan="5" class="center">
+                        <strong>
+                            <center>{% trans 'There are no objects in this container yet. Upload new objects by clicking the red button.' %}<center>
+                        </strong>
+                    </th>
+                </tr>
+            </tbody>
         {% endif %}
-		<tfoot><tr><td><a href="{% url "trashview" account=account %}" role="button" class="btn btn-mini"><span class="glyphicon glyphicon-trash"></span></a></td>
-		        <td colspan="5"></td></tr></tfoot>
+        <tfoot>
+            <tr>
+                <td>
+                    <a href="{% url "trashview" account=account %}" role="button" class="btn btn-mini">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+                <td colspan="5"></td>
+            </tr>
+        </tfoot>
     </table>
 {% endblock %}
