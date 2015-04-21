@@ -8,6 +8,7 @@ import hmac
 from hashlib import sha1
 import logging
 import zipfile
+# import chromelogger as console
 from StringIO import StringIO
 from swiftclient import client
 from django.shortcuts import render_to_response, redirect, render
@@ -90,12 +91,16 @@ def create_container(request):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-
+    
+    headers = {}
+    headers['X-Container-Meta-Access-Control-Expose-Headers'] = 'Access-Control-Allow-Origin'
+    headers['X-Container-Meta-Access-Control-Allow-Origin'] = settings.BASE_URL
+    
     form = CreateContainerForm(request.POST or None)
     if form.is_valid():
         container = form.cleaned_data['containername']
         try:
-            client.put_container(storage_url, auth_token, container)
+            client.put_container(storage_url, auth_token, container, headers)
             messages.add_message(request, messages.INFO,
                                  _("Container created."))
         except client.ClientException:
@@ -132,8 +137,11 @@ def objectview(request, container, prefix=None):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
+
+    account = client.head_account(storage_url, auth_token)
+    url_key = account.get('x-account-meta-temp-url-key','')
     
-    key = 'MYKEY'
+    key = url_key
     request.session['container'] = container   
     request.session['prefix'] = prefix
       
