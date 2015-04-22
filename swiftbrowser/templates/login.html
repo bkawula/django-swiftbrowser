@@ -5,7 +5,7 @@
     <style type="text/css">
         html, body {background: #efefef;}
         .modal-header {display: none;}
-        @media (min-height: 500px) { 
+        @media (min-height: 500px) {
             .modal-header {display: block;}
             form {
                 max-width: 450px;
@@ -26,15 +26,21 @@
                 -moz-background-clip: padding-box;
                 background-clip: padding-box;
             }
-        } 
+        }
         h3 {text-align:center;}
+        .tenant-dropdown {
+            width: 100%;
+            display:block;
+        }
     </style>
 {% endblock %}
- 
+
 {% block content %}
 <form method="post" action="{% url "login" %}">
     {% csrf_token %}
-    <div class="modal-header"><h3>Login</h3></div>
+    <div class="modal-header">
+        <h3>Login</h3>
+    </div>
     <div class="modal-body">
         {% if messages %}
             {% for message in messages %}
@@ -46,14 +52,28 @@
             {% endfor %}
         {% endif %}
         <fieldset>
-            <label><b>{% trans 'Username' %}</b></label>
+            <label>
+                <b>{% trans 'Tenant' %}</b>
+            </label>
+            <select name="tenant" class="tenant-dropdown">
+                {% for tenant, school in tenants.items %}
+                    <option value="{{tenant}}">{{school}}</option>
+                {% endfor %}
+            </select>
+            <label>
+                <b>{% trans 'Username' %}</b>
+            </label>
             <input class="focused input-block-level input-small"  name="username" type="text" placeholder="{% trans 'Username' %}">
-            <label><b>{% trans 'Password' %}</b></label>
+            <label>
+                <b>{% trans 'Password' %}</b>
+            </label>
             <input class="focused input-block-level" name="password" type="password" placeholder="{% trans 'Password' %}">
         </fieldset>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">{% trans 'Login' %} <span class="icon-chevron-right icon-white"></span></button>
+        <button type="submit" class="btn btn-primary">
+            {% trans 'Login' %} <span class="icon-chevron-right icon-white"></span>
+        </button>
     </div>
 </form>
 {% endblock %}

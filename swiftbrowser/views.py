@@ -15,7 +15,8 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.http import HttpResponse, HttpResponseServerError, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseServerError, \
+                        HttpResponseForbidden
 from django.views import generic
 from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext as _
@@ -43,7 +44,8 @@ def login(request):
     if form.is_valid():
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
-        """ tenant = settings.SWIFT_TENANT_NAME + ":" + username """
+        tenant = form.cleaned_data['tenant']
+        username = tenant + ":" + username
         try:
             auth_version = settings.SWIFT_AUTH_VERSION or 1
             (storage_url, auth_token) = client.get_auth(
@@ -53,14 +55,17 @@ def login(request):
             request.session['storage_url'] = storage_url
             request.session['username'] = username
             request.session['user'] = username
-           
+
             return redirect(containerview)
 
         except client.ClientException:
             messages.add_message(request, messages.ERROR, _("Login failed."))
-
-    return render_to_response('login.html', {'form': form, },
-                              context_instance=RequestContext(request))
+    return render_to_response(
+        'login.html',
+        {'form': form,
+        'tenants': settings.SWIFTBROWSER_SETTINGS["tenants"]},
+        context_instance=RequestContext(request)
+    )
 
 def containerview(request):
     """ Returns a list of all containers in current account. """
@@ -132,27 +137,27 @@ def objectview(request, container, prefix=None):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-    
+
     key = 'MYKEY'
-    request.session['container'] = container   
+    request.session['container'] = container
     request.session['prefix'] = prefix
-      
+
     redirect_url = get_base_url(request)
     redirect_url += reverse('objectview', kwargs={'container': container, })
 
     swift_url = storage_url + '/' + container + '/'
     if prefix:
         swift_url += prefix
-        redirect_url += prefix 
+        redirect_url += prefix
 
     url_parts = urlparse.urlparse(swift_url)
     path = url_parts.path
-           
+
     try:
         meta, objects = client.get_container(storage_url, auth_token,
                                              container, delimiter='/',
                                              prefix=prefix)
-    
+
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
@@ -164,22 +169,22 @@ def objectview(request, container, prefix=None):
     read_acl = meta.get('x-container-read', '').split(',')
     public = False
     required_acl = ['.r:*', '.rlistings']
-    
+
     max_file_size = 5368709122
     max_file_count = 1
     expires = int(time.time() + 15 * 60)
-    
+
     hmac_body = '%s\n%s\n%s\n%s\n%s' % (path, redirect_url,
         max_file_size, max_file_count, expires)
     signature = hmac.new(key, hmac_body, sha1).hexdigest()
-   
+
     if not key:
         messages.add_message(request, messages.ERROR, _("Access denied."))
         if prefix:
             return redirect(objectview, container=container, prefix=prefix)
         else:
             return redirect(objectview, container=container)
-            
+
     if [x for x in read_acl if x in required_acl]:
         public = True
 
@@ -209,7 +214,7 @@ def objecttable(request):
     auth_token = request.session.get('auth_token', '')
     container = request.session.get('container')
     prefix = request.session.get('prefix')
-    
+
     try:
         meta, objects = client.get_container(storage_url, auth_token,
                                              container, delimiter='/',
@@ -244,7 +249,7 @@ def objecttable(request):
         context_instance=RequestContext(request))
 """
 def upload_form(request, container, prefix=None):
-    
+
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
@@ -295,13 +300,13 @@ def upload_form(request, container, prefix=None):
 """
 """
 def upload_form(request, container, prefix):
-    
+
     return render_to_response('upload_form.html',{
         'container': container,
         'prefix':prefix,
     },context_instance=RequestContext(request)
     )
-"""  
+"""
 
 def download(request, container, objectname):
     """ Download an object from Swift """
@@ -456,7 +461,7 @@ def tempurl(request, container, objectname):
     if prefix:
         prefix += '/'
     prefixes = prefix_list(prefix)
-    
+
     return render_to_response('tempurl.html',
                               {'url': url,
                                'account': storage_url.split('/')[-1],
@@ -679,24 +684,24 @@ def serve_thumbnail(request, container, objectname):
 def upload(request):
     file = upload_receive( request )
     container = request.session.get('container')
-    prefix = request.session.get('prefix')    
+    prefix = request.session.get('prefix')
 
-    
+
     instance = Photo(file = file)
-    
+
     if prefix:
         instance.path = os.path.join(container,prefix)
     else:
         instance.path = os.path.join(container)
-    
+
     instance.save()
 
     basename = os.path.basename( instance.file.path )
-    
+
     file_dict = {
         'path' : instance.file.path,
         'name' : basename,
-        'size' : file.size,        
+        'size' : file.size,
         'url': swift_url + basename,
         'thumbnailUrl': swift_url + basename,
         'deleteUrl': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
@@ -720,12 +725,12 @@ def upload_delete( request, pk ):
 
 def move_to_folder(request, container, objectname):
     return
-    
+
 
 def trashview(request, account):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-   
+
     #Users are only allowed to view the trash of their own account.
     if storage_url == '' or account != storage_url.split('/')[-1]:
         messages.add_message(request, messages.ERROR, _("Access denied."))
@@ -782,7 +787,7 @@ def trashview(request, account):
 def delete_trash(request, account, trashname):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-    
+
     if storage_url == '' or account != storage_url.split('/')[-1]:
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
