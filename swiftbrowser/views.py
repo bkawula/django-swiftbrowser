@@ -17,7 +17,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse, HttpResponseServerError, \
-                        HttpResponseForbidden
+    HttpResponseForbidden
 from django.views import generic
 from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext as _
@@ -26,17 +26,16 @@ from jfu.http import upload_receive, UploadResponse, JFUResponse
 from swiftbrowser.models import Photo
 from swiftbrowser.models import Document
 from swiftbrowser.forms import CreateContainerForm, PseudoFolderForm, \
-                               LoginForm, AddACLForm, DocumentForm
+    LoginForm, AddACLForm, DocumentForm
 from swiftbrowser.utils import replace_hyphens, prefix_list, \
-                               pseudofolder_object_list, get_temp_key,\
-                               get_base_url, get_temp_url, create_thumbnail,\
-                               redirect_to_objectview_after_delete,\
-                               get_original_account,\
-                               create_pseudofolder_from_prefix
+    pseudofolder_object_list, get_temp_key, get_base_url, get_temp_url, \
+    create_thumbnail, redirect_to_objectview_after_delete, \
+    get_original_account, create_pseudofolder_from_prefix
 
 import swiftbrowser
 
 logger = logging.getLogger(__name__)
+
 
 def login(request):
     """ Tries to login user and sets session data """
@@ -68,6 +67,7 @@ def login(request):
         context_instance=RequestContext(request)
     )
 
+
 def containerview(request):
     """ Returns a list of all containers in current account. """
 
@@ -97,9 +97,11 @@ def create_container(request):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
-    headers = {}
-    headers['X-Container-Meta-Access-Control-Expose-Headers'] = 'Access-Control-Allow-Origin'
-    headers['X-Container-Meta-Access-Control-Allow-Origin'] = settings.BASE_URL
+    headers = {
+        'X-Container-Meta-Access-Control-Expose-Headers':
+        'Access-Control-Allow-Origin',
+        'X-Container-Meta-Access-Control-Allow-Origin': settings.BASE_URL
+    }
 
     form = CreateContainerForm(request.POST or None)
     if form.is_valid():
@@ -113,9 +115,11 @@ def create_container(request):
 
         return redirect(containerview)
 
-    return render_to_response('create_container.html', {
-                    'session': request.session,
-                              }, context_instance=RequestContext(request))
+    return render_to_response(
+        'create_container.html',
+        {'session': request.session},
+        context_instance=RequestContext(request)
+    )
 
 
 def delete_container(request, container):
@@ -144,7 +148,7 @@ def objectview(request, container, prefix=None):
     auth_token = request.session.get('auth_token', '')
 
     account = client.head_account(storage_url, auth_token)
-    url_key = account.get('x-account-meta-temp-url-key','')
+    url_key = account.get('x-account-meta-temp-url-key', '')
 
     key = url_key
     request.session['container'] = container
@@ -182,8 +186,13 @@ def objectview(request, container, prefix=None):
     max_file_count = 1
     expires = int(time.time() + 15 * 60)
 
-    hmac_body = '%s\n%s\n%s\n%s\n%s' % (path, redirect_url,
-        max_file_size, max_file_count, expires)
+    hmac_body = '%s\n%s\n%s\n%s\n%s' % (
+        path,
+        redirect_url,
+        max_file_size,
+        max_file_count,
+        expires
+    )
     signature = hmac.new(key, hmac_body, sha1).hexdigest()
 
     if not key:
@@ -196,24 +205,28 @@ def objectview(request, container, prefix=None):
     if [x for x in read_acl if x in required_acl]:
         public = True
 
-    return render_to_response("objectview.html", {
-        'swift_url': swift_url,
-        'signature': signature,
-        'redirect_url': redirect_url,
-        'container': container,
-        'objects': objs,
-        'folders': pseudofolders,
-        'session': request.session,
-        'prefix': prefix,
-        'prefixes': prefixes,
-        'base_url': base_url,
-        'account': account,
-        'public': public,
-        'max_file_size': max_file_size,
-        'max_file_count': max_file_count,
-        'expires': expires,
+    return render_to_response(
+        "objectview.html",
+        {
+            'swift_url': swift_url,
+            'signature': signature,
+            'redirect_url': redirect_url,
+            'container': container,
+            'objects': objs,
+            'folders': pseudofolders,
+            'session': request.session,
+            'prefix': prefix,
+            'prefixes': prefixes,
+            'base_url': base_url,
+            'account': account,
+            'public': public,
+            'max_file_size': max_file_size,
+            'max_file_count': max_file_count,
+            'expires': expires,
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )
+
 
 def objecttable(request):
     """ Returns list of all objects in current container. """
@@ -243,78 +256,22 @@ def objecttable(request):
     if [x for x in read_acl if x in required_acl]:
         public = True
 
-    return render_to_response("object_table.html", {
-        'container': container,
-        'objects': objs,
-        'folders': pseudofolders,
-        'session': request.session,
-        'prefix': prefix,
-        'prefixes': prefixes,
-        'base_url': base_url,
-        'account': account,
-        'public': public,
+    return render_to_response(
+        "object_table.html",
+        {
+            'container': container,
+            'objects': objs,
+            'folders': pseudofolders,
+            'session': request.session,
+            'prefix': prefix,
+            'prefixes': prefixes,
+            'base_url': base_url,
+            'account': account,
+            'public': public,
         },
-        context_instance=RequestContext(request))
-"""
-def upload_form(request, container, prefix=None):
-
-
-    storage_url = request.session.get('storage_url', '')
-    auth_token = request.session.get('auth_token', '')
-
-    redirect_url = get_base_url(request)
-    redirect_url += reverse('objectview', kwargs={'container': container, })
-
-    swift_url = storage_url + '/' + container + '/'
-    if prefix:
-        swift_url += prefix
-        redirect_url += prefix
-
-    url_parts = urlparse.urlparse(swift_url)
-    path = url_parts.path
-
-    max_file_size = 5 * 1024 * 1024 * 1024
-    max_file_count = 1
-    expires = int(time.time() + 15 * 60)
-    key = '123456'
-    if not key:
-        messages.add_message(request, messages.ERROR, _("Access denied."))
-        if prefix:
-            return redirect(objectview, container=container, prefix=prefix)
-        else:
-            return redirect(objectview, container=container)
-
-    hmac_body = '%s\n%s\n%s\n%s\n%s' % (path, redirect_url,
-        max_file_size, max_file_count, expires)
-    signature = hmac.new(key, hmac_body, sha1).hexdigest()
-
-    prefixes = prefix_list(prefix)
-
-    return render_to_response('upload_form.html', {
-                              'swift_url': swift_url,
-                              'redirect_url': redirect_url,
-                              'max_file_size': max_file_size,
-                              'max_file_count': max_file_count,
-                              'expires': expires,
-                              'signature': signature,
-                              'container': container,
-                              'prefix': prefix,
-                              'prefixes': prefixes,
-                              }, context_instance=RequestContext(request))
-
-
-
-
-"""
-"""
-def upload_form(request, container, prefix):
-
-    return render_to_response('upload_form.html',{
-        'container': container,
-        'prefix':prefix,
-    },context_instance=RequestContext(request)
+        context_instance=RequestContext(request)
     )
-"""
+
 
 def download(request, container, objectname):
     """ Download an object from Swift """
@@ -329,6 +286,7 @@ def download(request, container, objectname):
 
     return redirect(url)
 
+
 def download_collection(request, container, prefix=None, non_recursive=False):
     """ Download the content of an entire container/pseudofolder
     as a Zip file. """
@@ -338,9 +296,13 @@ def download_collection(request, container, prefix=None, non_recursive=False):
 
     delimiter = '/' if non_recursive else None
     try:
-        x, objects = client.get_container(storage_url, auth_token,
-                                         container, delimiter=delimiter,
-                                         prefix=prefix)
+        x, objects = client.get_container(
+            storage_url,
+            auth_token,
+            container,
+            delimiter=delimiter,
+            prefix=prefix
+        )
     except client.ClientException:
         return HttpResponseForbidden()
 
@@ -367,9 +329,10 @@ def download_collection(request, container, prefix=None, non_recursive=False):
         filename = container
     response = HttpResponse(output.getvalue(), 'application/zip')
     response['Content-Disposition'] = 'attachment; filename="%s.zip"'\
-    % (filename)
+        % (filename)
     output.close()
     return response
+
 
 def delete_object(request, container, objectname):
     """ Deletes an object """
@@ -423,9 +386,13 @@ def public_objectview(request, account, container, prefix=None):
     storage_url = settings.STORAGE_URL + account
     auth_token = ' '
     try:
-        _meta, objects = client.get_container(storage_url, auth_token,
-                                             container, delimiter='/',
-                                             prefix=prefix)
+        _meta, objects = client.get_container(
+            storage_url,
+            auth_token,
+            container,
+            delimiter='/',
+            prefix=prefix
+        )
 
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
@@ -436,17 +403,20 @@ def public_objectview(request, account, container, prefix=None):
     base_url = get_base_url(request)
     account = storage_url.split('/')[-1]
 
-    return render_to_response("publicview.html", {
-        'container': container,
-        'objects': objs,
-        'folders': pseudofolders,
-        'prefix': prefix,
-        'prefixes': prefixes,
-        'base_url': base_url,
-        'storage_url': storage_url,
-        'account': account,
+    return render_to_response(
+        "publicview.html",
+        {
+            'container': container,
+            'objects': objs,
+            'folders': pseudofolders,
+            'prefix': prefix,
+            'prefixes': prefixes,
+            'base_url': base_url,
+            'storage_url': storage_url,
+            'account': account,
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )
 
 
 def tempurl(request, container, objectname):
@@ -546,8 +516,11 @@ def edit_acl(request, container):
             username = form.cleaned_data['username']
 
             try:
-                (readers, writers) = get_acls(storage_url,
-                    auth_token, container)
+                (readers, writers) = get_acls(
+                    storage_url,
+                    auth_token,
+                    container
+                )
             except KeyError:
                 return redirect(logout)
 
@@ -563,8 +536,12 @@ def edit_acl(request, container):
             headers = {'X-Container-Read': readers,
                        'X-Container-Write': writers}
             try:
-                client.post_container(storage_url,
-                    auth_token, container, headers)
+                client.post_container(
+                    storage_url,
+                    auth_token,
+                    container,
+                    headers
+                )
                 message = "ACLs updated."
                 messages.add_message(request, messages.INFO, message)
             except client.ClientException:
@@ -638,6 +615,7 @@ def edit_acl(request, container):
         'base_url': base_url,
     }, context_instance=RequestContext(request))
 
+
 def serve_thumbnail(request, container, objectname):
     '''if request.session.get('username', '') == settings.THUMBNAIL_USER:
         return HttpResponseForbidden()'''
@@ -646,8 +624,12 @@ def serve_thumbnail(request, container, objectname):
     auth_token = request.session.get('auth_token', '')
 
     try:
-        im_headers = client.head_object(storage_url, auth_token, container,
-                                    objectname)
+        im_headers = client.head_object(
+            storage_url,
+            auth_token,
+            container,
+            objectname
+        )
         im_ts = float(im_headers['x-timestamp'])
     except client.ClientException as e:
         logger.error("Cannot head object %s of container %s. Error: %s "
@@ -657,29 +639,40 @@ def serve_thumbnail(request, container, objectname):
     #Is this an alias container? Then use the original account
     #to prevent duplicating
     (account, original_container_name) = get_original_account(
-                                        storage_url, auth_token, container)
+        storage_url,
+        auth_token,
+        container
+    )
     if account is None:
         return HttpResponseServerError()
 
-    '''(thumbnail_storage_url, thumbnail_auth_token) = client.get_auth(
-                                    settings.SWIFT_AUTH_URL, settings.THUMBNAIL_USER, settings.THUMBNAIL_PASS,
-                                    auth_version=settings.SWIFT_AUTH_VERSION)'''
     try:
-        th_headers = client.head_object(storage_url,
-                                        auth_token, account,
-                                        "%s_%s" % (original_container_name,
-                                        objectname))
+        th_headers = client.head_object(
+            storage_url,
+            auth_token,
+            account,
+            "%s_%s" % (original_container_name, objectname)
+        )
         th_ts = float(th_headers['x-timestamp'])
         if th_ts < im_ts:
             create_thumbnail(request, account,
                              container, objectname)
     except client.ClientException:
-        create_thumbnail(request, account, original_container_name,
-                         container, objectname)
+        create_thumbnail(
+            request,
+            account,
+            original_container_name,
+            container,
+            objectname
+        )
     th_name = "%s_%s" % (original_container_name, objectname)
     try:
-        headers, image_data = client.get_object(storage_url,
-                        auth_token, account, th_name)
+        headers, image_data = client.get_object(
+            storage_url,
+            auth_token,
+            account,
+            th_name
+        )
     except client.ClientException as e:
         logger.error("Cannot get object %s of container %s. Error: %s "
                      % (th_name, account, str(e)))
@@ -690,45 +683,45 @@ def serve_thumbnail(request, container, objectname):
 
 @require_POST
 def upload(request):
-    file = upload_receive( request )
+    file = upload_receive(request)
     container = request.session.get('container')
     prefix = request.session.get('prefix')
 
-
-    instance = Photo(file = file)
+    instance = Photo(file=file)
 
     if prefix:
-        instance.path = os.path.join(container,prefix)
+        instance.path = os.path.join(container, prefix)
     else:
         instance.path = os.path.join(container)
 
     instance.save()
 
-    basename = os.path.basename( instance.file.path )
+    basename = os.path.basename(instance.file.path)
 
     file_dict = {
-        'path' : instance.file.path,
-        'name' : basename,
-        'size' : file.size,
+        'path': instance.file.path,
+        'name': basename,
+        'size': file.size,
         'url': swift_url + basename,
         'thumbnailUrl': swift_url + basename,
-        'deleteUrl': reverse('jfu_delete', kwargs = { 'pk': instance.pk }),
+        'deleteUrl': reverse('jfu_delete', kwargs={'pk': instance.pk}),
         'deleteType': 'POST',
     }
 
-    return UploadResponse( request, file_dict )
+    return UploadResponse(request, file_dict)
+
 
 @require_POST
-def upload_delete( request, pk ):
+def upload_delete(request, pk):
     success = True
     try:
-        instance = Photo.objects.get( pk = pk )
-        os.unlink( instance.file.path )
+        instance = Photo.objects.get(pk=pk)
+        os.unlink(instance.file.path)
         instance.delete()
     except Photo.DoesNotExist:
         success = False
 
-    return JFUResponse( request, success )
+    return JFUResponse(request, success)
 
 
 def move_to_folder(request, container, objectname):
@@ -754,15 +747,19 @@ def trashview(request, account):
         try:
             client.put_container(storage_url, auth_token, account)
         except client.ClientException as e:
-            logger.error("Cannot put container %s. Error: %s "
-                     % (account, str(e)))
+            logger.error(
+                "Cannot put container %s. Error: %s " % (account, str(e))
+            )
             messages.add_message(request, messages.ERROR, _("Internal error."))
             return redirect(containerview)
 
     objs = []
     try:
-        x, objects = client.get_container(storage_url,
-                                             auth_token, account)
+        x, objects = client.get_container(
+            storage_url,
+            auth_token,
+            account
+        )
         for o in objects:
             last_modified = o['last_modified']
             size = 0
@@ -784,12 +781,15 @@ def trashview(request, account):
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
 
-    return render_to_response("trashview.html", {
-        'objects': objs,
-        'session': request.session,
-        'account': account,
+    return render_to_response(
+        "trashview.html",
+        {
+            'objects': objs,
+            'session': request.session,
+            'account': account,
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )
 
 
 def delete_trash(request, account, trashname):
@@ -826,9 +826,12 @@ def restore_trash(request, account, trashname):
                             settings.SWIFT_AUTH_URL,
                             settings.TRASH_USER, settings.TRASH_AUTH_KEY)'''
     try:
-        x, zipped_content = client.get_object(storage_url,
-                                                 auth_token,
-                                                 account, trashname)
+        x, zipped_content = client.get_object(
+            storage_url,
+            auth_token,
+            account,
+            trashname
+        )
     except client.ClientException as e:
         logger.error("Cannot retrieve object %s of container %s. Error: %s "
                      % (trashname, account, str(e)))
@@ -874,9 +877,12 @@ def restore_trash_collection(request, account, trashname):
                             settings.SWIFT_AUTH_URL,
                             settings.TRASH_USER, settings.TRASH_AUTH_KEY)'''
     try:
-        x, zipped_content = client.get_object(storage_url,
-                                                 auth_token,
-                                                 account, trashname)
+        x, zipped_content = client.get_object(
+            storage_url,
+            auth_token,
+            account,
+            trashname
+        )
     except client.ClientException as e:
         logger.error("Cannot retrieve object %s of container %s. Error: %s "
                      % (trashname, account, str(e)))
@@ -903,20 +909,28 @@ def restore_trash_collection(request, account, trashname):
     for name in zipf.namelist():
         try:
             prefix = '/'.join(name.split('/')[0:-1])
-            prefixlist = create_pseudofolder_from_prefix(storage_url,
-                                                    auth_token, container,
-                                                    prefix, prefixlist)
+            prefixlist = create_pseudofolder_from_prefix(
+                storage_url,
+                auth_token,
+                container,
+                prefix,
+                prefixlist
+            )
         except client.ClientException as e:
-            logger.error("Cannot create pseudofolder from prefix %s in "
-            "container %s. Error: %s " % (prefix, container, str(e)))
+            logger.error(
+                "Cannot create pseudofolder from prefix %s in "
+                "container %s. Error: %s " % (prefix, container, str(e))
+            )
 
         content = zipf.read(name)
         try:
             client.put_object(storage_url, auth_token, container, name,
                               content)
         except client.ClientException as e:
-            logger.error("Cannot put object %s to container %s. Error: %s "
-                     % (name, container, str(e)))
+            logger.error(
+                "Cannot put object %s to container %s. Error: %s "
+                % (name, container, str(e))
+            )
             messages.add_message(request, messages.ERROR, _("Internal error."))
     zipf.close()
 
@@ -933,14 +947,16 @@ def restore_trash_collection(request, account, trashname):
 
 def move_to_trash(request, container, objectname):
 
-
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
     #Is this an alias container? Then use the original account
     #to prevent duplicating.
     (account, original_container_name) = get_original_account(
-                                        storage_url, auth_token, container)
+        storage_url,
+        auth_token,
+        container
+    )
     if account is None:
         messages.add_message(request, messages.ERROR, _("Internal error."))
         return redirect_to_objectview_after_delete(objectname, container)
@@ -949,8 +965,12 @@ def move_to_trash(request, container, objectname):
                             settings.SWIFT_AUTH_URL,
                             settings.TRASH_USER, settings.TRASH_AUTH_KEY)'''
     try:
-        meta, content = client.get_object(storage_url, auth_token, container,
-                                       objectname)
+        meta, content = client.get_object(
+            storage_url,
+            auth_token,
+            container,
+            objectname
+        )
 
     except client.ClientException as e:
         logger.error("Cannot retrieve object %s of container %s. Error: %s"
@@ -978,9 +998,14 @@ def move_to_trash(request, container, objectname):
     try:
         headers = {'X-Delete-After': settings.TRASH_DURABILITY,
                    'x-object-meta-original-length': meta['content-length']}
-        client.put_object(storage_url, auth_token,
-                   account, trashname, contents=output.getvalue(),
-                   headers=headers)
+        client.put_object(
+            storage_url,
+            auth_token,
+            account,
+            trashname,
+            contents=output.getvalue(),
+            headers=headers
+        )
         output.close()
     except client.ClientException as e:
         logger.error("Cannot put object %s to container %s. Error: %s "
@@ -1017,30 +1042,39 @@ def move_collection_to_trash(request, container, prefix):
     #Is this an alias container? Then use the original account
     #to prevent duplicating.
     (account, original_container_name) = get_original_account(
-                                        storage_url, auth_token, container)
+        storage_url,
+        auth_token,
+        container
+    )
     if account is None:
         messages.add_message(request, messages.ERROR, _("Internal error."))
         return (redirect(containerview) if prefix is None else
-            redirect_to_objectview_after_delete(prefix, container))
+                redirect_to_objectview_after_delete(prefix, container))
 
     '''(storage_url, auth_token) = client.get_auth(
                             settings.SWIFT_AUTH_URL,
                             settings.TRASH_USER, settings.TRASH_AUTH_KEY)'''
 
     try:
-        x, objects = client.get_container(storage_url, auth_token,
-                                         container, prefix=prefix)
+        x, objects = client.get_container(
+            storage_url,
+            auth_token,
+            container,
+            prefix=prefix
+        )
     except client.ClientException as e:
         if prefix is None:
-            logger.error("Cannot retrieve container %s."
-             "Error: %s " % (container, str(e)))
+            logger.error(
+                "Cannot retrieve container %s."
+                "Error: %s " % (container, str(e))
+            )
         else:
             logger.error("Cannot retrieve container %s with prefix %s."
                          "Error: %s " % (container, prefix, str(e)))
 
         messages.add_message(request, messages.ERROR, _("Internal error."))
         return (redirect(containerview) if prefix is None else
-            redirect_to_objectview_after_delete(prefix, container))
+                redirect_to_objectview_after_delete(prefix, container))
 
     x, objs = pseudofolder_object_list(objects, prefix)
 
@@ -1054,11 +1088,12 @@ def move_collection_to_trash(request, container, prefix):
                                               container, name)
             original_length += int(meta.get('content-length', 0))
         except client.ClientException as e:
-            logger.error("Cannot retrieve object %s of container %s. Error: %s"
-                     % (name, container, str(e)))
+            logger.error(
+                "Cannot retrieve object %s of container %s. Error: %s"
+                % (name, container, str(e)))
             messages.add_message(request, messages.ERROR, _("Internal error."))
             return (redirect(containerview) if prefix is None else
-                redirect_to_objectview_after_delete(prefix, container))
+                    redirect_to_objectview_after_delete(prefix, container))
 
         zipf.writestr(name, content)
     zipf.close()
@@ -1073,31 +1108,37 @@ def move_collection_to_trash(request, container, prefix):
                          % (container, str(e)))
             messages.add_message(request, messages.ERROR, _("Internal error."))
             return (redirect(containerview) if prefix is None else
-                redirect_to_objectview_after_delete(prefix, container))
+                    redirect_to_objectview_after_delete(prefix, container))
 
     trashname = "%s/%s" % (original_container_name,
                            '' if prefix is None else prefix)
     try:
         headers = {'X-Delete-After': settings.TRASH_DURABILITY,
                    'x-object-meta-original-length': str(original_length)}
-        client.put_object(storage_url, auth_token,
-                   account, trashname, output.getvalue(),
-                   content_type='application/directory', headers=headers)
+        client.put_object(
+            storage_url,
+            auth_token,
+            account,
+            trashname,
+            output.getvalue(),
+            content_type='application/directory',
+            headers=headers)
         output.close()
     except client.ClientException as e:
         logger.error("Cannot put object %s to container %s. Error: %s "
                      % (trashname, container, str(e)))
         messages.add_message(request, messages.ERROR, _("Internal error."))
         return (redirect(containerview) if prefix is None else
-            redirect_to_objectview_after_delete(prefix, container))
+                redirect_to_objectview_after_delete(prefix, container))
 
     try:
         for o in objects:
             name = o['name']
             client.delete_object(storage_url, auth_token, container, name)
     except client.ClientException as e:
-        logger.error("Cannot delete all objects of container %s."
-                         "Error: %s " % (container, str(e)))
+        logger.error(
+            "Cannot delete all objects of container %s."
+            "Error: %s " % (container, str(e)))
         messages.add_message(request, messages.ERROR, _("Access denied."))
 
         try:
@@ -1107,7 +1148,7 @@ def move_collection_to_trash(request, container, prefix):
             pass
 
         return (redirect(containerview) if prefix is None else
-            redirect_to_objectview_after_delete(prefix, container))
+                redirect_to_objectview_after_delete(prefix, container))
 
     if prefix is None:
         try:
