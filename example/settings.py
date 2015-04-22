@@ -100,6 +100,11 @@ SECRET_KEY = 'DONT_USE_THIS_IN_PRODUCTION'
 STATIC_URL = "/static/"
 STATIC_ROOT = "static"
 
+SWIFTBROWSER_SETTINGS = {
+    'tenants': {
+        'tenant-name': 'tenant-label'
+    }
+}
 
 SWIFT_TENANT_NAME = 'TENANT'
 
