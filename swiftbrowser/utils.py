@@ -25,6 +25,7 @@ from StringIO import StringIO
 
 logger = logging.getLogger(__name__)
 
+
 def get_base_url(request):
     base_url = getattr(settings, 'BASE_URL', None)
     if base_url:
@@ -86,6 +87,7 @@ def pseudofolder_object_list(objects, prefix):
 
     return (pseudofolders, objs)
 
+
 def redirect_to_objectview_after_delete(objectname, container):
     if objectname[-1] == '/':  # deleting a pseudofolder, move one level up
             objectname = objectname[:-1]
@@ -94,11 +96,12 @@ def redirect_to_objectview_after_delete(objectname, container):
         prefix += '/'
     return redirect("objectview", container=container, prefix=prefix)
 
+
 def get_original_account(storage_url, auth_token, container):
     try:
         headers = client.head_container(storage_url, auth_token, container)
         msp = headers.get('x-container-meta-storage-path')
-        if msp == None:
+        if msp is None:
             account = storage_url.split('/')[-1]
             original_container_name = container
         else:
@@ -111,6 +114,7 @@ def get_original_account(storage_url, auth_token, container):
 
     return (account, original_container_name)
 
+
 def create_pseudofolder_from_prefix(storage_url, auth_token, container,
                                     prefix, prefixlist):
     #Recursively creates pseudofolders from a given prefix, if the
@@ -119,20 +123,27 @@ def create_pseudofolder_from_prefix(storage_url, auth_token, container,
     if subprefix == '' or prefix in prefixlist:
         return prefixlist
 
-    prefixlist = create_pseudofolder_from_prefix(storage_url, auth_token,
-                                                 container, subprefix,
-                                                 prefixlist)
+    prefixlist = create_pseudofolder_from_prefix(
+        storage_url,
+        auth_token,
+        container,
+        subprefix,
+        prefixlist)
 
     content_type = 'application/directory'
     obj = None
 
-    client.put_object(storage_url, auth_token,
-                          container, prefix + '/', obj,
-                          content_type=content_type)
+    client.put_object(
+        storage_url,
+        auth_token,
+        container,
+        prefix + '/',
+        obj,
+        content_type=content_type)
     prefixlist.append(prefix)
 
     return prefixlist
-    
+
 
 def get_temp_key(storage_url, auth_token):
     """ Tries to get meta-temp-url key from account.
@@ -171,32 +182,34 @@ def get_temp_url(storage_url, auth_token, container, objectname, expires=600):
     url = '%s%s?temp_url_sig=%s&temp_url_expires=%s' % (
         base, path, sig, expires)
     return url
-    
+
+
 def create_thumbnail(request, account, original_container_name, container,
                      objectname):
     """ Creates a thumbnail for an image. """
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
-    '''(thumbnail_storage_url, thumbnail_auth_token) = client.get_auth(
-                                    settings.SWIFT_AUTH_URL, settings.THUMBNAIL_USER, settings.THUMBNAIL_PASS,
-                                    auth_version=settings.SWIFT_AUTH_VERSION)'''
-
     try:
         client.head_container(storage_url, auth_token,
                               account)
     except client.ClientException:
         try:
-            client.put_container(storage_url, auth_token,
-                             account)
+            client.put_container(
+                storage_url,
+                auth_token,
+                account)
         except client.ClientException as e:
             logger.error("Cannot put container %s. Error: %s "
                          % (container, str(e)))
             return None
     try:
-        headers, content = client.get_object(storage_url, auth_token,
-                                              container, objectname)
-        
+        headers, content = client.get_object(
+            storage_url,
+            auth_token,
+            container,
+            objectname)
+
         im = Image.open(StringIO(content))
         im.thumbnail(settings.THUMBNAIL_SIZE, Image.ANTIALIAS)
         output = StringIO()
@@ -205,9 +218,13 @@ def create_thumbnail(request, account, original_container_name, container,
         content = output.getvalue()
         headers = {'X-Delete-After': settings.THUMBNAIL_DURABILITY}
         try:
-            client.put_object(storage_url, auth_token,
-                    account, "%s_%s" % (original_container_name, objectname),
-                    content, headers=headers)
+            client.put_object(
+                storage_url,
+                auth_token,
+                account,
+                "%s_%s" % (original_container_name, objectname),
+                content,
+                headers=headers)
         except client.ClientException as e:
             logger.error("Cannot create thumbnail for image %s."
                          "Could not put thumbnail to storage: %s"
