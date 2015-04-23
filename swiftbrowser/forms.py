@@ -26,7 +26,9 @@ class LoginForm(forms.Form):
     """ Login form """
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
-    OPTIONS = [(k, v) for k, v in settings.SWIFTBROWSER_SETTINGS["tenants"].items()]
+    OPTIONS = [
+        (k, v)
+        for k, v in settings.SWIFTBROWSER_SETTINGS["tenants"].items()]
     tenant = forms.ChoiceField(
         choices=OPTIONS)
 
