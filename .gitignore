@@ -1,1 +1,6 @@
+#django install files
+build/*
+dist/*
+django_swiftbrowser.egg-info/*
+myproj/*
 *.pyc
