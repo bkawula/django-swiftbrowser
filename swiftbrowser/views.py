@@ -33,7 +33,6 @@ from swiftbrowser.utils import replace_hyphens, prefix_list, \
     get_original_account, create_pseudofolder_from_prefix
 
 import swiftbrowser
-from utils import get_keystone_tenants
 
 logger = logging.getLogger(__name__)
 
@@ -65,7 +64,7 @@ def login(request):
     return render_to_response(
         'login.html',
         {'form': form,
-        'tenants': get_keystone_tenants()},
+        'tenants': {}},
         context_instance=RequestContext(request)
     )
 
