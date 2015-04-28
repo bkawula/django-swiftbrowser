@@ -3,7 +3,7 @@
 #pylint:disable=R0924
 from django import forms
 from django.conf import settings
-from utils import get_keystone_tenants
+#from utils import get_keystone_tenants
 
 
 class CreateContainerForm(forms.Form):
