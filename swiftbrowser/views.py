@@ -31,9 +31,9 @@ from swiftbrowser.utils import replace_hyphens, prefix_list, \
     pseudofolder_object_list, get_temp_key, get_base_url, get_temp_url, \
     create_thumbnail, redirect_to_objectview_after_delete, \
     get_original_account, create_pseudofolder_from_prefix
-import keystoneclient
 
 import swiftbrowser
+from utils import get_keystone_tenants
 
 logger = logging.getLogger(__name__)
 
@@ -61,18 +61,10 @@ def login(request):
         except client.ClientException:
             messages.add_message(request, messages.ERROR, _("Login failed."))
 
-    # Get tenants
-    keystone = keystoneclient.v2_0.Client(
-        username=os.environ["OS_USERNAME"],
-        password=os.environ["OS_PASSWORD"],
-        tenant_name=os.environ["OS_TENANT_NAME"],
-        auth_url=os.environ["OS_AUTH_URL"])
-    print(keystone.tenants.list())
-
     return render_to_response(
         'login.html',
         {'form': form,
-        'tenants': settings.SWIFTBROWSER_SETTINGS["tenants"]},
+        'tenants': get_keystone_tenants()},
         context_instance=RequestContext(request)
     )
 

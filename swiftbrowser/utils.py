@@ -19,6 +19,9 @@ from django.template import RequestContext
 from django.contrib import messages
 from django.conf import settings
 
+import keystoneclient
+
+
 
 from StringIO import StringIO
 
@@ -132,7 +135,7 @@ def create_pseudofolder_from_prefix(storage_url, auth_token, container,
     prefixlist.append(prefix)
 
     return prefixlist
-    
+
 
 def get_temp_key(storage_url, auth_token):
     """ Tries to get meta-temp-url key from account.
@@ -171,7 +174,7 @@ def get_temp_url(storage_url, auth_token, container, objectname, expires=600):
     url = '%s%s?temp_url_sig=%s&temp_url_expires=%s' % (
         base, path, sig, expires)
     return url
-    
+
 def create_thumbnail(request, account, original_container_name, container,
                      objectname):
     """ Creates a thumbnail for an image. """
@@ -196,7 +199,7 @@ def create_thumbnail(request, account, original_container_name, container,
     try:
         headers, content = client.get_object(storage_url, auth_token,
                                               container, objectname)
-        
+
         im = Image.open(StringIO(content))
         im.thumbnail(settings.THUMBNAIL_SIZE, Image.ANTIALIAS)
         output = StringIO()
@@ -220,3 +223,21 @@ def create_thumbnail(request, account, original_container_name, container,
     except IOError as e:
         logger.error("Cannot create thumbnail for image %s."
                      "An IOError occured: %s" % (objectname, e.strerror))
+
+
+def get_keystone_tenants():
+    '''Return a dictionary of tenant names from keystone.'''
+
+    # Get tenants
+    keystone = keystoneclient.v2_0.Client(
+        username=os.environ["OS_USERNAME"],
+        password=os.environ["OS_PASSWORD"],
+        tenant_name=os.environ["OS_TENANT_NAME"],
+        auth_url=os.environ["OS_AUTH_URL"])
+
+    # Future - use tenant.description for front end.
+    # example: tenant.name -> guelph
+    #          tenant.description -> University of Guelph
+    return dict(
+        (tenant.name, tenant.name)
+        for tenant in keystone.tenants.list())

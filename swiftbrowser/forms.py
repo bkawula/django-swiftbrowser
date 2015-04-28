@@ -3,7 +3,7 @@
 #pylint:disable=R0924
 from django import forms
 from django.conf import settings
-
+from utils import get_keystone_tenants
 
 class CreateContainerForm(forms.Form):
     """ Simple form for container creation """
@@ -26,7 +26,7 @@ class LoginForm(forms.Form):
     """ Login form """
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
-    OPTIONS = [(k, v) for k, v in settings.SWIFTBROWSER_SETTINGS["tenants"].items()]
+    OPTIONS = [(k, v) for k, v in get_keystone_tenants().items()]
     tenant = forms.ChoiceField(
         choices=OPTIONS)
 
