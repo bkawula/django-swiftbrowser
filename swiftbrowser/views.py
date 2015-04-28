@@ -175,6 +175,24 @@ def objectview(request, container, prefix=None):
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
+
+    # Check CORS header.
+    if "x-container-meta-access-control-expose-headers" not in meta:
+
+        # Add CORS headers so user can upload to this container.
+        headers = {
+            'X-Container-Meta-Access-Control-Expose-Headers':
+            'Access-Control-Allow-Origin',
+            'X-Container-Meta-Access-Control-Allow-Origin': settings.BASE_URL
+        }
+
+        try:
+            client.put_container(storage_url, auth_token, container, headers)
+
+        except client.ClientException:
+            messages.add_message(request, messages.ERROR, _("Access denied."))
+            return redirect(containerview)
+
     prefixes = prefix_list(prefix)
     pseudofolders, objs = pseudofolder_object_list(objects, prefix)
     base_url = get_base_url(request)
