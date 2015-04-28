@@ -28,10 +28,6 @@
             }
         }
         h3 {text-align:center;}
-        .tenant-dropdown {
-            width: 100%;
-            display:block;
-        }
     </style>
 {% endblock %}
 
@@ -52,14 +48,6 @@
             {% endfor %}
         {% endif %}
         <fieldset>
-            <label>
-                <b>{% trans 'Tenant' %}</b>
-            </label>
-            <select name="tenant" class="tenant-dropdown">
-                {% for tenant, school in tenants.items %}
-                    <option value="{{tenant}}">{{school}}</option>
-                {% endfor %}
-            </select>
             <label>
                 <b>{% trans 'Username' %}</b>
             </label>

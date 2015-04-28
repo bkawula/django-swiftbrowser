@@ -27,8 +27,8 @@ class LoginForm(forms.Form):
     """ Login form """
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
-    OPTIONS = [(k, v) for k, v in get_keystone_tenants().items()]
-    tenant = forms.ChoiceField(choices=OPTIONS)
+    # OPTIONS = [(k, v) for k, v in get_keystone_tenants().items()]
+    # tenant = forms.ChoiceField(choices=OPTIONS)
 
 
 class DocumentForm(forms.Form):

@@ -45,8 +45,8 @@ def login(request):
     if form.is_valid():
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
-        tenant = form.cleaned_data['tenant']
-        username = tenant + ":" + username
+        #tenant = form.cleaned_data['tenant']
+        #username = tenant + ":" + username
         try:
             auth_version = settings.SWIFT_AUTH_VERSION or 1
             (storage_url, auth_token) = client.get_auth(
