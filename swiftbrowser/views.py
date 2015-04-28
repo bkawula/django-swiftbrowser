@@ -58,7 +58,7 @@ def login(request):
 
             return redirect(containerview)
 
-        except client.ClientException:
+        except:
             messages.add_message(request, messages.ERROR, _("Login failed."))
     return render_to_response(
         'login.html',
