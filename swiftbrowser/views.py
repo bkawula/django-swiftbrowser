@@ -33,6 +33,7 @@ from swiftbrowser.utils import replace_hyphens, prefix_list, \
     get_original_account, create_pseudofolder_from_prefix
 
 import swiftbrowser
+from utils import get_keystone_tenants
 
 logger = logging.getLogger(__name__)
 
@@ -60,10 +61,11 @@ def login(request):
 
         except:
             messages.add_message(request, messages.ERROR, _("Login failed."))
+
     return render_to_response(
         'login.html',
         {'form': form,
-        'tenants': settings.SWIFTBROWSER_SETTINGS["tenants"]},
+        'tenants': get_keystone_tenants()},
         context_instance=RequestContext(request)
     )
 
