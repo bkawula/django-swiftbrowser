@@ -635,7 +635,7 @@ def edit_acl(request, container):
         'base_url': base_url,
     }, context_instance=RequestContext(request))
 
-
+"""
 def serve_thumbnail(request, container, objectname):
     '''if request.session.get('username', '') == settings.THUMBNAIL_USER:
         return HttpResponseForbidden()'''
@@ -699,7 +699,7 @@ def serve_thumbnail(request, container, objectname):
         return HttpResponseServerError()
 
     return HttpResponse(image_data, mimetype=headers['content-type'])
-
+"""
 
 @require_POST
 def upload(request):
