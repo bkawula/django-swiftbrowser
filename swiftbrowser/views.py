@@ -214,12 +214,13 @@ def objectview(request, container, prefix=None):
     )
     signature = hmac.new(key, hmac_body, sha1).hexdigest()
 
-    if not key:
-        messages.add_message(request, messages.ERROR, _("Access denied."))
-        if prefix:
-            return redirect(objectview, container=container, prefix=prefix)
-        else:
-            return redirect(objectview, container=container)
+    # if not key:
+    #     messages.add_message(request, messages.ERROR, _("Access denied."))
+    #     if prefix:
+    #         return redirect(containerview, container=container,
+        #prefix=prefix)
+    #     else:
+    #         return redirect(containerview, container=container)
 
     if [x for x in read_acl if x in required_acl]:
         public = True
