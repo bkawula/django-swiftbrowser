@@ -175,8 +175,10 @@ def objectview(request, container, prefix=None):
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
 
-    # Check CORS header.
-    if "x-container-meta-access-control-expose-headers" not in meta:
+    # Check CORS header - BASE_URL should be in there
+    if meta.get(
+        'x-container-meta-access-control-allow-origin'
+    ) != settings.BASE_URL:
 
         # Add CORS headers so user can upload to this container.
         headers = {
