@@ -30,7 +30,7 @@ from swiftbrowser.forms import CreateContainerForm, PseudoFolderForm, \
 from swiftbrowser.utils import replace_hyphens, prefix_list, \
     pseudofolder_object_list, get_temp_key, get_base_url, get_temp_url, \
     create_thumbnail, redirect_to_objectview_after_delete, \
-    get_original_account, create_pseudofolder_from_prefix
+    get_original_account, create_pseudofolder_from_prefix, delete_given_object
 
 import swiftbrowser
 
@@ -370,12 +370,25 @@ def download_collection(request, container, prefix=None, non_recursive=False):
 def delete_object(request, container, objectname):
     """ Deletes an object """
 
+    delete_given_object(request, container, objectname)
+    if objectname[-1] == '/':  # deleting a pseudofolder, move one level up
+        objectname = objectname[:-1]
+    prefix = '/'.join(objectname.split('/')[:-1])
+    if prefix:
+        prefix += '/'
+    return redirect(objectview, container=container, prefix=prefix)
+
+
+def delete_folder(request, container, objectname):
+    """ Deletes a pseudo folder. """
+
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
     try:
         client.delete_object(storage_url, auth_token, container, objectname)
         messages.add_message(request, messages.INFO, _("Object deleted."))
-    except client.ClientException:
+    except client.ClientException, e:
+        print(e)
         messages.add_message(request, messages.ERROR, _("Access denied."))
     if objectname[-1] == '/':  # deleting a pseudofolder, move one level up
         objectname = objectname[:-1]

@@ -20,6 +20,8 @@ from django.contrib import messages
 from django.conf import settings
 
 
+from django.utils.translation import ugettext as _
+
 from StringIO import StringIO
 
 
@@ -237,3 +239,15 @@ def create_thumbnail(request, account, original_container_name, container,
     except IOError as e:
         logger.error("Cannot create thumbnail for image %s."
                      "An IOError occured: %s" % (objectname, e.strerror))
+
+
+def delete_given_object(request, container, objectname):
+    '''Delete the given object. '''
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    try:
+        client.delete_object(storage_url, auth_token, container, objectname)
+        messages.add_message(request, messages.INFO, _("Object deleted."))
+    except client.ClientException, e:
+        messages.add_message(request, messages.ERROR, _("Access denied."))
