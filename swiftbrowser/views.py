@@ -58,13 +58,18 @@ def login(request):
 
             return redirect(containerview)
 
+        # Specify why the login failed.
+        except client.ClientException, e:
+            messages.error(request, _("Login failed: {0}".format(
+                e)))
+
+        # Generic login failure message.
         except:
-            messages.add_message(request, messages.ERROR, _("Login failed."))
+            messages.error(request, _("Login failed."))
 
     return render_to_response(
         'login.html',
-        {'form': form,
-        'tenants': {}},
+        {'form': form},
         context_instance=RequestContext(request)
     )
 
