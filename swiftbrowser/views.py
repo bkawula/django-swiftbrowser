@@ -389,6 +389,7 @@ def delete_folder(request, container, objectname):
 
     try:
         delete_given_folder(request, container, objectname)
+        messages.add_message(request, messages.INFO, _("Folder deleted."))
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(objectview, container=container)
