@@ -67,6 +67,9 @@ def login(request):
         except:
             messages.error(request, _("Login failed."))
 
+    else:
+        messages.error(request, _("Login failed."))
+
     return render_to_response(
         'login.html',
         {'form': form},
@@ -707,6 +710,7 @@ def serve_thumbnail(request, container, objectname):
 
     return HttpResponse(image_data, mimetype=headers['content-type'])
 """
+
 
 @require_POST
 def upload(request):
