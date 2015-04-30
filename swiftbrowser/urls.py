@@ -8,7 +8,7 @@ from swiftbrowser.views import containerview, objectview, download,\
     edit_acl, upload_delete, objecttable, \
     move_to_trash, trashview, delete_trash,\
     restore_trash, move_collection_to_trash, restore_trash_collection,\
-    download_collection
+    download_collection, delete_folder
 
 urlpatterns = patterns(
     'swiftbrowser.views',
@@ -29,6 +29,9 @@ urlpatterns = patterns(
         name="download"),
     url(r'^delete/(?P<container>.+?)/(?P<objectname>.+?)$', delete_object,
         name="delete_object"),
+    url(r'^delete_folder/(?P<container>.+?)/(?P<objectname>.+?)$',
+        delete_folder,
+        name="delete_folder"),
     url(r'^objects/(?P<container>.+?)/(?P<prefix>(.+)+)?$', objectview,
         name="objectview"),
     url(r'^object_table/', objecttable, name="objecttable"),

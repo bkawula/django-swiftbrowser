@@ -20,6 +20,8 @@ from django.contrib import messages
 from django.conf import settings
 
 
+from django.utils.translation import ugettext as _
+
 from StringIO import StringIO
 
 
@@ -237,3 +239,34 @@ def create_thumbnail(request, account, original_container_name, container,
     except IOError as e:
         logger.error("Cannot create thumbnail for image %s."
                      "An IOError occured: %s" % (objectname, e.strerror))
+
+
+def delete_given_object(request, container, objectname):
+    '''Delete the given object. '''
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    client.delete_object(storage_url, auth_token, container, objectname)
+
+
+def delete_given_folder(request, container, foldername):
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    # Get all objects within folder.
+    meta, objects = client.get_container(
+        storage_url, auth_token, container, delimiter='/', prefix=foldername)
+
+    # Recursive call to delete subfolders.
+    pseudofolders, objs = pseudofolder_object_list(objects, foldername)
+    for folder in pseudofolders:
+        delete_given_folder(request, container, folder[0])
+
+    # Delete all objects.
+    for obj in objs:
+        delete_given_object(request, container, obj["name"])
+
+    # Delete the folder itself.
+    delete_given_object(request, container, foldername)
