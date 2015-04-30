@@ -40,35 +40,38 @@ logger = logging.getLogger(__name__)
 def login(request):
     """ Tries to login user and sets session data """
     request.session.flush()
-    form = LoginForm(request.POST or None)
-    if form.is_valid():
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        #tenant = form.cleaned_data['tenant']
-        #username = tenant + ":" + username
-        try:
-            auth_version = settings.SWIFT_AUTH_VERSION or 1
-            (storage_url, auth_token) = client.get_auth(
-                settings.SWIFT_AUTH_URL, username, password,
-                auth_version=auth_version)
-            request.session['auth_token'] = auth_token
-            request.session['storage_url'] = storage_url
-            request.session['username'] = username
-            request.session['user'] = username
 
-            return redirect(containerview)
+    #Process the form if there is a POST request.
+    if (request.POST):
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            try:
+                auth_version = settings.SWIFT_AUTH_VERSION or 1
+                (storage_url, auth_token) = client.get_auth(
+                    settings.SWIFT_AUTH_URL, username, password,
+                    auth_version=auth_version)
+                request.session['auth_token'] = auth_token
+                request.session['storage_url'] = storage_url
+                request.session['username'] = username
+                request.session['user'] = username
 
-        # Specify why the login failed.
-        except client.ClientException, e:
-            messages.error(request, _("Login failed: {0}".format(
-                e)))
+                return redirect(containerview)
 
-        # Generic login failure message.
-        except:
+            # Specify why the login failed.
+            except client.ClientException, e:
+                messages.error(request, _("Login failed: {0}".format(
+                    e)))
+
+            # Generic login failure message.
+            except:
+                messages.error(request, _("Login failed."))
+        # Generic login failure on invalid forms.
+        else:
             messages.error(request, _("Login failed."))
-
     else:
-        messages.error(request, _("Login failed."))
+        form = LoginForm(None)
 
     return render_to_response(
         'login.html',
