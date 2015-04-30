@@ -5,7 +5,7 @@ from django.conf.urls import patterns, include, url
 from swiftbrowser.views import containerview, objectview, download,\
     delete_object, login, tempurl, upload, create_pseudofolder,\
     create_container, delete_container, public_objectview, toggle_public,\
-    edit_acl, upload_delete, objecttable, serve_thumbnail, \
+    edit_acl, upload_delete, objecttable, \
     move_to_trash, trashview, delete_trash,\
     restore_trash, move_collection_to_trash, restore_trash_collection,\
     download_collection
@@ -35,10 +35,10 @@ urlpatterns = patterns(
     url(r'upload/', upload, name='jfu_upload'),
     url(r'^acls/(?P<container>.+?)/$', edit_acl, name="edit_acl"),
     url(r'^delete/(?P<pk>.+)$', upload_delete, name='jfu_delete'),
-    url(
-        r'^thumbnails/(?P<container>.+?)/(?P<objectname>.+?)$',
-        serve_thumbnail,
-        name="serve_thumbnail"),
+    # url(
+    #    r'^thumbnails/(?P<container>.+?)/(?P<objectname>.+?)$',
+    #    serve_thumbnail,
+    #    name="serve_thumbnail"),
     url(
         r'^move_to_trash/(?P<container>.+?)/(?P<objectname>.+?)$',
         move_to_trash,

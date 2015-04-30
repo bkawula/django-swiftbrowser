@@ -71,11 +71,15 @@
 
                 {% for key in objects %}
                     <tr draggable="true">
-                        <td class="hidden-phone">
+                        {% comment %}
+						{% <td class="hidden-phone">
                             {% ifequal  key.content_type|slice:":6" "image/" %}
                                 <img src="{% url "serve_thumbnail"  container=container objectname=key.name %}"width="32" height="32">
                             {% endifequal %}
-                        </td>
+                        </td> %}
+						{% endcomment %}
+						<td class="hidden-phone">
+						</td>
                         <td>
                             <a href="{% url "download" container=container objectname=key.name %}" class="block">{{key.name|lastpart}}</a>
                         </td>
