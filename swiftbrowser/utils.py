@@ -247,11 +247,26 @@ def delete_given_object(request, container, objectname):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
-    try:
-        client.delete_object(storage_url, auth_token, container, objectname)
-        messages.add_message(request, messages.INFO, _("Object deleted."))
-    except client.ClientException, e:
-        messages.add_message(request, messages.ERROR, _("Access denied."))
+    client.delete_object(storage_url, auth_token, container, objectname)
 
-def delete_given_fodler(request, container, foldername):
-    pass
+
+def delete_given_folder(request, container, foldername):
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    # Get all objects within folder.
+    meta, objects = client.get_container(
+        storage_url, auth_token, container, delimiter='/', prefix=foldername)
+
+    # Recursive call to delete subfolders.
+    pseudofolders, objs = pseudofolder_object_list(objects, foldername)
+    for folder in pseudofolders:
+        delete_given_folder(request, container, folder[0])
+
+    # Delete all objects.
+    for obj in objs:
+        delete_given_object(request, container, obj["name"])
+
+    # Delete the folder itself.
+    delete_given_object(request, container, foldername)
