@@ -10,14 +10,6 @@
             <th style="width: 12.5em;" class="hidden-phone">{% trans 'Created' %}</th>
             <th style="width: 6em;" class="hidden-phone">{% trans 'Size' %}</th>
             <th style="width: 1em;">
-
-                {% if prefix %}
-                    <a href="{% url "create_pseudofolder" container=container prefix=prefix %}" class="btn btn-success" role="button">
-                {% else %}
-                    <a href="{% url "create_pseudofolder" container=container %}" class="btn btn-success" role="button">
-                {% endif %}
-                        <span class="glyphicon glyphicon-plus"></span>
-                    </a>
             </th>
         </tr>
         </thead>
@@ -79,6 +71,8 @@
                         </td> %}
 						{% endcomment %}
 						<td class="hidden-phone">
+                            <span class="glyphicon glyphicon-file">
+                            </span>
 						</td>
                         <td>
                             <a href="{% url "download" container=container objectname=key.name %}" class="block">{{key.name|lastpart}}</a>

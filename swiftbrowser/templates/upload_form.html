@@ -10,6 +10,7 @@ Bootstrap CSS Toolkit styles
     rel="stylesheet" 
     href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
 >
+
 {% endblock %}
 
 {% block CSS_BLUEIMP_GALLERY %}
@@ -65,6 +66,7 @@ Bootstrap CSS Toolkit styles
 {% comment %}
  The file upload form used as target for the file upload widget 
 {% endcomment %}
+
 <form 
     id="fileupload" action="{{ swift_url }}" 
     method="POST" enctype="multipart/form-data">
@@ -76,15 +78,60 @@ Bootstrap CSS Toolkit styles
         <input type="hidden" name="redirect" value="{{ request.path }}">
     </noscript>
 
-    {% block UPLOAD_FORM_BUTTON_BAR %}
-    <div class="row fileupload-buttonbar">
+  
+
     {% comment %}
+     The loading indicator is shown during file processing 
+    {% endcomment %}
+	<div class="modal-body">
+    <div id="preloadmsg">Choose files to upload to your OLRC container. You can select more than one file at a time. You can also drag and drop files anywhere on this page to start uploading.</div>
+	{% block UPLOAD_FORM_LINDICATOR %}
+    <div class="fileupload-loading"></div>
+    <br>
+    {% endblock %}
+
+    {% block UPLOAD_FORM_LISTING %}
+    {% comment %}
+     The table listing the files available for upload/download 
+    {% endcomment %}
+    <table role="presentation" class="table table-striped">
+        <tbody class="files"></tbody>
+    </table>
+    {% endblock %}
+	</div>
+    <div class="modal-footer">	        			
+    {% block UPLOAD_FORM_PROGRESS_BAR %}
+    {% comment %}
+     The global progress information 
+    {% endcomment %}
+    <div class="fileupload-progress fade">
+        {% comment %}
+         The global progress bar 
+        {% endcomment %}
+        <div 
+            class="progress progress-striped active" 
+            role="progressbar" 
+            aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar progress-bar-success" style="width:0%;">
+            </div>
+        </div>
+        {% comment %}
+         The extended global progress information 
+        {% endcomment %}
+        <div class="progress-extended">&nbsp;</div>
+		
+    </div>
+
+    {% endblock %}
+    {% block UPLOAD_FORM_BUTTON_BAR %}
+    <span class="fileupload-buttonbar">
+    
+	{% comment %}
      The fileupload-buttonbar contains buttons to add/delete files and
      start/cancel the upload 
     {% endcomment %}
 
-        <div class="col-lg-7">
-
+      
             {% comment %}
              The fileinput-button span is used to style the file input field as button 
             {% endcomment %}
@@ -124,52 +171,13 @@ Bootstrap CSS Toolkit styles
             </button>
             {% endblock %}
 
-        </div>
+       
 
-        {% block UPLOAD_FORM_PROGRESS_BAR %}
-        {% comment %}
-         The global progress information 
-        {% endcomment %}
-        <div class="col-lg-5 fileupload-progress fade">
-            {% comment %}
-             The global progress bar 
-            {% endcomment %}
-            <div 
-                class="progress progress-striped active" 
-                role="progressbar" 
-                aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-success" style="width:0%;">
-                </div>
-            </div>
-            {% comment %}
-             The extended global progress information 
-            {% endcomment %}
-            <div class="progress-extended">&nbsp;</div>
-			
-        </div>
-        {% endblock %}
-
+    </span>
+    {% endblock %}
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+     
     </div>
-    {% endblock %}
-
-    {% comment %}
-     The loading indicator is shown during file processing 
-    {% endcomment %}
-
-    {% block UPLOAD_FORM_LINDICATOR %}
-    <div class="fileupload-loading"></div>
-    <br>
-    {% endblock %}
-
-    {% block UPLOAD_FORM_LISTING %}
-    {% comment %}
-     The table listing the files available for upload/download 
-    {% endcomment %}
-    <table role="presentation" class="table table-striped">
-        <tbody class="files"></tbody>
-    </table>
-    {% endblock %}
-
 </form>
 {% endblock %}
 
@@ -251,6 +259,7 @@ Bootstrap CSS Toolkit styles
  The jQuery UI widget factory, can be omitted if jQuery UI is already included 
 {% endcomment %}
 <script src="{{ STATIC_URL }}js/vendor/jquery.ui.widget.js"></script>
+
 {% endblock %}
 
 {% block JS_TEMPLATES_PLUGIN %}
@@ -348,7 +357,9 @@ The File Upload validation plugin
 {% endcomment %}
 
 <script type="text/javascript">
-    $( function() {
+	var filesuploaded = 0;
+	var filesprocessed = 0;
+	$( function() {
         'use strict';
 
         {% comment %}
@@ -384,9 +395,12 @@ The File Upload validation plugin
             {% endblock %}
 
         });
+		$('#fileupload').bind('fileuploadprocessstart', function (e) {$('#preloadmsg').hide();})
+		$('#fileupload').bind('fileuploadprocessdone', function (e, data) {filesprocessed = filesprocessed + 1;});
+		
         {% endblock %}
 
-		
+		$('#fileupload').bind('fileuploadfinished', function (e, data) {filesuploaded = filesuploaded + 1;closeForm();})
 		    
 	
         {% block JS_FORM %}
@@ -409,15 +423,28 @@ The File Upload validation plugin
 		 
 			$(this).removeClass('fileupload-processing');
 			
+			
         }).done(function (result) {
-            $(this).fileupload('option', 'done')
+           	
+		    $(this).fileupload('option', 'done')
                 .call(this, $.Event('done'), {result: result});
 				
         });
 		
+		
+		
+			
+			
+	
         {% endblock %}
 
     });
+	function closeForm() {
+		if (filesprocessed == filesuploaded) {
+			setTimeout(function(){ $('#fileForm').modal('hide'); }, 250);
+			
+}
+}
 </script>
 
 {% block JS_XDR_TRANSPORT %}
