@@ -44,6 +44,9 @@ code {white-space: normal !important;}
 .login-form .btn {
 	width:100%;
 }
+.login-alert {
+	color:#ffffff;
+}
 .modal-dialog {
 	width:90%;
 }
