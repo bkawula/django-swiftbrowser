@@ -278,11 +278,15 @@ def session_valid(fn):
     view. Redirect to login when session is not available in the request.'''
 
     def wrapper(*args, **kw):
-        if args[0].session.get('storage_url') is not None:
+
+        storage_url = args[0].session.get('storage_url', '')
+        auth_token = args[0].session.get('auth_token', '')
+
+        try:
+            client.head_account(storage_url, auth_token)
             return fn(*args, **kw)
-        else:
+        except:
             messages.error(args[0], _("Session expired."))
-            print("re")
-            return redirect(swiftbrowser.views.login)
+        return redirect(swiftbrowser.views.login)
 
     return wrapper
