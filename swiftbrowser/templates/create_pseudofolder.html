@@ -10,12 +10,12 @@
 
         <ul class="breadcrumb">
             <li><a href="{% url "containerview" %}">Containers</a></li> 
-            <li><span class="divider">/</span>
+            <li>
                 <a class="u" href="{% url "objectview" container=container %}">{{container}}</a></li>
 
             {% for prefix in prefixes %}
                 <li>
-                    <span class="divider">/</span>
+                    
                     <a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
                 </li>
             {% endfor %}

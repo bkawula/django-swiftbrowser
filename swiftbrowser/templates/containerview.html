@@ -3,12 +3,20 @@
 {% load dateconv %}
 
 {% block content %}
-    <div class="container">
-    {% include "messages.html" %}
-        <ul class="breadcrumb">
-            <li><a href="{% url "containerview" %}">Containers</a></li>
-       </ul> 
-    
+ <div class="container">
+ <div class="row">  
+	   <div class="col-xs-12 col-sm-8">
+	   		<ul class="breadcrumb">
+	               <li><a href="{% url "containerview" %}">Containers</a></li> 
+	          </ul>
+	   </div>
+	   <div class="col-xs-12 col-sm-4 action-btns">
+       <a href="{% url "create_container" %}" class="btn btn-primary" role="button">
+           Create Container
+       </a>
+	   </div>
+</div>
+	   {% include "messages.html" %}
         <table class="table table-striped">
         
         <thead>
@@ -18,11 +26,6 @@
                 <th style="width: 1em;" class="hidden-phone">{% trans 'Objects' %}</th>
                 <th style="width: 5em;" class="hidden-phone">{% trans 'Size' %}</th>
                 <th style="width: 1em;">
-
-                <a href="{% url "create_container" %}" class="btn btn-success">
-                     <span class="glyphicon glyphicon-plus"></span>
-                </a>
-
                 </th>
             </tr>
         </thead>
@@ -40,11 +43,15 @@
 					    <span class="caret"></span>
 					  </button>
                     <ul class="dropdown-menu">
-                        {% url "edit_acl" container=container.name as edit_acl_url %}
+                        {% comment %}
+						{%
+						{% url "edit_acl" container=container.name as edit_acl_url %}
                         {% if edit_acl_url %}
                             <li><a href="{{ edit_acl_url }}"><span class="glyphicon glyphicon-folder-user"></span> {% trans 'Sharing' %}</a></li>
                             <li class="divider" />
                         {% endif %}
+						%}
+						{% endcomment %}
 						<li>
 						    <a href="{% url "download_collection" container=container.name %}">
 						        <span class="glyphicon glyphicon-download"></span> {% trans 'Download' %}
@@ -61,10 +68,12 @@
                                 <span class="glyphicon glyphicon-fire"></span> {% trans 'Delete container' %}
                             </a>
                         </li>
-						<li>
-						                       	<a href="{% url "move_collection_to_trash" container=container.name  %}"  ><span class="glyphicon glyphicon-trash"></span></i> {% trans 'Move to trash' %}
-						                        	</a>
-						                        </li>
+						{% comment %}
+						{% <li>
+						<a href="{% url "move_collection_to_trash" container=container.name  %}"  ><span class="glyphicon glyphicon-trash"></span></i> {% trans 'Move to trash' %}
+						</a>
+						</li>%}
+						{% endcomment %}
 						
                     </ul>
                 </div>

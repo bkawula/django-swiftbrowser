@@ -30,9 +30,10 @@
                         <td class="hidden-phone"></td>
                         <td>
                            <div class="dropdown pull-right">
-                                <a class="dropdown-toggle btn btn-mini btn-danger" data-toggle="dropdown">
-                                    <span class="glyphicon glyphicon-chevron-down"></span>
-                                </a>
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+								
                                 <ul class="dropdown-menu">
                                     <li>
                                         <a href="{% url "download_collection" container=container prefix=folder.0 %}">
@@ -50,11 +51,14 @@
                                             <span class="glyphicon glyphicon-fire"></span> {% trans 'Delete folder' %}
                                         </a>
                                     </li>
-                                    <li>
+                                    {% comment %}
+									{%
+									<li>
                                         <a href="{% url "move_collection_to_trash" container=container prefix=folder.1  %}">
                                             <span class="glyphicon glyphicon-trash"></span> {% trans 'Move to trash' %}
                                         </a>
-                                    </li>
+                                    </li>%}
+									{% endcomment %}
                                 </ul>
                             </div>
                         </td>
@@ -96,11 +100,13 @@
                                             <span class="glyphicon glyphicon-fire"></span> {% trans 'Delete Object' %}
                                         </a>
                                     </li>
-                                    <li>
+                                    {% comment %}
+									{% <li>
                                         <a href="{% url "move_to_trash" container=container objectname=key.name  %}">
                                             <span class="glyphicon glyphicon-trash"></span> {% trans 'Move to trash' %}
                                         </a>
-                                    </li>
+                                    </li> %}
+									{% endcomment %}
                                 </ul>
                             </div>
                         </td>
@@ -118,7 +124,8 @@
                 </tr>
             </tbody>
         {% endif %}
-        <tfoot>
+        {% comment %}
+		{% <tfoot>
             <tr>
                 <td>
                     <a href="{% url "trashview" account=account %}" role="button" class="btn btn-mini">
@@ -127,6 +134,7 @@
                 </td>
                 <td colspan="5"></td>
             </tr>
-        </tfoot>
+        </tfoot> %}
+		{% endcomment %}
     </table>
 {% endblock %}
