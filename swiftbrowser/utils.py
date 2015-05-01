@@ -23,7 +23,8 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from StringIO import StringIO
-
+from swiftbrowser.forms import LoginForm
+import swiftbrowser.views
 
 logger = logging.getLogger(__name__)
 
@@ -270,3 +271,18 @@ def delete_given_folder(request, container, foldername):
 
     # Delete the folder itself.
     delete_given_object(request, container, foldername)
+
+
+def session_valid(fn):
+    '''Decorator class to verify session has not expired before displaying a
+    view. Redirect to login when session is not available in the request.'''
+
+    def wrapper(*args, **kw):
+        if args[0].session.get('storage_url') is not None:
+            return fn(*args, **kw)
+        else:
+            messages.error(args[0], _("Session expired."))
+            print("re")
+            return redirect(swiftbrowser.views.login)
+
+    return wrapper
