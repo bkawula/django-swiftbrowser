@@ -859,7 +859,7 @@ def trashview(request, account):
         context_instance=RequestContext(request)
     )
 
-
+@session_valid
 def delete_trash(request, account, trashname):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
@@ -882,6 +882,7 @@ def delete_trash(request, account, trashname):
     return redirect(trashview, account=account)
 
 
+@session_valid
 def restore_trash(request, account, trashname):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
@@ -933,6 +934,7 @@ def restore_trash(request, account, trashname):
     return redirect(trashview, account=account)
 
 
+@session_valid
 def restore_trash_collection(request, account, trashname):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
@@ -1013,6 +1015,7 @@ def restore_trash_collection(request, account, trashname):
     return redirect(trashview, account=account)
 
 
+@session_valid
 def move_to_trash(request, container, objectname):
 
     storage_url = request.session.get('storage_url', '')
@@ -1100,6 +1103,7 @@ def move_to_trash(request, container, objectname):
     return redirect_to_objectview_after_delete(objectname, container)
 
 
+@session_valid
 def move_collection_to_trash(request, container, prefix):
     if request.session['username'] == settings.TRASH_USER:
         return HttpResponseForbidden()
