@@ -166,12 +166,12 @@ Bootstrap CSS Toolkit styles
                 <span>Cancel upload</span>
             </button>
             {% endblock %}
-
+			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
        
 
     </span>
     {% endblock %}
-	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	
      
     </div>
 </form>
@@ -197,7 +197,7 @@ Bootstrap CSS Toolkit styles
             <span class="preview"></span>
         </td>
         <td>
-            <p class="filename">{{ JQ_OPEN }}=path {{ JQ_CLOSE }}</p>
+            <p class="filename">{{ JQ_OPEN }}=p {{ JQ_CLOSE }}</p>
 			<p class="name">{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</p>
             <strong class="error text-danger"></strong>
         </td>
@@ -387,7 +387,8 @@ The File Upload validation plugin
 
 
             {% block JS_OPTS %}
-            sequentialUploads: true
+            sequentialUploads: true,
+			recalculateProgress: false
             {% endblock %}
 
         });

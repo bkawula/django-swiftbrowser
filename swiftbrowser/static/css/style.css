@@ -55,7 +55,7 @@ code {white-space: normal !important;}
 }
 .progress {margin-bottom:10px;}
 .progress-extended {margin-bottom:10px;}
-
+.fileupload-buttonbar .btn {margin-bottom:0px !important;}
 @media (max-width: 992px) {
 	.head-logo {
 		margin-left:15px;
