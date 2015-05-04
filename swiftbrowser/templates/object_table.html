@@ -54,7 +54,22 @@
                                     </li>
                                     <li class="divider" />
                                     <li>
-                                        <a href="{% url "delete_folder" container=container objectname=folder.1 %}" onclick="return confirm('{% trans 'Delete folder' %} {{folder.1}}?');" >
+                                        <script>
+                                            function double_confirm() {
+                                                var confirm1 = confirm('{% trans 'Delete folder' %} {{folder.1}}?');
+                                                if (confirm1) {
+                                                    var confirm2 = confirm('Deleting this folder will delete everything in the folder. Are you sure?');
+                                                    if (confirm2) {
+                                                        return true;
+                                                    } else {
+                                                        return false;
+                                                    }
+                                                } else {
+                                                    return false;
+                                                }
+                                            }
+                                        </script>
+                                        <a href="{% url "delete_folder" container=container objectname=folder.1 %}" onclick="return double_confirm()" >
                                             <span class="glyphicon glyphicon-fire"></span> {% trans 'Delete folder' %}
                                         </a>
                                     </li>
