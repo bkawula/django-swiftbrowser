@@ -5,6 +5,7 @@ import os
 import time
 import urlparse
 import hmac
+import re
 from hashlib import sha1
 import logging
 import zipfile
@@ -496,6 +497,9 @@ def tempurl(request, container, objectname):
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(objectview, container=container)
 
+    # Convert the URL to show the domain and not the IP
+    url = re.sub('.*(\d{1,3}\.){3}\d{1,3}', settings.BASE_URL, url)
+
     prefix = '/'.join(objectname.split('/')[:-1])
     if prefix:
         prefix += '/'
@@ -793,5 +797,3 @@ def upload_delete(request, pk):
 
 def move_to_folder(request, container, objectname):
     return
-
-
