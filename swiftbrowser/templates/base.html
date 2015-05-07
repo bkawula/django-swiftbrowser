@@ -1,42 +1,24 @@
 {% extends "core.html" %}
 {% load i18n %}
 {% load staticfiles %}
-    {% block head %}
-	{% if session.username %}
-	<header class="navbar navbar-static-top bs-docs-nav" id="top">
-	   
-	  <div class="container">
-	    <div role="navigation">
-	      <a href="{% url "containerview" %}" class="navbar-brand"><img class="head-logo" src="{% static "img/olrc-logo-small.png" %}" alt="OLRC Browser"/></a>	   
-	      <div class="account-btns">
-		 
-		  <span class="username"><strong>{{session.username}}</strong></span>
-          <a class="btn btn-primary log-out" role="button" href="{% url "login" %}">
-          <span class="glyphicon glyphicon-arrow-left"></span>
-          {% trans 'Logout' %}
-          </a>
-		 
-	  	</div> 
-          </div>   
-	  </div>
-	 
-	</header>
-	  {% else %}
-      {% endif %}
-
-
-        <noscript>
-            <div class="container">
-                    <div class="alert alert-error">
-                        <button type="button" class="close" data-dismiss="alert">
-                            &times;
-                        </button>
-                        <strong>{% trans 'Warning!' %}</strong>
-                        {% trans 'You need JavaScript enabled to use all functions on this site.' %}
-                    </div>
-            </div>
-        </noscript>
-    {% endblock %}
-
-    {% block content %}
-    {% endblock %}
+{% block head %}
+{% if session.username %}
+<div class="row" role="navigation">	
+	<div class="small-3 columns">
+		<a href="{% url "containerview" %}" ><img class="service-logo" src="{% static "img/olrc-logo-small.png" %}" alt="OLRC Browser"/></a>	   
+	</div>   
+	<div class="small-9 columns">
+		<div class="account-btns">
+			<span><strong>{{session.username}}</strong></span>
+			<a class="btn btn-primary log-out" role="button" href="{% url "login" %}">
+			<span ></span>
+			{% trans 'Logout' %}
+			</a>
+		</div> 
+	</div>
+</div>
+{% else %}
+{% endif %}
+{% endblock %}
+{% block content %}
+{% endblock %}

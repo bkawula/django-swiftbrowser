@@ -21,7 +21,7 @@ setup(
         'django>=1.5',
         'python-swiftclient',
         'django-jfu',
-        'PIL'
+        'PIL',
     ],
     zip_safe=False,
     classifiers=[

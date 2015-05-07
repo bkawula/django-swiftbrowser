@@ -1,27 +1,16 @@
-{% extends "base.html" %}
+
 {% load l10n %}
 {% load i18n %}
 {% load dateconv %}
 {% load lastpart %}
 {% block content %}
 
-<div class="container">
+<div>
 {% include "messages.html" %}
 
-        <ul class="breadcrumb">
-            <li><a href="{% url "containerview" %}">Containers</a></li> 
-            <li>
-                <a class="u" href="{% url "objectview" container=container %}">{{container}}</a></li>
 
-            {% for prefix in prefixes %}
-                <li>
-                    
-                    <a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
-                </li>
-            {% endfor %}
-       </ul> 
 
-<form method="POST" class="form-horizontal">
+<form method="POST" class="form-horizontal" action="{% url "create_pseudofolder" container=container prefix=prefix %}">
     <fieldset>
     <legend>{% trans 'Create a new pseudofolder' %}</legend>
     {% csrf_token %}

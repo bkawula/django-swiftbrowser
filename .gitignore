@@ -4,3 +4,9 @@ dist/*
 django_swiftbrowser.egg-info/*
 myproj/*
 *.pyc
+swiftbrowser/static/glyphicons/css/glyphicons.css
+swiftbrowser/static/glyphicons/fonts/glyphicons-regular.eot
+swiftbrowser/static/glyphicons/fonts/glyphicons-regular.svg
+swiftbrowser/static/glyphicons/fonts/glyphicons-regular.ttf
+swiftbrowser/static/glyphicons/fonts/glyphicons-regular.woff
+swiftbrowser/static/glyphicons/fonts/glyphicons-regular.woff2

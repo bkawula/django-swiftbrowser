@@ -4,104 +4,89 @@
 {% load dateconv %}
 {% load lastpart %}
 {% block content %}
-<div id='containerdiv' class="container">
-{% include "messages.html" %}
+<div id='objectview'>
 <div class="row">
-
-<div class="col-xs-12 col-sm-8">
-		<ul class="breadcrumb">
-            <li><a href="{% url "containerview" %}">Containers</a></li> 
-            <li>
-                <a class="u" href="{% url "objectview" container=container %}">{{container}}</a></li>
-
-            {% for prefix in prefixes %}
-                <li>                    
-                    <a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
-                </li>
-            {% endfor %}
-
-       </ul>
+	<div class="small-12 columns">
+		{% include "messages.html" %}
+	</div>
 </div>
-<div class="col-xs-12 col-sm-4 action-btns">
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#fileForm">Upload Files</button>
-                {% if prefix %}
-                    <a href="{% url "create_pseudofolder" container=container prefix=prefix %}" class="btn btn-primary" role="button">
-                {% else %}
-                    <a href="{% url "create_pseudofolder" container=container %}" class="btn btn-primary" role="button">
-                {% endif %}
-                        New Folder
-                    </a>
+<div class="row">
+	<div class="small-12 large-8 columns">
+		<ul class="breadcrumbs">
+			<li><a href="{% url "containerview" %}">Containers</a></li> 
+			<li>
+				<a href="{% url "objectview" container=container %}">{{container}}</a>
+			</li>
+			{% for prefix in prefixes %}
+			<li>
+				<a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
+			</li>
+			{% endfor %}
+		</ul>
+</div>
+<div class="row">
+	<div class="small-12 large-4 columns">		
+		<button type="button" data-reveal-id="fileForm" class="button">Upload Files</button>
+		<button type="button" data-reveal-id="pseudoContainer" class="button">New Folder</button>
+	</div>
 </div>
 </div> 
-    {% if public %}
-            
-        <div class="alert alert-info">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>{% trans 'Public URL:' %}</strong>
-            <a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
-                {{ base_url }}{% url "public_objectview" account=account container=container %}
-            </a>
-        </div>
- 
-    {% endif %}
-	<div>
-	<script type="text/javascript"> 
-		$( document ).ready(function() {
-			loadTable();
-			
-		}
-		);
-		
-		function loadTable() {
-		$.ajax({
-		  url: '{% url "objecttable" %}',
-		  success: function(data) {
-		  $('#objecttable').html(data);
-		  }
-		});
-		
-	}
-	
-	</script> 
-<!--
-	<form 
-	    id="fileupload" action="{{ swift_url }}" 
-	    method="POST" enctype="multipart/form-data">
-	
-				<input type="hidden" name="redirect" value="{{redirect_url}}" />
-			    <input type="hidden" name="max_file_size" value="{{ max_file_size }}" />
-			    <input type="hidden" name="max_file_count" value="{{ max_file_count }}" />
-			    <input type="hidden" name="expires" value="{{ expires }}" />
-			    <input type="hidden" name="signature" value="{{ signature }}" />
-				<input type="file" name="file1" /><br />
-				<input type="submit" />
-			</form>
-	{% include "cors.html" %}
--->
-	
-	<div class="modal fade " id="fileForm" tabindex="-1" role="dialog" aria-labelledby="fileFormLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-lg">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="fileFormLabel">Add files</h4>
-	      </div>	      
-		   {% load jfutags %} 
-		   {% jfu 'upload_form.html' %}
-	    </div>
-	  </div>
+{% if public %}
+<div class="row">
+<div class="small-12 columns">
+	<div data-alert class="alert-box secondary">
+		<strong>{% trans 'Public URL:' %}</strong>
+		<a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
+			{{ base_url }}{% url "public_objectview" account=account container=container %}
+		</a>
+		<a href="#" class="close">&times;</a>
 	</div>
-
-
+</div> 
+</div>
+{% endif %}
+<div class="row">
+	<div class="small-12 columns">
+		<script type="text/javascript">
+			$( document ).ready(function() {
+				loadTable();
+				
+			});
+			function loadTable() {
+				$.ajax({
+					url: '{% url "objecttable" %}',
+					success: function(data) {
+						$('#objecttable').html(data);
+						$(document).foundation();
+					}
+				});	
+			}
+		</script>
+		<div id="objecttable"></div>
 	</div>
-
-<div id="objecttable">
+</div>
+<div class="reveal-modal" id="fileForm" data-reveal aria-labelledby="fileForm-title" aria-hidden="true" role="dialog">
+	<h2 id="fileForm-title">Add Files</h2>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	{% load jfutags %}
+	{% jfu 'upload_form.html' %}
+</div>
+<div class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
+	
+	<h2 id="pseudoContainer-title">Add Files</h2>
+	
+	<div id="pfold">
+		{% include "create_pseudofolder.html" %}
+	</div>
+	
+	
+	
 </div>
 </div>
 {% endblock %}
 {% block jsadd %}
-	<script type="text/javascript"> 		
-		$('input[id=file]').change(function() { $('#filetmp').val($(this).val()); });				
-	</script> 
+
+<script type="text/javascript"> 		
+	$('input[id=file]').change(function() { $('#filetmp').val($(this).val()); });
+</script> 
 {% endblock %}
 

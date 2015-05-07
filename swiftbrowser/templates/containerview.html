@@ -1,111 +1,107 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load dateconv %}
-
 {% block content %}
- <div class="container">
- <div class="row">  
-	   <div class="col-xs-12 col-sm-8">
-	   		<ul class="breadcrumb">
-	               <li><a href="{% url "containerview" %}">Containers</a></li> 
-	          </ul>
-	   </div>
-	   <div class="col-xs-12 col-sm-4 action-btns">
-       <a href="{% url "create_container" %}" class="btn btn-primary" role="button">
-           Create Container
-       </a>
-	   </div>
+<div id="containerview">
+<div class="row">
+	<div class="small-12 large-8 columns">
+		<ul class="breadcrumbs">
+			<li class="current"><a href="{% url "containerview" %}">Containers</a></li> 
+		</ul>
+	</div>
+	<div class="small-12 large-4 columns">
+		<a href="{% url "create_container" %}" class="btn btn-primary" role="button">
+			Create Container
+		</a>
+	</div>
 </div>
-	   {% include "messages.html" %}
-        <table class="table table-striped">
-        
-        <thead>
-            <tr>
-                <th style="width: 1em;" class="hidden-phone"></th>
-                <th>{% trans 'Name' %}</th>
-                <th style="width: 1em;" class="hidden-phone">{% trans 'Objects' %}</th>
-                <th style="width: 5em;" class="hidden-phone">{% trans 'Size' %}</th>
-                <th style="width: 1em;">
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for container in containers %}
-            <tr>
-            <td class="hidden-phone"><span class="glyphicon glyphicon-folder-close"></span></td>
-            <td><strong><a href="{% url "objectview" container=container.name %}" class="block">{{container.name}}</a></strong></td>
-    	    <td class="hidden-phone">{{container.count}}</td>
-    	    <td class="hidden-phone">{{container.bytes|filesizeformat}}</td>
-
-            <td>
-                <div class="btn-group pull-right">
-					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-					    <span class="caret"></span>
-					  </button>
-                    <ul class="dropdown-menu">
-                        {% comment %}
-						{%
-						{% url "edit_acl" container=container.name as edit_acl_url %}
-                        {% if edit_acl_url %}
-                            <li><a href="{{ edit_acl_url }}"><span class="glyphicon glyphicon-folder-user"></span> {% trans 'Sharing' %}</a></li>
-                            <li class="divider" />
-                        {% endif %}
-						%}
+{% include "messages.html" %}
+<div class="row">
+	<div class="large-12 columns">
+	<table role="grid">
+		<thead>
+			<tr>
+				<th></th>
+				<th>{% trans 'Name' %}</th>
+				<th>{% trans 'Objects' %}</th>
+				<th>{% trans 'Size' %}</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for container in containers %}
+		
+			<tr>
+				<td><span class="glyphicons glyphicons-folder-closed"></span></td>
+				<td><strong><a href="{% url "objectview" container=container.name %}">{{container.name}}</a></strong></td>
+				<td>{{container.count}}</td>
+				<td>{{container.bytes|filesizeformat}}</td>
+				<td>
+					<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown"><span class="glyphicons glyphicons-cogwheel"></span></button><br>
+					<ul id="opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
+						{% comment %}
+							{%
+							{% url "edit_acl" container=container.name as edit_acl_url %}
+							{% if edit_acl_url %}
+							<li><a href="{{ edit_acl_url }}"><span class="glyphicons glyphicons-user"></span> {% trans 'Sharing' %}</a></li>
+							<li class="divider" />
+							{% endif %}
+							%}
 						{% endcomment %}
 						<li>
-						    <a href="{% url "download_collection" container=container.name %}">
-						        <span class="glyphicon glyphicon-download"></span> {% trans 'Download' %}
-						        </a>
-						    </li>
-						    <li>
-						        <a href="{% url "download_collection_nonrec" container=container.name %}">
-						            <span class="glyphicon glyphicon-download"></span> {% trans 'Download nonrecursive' %}
-						        </a>
-						    </li>
-						    <li class="divider" />
-                        <li>
-                            <a href="{% url "delete_container" container=container.name %}" onclick="return confirm('{% trans 'Delete container' %} {{container.name}}?');">
-                                <span class="glyphicon glyphicon-fire"></span> {% trans 'Delete container' %}
-                            </a>
-                        </li>
+							<a href="{% url "download_collection" container=container.name %}">
+								<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download' %}
+							</a>
+						</li>
+						<li>
+							<a href="{% url "download_collection_nonrec" container=container.name %}">
+								<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download nonrecursive' %}
+							</a>
+						</li>
+						<li class="divider" />
+						<li>
+							<a href="{% url "delete_container" container=container.name %}" onclick="return confirm('{% trans 'Delete container' %} {{container.name}}?');">
+								<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete container' %}
+							</a>
+						</li>
 						{% comment %}
 						{% <li>
-						<a href="{% url "move_collection_to_trash" container=container.name  %}"  ><span class="glyphicon glyphicon-trash"></span></i> {% trans 'Move to trash' %}
-						</a>
-						</li>%}
+							<a href="{% url "move_collection_to_trash" container=container.name  %}"  ><span class="glyphicons glyphicons-bin"></span> {% trans 'Move to trash' %}
+							</a>
+						</li> %}
 						{% endcomment %}
-						
-                    </ul>
-                </div>
-            </td>
-
-            </tr> 
-
-        {% empty %}
-        <tr>
-            <td colspan="5">
-            <strong><center>{% trans 'There are no containers in this account yet. Create a new container by clicking the red button.' %}<center></strong>
-            </td>
-        </tr> 
- 
-        {% endfor %}
-        </tbody> 
-       
-        <tfoot>
-            <tr>
-				<td><a href="{% url "trashview" account=account %}" role="button" class="btn btn-mini"><i class="icon-trash"></i></a></td>
-                <th colspan="5" class="center">
-                    {{account_stat.x_account_bytes_used|filesizeformat}} 
-                    {% if account_stat.x_account_meta_quota_bytes %}
-                        {% trans 'of' %}
-                        {{account_stat.x_account_meta_quota_bytes|filesizeformat}} 
-                    {% endif %}
-                    {% trans 'used' %}
-                </th>
-            </tr>
-        </tfoot>
-        </table>
-        </div>
-        </div>
-    {% endblock %}
+					</ul>
+					
+					
+				</td>
+			</tr> 
+			{% empty %}
+			<tr>
+				<td colspan="5">
+					<strong><center>{% trans 'There are no containers in this account yet. Create a new container by clicking the red button.' %}<center></strong>
+				</td>
+			</tr> 
+			{% endfor %}
+		</tbody> 
+		<tfoot>
+			<tr>
+				<td><a href="{% url "trashview" account=account %}" role="button" class="hide"><span class="glyphicons glyphicons-bin"></span></a></td>
+				<td>
+					{{account_stat.x_account_bytes_used|filesizeformat}} 
+					{% if account_stat.x_account_meta_quota_bytes %}
+					{% trans 'of' %}
+					{{account_stat.x_account_meta_quota_bytes|filesizeformat}} 
+					{% endif %}
+					{% trans 'used' %}
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tfoot>
+	</table>
+	</div>
+</div>
+</div>
+{% endblock %}
 

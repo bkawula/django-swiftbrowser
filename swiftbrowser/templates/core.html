@@ -1,23 +1,25 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>OLRC Browser</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-        <link href="{% static "bootstrap/css/bootstrap-responsive.min.css" %}" rel="stylesheet">
-		<link rel="stylesheet" href="{% static "css/style.css" %}">
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-        {% block cssadd %}{% endblock %}
-    </head>
-
-    <body>
-        {% block head %}{% endblock %}
-        {% block content %}{% endblock %}
-        {% block footer %}{% endblock %}
-        {% block jsadd %}{% endblock %}
-    </body>
+	<head>
+		<meta charset="utf-8">
+		<title>OLRC Browser</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="apple-mobile-web-app-capable" content="yes" />		
+		<link href="{% static "foundation/stylesheets/app.css" %}" rel="stylesheet">
+		<link href="{% static "glyphicons/css/glyphicons.css" %}" rel="stylesheet">		
+		<script src="{% static "foundation/bower_components/foundation/js/vendor/modernizr.js" %}"></script>
+		<script src="{% static "foundation/bower_components/foundation/js/vendor/jquery.js" %}"></script>
+		<script src="{% static "foundation/bower_components/foundation/js/foundation.min.js" %}"></script>
+		{% block cssadd %}{% endblock %}
+	</head>
+	<body>
+		{% block head %}{% endblock %}
+		{% block content %}{% endblock %}
+		{% block footer %}{% endblock %}
+	    <script>
+	        $(document).foundation();
+	    </script>
+		{% block jsadd %}{% endblock %}		
+	</body>
 </html>

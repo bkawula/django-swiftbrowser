@@ -438,7 +438,7 @@ The File Upload validation plugin
     });
 	function closeForm() {
 		if (filesprocessed == filesuploaded) {
-			setTimeout(function(){ $('#fileForm').modal('hide'); }, 250);
+			setTimeout(function(){ $('#fileForm').foundation('reveal', 'close'); }, 250);
 			
 }
 }
