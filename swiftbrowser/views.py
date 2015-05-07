@@ -749,36 +749,38 @@ def serve_thumbnail(request, container, objectname):
     return HttpResponse(image_data, mimetype=headers['content-type'])
 """
 
+#This function doesn't do anything.
+# @session_valid
+# @require_POST
+# def upload(request):
+#     # This function doesn't do anything
+#     return ""
+#     file = upload_receive(request)
+#     container = request.session.get('container')
+#     prefix = request.session.get('prefix')
 
-@session_valid
-@require_POST
-def upload(request):
-    file = upload_receive(request)
-    container = request.session.get('container')
-    prefix = request.session.get('prefix')
+#     instance = Photo(file=file)
 
-    instance = Photo(file=file)
+#     if prefix:
+#         instance.path = os.path.join(container, prefix)
+#     else:
+#         instance.path = os.path.join(container)
 
-    if prefix:
-        instance.path = os.path.join(container, prefix)
-    else:
-        instance.path = os.path.join(container)
+#     instance.save()
 
-    instance.save()
+#     basename = os.path.basename(instance.file.path)
 
-    basename = os.path.basename(instance.file.path)
+#     file_dict = {
+#         'path': instance.file.path,
+#         'name': basename,
+#         'size': file.size,
+#         'url': swift_url + basename,
+#         'thumbnailUrl': swift_url + basename,
+#         'deleteUrl': reverse('jfu_delete', kwargs={'pk': instance.pk}),
+#         'deleteType': 'POST',
+#     }
 
-    file_dict = {
-        'path': instance.file.path,
-        'name': basename,
-        'size': file.size,
-        'url': swift_url + basename,
-        'thumbnailUrl': swift_url + basename,
-        'deleteUrl': reverse('jfu_delete', kwargs={'pk': instance.pk}),
-        'deleteType': 'POST',
-    }
-
-    return UploadResponse(request, file_dict)
+#     return UploadResponse(request, file_dict)
 
 
 @session_valid
