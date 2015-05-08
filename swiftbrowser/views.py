@@ -5,6 +5,7 @@ import os
 import time
 import urlparse
 import hmac
+import re
 from hashlib import sha1
 import logging
 import zipfile
@@ -31,7 +32,7 @@ from swiftbrowser.utils import replace_hyphens, prefix_list, \
     pseudofolder_object_list, get_temp_key, get_base_url, get_temp_url, \
     create_thumbnail, redirect_to_objectview_after_delete, \
     get_original_account, create_pseudofolder_from_prefix, \
-    delete_given_object, delete_given_folder
+    delete_given_object, delete_given_folder, session_valid
 
 import swiftbrowser
 
@@ -81,6 +82,7 @@ def login(request):
     )
 
 
+@session_valid
 def containerview(request):
     """ Returns a list of all containers in current account. """
 
@@ -104,6 +106,7 @@ def containerview(request):
     }, context_instance=RequestContext(request))
 
 
+@session_valid
 def create_container(request):
     """ Creates a container (empty object of type application/directory) """
 
@@ -135,6 +138,7 @@ def create_container(request):
     )
 
 
+@session_valid
 def delete_container(request, container):
     """ Deletes a container """
 
@@ -154,6 +158,7 @@ def delete_container(request, container):
     return redirect(containerview)
 
 
+@session_valid
 def objectview(request, container, prefix=None):
     """ Returns list of all objects in current container. """
 
@@ -262,6 +267,7 @@ def objectview(request, container, prefix=None):
     )
 
 
+@session_valid
 def objecttable(request):
     """ Returns list of all objects in current container. """
 
@@ -307,6 +313,7 @@ def objecttable(request):
     )
 
 
+@session_valid
 def download(request, container, objectname):
     """ Download an object from Swift """
 
@@ -321,6 +328,7 @@ def download(request, container, objectname):
     return redirect(url)
 
 
+@session_valid
 def download_collection(request, container, prefix=None, non_recursive=False):
     """ Download the content of an entire container/pseudofolder
     as a Zip file. """
@@ -368,6 +376,7 @@ def download_collection(request, container, prefix=None, non_recursive=False):
     return response
 
 
+@session_valid
 def delete_object(request, container, objectname):
     """ Deletes an object """
     try:
@@ -384,6 +393,7 @@ def delete_object(request, container, objectname):
     return redirect(objectview, container=container, prefix=prefix)
 
 
+@session_valid
 def delete_folder(request, container, objectname):
     """ Deletes a pseudo folder. """
 
@@ -401,6 +411,7 @@ def delete_folder(request, container, objectname):
     return redirect(objectview, container=container, prefix=prefix)
 
 
+@session_valid
 def toggle_public(request, container):
     """ Sets/unsets '.r:*,.rlistings' container read ACL """
 
@@ -430,6 +441,7 @@ def toggle_public(request, container):
     return redirect(objectview, container=container)
 
 
+@session_valid
 def public_objectview(request, account, container, prefix=None):
     """ Returns list of all objects in current container. """
     storage_url = settings.STORAGE_URL + account
@@ -468,6 +480,7 @@ def public_objectview(request, account, container, prefix=None):
     )
 
 
+@session_valid
 def tempurl(request, container, objectname):
     """ Displays a temporary URL for a given container object """
 
@@ -483,6 +496,9 @@ def tempurl(request, container, objectname):
     if not url:
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(objectview, container=container)
+
+    # Convert the URL to show the domain and not the IP
+    url = re.sub('.*(\d{1,3}\.){3}\d{1,3}', settings.BASE_URL, url)
 
     prefix = '/'.join(objectname.split('/')[:-1])
     if prefix:
@@ -501,6 +517,7 @@ def tempurl(request, container, objectname):
                               context_instance=RequestContext(request))
 
 
+@session_valid
 def create_pseudofolder(request, container, prefix=None):
     """ Creates a pseudofolder (empty object of type application/directory) """
     storage_url = request.session.get('storage_url', '')
@@ -554,6 +571,7 @@ def remove_duplicates_from_acl(acls):
     return acls
 
 
+@session_valid
 def edit_acl(request, container):
     """ Edit ACLs on given container. """
 
@@ -732,6 +750,7 @@ def serve_thumbnail(request, container, objectname):
 """
 
 
+@session_valid
 @require_POST
 def upload(request):
     file = upload_receive(request)
@@ -762,6 +781,7 @@ def upload(request):
     return UploadResponse(request, file_dict)
 
 
+@session_valid
 @require_POST
 def upload_delete(request, pk):
     success = True
@@ -777,5 +797,3 @@ def upload_delete(request, pk):
 
 def move_to_folder(request, container, objectname):
     return
-
-

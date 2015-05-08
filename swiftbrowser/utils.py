@@ -8,6 +8,7 @@ import hmac
 import logging
 import string
 import random
+import re
 import Image
 from hashlib import sha1
 
@@ -271,6 +272,15 @@ def delete_given_folder(request, container, foldername):
 
     # Delete the folder itself.
     delete_given_object(request, container, foldername)
+
+
+def replace_ip(domain, url):
+    '''Given a url, replace one occurence of an IP address with the project's
+    base url.'''
+
+    new_url = re.sub('.*(\d{1,3}\.){3}\d', domain, url)
+
+    return new_url
 
 
 def session_valid(fn):
