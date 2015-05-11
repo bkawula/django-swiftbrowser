@@ -87,7 +87,11 @@
 	        <h4 class="modal-title" id="fileFormLabel">Add files</h4>
 	      </div>
 		   {% load jfutags %}
-		   {% jfu 'upload_form.html' ''%}
+		   {% comment %}
+		   		Passing in login as arbitrary upload handler since no server side
+		   		upload handler is actually used.
+		   {% endcomment %}
+		   {% jfu 'upload_form.html' 'login'%}
 	    </div>
 	  </div>
 	</div>
