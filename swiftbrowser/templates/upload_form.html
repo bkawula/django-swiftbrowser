@@ -104,13 +104,10 @@ Bootstrap CSS Toolkit styles
         {% comment %}
          The global progress bar 
         {% endcomment %}
-        <div 
-            class="progress progress-striped active" 
-            role="progressbar" 
+		<div class="progress" role="progressbar" 
             aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar progress-bar-success" style="width:0%;">
-            </div>
-        </div>
+		  <span class="progress-bar meter" style="width: 0%"></span>
+		</div>
         {% comment %}
          The extended global progress information 
         {% endcomment %}
@@ -207,6 +204,7 @@ Bootstrap CSS Toolkit styles
                     aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                 <div class="progress-bar progress-bar-success" style="width:0%;"></div>
             </div>
+			
         </td>
         <td>
             {{ JQ_OPEN }} if (!i && !o.options.autoUpload) { {{ JQ_CLOSE }}
