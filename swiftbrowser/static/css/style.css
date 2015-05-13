@@ -41,6 +41,9 @@ code {white-space: normal !important;}
 	width:100%;
 	height:100%;
 }
+#login-fields {
+	clear:both;
+}
 .login-form .btn {
 	width:100%;
 }
