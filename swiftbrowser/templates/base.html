@@ -3,6 +3,7 @@
 {% load staticfiles %}
 {% block head %}
 {% if session.username %}
+<div id="header">
 <div class="row" role="navigation">	
 	<div class="small-3 columns">
 		<a href="{% url "containerview" %}" ><img class="service-logo" src="{% static "img/olrc-logo-small.png" %}" alt="OLRC Browser"/></a>	   
@@ -16,6 +17,7 @@
 			</a>
 		</div> 
 	</div>
+</div>
 </div>
 {% else %}
 {% endif %}

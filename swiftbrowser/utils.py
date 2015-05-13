@@ -75,10 +75,13 @@ def pseudofolder_object_list(objects, prefix):
     for obj in objects:
         # Rackspace Cloudfiles uses application/directory
         # Cyberduck uses application/x-directory
+        
+        
+        
         if obj.get('content_type', None) in ('application/directory',
                                              'application/x-directory'):
             obj['subdir'] = obj['name']
-
+        
         if 'subdir' in obj:
             # make sure that there is a single slash at the end
             # Cyberduck appends a slash to the name of a pseudofolder
@@ -87,8 +90,21 @@ def pseudofolder_object_list(objects, prefix):
                 duplist.append(entry)
                 pseudofolders.append((entry, obj['subdir']))
         else:
+            #add extension to object for file icon display
+            obj['extension'] = obj.get('name').split('.')[-1]
+            if obj.get('extension', None) not in (
+            'pdf','png','txt','doc','rtf','log','tex','msg','text','wpd','wps','docx','page','csv',
+            'dat','tar','xml','vcf','pps','key','ppt','pptx','sdf','gbr','ged','mp3','m4a','waw',
+            'wma','mpa','iff','aif','ra','mid','m3v','swf','avi','asx','mp4','mpg',
+            'asf','vob','wmv','mov','srt','m4v','flv','rm','png','psd','psp','jpg','tif','tiff','gif'
+            'bmp','tga','thm','yuv','dds','ai','eps','ps','svg','pdf','pct','indd','xlr','xls','xlsx',
+            'db','dbf','mdb','pdb','sql','aacd','app','exe','com','bat','apk','jar','hsf','pif','vb'
+            'cgi','css','js','php','xhtml','htm','html','asp','cer','jsp','cfm','aspx','rss','csr'
+            'less','otf','ttf','font','fnt','eot','woff','zip','zipx','rar','targ','sitx','deb','pkg',
+            'rmp','cbr','gz','dmg','cue','bin','iso','hdf','vcd','bak','tmp','ics','msi','cfg','ini',
+            'prf'): obj['extension'] = 'other'
             objs.append(obj)
-
+            
     return (pseudofolders, objs)
 
 
@@ -241,7 +257,6 @@ def create_thumbnail(request, account, original_container_name, container,
     except IOError as e:
         logger.error("Cannot create thumbnail for image %s."
                      "An IOError occured: %s" % (objectname, e.strerror))
-
 
 def delete_given_object(request, container, objectname):
     '''Delete the given object. '''

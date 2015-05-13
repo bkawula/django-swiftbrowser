@@ -3,8 +3,17 @@
 {% load i18n %}
 {% load dateconv %}
 {% load lastpart %}
+{% load staticfiles %}
+
+
+	
+
+
 {% block content %}
-<div id='objectview'>
+
+<div id="objectview">
+	<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">	
+<div class="crumb-row">
 <div class="row">
 	<div class="small-12 columns">
 		{% include "messages.html" %}
@@ -29,6 +38,7 @@
 		<button type="button" data-reveal-id="fileForm" class="button">Upload Files</button>
 		<button type="button" data-reveal-id="pseudoContainer" class="button">New Folder</button>
 	</div>
+</div>
 </div>
 </div> 
 {% if public %}

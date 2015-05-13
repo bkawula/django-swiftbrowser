@@ -9,7 +9,7 @@ import re
 from hashlib import sha1
 import logging
 import zipfile
-# import chromelogger as console
+import chromelogger as console
 from StringIO import StringIO
 from swiftclient import client
 from django.shortcuts import render_to_response, redirect, render
@@ -295,7 +295,8 @@ def objecttable(request):
     required_acl = ['.r:*', '.rlistings']
     if [x for x in read_acl if x in required_acl]:
         public = True
-
+   
+    console.log(objs)
     return render_to_response(
         "object_table.html",
         {
@@ -311,7 +312,6 @@ def objecttable(request):
         },
         context_instance=RequestContext(request)
     )
-
 
 @session_valid
 def download(request, container, objectname):

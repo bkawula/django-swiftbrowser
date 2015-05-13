@@ -39,10 +39,10 @@ urlpatterns = patterns(
     url(r'upload/', upload, name='jfu_upload'),
     url(r'^acls/(?P<container>.+?)/$', edit_acl, name="edit_acl"),
     url(r'^delete/(?P<pk>.+)$', upload_delete, name='jfu_delete'),
-    # url(
-    #    r'^thumbnails/(?P<container>.+?)/(?P<objectname>.+?)$',
-    #    serve_thumbnail,
-    #    name="serve_thumbnail"),
+    #url(
+    #   r'^thumbnails/(?P<container>.+?)/(?P<objectname>.+?)$',
+    #   serve_thumbnail,
+    #  name="serve_thumbnail"),
     url(
         r'^move_to_trash/(?P<container>.+?)/(?P<objectname>.+?)$',
         move_to_trash,

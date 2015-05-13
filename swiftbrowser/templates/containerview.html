@@ -3,6 +3,7 @@
 {% load dateconv %}
 {% block content %}
 <div id="containerview">
+<div class="crumb-row">
 <div class="row">
 	<div class="small-12 large-8 columns">
 		<ul class="breadcrumbs">
@@ -14,6 +15,7 @@
 			Create Container
 		</a>
 	</div>
+</div>
 </div>
 {% include "messages.html" %}
 <div class="row">
@@ -32,7 +34,7 @@
 			{% for container in containers %}
 		
 			<tr>
-				<td><span class="glyphicons glyphicons-folder-closed"></span></td>
+				<td class="icon"><span class="glyphicons glyphicons-folder-closed"></span></td>
 				<td><strong><a href="{% url "objectview" container=container.name %}">{{container.name}}</a></strong></td>
 				<td>{{container.count}}</td>
 				<td>{{container.bytes|filesizeformat}}</td>
