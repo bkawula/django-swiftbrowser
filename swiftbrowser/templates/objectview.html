@@ -13,13 +13,8 @@
 
 <div id="objectview">
 	<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">	
-<div class="crumb-row">
-<div class="row">
-	<div class="small-12 columns">
-		{% include "messages.html" %}
-	</div>
-</div>
-<div class="row">
+<div class="crumb-row" data-magellan-expedition="fixed">
+<div class="row" >
 	<div class="small-12 large-8 columns">
 		<ul class="breadcrumbs">
 			<li><a href="{% url "containerview" %}">Containers</a></li> 
@@ -40,17 +35,18 @@
 	</div>
 </div>
 </div>
+		{% include "messages.html" %}
 </div> 
 {% if public %}
 <div class="row">
 <div class="small-12 columns">
-	<div data-alert class="alert-box secondary">
+	
 		<strong>{% trans 'Public URL:' %}</strong>
 		<a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
 			{{ base_url }}{% url "public_objectview" account=account container=container %}
 		</a>
-		<a href="#" class="close">&times;</a>
-	</div>
+		
+	
 </div> 
 </div>
 {% endif %}
