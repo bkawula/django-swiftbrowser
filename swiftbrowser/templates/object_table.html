@@ -27,7 +27,7 @@
 			<td></td>
 			<td></td>
 			<td>
-				<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown"><span class="glyphicons glyphicons-cogwheel"></span></button><br>
+				<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn"><span class="glyphicons glyphicons-cogwheel"></span></button><br>
 				<ul id="opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
 					<li>
 						<a href="{% url "download_collection" container=container prefix=folder.0 %}">

@@ -10,8 +10,8 @@
 	</div>   
 	<div class="small-9 columns">
 		<div class="account-btns">
-			<span><strong>{{session.username}}</strong></span>
-			<a class="btn btn-primary log-out" role="button" href="{% url "login" %}">
+			<span class="username">{{session.username}}</span>
+			<a class="button tiny" role="button" href="{% url "login" %}">
 			<span ></span>
 			{% trans 'Logout' %}
 			</a>

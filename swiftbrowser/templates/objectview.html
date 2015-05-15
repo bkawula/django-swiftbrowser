@@ -15,9 +15,10 @@
 	<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">	
 <div class="crumb-row" data-magellan-expedition="fixed">
 <div class="row" >
-	<div class="small-12 large-8 columns">
+	<div class="small-12 large-7 columns">
 		<ul class="breadcrumbs">
 			<li><a href="{% url "containerview" %}">Containers</a></li> 
+			
 			<li>
 				<a href="{% url "objectview" container=container %}">{{container}}</a>
 			</li>
@@ -28,29 +29,47 @@
 			{% endfor %}
 		</ul>
 </div>
-<div class="row">
-	<div class="small-12 large-4 columns">		
-		<button type="button" data-reveal-id="fileForm" class="button">Upload Files</button>
-		<button type="button" data-reveal-id="pseudoContainer" class="button">New Folder</button>
+<div class="row action-btns">
+	<div class="small-12 large-5 columns">		
+		<button type="button" data-reveal-id="fileForm" class="button upload">
+			<span class="glyphicons glyphicons-cloud-upload"></span> 
+			Upload Files
+		</button>
+		{% if public %}
+		<button type="button" data-dropdown="drop2" aria-controls="drop2" aria-expanded="false" class="button share">
+			<span class="glyphicons glyphicons-share"></span> 
+			Share
+		</button>
+		{% endif %}
+		<button type="button" data-reveal-id="pseudoContainer" class="button folder">
+			<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
+			New Folder
+		</button>
+		{% if public %}
+		<div id="drop2" data-dropdown-content class="f-dropdown content" aria-hidden="true" tabindex="-1">
+		<strong>{% trans 'Public URL:' %}</strong>
+		<a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
+			{{ base_url }}{% url "public_objectview" account=account container=container %}
+		</a>
+		</div>
+		{% endif %}
 	</div>
 </div>
 </div>
 		{% include "messages.html" %}
 </div> 
-{% if public %}
+
+
 <div class="row">
 <div class="small-12 columns">
 	
-		<strong>{% trans 'Public URL:' %}</strong>
-		<a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
-			{{ base_url }}{% url "public_objectview" account=account container=container %}
-		</a>
+		
 		
 	
 </div> 
 </div>
-{% endif %}
-<div class="row">
+
+<div class="row content-body">
 	<div class="small-12 columns">
 		<script type="text/javascript">
 			$( document ).ready(function() {
@@ -81,36 +100,26 @@
 			   {% jfu 'upload_form.html' 'login'%}
 </div>
 <div class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
-	
-	<h2 id="pseudoContainer-title">Make a new folder</h2>
+	<h2 id="pseudoContainer-title">Create a new folder</h2>
 	<form method="POST" id="create-pseudofolder">
-	    <fieldset>
-	    <legend>{% trans 'Create a new pseudofolder' %}</legend>
 	    {% csrf_token %}
-  
-	    <div class="control-group">
-	        <label class="control-label" for="foldername">{% trans "Foldername" %}</label>
-	        <div class="controls">
+	    <div>
+	        <label for="foldername">{% trans "Enter your folder name here." %}
+            {% trans "Please note that you can not rename it afterwards." %}
+		</label>
+	        <div>
 	            <input id="foldername" name="foldername" class="input-xlarge" type="text" placeholder="{% trans "Foldername" %}">
-	            <span class="help-block">
-	                {% trans "Enter name of pseudofolder here." %}
-	                {% trans "Please note that you can not rename it afterwards." %}
-	            </span>
+	            
 	        </div>
 	    </div>
 
-	    <div class="control-group">
-	        <div class="controls">
-	            <button type="submit" class="btn btn-primary">{% trans 'Create' %}</button>
-	            {% if prefix %}
-	        <a href="{% url "objectview" container=container prefix=prefix %}" class="btn" >
-	    {% else %}
-	        <a href="{% url "objectview" container=container %}" class="btn" >
-	    {% endif %}
-	    {% trans 'Cancel' %}</a>
+	    <div>
+	        
+	            <button type="submit" class="button expand">{% trans 'Create' %}</button>
+
 	         </div>
-	    </div>
-	  </fieldset>
+	    
+
 	</form>
 	<div id="progress">
 	<div class="loader">Loading...</div>
