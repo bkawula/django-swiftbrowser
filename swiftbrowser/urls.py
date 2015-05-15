@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.conf.urls import patterns, include, url
 
 from swiftbrowser.views import containerview, objectview, download,\
-    delete_object, login, tempurl, upload, create_pseudofolder,\
+    delete_object, login, tempurl, create_pseudofolder,\
     create_container, delete_container, public_objectview, toggle_public,\
     edit_acl, upload_delete, objecttable, \
     download_collection, delete_folder
@@ -36,7 +36,7 @@ urlpatterns = patterns(
     url(r'^objects/(?P<container>.+?)/(?P<prefix>(.+)+)?$', objectview,
         name="objectview"),
     url(r'^object_table/', objecttable, name="objecttable"),
-    url(r'upload/', upload, name='jfu_upload'),
+    # url(r'upload/', upload, name='jfu_upload'),
     url(r'^acls/(?P<container>.+?)/$', edit_acl, name="edit_acl"),
     url(r'^delete/(?P<pk>.+)$', upload_delete, name='jfu_delete'),
     #url(

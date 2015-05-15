@@ -286,7 +286,12 @@ def delete_given_folder(request, container, foldername):
         delete_given_object(request, container, obj["name"])
 
     # Delete the folder itself.
-    delete_given_object(request, container, foldername)
+    try:
+        delete_given_object(request, container, foldername)
+    except:
+        #Except a failure to delete if the pseudo folder was not created
+        #manually.
+        pass
 
 
 def replace_ip(domain, url):

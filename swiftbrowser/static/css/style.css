@@ -21,7 +21,7 @@ td a.block {display: block;}
 .breadcrumb {padding:0px !important;font-size:20px;background-color:transparent !important;}
 .breadcrumb>li+li:before {padding: 0px 0px 0px 5px;color: #ccc;content: "/\00a0";}
 code {white-space: normal !important;}
-.head-logo {width:70px;}
+.head-logo {width:170px;}
 .account-btns {text-align:right;}
 .log-out {border-radius:0 !important;padding:10px 15px !important;}
 .username{padding:0px 10px;}
@@ -40,6 +40,9 @@ code {white-space: normal !important;}
 	position:absolute;
 	width:100%;
 	height:100%;
+}
+#login-fields {
+	clear:both;
 }
 .login-form .btn {
 	width:100%;

@@ -74,7 +74,11 @@
 	<h2 id="fileForm-title">Add Files</h2>
 	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	{% load jfutags %}
-	{% jfu 'upload_form.html' %}
+	{% comment %}
+			   		Passing in login as arbitrary upload handler since no server side
+			   		upload handler is actually used.
+			   {% endcomment %}
+			   {% jfu 'upload_form.html' 'login'%}
 </div>
 <div class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
 	
