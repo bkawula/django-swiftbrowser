@@ -1,25 +1,47 @@
 {% extends "base.html" %}
+{% load l10n %}
 {% load i18n %}
 {% load dateconv %}
+{% load lastpart %}
 {% block content %}
 <div id="containerview">
-<div class="crumb-row">
+<div class="crumb-row" data-magellan-expedition="fixed">
 <div class="row">
-	<div class="small-12 large-8 columns">
+	<div class="small-12 large-7 columns">
 		<ul class="breadcrumbs">
-			<li class="current"><a href="{% url "containerview" %}">Containers</a></li> 
+			<li>
+				<a href="{% url "containerview" %}">Containers</a> 
+				<span class="usage">					
+					{{account_stat.x_account_bytes_used|filesizeformat}} 
+					{% if account_stat.x_account_meta_quota_bytes %}
+					{% trans 'of' %}
+					{{account_stat.x_account_meta_quota_bytes|filesizeformat}} 
+					{% endif %}
+					{% trans 'used' %}					
+				</span>
+			
+			</li>
 		</ul>
 	</div>
-	<div class="small-12 large-4 columns">
-		<a href="{% url "create_container" %}" class="btn btn-primary" role="button">
+<div class="row action-btns">
+	<div class="small-12 large-5 columns">
+		
+		<button type="button" data-reveal-id="container" class="button folder">
+			<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
 			Create Container
-		</a>
+		</button>
+		
 	</div>
+</div>
 </div>
 </div>
 {% include "messages.html" %}
 <div class="row">
-	<div class="large-12 columns">
+<div class="small-12 columns">
+</div> 
+</div>
+<div class="row content-body">
+	<div id="containertable" class="small-12 columns">
 	<table role="grid">
 		<thead>
 			<tr>
@@ -39,7 +61,7 @@
 				<td>{{container.count}}</td>
 				<td>{{container.bytes|filesizeformat}}</td>
 				<td>
-					<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown"><span class="glyphicons glyphicons-cogwheel"></span></button><br>
+					<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn"><span class="glyphicons glyphicons-cogwheel"></span></button><br>
 					<ul id="opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
 						{% comment %}
 							{%
@@ -84,26 +106,50 @@
 				</td>
 			</tr> 
 			{% endfor %}
+			
 		</tbody> 
-		<tfoot>
-			<tr>
-				<td><a href="{% url "trashview" account=account %}" role="button" class="hide"><span class="glyphicons glyphicons-bin"></span></a></td>
-				<td>
-					{{account_stat.x_account_bytes_used|filesizeformat}} 
-					{% if account_stat.x_account_meta_quota_bytes %}
-					{% trans 'of' %}
-					{{account_stat.x_account_meta_quota_bytes|filesizeformat}} 
-					{% endif %}
-					{% trans 'used' %}
-				</td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
-		</tfoot>
+		
 	</table>
 	</div>
 </div>
+<div class="row">
+	<div class="small-12 columns">
+		<a href="{% url "trashview" account=account %}" role="button" class="hide"><span class="glyphicons glyphicons-bin"></span></a>
+		
+	</div>
 </div>
-{% endblock %}
+<div class="reveal-modal" id="container" data-reveal aria-labelledby="container-title" aria-hidden="true" role="dialog">
+	<h2 id="container-title">Create a new container</h2>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	<form method="POST" action="{% url 'create_container' %}" id="create-container">
+	    {% csrf_token %}
+	    <div>
+	        <label for="containername">{% trans "Enter your container name here." %}
+            {% trans "Please note that you can not rename it afterwards." %}
+		</label>
+	        <div>
+	            <input id="containername" name="containername" class="input-xlarge" type="text" placeholder="{% trans "Container Name" %}">	            
+	        </div>
+	    </div>
+	    <div>
+	            <button type="submit" class="button expand">{% trans 'Create' %}</button>
+	    </div>
+	</form>
+	<div id="progress">
+		<div class="loader">Loading...</div>
+	</div>	
+</div>
+</div>
+<script type="text/javascript"> 		
+	
 
+	$('#create-container').on('submit', function(event){
+		$("#create-container").hide();
+		$("#progress").show();		
+	});
+	
+	
+	
+
+</script> 
+{% endblock %}

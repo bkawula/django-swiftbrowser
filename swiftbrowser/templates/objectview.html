@@ -4,15 +4,9 @@
 {% load dateconv %}
 {% load lastpart %}
 {% load staticfiles %}
-
-
-	
-
-
 {% block content %}
-
 <div id="objectview">
-	<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">	
+<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">	
 <div class="crumb-row" data-magellan-expedition="fixed">
 <div class="row" >
 	<div class="small-12 large-7 columns">
@@ -28,7 +22,7 @@
 			</li>
 			{% endfor %}
 		</ul>
-</div>
+	</div>
 <div class="row action-btns">
 	<div class="small-12 large-5 columns">		
 		<button type="button" data-reveal-id="fileForm" class="button upload">
@@ -56,19 +50,12 @@
 	</div>
 </div>
 </div>
-		{% include "messages.html" %}
+{% include "messages.html" %}
 </div> 
-
-
 <div class="row">
 <div class="small-12 columns">
-	
-		
-		
-	
 </div> 
 </div>
-
 <div class="row content-body">
 	<div class="small-12 columns">
 		<script type="text/javascript">
@@ -91,7 +78,7 @@
 </div>
 <div class="reveal-modal" id="fileForm" data-reveal aria-labelledby="fileForm-title" aria-hidden="true" role="dialog">
 	<h2 id="fileForm-title">Add Files</h2>
-	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	
 	{% load jfutags %}
 	{% comment %}
 			   		Passing in login as arbitrary upload handler since no server side
@@ -101,6 +88,7 @@
 </div>
 <div class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
 	<h2 id="pseudoContainer-title">Create a new folder</h2>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	<form method="POST" id="create-pseudofolder">
 	    {% csrf_token %}
 	    <div>
@@ -108,18 +96,12 @@
             {% trans "Please note that you can not rename it afterwards." %}
 		</label>
 	        <div>
-	            <input id="foldername" name="foldername" class="input-xlarge" type="text" placeholder="{% trans "Foldername" %}">
-	            
+	            <input id="foldername" name="foldername" class="input-xlarge" type="text" placeholder="{% trans "Folder Name" %}">	            
 	        </div>
 	    </div>
-
 	    <div>
-	        
 	            <button type="submit" class="button expand">{% trans 'Create' %}</button>
-
-	         </div>
-	    
-
+	    </div>
 	</form>
 	<div id="progress">
 	<div class="loader">Loading...</div>
@@ -153,12 +135,16 @@
 			function() {	//success method
 				$('#pseudoContainer').foundation('reveal', 'close');
 				loadTable();
-				$('#pfold').html('<div data-alert class="alert-box success radius">Shit works<a href="#" class="close">&times;</a></div>');
+				$('#pfold').html('<div data-alert class="alert-box success radius">works<a href="#" class="close">&times;</a></div>');
 			}
 		).fail(function() {
-			$('#pfold').html('<div data-alert class="alert-box alert radius">Shit no works<a href="#" class="close">&times;</a></div>');
+			$('#pfold').html('<div data-alert class="alert-box alert radius">no works<a href="#" class="close">&times;</a></div>');
 		});
  	}
+	
+	
+	
+
 </script> 
 {% endblock %}
 

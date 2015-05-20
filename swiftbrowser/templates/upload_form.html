@@ -89,9 +89,9 @@
        {% comment %}
         The table listing the files available for upload/download 
        {% endcomment %}
-       <table role="presentation" class="table table-striped">
-           <tbody class="files"></tbody>
-       </table>
+       <div role="presentation" class="">
+           <div class="files"></div>
+       </div>
        {% endblock %}
    	</div>
        <div class="modal-footer">	        			
@@ -129,8 +129,8 @@
                {% endcomment %}
 
                {% block UPLOAD_FORM_BUTTON_BAR_ADD %}
-               <span class="btn btn-success fileinput-button">
-                   <i class="glyphicon glyphicon-plus"></i>
+               <span class="button fileinput-button">
+                   <span class="glyphicons glyphicons-plus"></span>
                    <span>Add files...</span>
 
                         
@@ -153,16 +153,16 @@
                {% endblock %}
 
                {% block UPLOAD_FORM_BUTTON_BAR_CONTROL %}
-               <button type="submit" class="btn btn-primary start">
-                   <i class="glyphicon glyphicon-upload"></i>
+               <button type="submit" id="start-upload" class="button start success disabled">
+                   <span class="glyphicons glyphicons-up-arrow"></span>
                    <span>Start upload</span>
                </button>
-               <button type="reset" class="btn btn-warning cancel">
-                   <i class="glyphicon glyphicon-ban-circle"></i>
+               <button type="reset" id="cancel-upload" class="button cancel secondary disabled">
+                   <span class="glyphicons glyphicons-circle-remove"></span>
                    <span>Cancel upload</span>
                </button>
                {% endblock %}
-   			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+   			<button type="button" id="close-upload" class="button close">Close</button>
        
 
        </span>
@@ -185,42 +185,69 @@
     {% endcomment %}
     {% block JS_UPLOAD_TEMPLATE %}
 		<script id="template-upload" type="text/x-tmpl">
-		{{ JQ_OPEN }} for (var i=0, file; file=o.files[i]; i++) { {{ JQ_CLOSE }}
-			{{ JQ_OPEN }}var p = window.location.pathname.substring(9) + file.name;{{ JQ_CLOSE }}
-			{{ JQ_OPEN }}var path = p.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()]/g,"");{{ JQ_CLOSE }}
-		    <tr class="template-upload fade">
-		        <td>
-		            <span class="preview"></span>
-		        </td>
-		        <td>
-		            <p class="filename">{{ JQ_OPEN }}=p {{ JQ_CLOSE }}</p>
-					<p class="name">{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}</p>
-		            <strong class="error text-danger"></strong>
-		        </td>
-		        <td>
-		            <p class="size">Processing...</p>
-		            <div class="progress progress-striped active" role="progressbar"
-		                    aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-		                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-		            </div>
+		{{ JQ_OPEN }} 
+		
+		for (var i=0, file; file=o.files[i]; i++) { 
+			var type = file.name.substr(file.name.lastIndexOf('.') + 1);
+			var types = ['pdf','png','txt','doc','rtf','log','tex','msg','text','wpd','wps','docx','page','csv',
+            'dat','tar','xml','vcf','pps','key','ppt','pptx','sdf','gbr','ged','mp3','m4a','waw',
+            'wma','mpa','iff','aif','ra','mid','m3v','swf','avi','asx','mp4','mpg',
+            'asf','vob','wmv','mov','srt','m4v','flv','rm','png','psd','psp','jpg','tif','tiff','gif',
+            'bmp','tga','thm','yuv','dds','ai','eps','ps','svg','pdf','pct','indd','xlr','xls','xlsx',
+            'db','dbf','mdb','pdb','sql','aacd','app','exe','com','bat','apk','jar','hsf','pif','vb',
+            'cgi','css','js','php','xhtml','htm','html','asp','cer','jsp','cfm','aspx','rss','csr',
+            'less','otf','ttf','font','fnt','eot','woff','zip','zipx','rar','targ','sitx','deb','pkg',
+            'rmp','cbr','gz','dmg','cue','bin','iso','hdf','vcd','bak','tmp','ics','msi','cfg','ini',
+            'prf']
+			var images = ['gif','png','jpeg',]
+		{{ JQ_CLOSE }}
+		<div class="template-upload file-row">
+			   		<div class="progress file-progress" role="progressbar" 
+			               aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+			   		  <span class="progress-bar meter" style="width: 0%;"></span>
+			   		</div>					
+					<div class="row">
+						<div class="small-1 columns">
+						{{ JQ_OPEN }} if ($.inArray( type, types ) == -1) { {{ JQ_CLOSE }}
+			            	<div class="icon"><span class="glyphicons glyphicons-file"></span></div>
+						{{ JQ_OPEN }} } else { {{ JQ_CLOSE }}
+							{{ JQ_OPEN }} if ($.inArray( type, images ) == -1) { {{ JQ_CLOSE }}
+						 		<div class="icon">
+						 		   <span class="filetypes filetypes-{{ JQ_OPEN }}=type{{ JQ_CLOSE }}"></span></div>
+								{{ JQ_OPEN }} } else { {{ JQ_CLOSE }} 
+									<div class="preview"></div>
+								{{ JQ_OPEN }} } {{ JQ_CLOSE }}  
+						{{ JQ_OPEN }} } {{ JQ_CLOSE }}
+						</div>
+						<div class="small-6 columns">
+						<div class="name">
+							{{ JQ_OPEN }}=file.name{{ JQ_CLOSE }}
+							<strong class="error text-danger"></strong>
+						</div>
+						</div>
+						<div class="small-2 columns">
+			            <div class="size">Processing...</div>
+					</div>
+		           
 			
-		        </td>
-		        <td>
-		            {{ JQ_OPEN }} if (!i && !o.options.autoUpload) { {{ JQ_CLOSE }}
-		                <button class="btn btn-primary start" disabled>
-		                    <i class="glyphicon glyphicon-upload"></i>
-		                    <span>Start</span>
-		                </button>
-		            {{ JQ_OPEN }} } {{ JQ_CLOSE }}
-		            {{ JQ_OPEN }} if (!i) { {{ JQ_CLOSE }}
-		                <button class="btn btn-warning cancel">
-		                    <i class="glyphicon glyphicon-ban-circle"></i>
-		                    <span>Cancel</span>
-		                </button>
-				
-		            {{ JQ_OPEN }} } {{ JQ_CLOSE }}
-		        </td>
-		    </tr>
+			        	<div class="small-3 columns filerowbtns">
+			            {{ JQ_OPEN }} if (!i && !o.options.autoUpload) { {{ JQ_CLOSE }}
+			                <button class="button tiny start success" disabled>
+			                    <i class="glyphicon glyphicon-upload"></i>
+			                    <span>Start</span>
+			                </button>
+			            {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+			            {{ JQ_OPEN }} if (!i) { {{ JQ_CLOSE }}
+			                <button class="button tiny cancel secondary">
+			                    <i class="glyphicon glyphicon-ban-circle"></i>
+			                    <span>Cancel</span>
+			                </button>
+					
+			            {{ JQ_OPEN }} } {{ JQ_CLOSE }}
+						</div>
+					</div>
+		</div>
+			
 		{{ JQ_OPEN }} } {{ JQ_CLOSE }}
 		</script>
 		{% endblock %}
@@ -347,8 +374,12 @@
      The main application script
     {% endcomment %}
 
-    <script type="text/javascript">
-    	var filesuploaded = 0;
+    <script type="text/javascript">		
+		$('#close-upload').on('click', function(){$('#fileForm').foundation('reveal', 'close')});
+		
+		
+		
+		var filesuploaded = 0;
     	var filesprocessed = 0;
     	$( function() {
             'use strict';
@@ -379,21 +410,47 @@
 
                     {% block JS_OPTS %}
                         sequentialUploads: true,
-            			recalculateProgress: false
+            			recalculateProgress: false,
+						previewMaxWidth:100,
+						previewMaxHeight:100
+					
+					
                     {% endblock %}
 
                 });
         		$('#fileupload').bind('fileuploadprocessstart', function (e) {
                     $('#preloadmsg').hide();
+					$('#start-upload').removeClass('disabled');
+					$('#cancel-upload').removeClass('disabled');
+                });
+        		$('#fileupload').bind('fileuploadprocess', function (e) {
+					
+					
                 });
         		$('#fileupload').bind('fileuploadprocessdone', function (e, data) {
-                    filesprocessed = filesprocessed + 1;}
+					filesprocessed = filesprocessed + 1;
+				
+				}
                 );
-
+				
+				             				
             {% endblock %}
 
+			$('#fileupload').bind('fileuploadsend', function (e, data) {
+				Foundation.libs.reveal.settings.close_on_background_click = false;
+				$('#close-upload').off().addClass('disabled');
+				
+				$.each(data.files, function (index, file) {
+					$('#fileForm').foundation({reveal : {close_on_background_click: false,close_on_esc:false}});					  
+				});			
+			});
+			
+
     		$('#fileupload').bind('fileuploadfinished', function (e, data) {
-                filesuploaded = filesuploaded + 1;closeForm();
+                filesuploaded = filesuploaded + 1;				
+				
+				closeForm();
+				
             });
 
             {% block JS_FORM %}
@@ -411,8 +468,8 @@
                     url: $('#fileupload').fileupload('option', 'url'),
                     dataType: 'json',
                     context: $('#fileupload')[0]
-                }).always(function () {
-
+                }).always(function (context) {
+					
         			$(this).removeClass('fileupload-processing');
 
                 }).done(function (result) {
@@ -425,13 +482,28 @@
             {% endblock %}
 
         });
-
+		
+		
     	function closeForm() {
     		if (filesprocessed == filesuploaded) {
-    			setTimeout(function(){ $('#fileForm').foundation('reveal', 'close'); }, 250);
+    			$('#fileForm').foundation({reveal : {close_on_background_click: true,close_on_esc:true}});	
+				setTimeout(function(){ 
+					$('#fileForm').foundation('reveal', 'close');
+					setTimeout(function(){ 
+					$('#preloadmsg').show();
+					$('#start-upload').addClass('disabled');
+					$('#cancel-upload').addClass('disabled');
+					$('#close-upload').on('click', function(){$('#fileForm').foundation('reveal', 'close')}).removeClass('disabled'); 
+					}, 250);
+				}, 250);
 
             }
         }
+		
+		
+		
+		
+		
 
         /*
             Modify jquery fileupload's onAdd method. This method recreates

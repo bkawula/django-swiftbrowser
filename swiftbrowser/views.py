@@ -133,9 +133,10 @@ def create_container(request):
 
     return render_to_response(
         'create_container.html',
-        {'session': request.session},
-        context_instance=RequestContext(request)
-    )
+        {'session': request.session,},
+        context_instance=RequestContext(request))
+        
+        
 
 
 @session_valid
@@ -295,8 +296,7 @@ def objecttable(request):
     required_acl = ['.r:*', '.rlistings']
     if [x for x in read_acl if x in required_acl]:
         public = True
-   
-    console.log(objs)
+
     return render_to_response(
         "object_table.html",
         {
