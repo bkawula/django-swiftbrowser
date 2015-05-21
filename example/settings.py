@@ -31,6 +31,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'swiftbrowser.middlewares.AjaxMessaging',
 )
 
 ROOT_URLCONF = 'myproj.urls'

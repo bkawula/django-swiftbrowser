@@ -9,12 +9,14 @@ import re
 from hashlib import sha1
 import logging
 import zipfile
+import json
 import chromelogger as console
 from StringIO import StringIO
 from swiftclient import client
 from django.shortcuts import render_to_response, redirect, render
 from django.template import RequestContext
 from django.contrib import messages
+from django.contrib.messages import get_messages
 from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse, HttpResponseServerError, \
@@ -80,7 +82,7 @@ def login(request):
         {'form': form},
         context_instance=RequestContext(request)
     )
-
+    
 
 @session_valid
 def containerview(request):
@@ -522,7 +524,7 @@ def create_pseudofolder(request, container, prefix=None):
     """ Creates a pseudofolder (empty object of type application/directory) """
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-
+    
     form = PseudoFolderForm(request.POST)
     if form.is_valid():
         foldername = request.POST.get('foldername', None)
@@ -539,22 +541,17 @@ def create_pseudofolder(request, container, prefix=None):
             client.put_object(storage_url, auth_token,
                               container, foldername, obj,
                               content_type=content_type)
-            messages.add_message(request, messages.INFO,
-                                 _("Pseudofolder created."))
+            messages.add_message(request, messages.SUCCESS, _("The folder " + request.POST.get('foldername', None) + " was created."))
+            
         except client.ClientException:
             messages.add_message(request, messages.ERROR, _("Access denied."))
 
         if prefix:
             return redirect(objectview, container=container, prefix=prefix)
-        return redirect(objectview, container=container)
 
-    return render_to_response('create_pseudofolder.html', {
-                              'container': container,
-                              'prefix': prefix,
-                              'session': request.session,
-                              }, context_instance=RequestContext(request))
+    return HttpResponse(json.dumps({}), mimetype="application/json")
 
-
+  
 def get_acls(storage_url, auth_token, container):
     """ Returns ACLs of given container. """
     cont = client.head_container(storage_url, auth_token, container)

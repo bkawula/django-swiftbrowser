@@ -1,5 +1,5 @@
 {% extends 'jfu/upload_form.html' %}
-
+{% load i18n %}
 {% block CSS %}
 
     {% block CSS_BOOTSTRAP %}
@@ -451,6 +451,8 @@
 				
 				closeForm();
 				
+			    
+				
             });
 
             {% block JS_FORM %}
@@ -497,7 +499,18 @@
 					}, 250);
 				}, 250);
 
-            }
+			    $('#messages').html(
+					'<div data-alert class="alert-box success header-alert">' +
+						'<div class="row" >' +
+							'<div class="small-12 columns">' +
+						'<strong>{% trans "Success." %}</strong> ' + filesuploaded +
+						' files where added. <a href="#" class="close">&times;</a>' +
+						'</div>' +
+						'</div>' +
+					'</div>'			
+				    );
+            
+			}
         }
 		
 		
