@@ -57,6 +57,32 @@ table {
 	
 	
 }
+
+#login-form {
+	background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
+	background-size: 400px;
+	background-position:194px 0px;
+	background-color:#666666; height:100%;
+	position:absolute;
+	width:100%;
+	height:100%;
+	.login-form-box {
+		width:100%;
+		background-color:rgba(0,0,0,0.65);
+		padding: 50px 200px 10px;
+		position:relative;
+		top:40%;
+		.columns {
+			padding-left:0;
+		}
+		.login-btn {
+			width:100%;
+	
+		}	
+	}
+	.olrctext {width:400px;padding-bottom:15px;}
+}
+
 #header {
 	background-color:#363636;
 	.service-logo {

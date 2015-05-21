@@ -1,0 +1,4 @@
+
+[submodule "swiftbrowser/static/glyphicons/fonts"]
+	path = swiftbrowser/static/glyphicons/fonts
+	url = git@gitlab.scholarsportal.info:bartek/fonts.git
