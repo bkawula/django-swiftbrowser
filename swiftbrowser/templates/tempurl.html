@@ -1,42 +1,21 @@
-{% extends "base.html" %}
+
 {% load l10n %}
 {% load i18n %}
 {% load dateconv %}
 {% load lastpart %}
 {% block content %}
-
-<div class="container">
-{% include "messages.html" %}
-
-        <ul class="breadcrumb">
-            <li><a href="{% url "containerview" %}">Containers</a></li> 
-            <li>
-                <a class="u" href="{% url "objectview" container=container %}">{{container}}</a></li>
-
-            {% for prefix in prefixes %}
-                <li>
-                   
-                    <a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
-                </li>
-            {% endfor %}
-       </ul> 
-
-    <fieldset>
-    <legend>{% trans 'Temporary URL for' %} {{container}}/{{objectname}}</legend>
+<h2 id="tempurl-title">Temporary URL</h2>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	<h4>{% trans 'Temporary URL for' %} {{container}}/{{objectname}}</h4>
     <p>{% trans 'Use the following URL to share this object. The URL is valid for 7 days.' %}</p>
     <p><code>{{url}}</code></p>
     <p>{% trans 'Please note that you cannot revoke this URL. It is valid until expiration!' %}</p>
-
-
-            {% if prefix %}
-        <a href="{% url "objectview" container=container prefix=prefix %}" class="btn" >
-    {% else %}
-        <a href="{% url "objectview" container=container %}" class="btn" >
-    {% endif %}
-    {% trans 'Back' %}</a>
-  </fieldset>
-</div>
-
+	
+	<button type="button" id="close-tempurl" class="button close expand">Close</button>
+<div></div>
+<script type="text/javascript"> 		
+	$('#close-tempurl').on('click', function(){$('#tempurl').foundation('reveal', 'close')});
+</script>
 {% endblock %}
 
 

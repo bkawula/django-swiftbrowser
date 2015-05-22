@@ -112,10 +112,14 @@
 	
 	
 </div>
+<div class="reveal-modal" id="tempurl" data-reveal aria-labelledby="tempurl-title" aria-hidden="true" role="dialog">
+
+</div>
 </div>
 {% endblock %}
 {% block jsadd %}
 <script type="text/javascript"> 		
+	
 	$('input[id=file]').change(function() { $('#filetmp').val($(this).val()); });	
 		
 	$('#create-pseudofolder').on('submit', function(event){

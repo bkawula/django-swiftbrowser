@@ -80,6 +80,10 @@ table {
 	
 		}	
 	}
+	.login-alert {
+		color:$white;
+		padding-bottom:1rem;
+	}
 	.olrctext {width:400px;padding-bottom:15px;}
 }
 
@@ -132,7 +136,7 @@ table {
 	}
 }
 #containerview {
-
+	padding-bottom: 5rem;
 	.usage {
 		color:$white;
 		font-weight:normal;
@@ -206,7 +210,7 @@ table {
 }
 #objectview {
 	
-	
+	padding-bottom: 5rem;
 	#objecttable {
 		
 		
@@ -233,6 +237,19 @@ table {
 		
 	}
 	
+}
+.dropdown-btn {
+	background-color:transparent;
+	padding:0.5rem;
+	color:$charcoal;
+	font-size: 0.875rem;
+	width:100%;
+	margin:0;
+	text-align:left;
+	&:hover, &:focus {
+		color:$charcoal;
+		background-color:$smoke;
+	}
 }
 #fileForm {
 	.file-row {
