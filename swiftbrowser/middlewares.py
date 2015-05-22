@@ -1,5 +1,4 @@
 import simplejson as json
-import chromelogger as console
 
 from django.contrib import messages
 
