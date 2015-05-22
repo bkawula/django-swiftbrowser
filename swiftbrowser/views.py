@@ -21,6 +21,7 @@ from django.conf import settings
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse, HttpResponseServerError, \
     HttpResponseForbidden
+from django.http import JsonResponse
 from django.views import generic
 from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext as _
@@ -549,7 +550,7 @@ def create_pseudofolder(request, container, prefix=None):
         if prefix:
             return redirect(objectview, container=container, prefix=prefix)
 
-    return HttpResponse(json.dumps({}), mimetype="application/json")
+    return JsonResponse({})
 
   
 def get_acls(storage_url, auth_token, container):
