@@ -63,21 +63,6 @@
 	}
 
 	</script>
-<!--
-	<form
-	    id="fileupload" action="{{ swift_url }}"
-	    method="POST" enctype="multipart/form-data">
-
-				<input type="hidden" name="redirect" value="{{redirect_url}}" />
-			    <input type="hidden" name="max_file_size" value="{{ max_file_size }}" />
-			    <input type="hidden" name="max_file_count" value="{{ max_file_count }}" />
-			    <input type="hidden" name="expires" value="{{ expires }}" />
-			    <input type="hidden" name="signature" value="{{ signature }}" />
-				<input type="file" name="file1" /><br />
-				<input type="submit" />
-			</form>
-	{% include "cors.html" %}
--->
 
 	<div class="modal fade " id="fileForm" tabindex="-1" role="dialog" aria-labelledby="fileFormLabel" aria-hidden="true">
 	  <div class="modal-dialog modal-lg">
