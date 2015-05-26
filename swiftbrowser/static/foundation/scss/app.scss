@@ -332,6 +332,32 @@ table {
 		  font-size: 0.875rem;
 		  font-weight: bold;
 	}
+	.fileupload-progress {
+		display:none;
+	}
+	#fileupload {
+		#preloadmsg {
+			text-align:center;
+			background: url("../../img/upload-bkg.png") no-repeat center center;
+			
+			
+			.preloadmsg-txt {
+				font-size:1.5rem;
+				font-weight:bold;
+				padding-top: 12rem;
+			}
+			.chrome {
+				font-size:0.8rem;
+				padding-top: 8rem;
+				.chrome-txt {
+					
+				}
+				img {
+					width:40px;
+				}
+			}
+		}
+	}
 	
 }
 .fileinput-button {

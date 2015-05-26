@@ -79,7 +79,15 @@
         The loading indicator is shown during file processing 
        {% endcomment %}
    	<div class="modal-body">
-       <div id="preloadmsg">Choose files to upload to your OLRC container. You can select more than one file at a time. You can also drag and drop files anywhere on this page to start uploading.</div>
+       <div id="preloadmsg">
+		   <div class="preloadmsg-txt">Drop your files anywhere on the screen to start.</div>
+		   <div class="chrome">
+		   		<div class="chrome-txt">
+				<div><img src="{{ STATIC_URL }}img/chrome.png" alt="Google Chrome Logo" /></div>
+				<div>Chrome users! You can upload nested folders by dragging them onto the screen.</div>
+			</div>
+		   </div>
+	   </div>
    	{% block UPLOAD_FORM_LINDICATOR %}
        <div class="fileupload-loading"></div>
        <br>
@@ -208,6 +216,7 @@
 			   		</div>					
 					<div class="row">
 						<div class="small-1 columns">
+							<div class="preview"></div>
 						{{ JQ_OPEN }} if ($.inArray( type, types ) == -1) { {{ JQ_CLOSE }}
 			            	<div class="icon"><span class="glyphicons glyphicons-file"></span></div>
 						{{ JQ_OPEN }} } else { {{ JQ_CLOSE }}
@@ -420,6 +429,7 @@
                 });
         		$('#fileupload').bind('fileuploadprocessstart', function (e) {
                     $('#preloadmsg').hide();
+					$('.fileupload-progress').show();
 					$('#start-upload').removeClass('disabled');
 					$('#cancel-upload').removeClass('disabled');
                 });
@@ -493,6 +503,7 @@
 					$('#fileForm').foundation('reveal', 'close');
 					setTimeout(function(){ 
 					$('#preloadmsg').show();
+					$('.fileupload-progress').hide();
 					$('#start-upload').addClass('disabled');
 					$('#cancel-upload').addClass('disabled');
 					$('#close-upload').on('click', function(){$('#fileForm').foundation('reveal', 'close')}).removeClass('disabled'); 
