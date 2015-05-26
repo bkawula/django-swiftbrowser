@@ -491,7 +491,8 @@
                 */
                 if (typeof element.relativePath !== "undefined") {
                     var element = new File([element], element.relativePath + element.name, {type: "text/plain"});
-
+                } else if(typeof element.webkitRelativePath !== "undefined") {
+                    var element = new File([element], element.webkitRelativePath, {type: "text/plain"});
                 }
                 var newData = $.extend({}, data);
                 newData.files = fileSet ? element : [element];
