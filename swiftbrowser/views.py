@@ -27,7 +27,7 @@ from jfu.http import upload_receive, UploadResponse, JFUResponse
 from swiftbrowser.models import Photo
 from swiftbrowser.models import Document
 from swiftbrowser.forms import CreateContainerForm, PseudoFolderForm, \
-    LoginForm, AddACLForm, DocumentForm
+    LoginForm, AddACLForm, DocumentForm, CustomTempURLForm
 from swiftbrowser.utils import replace_hyphens, prefix_list, \
     pseudofolder_object_list, get_temp_key, get_base_url, get_temp_url, \
     create_thumbnail, redirect_to_objectview_after_delete, \
@@ -220,7 +220,7 @@ def objectview(request, container, prefix=None):
     public = False
     required_acl = ['.r:*', '.rlistings']
 
-    max_file_size = 5368709122
+    max_file_size = 10737418240
     max_file_count = 1
     expires = int(time.time() + 15 * 60)
 
@@ -480,9 +480,37 @@ def public_objectview(request, account, container, prefix=None):
     )
 
 
-@session_valid
+# @session_valid
 def tempurl(request, container, objectname):
-    """ Displays a temporary URL for a given container object """
+    """ Displays a temporary URL for a given container object. Provide a form
+    to request a custom temporary URL. """
+
+    # The time of the expiration of the tempurl can be defined through a post.
+    # The default is 7 days and 0 hours.
+    days_to_expiry = 7
+    hours_to_expiry = 0
+
+    if (request.POST):
+        tempurl_form = CustomTempURLForm(request.POST)
+        if tempurl_form.is_valid():
+
+            days_to_expiry = float(tempurl_form.cleaned_data['days'])
+            hours_to_expiry = float(tempurl_form.cleaned_data['hours'])
+
+    # Tempurl uses expiration time in seconds to create the url
+    seconds_to_expiry = days_to_expiry * 24 * 3600 \
+        + hours_to_expiry * 60 * 60
+
+    time_of_expiry = time.strftime(
+        '%A, %B %-d, %Y at %-I:%M%p',
+        time.localtime(int(time.time()) + seconds_to_expiry)
+    )
+
+    # Expiration message for the front end.
+    expires_in_message = '{0} days {1} hour(s) until {2}'.format(
+        days_to_expiry,
+        hours_to_expiry,
+        time_of_expiry)
 
     container = unicode(container).encode('utf-8')
     objectname = unicode(objectname).encode('utf-8')
@@ -491,7 +519,7 @@ def tempurl(request, container, objectname):
     auth_token = request.session.get('auth_token', '')
 
     url = get_temp_url(storage_url, auth_token,
-                       container, objectname, 7 * 24 * 3600)
+                       container, objectname, seconds_to_expiry)
 
     if not url:
         messages.add_message(request, messages.ERROR, _("Access denied."))
@@ -505,6 +533,8 @@ def tempurl(request, container, objectname):
         prefix += '/'
     prefixes = prefix_list(prefix)
 
+    tempurl_form = CustomTempURLForm()
+
     return render_to_response('tempurl.html',
                               {'url': url,
                                'account': storage_url.split('/')[-1],
@@ -513,6 +543,8 @@ def tempurl(request, container, objectname):
                                'prefixes': prefixes,
                                'objectname': objectname,
                                'session': request.session,
+                               'tempurl_form': tempurl_form,
+                               'expires_in_message': expires_in_message,
                                },
                               context_instance=RequestContext(request))
 

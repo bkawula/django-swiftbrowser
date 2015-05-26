@@ -5,37 +5,55 @@
 {% load lastpart %}
 {% block content %}
 
-<div class="container">
-{% include "messages.html" %}
+    <div class="container">
+        {% include "messages.html" %}
 
         <ul class="breadcrumb">
-            <li><a href="{% url "containerview" %}">Containers</a></li> 
             <li>
-                <a class="u" href="{% url "objectview" container=container %}">{{container}}</a></li>
-
+                <a href="{% url "containerview" %}">Containers</a>
+            </li>
+            <li>
+                <a class="u" href="{% url "objectview" container=container %}">{{container}}</a>
+            </li>
             {% for prefix in prefixes %}
                 <li>
-                   
                     <a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
                 </li>
             {% endfor %}
-       </ul> 
+        </ul>
 
-    <fieldset>
-    <legend>{% trans 'Temporary URL for' %} {{container}}/{{objectname}}</legend>
-    <p>{% trans 'Use the following URL to share this object. The URL is valid for 7 days.' %}</p>
-    <p><code>{{url}}</code></p>
-    <p>{% trans 'Please note that you cannot revoke this URL. It is valid until expiration!' %}</p>
-
+        <fieldset>
+            <legend>
+                {% trans 'Temporary URL for' %} {{container}}/{{objectname}}
+            </legend>
+            <p>
+                Use the following URL to share this object. The URL is valid for {{expires_in_message}}.
+            </p>
+            <p>
+                <code>
+                    {{url}}
+                </code>
+            </p>
+            <p>
+                {% trans 'Please note that you cannot revoke this URL. It is valid until expiration!' %}
+            </p>
+            <p>
+                {% trans 'To create a customer tempurl with a preside expiry time, enter a value below. This will generate a tempurl which will expire in the specified amount of hours.' %}
+            </p>
+            <form action="{% url "tempurl" container=container objectname=objectname %}" method="post">
+                {% csrf_token %}
+                {{tempurl_form}}
+                <input type="submit" />
+            </form>
 
             {% if prefix %}
-        <a href="{% url "objectview" container=container prefix=prefix %}" class="btn" >
-    {% else %}
-        <a href="{% url "objectview" container=container %}" class="btn" >
-    {% endif %}
-    {% trans 'Back' %}</a>
-  </fieldset>
-</div>
+                <a href="{% url "objectview" container=container prefix=prefix %}" class="btn" >
+            {% else %}
+                <a href="{% url "objectview" container=container %}" class="btn" >
+            {% endif %}
+            {% trans 'Back' %}</a>
+        </fieldset>
+    </div>
 
 {% endblock %}
 

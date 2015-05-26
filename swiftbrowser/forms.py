@@ -27,11 +27,16 @@ class LoginForm(forms.Form):
     """ Login form """
     username = forms.CharField(max_length=100)
     password = forms.CharField(widget=forms.PasswordInput)
-    # OPTIONS = [(k, v) for k, v in get_keystone_tenants().items()]
-    # tenant = forms.ChoiceField(choices=OPTIONS)
 
 
 class DocumentForm(forms.Form):
     docfile = forms.FileField(
         label='Select a file'
     )
+
+
+class CustomTempURLForm(forms.Form):
+    ''' Custom Temp URL Form. Allows users to specify the duration a tempurl
+    will last by days.'''
+    days = forms.DecimalField(initial=0)
+    hours = forms.DecimalField(initial=0)
