@@ -7,7 +7,6 @@
 <div id='containerdiv' class="container">
 	{% include "messages.html" %}
 	<div class="row">
-
 		<div class="col-xs-12 col-sm-8">
 			<ul class="breadcrumb">
 			    <li>
@@ -25,7 +24,7 @@
 			</ul>
 		</div>
 		<div class="col-xs-12 col-sm-4 action-btns">
-			<a href="{% url "delete_container" container=container.name %}" onclick="return confirm('{% trans 'Delete container' %} {{container.name}}?');">Delete Container</a>
+			<a href="{% url "delete_container" container=container %}" onclick="return confirm('{% trans 'Delete container' %} {{container}}?');">Delete Container</a>
 			<button type="button" class="btn btn-success" data-toggle="modal" data-target="#fileForm">Upload Files</button>
 		    {% if prefix %}
 		        <a href="{% url "create_pseudofolder" container=container prefix=prefix %}" class="btn btn-primary" role="button">
