@@ -132,13 +132,11 @@
                             {% comment %}
                                 The file input for the upload form.
                             {% endcomment %}
-                				<input
+                                <input
                                     id="file" type="file" name="FILE_NAME" multiple
                                     {% if accepted_mime_types %}
                                         accept = '{{ accepted_mime_types|join:"," }}'
                                     {% endif %}
-
-                                    multiple directory webkitdirectory mozdirectory
                                 />
                             {% endblock %}
                         </span>
