@@ -10,7 +10,7 @@ from hashlib import sha1
 import logging
 import zipfile
 import json
-#import chromelogger as console
+import chromelogger as console
 from StringIO import StringIO
 from swiftclient import client
 from django.shortcuts import render_to_response, redirect, render
@@ -168,7 +168,6 @@ def objectview(request, container, prefix=None):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-
     account = client.head_account(storage_url, auth_token)
     url_key = account.get('x-account-meta-temp-url-key', '')
 
@@ -199,18 +198,18 @@ def objectview(request, container, prefix=None):
     # Check CORS header - BASE_URL should be in there
     if meta.get(
         'x-container-meta-access-control-allow-origin'
-    ) != settings.BASE_URL:
-
+    ) != '*':
+        
         # Add CORS headers so user can upload to this container.
         headers = {
             'X-Container-Meta-Access-Control-Expose-Headers':
             'Access-Control-Allow-Origin',
-            'X-Container-Meta-Access-Control-Allow-Origin': settings.BASE_URL
+            'X-Container-Meta-Access-Control-Allow-Origin': settings.BASE_URL,
         }
 
         try:
             client.put_container(storage_url, auth_token, container, headers)
-
+            
         except client.ClientException:
             messages.add_message(request, messages.ERROR, _("Access denied."))
             return redirect(containerview)
@@ -230,7 +229,7 @@ def objectview(request, container, prefix=None):
 
     hmac_body = '%s\n%s\n%s\n%s\n%s' % (
         path,
-        redirect_url,
+        '',
         max_file_size,
         max_file_count,
         expires
@@ -745,7 +744,7 @@ def serve_thumbnail(request, container, objectname):
         return HttpResponseServerError()
 
     return HttpResponse(image_data, mimetype=headers['content-type'])
-"""
+
 
 #This function doesn't do anything.
 @session_valid
@@ -780,7 +779,7 @@ def upload(request):
      }
 
      return UploadResponse(request, file_dict)
-
+"""
 
 @session_valid
 @require_POST
