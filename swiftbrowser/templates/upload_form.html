@@ -132,7 +132,7 @@
                             {% comment %}
                                 The file input for the upload form.
                             {% endcomment %}
-                                <input
+                				<input
                                     id="file" type="file" name="FILE_NAME" multiple
                                     {% if accepted_mime_types %}
                                         accept = '{{ accepted_mime_types|join:"," }}'
@@ -354,6 +354,7 @@
     				{name:"expires",value:"{{ expires }}"},
     				{name:"signature",value:"{{ signature }}"}
     	        );
+
         		$('#fileupload').fileupload({
 
         		    formData: formData,
@@ -489,8 +490,7 @@
                 */
                 if (typeof element.relativePath !== "undefined") {
                     var element = new File([element], element.relativePath + element.name, {type: "text/plain"});
-                } else if(typeof element.webkitRelativePath !== "undefined") {
-                    var element = new File([element], element.webkitRelativePath, {type: "text/plain"});
+
                 }
                 var newData = $.extend({}, data);
                 newData.files = fileSet ? element : [element];
