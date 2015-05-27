@@ -305,3 +305,23 @@ def session_valid(fn):
         return redirect(swiftbrowser.views.login)
 
     return wrapper
+
+
+def ajax_session_valid(fn):
+    '''Decorator class to verify session has not expired before displaying a
+    view for views that are only accessed with Ajax requests. Return error
+    code if failed.'''
+
+    def wrapper(*args, **kw):
+
+        storage_url = args[0].session.get('storage_url', '')
+        auth_token = args[0].session.get('auth_token', '')
+
+        try:
+            client.head_account(storage_url, auth_token)
+            return fn(*args, **kw)
+        except:
+            messages.error(args[0], _("Session expired."))
+        return {'errors': 'true'}
+
+    return wrapper

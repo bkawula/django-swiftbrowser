@@ -50,20 +50,22 @@
 	<script type="text/javascript">
 		$( document ).ready(function() {
 			loadTable();
-
-		}
-		);
-
-		function loadTable() {
-		$.ajax({
-		  url: '{% url "objecttable" %}',
-		  success: function(data) {
-		  $('#objecttable').html(data);
-		  }
 		});
 
-	}
+		function loadTable() {
+			$.ajax({
+			  url: '{% url "objecttable" %}',
+			  success: function(data, status) {
+			  	$('#objecttable').html(data);
 
+			  },
+			  error: function(data) {
+			  	//On error, refresh the page. This will redirect to login
+			  	//if session is expired.
+			  	location.reload();
+			  }
+			});
+		}
 	</script>
 
 	<div class="modal fade " id="fileForm" tabindex="-1" role="dialog" aria-labelledby="fileFormLabel" aria-hidden="true">

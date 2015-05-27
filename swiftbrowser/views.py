@@ -32,7 +32,7 @@ from swiftbrowser.utils import replace_hyphens, prefix_list, \
     pseudofolder_object_list, get_temp_key, get_base_url, get_temp_url, \
     create_thumbnail, redirect_to_objectview_after_delete, \
     get_original_account, create_pseudofolder_from_prefix, \
-    delete_given_object, delete_given_folder, session_valid
+    delete_given_object, delete_given_folder, session_valid, ajax_session_valid
 
 import swiftbrowser
 
@@ -267,7 +267,7 @@ def objectview(request, container, prefix=None):
     )
 
 
-@session_valid
+@ajax_session_valid
 def objecttable(request):
     """ Returns list of all objects in current container. """
 
