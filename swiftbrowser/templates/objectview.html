@@ -23,7 +23,9 @@
        </ul>
 </div>
 <div class="col-xs-12 col-sm-4 action-btns">
+	<a href="{% url "delete_container" container=container %}" onclick="return confirm('{% trans 'Delete container' %} {{container}}?');">Delete Container</a>
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#fileForm">Upload Files</button>
+
                 {% if prefix %}
                     <a href="{% url "create_pseudofolder" container=container prefix=prefix %}" class="btn btn-primary" role="button">
                 {% else %}
