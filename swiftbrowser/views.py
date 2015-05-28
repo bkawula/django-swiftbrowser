@@ -222,7 +222,9 @@ def objectview(request, container, prefix=None):
 
     max_file_size = 5368709122
     max_file_count = 1
-    expires = int(time.time() + 15 * 60)
+
+    #To allow large files to upload, increase this window to 1hr.
+    expires = int(time.time() + 60 * 60 * 60)
 
     hmac_body = '%s\n%s\n%s\n%s\n%s' % (
         path,
@@ -277,9 +279,12 @@ def objecttable(request):
     prefix = request.session.get('prefix')
 
     try:
-        meta, objects = client.get_container(storage_url, auth_token,
-                                             container, delimiter='/',
-                                             prefix=prefix)
+        meta, objects = client.get_container(
+            storage_url,
+            auth_token,
+            container,
+            delimiter='/',
+            prefix=prefix)
 
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
