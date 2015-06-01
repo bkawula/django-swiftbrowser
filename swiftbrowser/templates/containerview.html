@@ -56,7 +56,7 @@
 			{% for container in containers %}
 		
 			<tr>
-				<td class="icon"><span class="glyphicons glyphicons-folder-closed"></span></td>
+				<td class="icon"><span class="glyphicons glyphicons-cloud"></span></td>
 				<td><strong><a href="{% url "objectview" container=container.name %}">{{container.name}}</a></strong></td>
 				<td>{{container.count}}</td>
 				<td>{{container.bytes|filesizeformat}}</td>

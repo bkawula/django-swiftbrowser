@@ -2357,7 +2357,7 @@ select {
 }
 /* line 68, ../bower_components/foundation/scss/foundation/components/_breadcrumbs.scss */
 .breadcrumbs > *:hover a, .breadcrumbs > *:focus a {
-  text-decoration: underline;
+  text-decoration: none;
 }
 /* line 70, ../bower_components/foundation/scss/foundation/components/_breadcrumbs.scss */
 .breadcrumbs > * a {
@@ -9809,7 +9809,6 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
 #fileForm #fileupload #preloadmsg {
   text-align: center;
   background: url("../../img/upload-bkg.png") no-repeat center center;
-  position: relative;
 }
 /* line 344, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .preloadmsg-txt {
@@ -9848,18 +9847,26 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   font-size: 1.25rem;
   font-weight: bold;
 }
-/* line 378, ../scss/app.scss */
+/* line 377, ../scss/app.scss */
+.breadcrumbs li:focus, .breadcrumbs li:hover {
+  text-decoration: none;
+}
+/* line 381, ../scss/app.scss */
 .breadcrumbs a {
   color: #FFFFFF;
   text-decoration: none;
 }
-/* line 382, ../scss/app.scss */
+/* line 385, ../scss/app.scss */
 .breadcrumbs a:focus, .breadcrumbs a:hover {
   text-decoration: none;
   color: #dbdbdb;
 }
+/* line 391, ../scss/app.scss */
+.breadcrumbs .delete-container {
+  top: -10px;
+}
 
-/* line 393, ../scss/app.scss */
+/* line 396, ../scss/app.scss */
 .loader:before,
 .loader:after,
 .loader {
@@ -9872,12 +9879,12 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation: load7 1.8s infinite ease-in-out;
 }
 
-/* line 404, ../scss/app.scss */
+/* line 407, ../scss/app.scss */
 #progress {
   display: none;
 }
 
-/* line 407, ../scss/app.scss */
+/* line 410, ../scss/app.scss */
 .loader {
   margin: 0em 4em 6em;
   font-size: 10px;
@@ -9890,19 +9897,19 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation-delay: -0.16s;
 }
 
-/* line 419, ../scss/app.scss */
+/* line 422, ../scss/app.scss */
 .loader:before {
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
 
-/* line 424, ../scss/app.scss */
+/* line 427, ../scss/app.scss */
 .loader:after {
   left: 3.5em;
 }
 
-/* line 427, ../scss/app.scss */
+/* line 430, ../scss/app.scss */
 .loader:before,
 .loader:after {
   content: '';

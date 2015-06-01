@@ -62,122 +62,132 @@
      The file upload form used as target for the file upload widget
     {% endcomment %}
 
-   <form 
-       id="fileupload" enctype="multipart/form-data">
-   	{% csrf_token %}
-       {% comment %}
-        Redirect browsers with JavaScript disabled to the origin page 
-       {% endcomment %}
-       <noscript>
-           <input type="hidden" name="redirect" value="{{ request.path }}">
-       </noscript>
+    <form
+        id="fileupload" action="{{ swift_url }}"
+        method="POST" enctype="multipart/form-data">
+    	{% csrf_token %}
+        {% comment %}
+         Redirect browsers with JavaScript disabled to the origin page
+        {% endcomment %}
+        <noscript>
+            <input type="hidden" name="redirect" value="{{ request.path }}">
+        </noscript>
 
-  
+        {% comment %}
+         The loading indicator is shown during file processing
+        {% endcomment %}
+    	<div class="modal-body">
+	        <div id="preloadmsg">
+	 		   <div class="preloadmsg-txt">Drop your files anywhere on the screen to start.</div>
+	 		   <div class="chrome">
+	 		   		<div class="chrome-txt">
+	 				<div><img src="{{ STATIC_URL }}img/chrome.png" alt="Google Chrome Logo" /></div>
+	 				<div>Chrome users! You can upload nested folders by dragging them onto the screen.</div>
+	 			</div>
+	 		   </div>
+	 	   </div>
+    	    {% block UPLOAD_FORM_LINDICATOR %}
+                <div class="fileupload-loading"></div>
+				<br>
+            {% endblock %}
 
-       {% comment %}
-        The loading indicator is shown during file processing 
-       {% endcomment %}
-   	<div class="modal-body">
-       <div id="preloadmsg">
-		   <div class="preloadmsg-txt">Drop your files anywhere on the screen to start.</div>
-		   <div class="chrome">
-		   		<div class="chrome-txt">
-				<div><img src="{{ STATIC_URL }}img/chrome.png" alt="Google Chrome Logo" /></div>
-				<div>Chrome users! You can upload nested folders by dragging them onto the screen.</div>
-			</div>
-		   </div>
-	   </div>
-   	{% block UPLOAD_FORM_LINDICATOR %}
-       <div class="fileupload-loading"></div>
-       <br>
-       {% endblock %}
+            {% block UPLOAD_FORM_LISTING %}
+                {% comment %}
+                 The table listing the files available for upload/download
+                {% endcomment %}
+		        <div role="presentation" class="">
+		            <div class="files"></div>
+		        </div>
+            {% endblock %}
+    	</div>
+        <div class="modal-footer">
+            {% block UPLOAD_FORM_PROGRESS_BAR %}
+            {% comment %}
+             The global progress information
+            {% endcomment %}
+            <div class="fileupload-progress fade">
+                {% comment %}
+                 The global progress bar
+                {% endcomment %}
+	      		<div class="progress" role="progressbar" 
+	                  aria-valuemin="0" aria-valuemax="100">
+	      		  <span class="progress-bar meter" style="width: 0%"></span>
+	      		</div>
+                {% comment %}
+                 The extended global progress information
+                {% endcomment %}
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+            {% endblock %}
+            {% block UPLOAD_FORM_BUTTON_BAR %}
+                <span class="fileupload-buttonbar">
+                	{% comment %}
+                     The fileupload-buttonbar contains buttons to add/delete files and
+                     start/cancel the upload
+                    {% endcomment %}
 
-       {% block UPLOAD_FORM_LISTING %}
-       {% comment %}
-        The table listing the files available for upload/download 
-       {% endcomment %}
-       <div role="presentation" class="">
-           <div class="files"></div>
-       </div>
-       {% endblock %}
-   	</div>
-       <div class="modal-footer">	        			
-       {% block UPLOAD_FORM_PROGRESS_BAR %}
-       {% comment %}
-        The global progress information 
-       {% endcomment %}
-       <div class="fileupload-progress fade">
-           {% comment %}
-            The global progress bar 
-           {% endcomment %}
-   		<div class="progress" role="progressbar" 
-               aria-valuemin="0" aria-valuemax="100">
-   		  <span class="progress-bar meter" style="width: 0%"></span>
-   		</div>
-           {% comment %}
-            The extended global progress information 
-           {% endcomment %}
-           <div class="progress-extended">&nbsp;</div>
-		
-       </div>
-
-       {% endblock %}
-       {% block UPLOAD_FORM_BUTTON_BAR %}
-       <span class="fileupload-buttonbar">
-    
-   	{% comment %}
-        The fileupload-buttonbar contains buttons to add/delete files and
-        start/cancel the upload 
-       {% endcomment %}
-
-      
-               {% comment %}
-                The fileinput-button span is used to style the file input field as button 
-               {% endcomment %}
-
-               {% block UPLOAD_FORM_BUTTON_BAR_ADD %}
-               <span class="button fileinput-button">
-                   <span class="glyphicons glyphicons-plus"></span>
-                   <span>Add files...</span>
+                    {% comment %}
+                     The fileinput-button span is used to style the file input field as button
+                    {% endcomment %}
+                    {% block UPLOAD_FORM_BUTTON_BAR_ADD %}
+		                <span class="button fileinput-button small">
+		                    <span class="glyphicons glyphicons-plus"></span>
+		                    <span>Add files...</span>
 
                         
-                   {% block FILE_INPUT %}
-                   {% comment %}
-                       The file input for the upload form.
-                   {% endcomment %}
+		                    {% block FILE_INPUT %}
+		                    {% comment %}
+		                        The file input for the upload form.
+		                    {% endcomment %}
 				
-   				<input 
-                       id="file" type="file" name="FILE_NAME" multiple
+		    				<input 
+		                        id="file" type="file" name="FILE_NAME" multiple
 
-                       {% if accepted_mime_types %}
-                           accept = '{{ accepted_mime_types|join:"," }}'
-                       {% endif %}
-                   />
+		                        {% if accepted_mime_types %}
+		                            accept = '{{ accepted_mime_types|join:"," }}'
+		                        {% endif %}
+		                    />
 				
-                   {% endblock %}
+		                    {% endblock %}
 
-               </span>
-               {% endblock %}
+		                </span>
+		                <span class="button fileinput-button small">
+		                    <span class="glyphicons glyphicons-folder-plus"></span>
+                            <span>Add Directories...</span>
+                            {% comment %}
+                                The file input for the upload form.
+                            {% endcomment %}
+                                <input
+                                    id="directory" type="file" name="FILE_NAME" multiple directory webkitdirectory
+                                    {% if accepted_mime_types %}
+                                        accept = '{{ accepted_mime_types|join:"," }}'
+                                    {% endif %}
+                                />
+                        </span>
+                    {% endblock %}
 
-               {% block UPLOAD_FORM_BUTTON_BAR_CONTROL %}
-               <button type="submit" id="start-upload" class="button start success disabled">
-                   <span class="glyphicons glyphicons-up-arrow"></span>
-                   <span>Start upload</span>
-               </button>
-               <button type="reset" id="cancel-upload" class="button cancel secondary disabled">
-                   <span class="glyphicons glyphicons-circle-remove"></span>
-                   <span>Cancel upload</span>
-               </button>
-               {% endblock %}
-   			<button type="button" id="close-upload" class="button close">Close</button>
-       
+                    {% block UPLOAD_FORM_BUTTON_BAR_CONTROL %}
+		                <button type="submit" id="start-upload" class="button start success disabled small">
+		                    <span class="glyphicons glyphicons-up-arrow"></span>
+		                    <span>Start upload</span>
+		                </button>
+		                <button type="reset" id="cancel-upload" class="button cancel secondary disabled small">
+		                    <span class="glyphicons glyphicons-circle-remove"></span>
+		                    <span>Cancel upload</span>
+		                </button>
+                    {% endblock %}
+        			<button type="button" id="close-upload" class="button close small">Close</button>
+                </span>
+            {% endblock %}
+        </div>
+    </form>
+    <form
+        id="directoryupload" action="{{ swift_url }}"
+        method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
 
-       </span>
-       {% endblock %}
-	
-     
-       </div>
-   </form>
+    </form>
+
 {% endblock %}
 
 {% block MODAL_GALLERY %}
@@ -583,6 +593,12 @@
 				
                 if (element.relativePath) {
                     var element = new File([element], element.relativePath + element.name, {type: "text/plain"});
+
+
+                } else if (element.webkitRelativePath){
+					console.log(typeof element.webkitRelativePath);
+                    var element = new File([element], element.webkitRelativePath + element.name, {type: "text/plain"});
+
                 }
                 var newData = $.extend({}, data);
                 newData.files = fileSet ? element : [element];

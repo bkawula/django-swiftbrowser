@@ -11,10 +11,13 @@
 <div class="row" >
 	<div class="small-12 large-7 columns">
 		<ul class="breadcrumbs">
-			<li><a href="{% url "containerview" %}">Containers</a></li> 
+			<li>
+				<a href="{% url "containerview" %}">Containers</a>
+			</li> 
 			
 			<li>
 				<a href="{% url "objectview" container=container %}">{{container}}</a>
+				<a href="{% url "delete_container" container=container %}" onclick="return confirm('{% trans 'Delete container' %} {{container}}?');" title="Delete Container"><span class="glyphicons glyphicons-cloud-minus delete-container"></span></a>
 			</li>
 			{% for prefix in prefixes %}
 			<li>
@@ -39,6 +42,7 @@
 			<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
 			New Folder
 		</button>
+		
 		{% if public %}
 		<div id="drop2" data-dropdown-content class="f-dropdown content" aria-hidden="true" tabindex="-1">
 		<strong>{% trans 'Public URL:' %}</strong>
@@ -72,11 +76,18 @@
 						$('#objecttable').html(data);
 						$(document).foundation();
 					}
+				}).fail( function(data) {
+					//On error, refresh the page. This will redirect to login
+					//if session is expired.
+					location.reload();
 				});	
 			}
+			
+			
 		</script>
 		<div id="objecttable"></div>
 	</div>
+
 </div>
 <div class="reveal-modal" id="fileForm" data-reveal aria-labelledby="fileForm-title" aria-hidden="true" role="dialog">
 	<h2 id="fileForm-title">Add Files</h2>
@@ -190,6 +201,7 @@
 		  }).always(function(data, textStatus, jqXHR) {
 		
   	        var contentType = jqXHR.getResponseHeader("Content-Type");
+
 
   	        if (contentType == "application/javascript" || contentType == "application/json") {
   	            var json = $.parseJSON(jqXHR.responseText);

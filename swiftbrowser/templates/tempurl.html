@@ -4,6 +4,7 @@
 {% load dateconv %}
 {% load lastpart %}
 {% block content %}
+
 <h2 id="tempurl-title">Temporary URL</h2>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	<h4>{% trans 'Temporary URL for' %} {{container}}/{{objectname}}</h4>
@@ -16,6 +17,7 @@
 <script type="text/javascript"> 		
 	$('#close-tempurl').on('click', function(){$('#tempurl').foundation('reveal', 'close')});
 </script>
+
 {% endblock %}
 
 

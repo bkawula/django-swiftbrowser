@@ -374,6 +374,9 @@ table {
 		text-transform:none;
 		font-size: 1.25rem;
 		font-weight:bold;
+		&:focus,&:hover {
+			text-decoration:none;
+		};
 	}
 	a {
 		//color:#78D2F7;
@@ -385,9 +388,9 @@ table {
 		}
 		
 	}
-	//*:before {
-	//	content:none;
-	//}
+	.delete-container {
+		top:-10px;
+	}
 	
 }
 .loader:before,

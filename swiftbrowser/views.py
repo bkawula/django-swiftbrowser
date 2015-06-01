@@ -30,12 +30,12 @@ from jfu.http import upload_receive, UploadResponse, JFUResponse
 from swiftbrowser.models import Photo
 from swiftbrowser.models import Document
 from swiftbrowser.forms import CreateContainerForm, PseudoFolderForm, \
-    LoginForm, AddACLForm, DocumentForm
+    LoginForm, AddACLForm, DocumentForm, CustomTempURLForm
 from swiftbrowser.utils import replace_hyphens, prefix_list, \
     pseudofolder_object_list, get_temp_key, get_base_url, get_temp_url, \
     create_thumbnail, redirect_to_objectview_after_delete, \
     get_original_account, create_pseudofolder_from_prefix, \
-    delete_given_object, delete_given_folder, session_valid
+    delete_given_object, delete_given_folder, session_valid, ajax_session_valid
 
 import swiftbrowser
 
@@ -223,9 +223,11 @@ def objectview(request, container, prefix=None):
     public = False
     required_acl = ['.r:*', '.rlistings']
 
-    max_file_size = 5368709122
+    max_file_size = 10737418240
     max_file_count = 1
-    expires = int(time.time() + 15 * 60)
+
+    #To allow large files to upload, increase this window to 2hr.
+    expires = int(time.time() + 60 * 60 * 60 * 2)
 
     hmac_body = '%s\n%s\n%s\n%s\n%s' % (
         path,
@@ -270,7 +272,7 @@ def objectview(request, container, prefix=None):
     )
 
 
-@session_valid
+@ajax_session_valid
 def objecttable(request):
     """ Returns list of all objects in current container. """
 
@@ -280,9 +282,12 @@ def objecttable(request):
     prefix = request.session.get('prefix')
 
     try:
-        meta, objects = client.get_container(storage_url, auth_token,
-                                             container, delimiter='/',
-                                             prefix=prefix)
+        meta, objects = client.get_container(
+            storage_url,
+            auth_token,
+            container,
+            delimiter='/',
+            prefix=prefix)
 
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
@@ -482,9 +487,38 @@ def public_objectview(request, account, container, prefix=None):
     )
 
 
-@session_valid
+# @session_valid
 def tempurl(request, container, objectname):
-    """ Displays a temporary URL for a given container object """
+    """ Displays a temporary URL for a given container object. Provide a form
+    to request a custom temporary URL. """
+
+    # The time of the expiration of the tempurl can be defined through a post.
+    # The default is 7 days and 0 hours.
+    days_to_expiry = 7
+    hours_to_expiry = 0
+
+    if (request.POST):
+        tempurl_form = CustomTempURLForm(request.POST)
+        if tempurl_form.is_valid():
+
+            days_to_expiry = float(tempurl_form.cleaned_data['days'])
+            hours_to_expiry = float(tempurl_form.cleaned_data['hours'])
+
+    # Tempurl uses expiration time in seconds to create the url
+    seconds_to_expiry = int(
+        days_to_expiry * 24 * 3600
+        + hours_to_expiry * 60 * 60)
+
+    time_of_expiry = time.strftime(
+        '%A, %B %-d, %Y at %-I:%M%p',
+        time.localtime(int(time.time()) + seconds_to_expiry)
+    )
+
+    # Expiration message for the front end.
+    expires_in_message = '{0} days {1} hour(s) until {2}'.format(
+        days_to_expiry,
+        hours_to_expiry,
+        time_of_expiry)
 
     container = unicode(container).encode('utf-8')
     objectname = unicode(objectname).encode('utf-8')
@@ -493,7 +527,7 @@ def tempurl(request, container, objectname):
     auth_token = request.session.get('auth_token', '')
 
     url = get_temp_url(storage_url, auth_token,
-                       container, objectname, 7 * 24 * 3600)
+                       container, objectname, seconds_to_expiry)
 
     if not url:
         messages.add_message(request, messages.ERROR, _("Access denied."))
@@ -507,6 +541,8 @@ def tempurl(request, container, objectname):
         prefix += '/'
     prefixes = prefix_list(prefix)
 
+    tempurl_form = CustomTempURLForm()
+
     return render_to_response('tempurl.html',
                               {'url': url,
                                'account': storage_url.split('/')[-1],
@@ -515,6 +551,8 @@ def tempurl(request, container, objectname):
                                'prefixes': prefixes,
                                'objectname': objectname,
                                'session': request.session,
+                               'tempurl_form': tempurl_form,
+                               'expires_in_message': expires_in_message,
                                },
                               context_instance=RequestContext(request))
 
@@ -680,107 +718,6 @@ def edit_acl(request, container):
         'base_url': base_url,
     }, context_instance=RequestContext(request))
 
-"""
-def serve_thumbnail(request, container, objectname):
-    '''if request.session.get('username', '') == settings.THUMBNAIL_USER:
-        return HttpResponseForbidden()'''
-
-    storage_url = request.session.get('storage_url', '')
-    auth_token = request.session.get('auth_token', '')
-
-    try:
-        im_headers = client.head_object(
-            storage_url,
-            auth_token,
-            container,
-            objectname
-        )
-        im_ts = float(im_headers['x-timestamp'])
-    except client.ClientException as e:
-        logger.error("Cannot head object %s of container %s. Error: %s "
-                     % (objectname, container, str(e)))
-        return HttpResponseServerError()
-
-    #Is this an alias container? Then use the original account
-    #to prevent duplicating
-    (account, original_container_name) = get_original_account(
-        storage_url,
-        auth_token,
-        container
-    )
-    if account is None:
-        return HttpResponseServerError()
-
-    try:
-        th_headers = client.head_object(
-            storage_url,
-            auth_token,
-            account,
-            "%s_%s" % (original_container_name, objectname)
-        )
-        th_ts = float(th_headers['x-timestamp'])
-        if th_ts < im_ts:
-            create_thumbnail(request, account,
-                             container, objectname)
-    except client.ClientException:
-        create_thumbnail(
-            request,
-            account,
-            original_container_name,
-            container,
-            objectname
-        )
-    th_name = "%s_%s" % (original_container_name, objectname)
-    try:
-        headers, image_data = client.get_object(
-            storage_url,
-            auth_token,
-            account,
-            th_name
-        )
-    except client.ClientException as e:
-        logger.error("Cannot get object %s of container %s. Error: %s "
-                     % (th_name, account, str(e)))
-        return HttpResponseServerError()
-
-    return HttpResponse(image_data, mimetype=headers['content-type'])
-
-
-#This function doesn't do anything.
-@session_valid
-@require_POST
-def upload(request):
-     # This function doesn't do anything
-     return ""
-     file = upload_receive(request)
-     container = request.session.get('container')
-     prefix = request.session.get('prefix')
-
-     instance = Photo(file=file)
-
-     if prefix:
-         instance.path = os.path.join(container, prefix)
-     else:
-         instance.path = os.path.join(container)
-
-     instance.save()
-
-     basename = os.path.basename(instance.file.path)
-
-     file_dict = {
-         'path': instance.file.path,
-         'name': basename,
-         'size': file.size,
-         'url': swift_url + basename,
-         'thumbnailUrl': swift_url + basename,
-         'session': request.session,
-         'deleteUrl': reverse('jfu_delete', kwargs={'pk': instance.pk}),
-         'deleteType': 'POST',
-     }
-
-     return UploadResponse(request, file_dict)
-"""
-
 @session_valid
 @require_POST
 def upload_delete(request, pk):
@@ -793,7 +730,3 @@ def upload_delete(request, pk):
         success = False
 
     return JFUResponse(request, success)
-
-
-def move_to_folder(request, container, objectname):
-    return
