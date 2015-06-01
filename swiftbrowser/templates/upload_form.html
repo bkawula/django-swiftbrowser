@@ -132,13 +132,26 @@
                             {% comment %}
                                 The file input for the upload form.
                             {% endcomment %}
-                				<input
+                                <input
                                     id="file" type="file" name="FILE_NAME" multiple
                                     {% if accepted_mime_types %}
                                         accept = '{{ accepted_mime_types|join:"," }}'
                                     {% endif %}
                                 />
                             {% endblock %}
+                        </span>
+                        <span class="btn btn-success fileinput-button">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Add Directories...</span>
+                            {% comment %}
+                                The file input for the upload form.
+                            {% endcomment %}
+                                <input
+                                    id="directory" type="file" name="FILE_NAME" multiple directory webkitdirectory
+                                    {% if accepted_mime_types %}
+                                        accept = '{{ accepted_mime_types|join:"," }}'
+                                    {% endif %}
+                                />
                         </span>
                     {% endblock %}
 
@@ -156,6 +169,12 @@
                 </span>
             {% endblock %}
         </div>
+    </form>
+    <form
+        id="directoryupload" action="{{ swift_url }}"
+        method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
     </form>
 {% endblock %}
 
@@ -491,6 +510,8 @@
                 if (typeof element.relativePath !== "undefined") {
                     var element = new File([element], element.relativePath + element.name, {type: "text/plain"});
 
+                } else if (typeof element.webkitRelativePath !== "undefined"){
+                    var element = new File([element], element.webkitRelativePath + element.name, {type: "text/plain"});
                 }
                 var newData = $.extend({}, data);
                 newData.files = fileSet ? element : [element];
