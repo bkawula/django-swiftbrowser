@@ -3,20 +3,22 @@
 {% load i18n %}
 {% load dateconv %}
 {% load lastpart %}
+{% load static %}
 {% block content %}
 
-<h2 id="tempurl-title">Temporary URL</h2>
+    <h2 id="tempurl-title">Temporary URL</h2>
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-	<h4>{% trans 'Temporary URL for' %} {{container}}/{{objectname}}</h4>
-    <p>{% trans 'Use the following URL to share this object. The URL is valid for 7 days.' %}</p>
-    <p><code>{{url}}</code></p>
+    <h4>{% trans 'Temporary URL for' %} {{container}}/{{objectname}}</h4>
+    <p>Use the following URL to share this object. The URL is valid for {{expires_in_message}}.</p>
+    <p>
+        <input type="text" id="tempurl" style="width: 400px">{{url}}</input>
+        <span id="highlight-icon" class="glyphicons glyphicons-magic">highlight</span>
+    </p>
     <p>{% trans 'Please note that you cannot revoke this URL. It is valid until expiration!' %}</p>
-	
-	<button type="button" id="close-tempurl" class="button close expand">Close</button>
-<div></div>
-<script type="text/javascript"> 		
-	$('#close-tempurl').on('click', function(){$('#tempurl').foundation('reveal', 'close')});
-</script>
+
+    <button type="button" id="close-tempurl" class="button close expand">Close</button>
+    <div></div>
+    <script src="{% static "js/helpers/tempurl.js" %}"></script>
 
 {% endblock %}
 
