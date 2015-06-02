@@ -10,8 +10,6 @@ from hashlib import sha1
 import logging
 import zipfile
 import json
-import chromelogger as console
-# import chromelogger as console
 from StringIO import StringIO
 from swiftclient import client
 from django.shortcuts import render_to_response, redirect, render
