@@ -5,8 +5,8 @@ from django.conf.urls import patterns, include, url
 from swiftbrowser.views import containerview, objectview, download,\
     delete_object, login, tempurl, create_pseudofolder,\
     create_container, delete_container, public_objectview, toggle_public,\
-    edit_acl, upload_delete, objecttable, \
-    download_collection, delete_folder
+    edit_acl, upload_delete, objecttable, delete_folder
+from swiftbrowser.utils import download_collection
 
 from swiftbrowser.trashviews import move_to_trash, trashview, delete_trash,\
     restore_trash, move_collection_to_trash, restore_trash_collection

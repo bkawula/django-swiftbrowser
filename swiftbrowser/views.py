@@ -11,6 +11,7 @@ import logging
 import zipfile
 import json
 import chromelogger as console
+# import chromelogger as console
 from StringIO import StringIO
 from swiftclient import client
 from django.shortcuts import render_to_response, redirect, render
@@ -35,7 +36,8 @@ from swiftbrowser.utils import replace_hyphens, prefix_list, \
     pseudofolder_object_list, get_temp_key, get_base_url, get_temp_url, \
     create_thumbnail, redirect_to_objectview_after_delete, \
     get_original_account, create_pseudofolder_from_prefix, \
-    delete_given_object, delete_given_folder, session_valid, ajax_session_valid
+    delete_given_object, delete_given_folder, session_valid, \
+    ajax_session_valid, get_acls, remove_duplicates_from_acl
 
 import swiftbrowser
 
@@ -83,7 +85,7 @@ def login(request):
         {'form': form},
         context_instance=RequestContext(request)
     )
-    
+
 
 @session_valid
 def containerview(request):
@@ -136,10 +138,8 @@ def create_container(request):
 
     return render_to_response(
         'create_container.html',
-        {'session': request.session,},
+        {'session': request.session},
         context_instance=RequestContext(request))
-        
-        
 
 
 @session_valid
@@ -199,7 +199,7 @@ def objectview(request, container, prefix=None):
     if meta.get(
         'x-container-meta-access-control-allow-origin'
     ) != '*':
-        
+
         # Add CORS headers so user can upload to this container.
         headers = {
             'X-Container-Meta-Access-Control-Expose-Headers':
@@ -209,7 +209,7 @@ def objectview(request, container, prefix=None):
 
         try:
             client.put_container(storage_url, auth_token, container, headers)
-            
+
         except client.ClientException:
             messages.add_message(request, messages.ERROR, _("Access denied."))
             return redirect(containerview)
@@ -320,6 +320,7 @@ def objecttable(request):
         context_instance=RequestContext(request)
     )
 
+
 @session_valid
 def download(request, container, objectname):
     """ Download an object from Swift """
@@ -333,54 +334,6 @@ def download(request, container, objectname):
         return redirect(objectview, container=container)
 
     return redirect(url)
-
-
-@session_valid
-def download_collection(request, container, prefix=None, non_recursive=False):
-    """ Download the content of an entire container/pseudofolder
-    as a Zip file. """
-
-    storage_url = request.session.get('storage_url', '')
-    auth_token = request.session.get('auth_token', '')
-
-    delimiter = '/' if non_recursive else None
-    try:
-        x, objects = client.get_container(
-            storage_url,
-            auth_token,
-            container,
-            delimiter=delimiter,
-            prefix=prefix
-        )
-    except client.ClientException:
-        return HttpResponseForbidden()
-
-    x, objs = pseudofolder_object_list(objects, prefix)
-
-    output = StringIO()
-    zipf = zipfile.ZipFile(output, 'w')
-    for o in objs:
-        name = o['name']
-        try:
-            x, content = client.get_object(storage_url, auth_token, container,
-                                           name)
-        except client.ClientException:
-            return HttpResponseForbidden()
-
-        if prefix:
-            name = name[len(prefix):]
-        zipf.writestr(name, content)
-    zipf.close()
-
-    if prefix:
-        filename = prefix.split('/')[-2]
-    else:
-        filename = container
-    response = HttpResponse(output.getvalue(), 'application/zip')
-    response['Content-Disposition'] = 'attachment; filename="%s.zip"'\
-        % (filename)
-    output.close()
-    return response
 
 
 @session_valid
@@ -487,7 +440,7 @@ def public_objectview(request, account, container, prefix=None):
     )
 
 
-# @session_valid
+@session_valid
 def tempurl(request, container, objectname):
     """ Displays a temporary URL for a given container object. Provide a form
     to request a custom temporary URL. """
@@ -562,7 +515,7 @@ def create_pseudofolder(request, container, prefix=None):
     """ Creates a pseudofolder (empty object of type application/directory) """
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-    
+
     form = PseudoFolderForm(request.POST)
     if form.is_valid():
         foldername = request.POST.get('foldername', None)
@@ -579,8 +532,14 @@ def create_pseudofolder(request, container, prefix=None):
             client.put_object(storage_url, auth_token,
                               container, foldername, obj,
                               content_type=content_type)
-            messages.add_message(request, messages.SUCCESS, _("The folder " + request.POST.get('foldername', None) + " was created."))
-            
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                _(
+                    "The folder " +
+                    request.POST.get('foldername', None) + " was created.")
+            )
+
         except client.ClientException:
             messages.add_message(request, messages.ERROR, _("Access denied."))
 
@@ -588,22 +547,6 @@ def create_pseudofolder(request, container, prefix=None):
             return redirect(objectview, container=container, prefix=prefix)
 
     return JsonResponse({})
-
-  
-def get_acls(storage_url, auth_token, container):
-    """ Returns ACLs of given container. """
-    cont = client.head_container(storage_url, auth_token, container)
-    readers = cont.get('x-container-read', '')
-    writers = cont.get('x-container-write', '')
-    return (readers, writers)
-
-
-def remove_duplicates_from_acl(acls):
-    """ Removes possible duplicates from a comma-separated list. """
-    entries = acls.split(',')
-    cleaned_entries = list(set(entries))
-    acls = ','.join(cleaned_entries)
-    return acls
 
 
 @session_valid
@@ -717,6 +660,7 @@ def edit_acl(request, container):
         'public': public,
         'base_url': base_url,
     }, context_instance=RequestContext(request))
+
 
 @session_valid
 @require_POST
