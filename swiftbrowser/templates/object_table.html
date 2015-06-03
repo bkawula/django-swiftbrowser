@@ -2,6 +2,7 @@
 {% load dateconv %}
 {% load lastpart %}
 {% block content %}
+
 <table>
 	<thead>
 		<tr>
@@ -13,120 +14,121 @@
 		</tr>
 	</thead>
 	{% if folders or objects %}
-	<tbody>
-		{% for folder in folders %}
-		<tr>
-			<td class="icon">
-				<span class="glyphicons glyphicons-folder-closed"></span>
-			</td>
-			<td>
-				<a href="{% url "objectview" container=container prefix=folder.0 %}">
-					<strong>{{folder.0|lastpart}}</strong>
-				</a>
-			</td>
-			<td></td>
-			<td></td>
-			<td>
-				<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn"><span class="glyphicons glyphicons-cogwheel"></span></button><br>
-				<ul id="opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
-					<li>
-						<a href="{% url "download_collection" container=container prefix=folder.0 %}">
-							<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download' %}
+		<tbody>
+			{% for folder in folders %}
+				<tr>
+					<td class="icon">
+						<span class="glyphicons glyphicons-folder-closed"></span>
+					</td>
+					<td>
+						<a href="{% url "objectview" container=container prefix=folder.0 %}">
+							<strong>{{folder.0|lastpart}}</strong>
 						</a>
-					</li>
-					<li>
-						<a href="{% url "download_collection_nonrec" container=container prefix=folder.0  %}">
-							<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download nonrecursive' %}
-						</a>
-					</li>
-					<li>
-						<script>
-						function double_confirm() {
-							var confirm1 = confirm('{% trans 'Delete folder' %} {{folder.1}}?');
-							if (confirm1) {
-								var confirm2 = confirm('Deleting this folder will delete everything in the folder. Are you sure?');
-								if (confirm2) {
-									return true;
-								} else {
-									return false;
-								}
-							} else {
-								return false;
-							}
-						}
-						</script>
-						<a href="{% url "delete_folder" container=container objectname=folder.1 %}" onclick="return double_confirm()" >
-							<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete folder' %}
-						</a>
-					</li>
-					{% comment %}
-					{%
-						<li>
-							<a href="{% url "move_collection_to_trash" container=container prefix=folder.1  %}">
-								<span class="glyphicons glyphicons-bin"></span> {% trans 'Move to trash' %}
-							</a>
-						</li>%}
-						{% endcomment %}
-				</ul>
-			</td>
-		</tr>
-		{% endfor %}
-		{% for key in objects %}
-		<tr>
-			 <td class="icon">
-				{% if key.extension != "other" %}
-					<span class="filetypes filetypes-{{key.extension}}"></span>
-				{% else %}
-					<span class="glyphicons glyphicons-file"></span>
-				{% endif %}
-				
-			</td> 
-			<td>
-				<a href="{% url "download" container=container objectname=key.name %}" class="block">{{key.name|lastpart}}</a>
-			</td>
-			<td class="hidden-phone">{{key.last_modified|dateconv|date:"SHORT_DATETIME_FORMAT"}}</td>
-			<td class="hidden-phone">{{key.bytes|filesizeformat}}</td>
-			<td>
-				<button type="button" data-dropdown="file-opt{{forloop.counter}}" aria-controls="file-opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn"><span class="glyphicons glyphicons-cogwheel"></span></button><br>
-				<ul id="file-opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
-						<li>
-							<button type="button" data-reveal-id="tempurl" class="button dropdown-btn" data-reveal-ajax="{% url "tempurl" container=container objectname=key.name %}">
-								<span class="glyphicons glyphicons-clock"></span>&nbsp;
-								
-								{% trans 'Temporary URL' %}
-							</button>
-							
-						</li>
-			
-						<li>
-							<a href="{% url "delete_object" container=container objectname=key.name  %}" onclick="return confirm('{% trans 'Delete object' %} {{key.name}}?');" >
-								<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete Object' %}
-							</a>
-						</li>
-						{% comment %}
-						{% <li>
-							<a href="{% url "move_to_trash" container=container objectname=key.name  %}">
-								<span class="glyphicons glyphicons-bin"></span> {% trans 'Move to trash' %}
-							</a>
-						</li> %}
-						{% endcomment %}
-					</ul>
-					
-			</td>
-		</tr>
-		{% endfor %}
-	</tbody>
+					</td>
+					<td></td>
+					<td></td>
+					<td>
+						<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn">
+							<span class="glyphicons glyphicons-cogwheel"></span>
+						</button>
+						<br>
+						<ul id="opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
+							<li>
+								<a href="{% url "download_collection" container=container prefix=folder.0 %}">
+									<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download' %}
+								</a>
+							</li>
+							<li>
+								<a href="{% url "download_collection_nonrec" container=container prefix=folder.0  %}">
+									<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download nonrecursive' %}
+								</a>
+							</li>
+							<li>
+								<script>
+									function double_confirm() {
+										var confirm1 = confirm('{% trans 'Delete folder' %} {{folder.1}}?');
+										if (confirm1) {
+											var confirm2 = confirm('Deleting this folder will delete everything in the folder. Are you sure?');
+											if (confirm2) {
+												return true;
+											} else {
+												return false;
+											}
+										} else {
+											return false;
+										}
+									}
+								</script>
+								<a href="{% url "delete_folder" container=container objectname=folder.1 %}" onclick="return double_confirm()" >
+									<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete folder' %}
+								</a>
+							</li>
+							{% comment %}
+							{%
+								<li>
+									<a href="{% url "move_collection_to_trash" container=container prefix=folder.1  %}">
+										<span class="glyphicons glyphicons-bin"></span> {% trans 'Move to trash' %}
+									</a>
+								</li>%}
+								{% endcomment %}
+						</ul>
+					</td>
+				</tr>
+			{% endfor %}
+			{% for key in objects %}
+				<tr>
+					<td class="icon">
+						{% if key.extension != "other" %}
+							<span class="filetypes filetypes-{{key.extension}}"></span>
+						{% else %}
+							<span class="glyphicons glyphicons-file"></span>
+						{% endif %}
+					</td>
+					<td>
+						<a href="{% url "download" container=container objectname=key.name %}" class="block">{{key.name|lastpart}}</a>
+					</td>
+					<td class="hidden-phone">{{key.last_modified|dateconv|date:"SHORT_DATETIME_FORMAT"}}</td>
+					<td class="hidden-phone">{{key.bytes|filesizeformat}}</td>
+					<td>
+						<button type="button" data-dropdown="file-opt{{forloop.counter}}" aria-controls="file-opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn">
+							<span class="glyphicons glyphicons-cogwheel"></span>
+						</button>
+						<br>
+						<ul id="file-opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
+							<li>
+								<button type="button" data-reveal-id="tempurl" class="button dropdown-btn" data-reveal-ajax="{% url "tempurl" container=container objectname=key.name %}">
+									<span class="glyphicons glyphicons-clock"></span>&nbsp;
+
+									{% trans 'Temporary URL' %}
+								</button>
+
+							</li>
+							<li>
+								<a href="{% url "delete_object" container=container objectname=key.name  %}" onclick="return confirm('{% trans 'Delete object' %} {{key.name}}?');" >
+									<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete Object' %}
+								</a>
+							</li>
+							{% comment %}
+							{% <li>
+								<a href="{% url "move_to_trash" container=container objectname=key.name  %}">
+									<span class="glyphicons glyphicons-bin"></span> {% trans 'Move to trash' %}
+								</a>
+							</li> %}
+							{% endcomment %}
+						</ul>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
 	{% else %}
-	<tbody>
-		<tr>
-			<th colspan="5" class="center">
-				<strong>
-					
+		<tbody>
+			<tr>
+				<th colspan="5" class="center">
+					<strong>
 						{% trans 'There are no objects in this container yet. Upload new objects by clicking the blue button.' %}
-				
-				</strong>
-			</th>
-		</tr>
+					</strong>
+				</th>
+			</tr>
 	</tbody>
 	{% endif %}
 	{% comment %}

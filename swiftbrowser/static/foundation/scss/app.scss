@@ -1,5 +1,6 @@
 @import "settings";
 @import "foundation";
+@import "tempurl";
 
 table {
 	width:100%;
@@ -9,7 +10,7 @@ table {
 		font-size:24px;
 	}
 	thead {
-		
+
 		background:transparent;
 		tr{
 			th {
@@ -32,7 +33,7 @@ table {
 	}
 	tr {
 		border-bottom:1px solid $smoke;
-		
+
 		.even {
 			background-color:transparent;
 		}
@@ -44,7 +45,7 @@ table {
 		}
 		td {
 			padding: 0rem 0.625rem;
-			
+
 			&:nth-child(1) {
 				padding: 0rem 0.625rem 0rem 0rem;
 			}
@@ -52,10 +53,10 @@ table {
 				padding: 0;
 			}
 		}
-		
+
 	}
-	
-	
+
+
 }
 
 #login-form {
@@ -77,8 +78,8 @@ table {
 		}
 		.login-btn {
 			width:100%;
-	
-		}	
+
+		}
 	}
 	.login-alert {
 		color:$white;
@@ -101,7 +102,7 @@ table {
 			&:focus, &:hover {
 				background-color: scale-color($black, $lightness: +14%);
 			}
-			
+
 		}
 		.username {
 		    padding-top: 0.625rem;
@@ -110,7 +111,7 @@ table {
 		    padding-left: 0.8rem;
 		    font-size: 0.6875rem;
 			color:$white;
-			
+
 		}
 	}
 }
@@ -132,7 +133,7 @@ table {
 		&:focus, &:hover {
 			background-color: scale-color($black, $lightness: +14%);
 		}
-		
+
 	}
 }
 #containerview {
@@ -143,34 +144,34 @@ table {
 		font-size:0.65rem;
 		vertical-align: super;
 	}
-	
+
 	#containertable {
-		
-		
+
+
 		.dropdown.button::after {
 			border-color: $black transparent transparent transparent;
-		
+
 		}
 		.file-btn {
 			background-color:transparent;
 			margin:0px;
 			color:$black;
-			
-			
-			
-			
+
+
+
+
 			&:hover, &:focus {
 				background-color:$smoke;
 
-				
+
 			}
-			
-			
+
+
 		}
-		
+
 	}
-	
-	
+
+
 }
 .crumb-row {
 	background-color:#363636;
@@ -190,7 +191,7 @@ table {
 		font-size:0.85rem;
 	}
 	.upload {
-		
+
 	}
 	.share {
 		background-color:#3B862F;
@@ -209,34 +210,34 @@ table {
 	}
 }
 #objectview {
-	
+
 	padding-bottom: 5rem;
 	#objecttable {
-		
-		
+
+
 		.dropdown.button::after {
 			border-color: $black transparent transparent transparent;
-		
+
 		}
 		.file-btn {
 			background-color:transparent;
 			margin:0px;
 			color:$black;
-			
-			
-			
-			
+
+
+
+
 			&:hover, &:focus {
 				background-color:$smoke;
 
-				
+
 			}
-			
-			
+
+
 		}
-		
+
 	}
-	
+
 }
 .dropdown-btn {
 	background-color:transparent;
@@ -318,7 +319,7 @@ table {
 			  font-size: 0.875rem;
 			  padding-top:10px;
 		}
-		
+
 	}
 	.progress {
 		background-color:$white;
@@ -339,8 +340,8 @@ table {
 		#preloadmsg {
 			text-align:center;
 			background: url("../../img/upload-bkg.png") no-repeat center center;
-			
-			
+
+
 			.preloadmsg-txt {
 				font-size:1.5rem;
 				font-weight:bold;
@@ -350,7 +351,7 @@ table {
 				font-size:0.8rem;
 				padding-top: 8rem;
 				.chrome-txt {
-					
+
 				}
 				img {
 					width:40px;
@@ -358,7 +359,7 @@ table {
 			}
 		}
 	}
-	
+
 }
 .fileinput-button {
 	overflow:inherit !important;
@@ -386,12 +387,12 @@ table {
 			text-decoration:none;
 			color: scale-color($white, $lightness: -14%);
 		}
-		
+
 	}
 	.delete-container {
 		top:-10px;
 	}
-	
+
 }
 .loader:before,
 .loader:after,
@@ -408,7 +409,7 @@ table {
 	display:none;
 }
 .loader {
-  
+
   margin: 0em 4em 6em;
   font-size: 10px;
   position: relative;

@@ -9439,71 +9439,97 @@ th.hide-for-touch {
     display: none !important;
   }
 }
-/* line 4, ../scss/app.scss */
+/* line 1, ../scss/_tempurl.scss */
+#generated-tempurl {
+  width: 90%;
+  display: inline;
+}
+
+/* line 6, ../scss/_tempurl.scss */
+span#highlight-icon {
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+}
+
+/* line 12, ../scss/_tempurl.scss */
+form#custom-temp-url input.submit {
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-weight: normal;
+  line-height: normal;
+  font-size: 1rem;
+  padding: 1rem 2rem 1.0625rem 2rem;
+  width: 100%;
+  background-color: black;
+  color: white;
+  border: none;
+  margin-bottom: 1rem;
+}
+
+/* line 5, ../scss/app.scss */
 table {
   width: 100%;
   border-collapse: collapse;
   border: 0px;
 }
-/* line 8, ../scss/app.scss */
+/* line 9, ../scss/app.scss */
 table .icon {
   font-size: 24px;
 }
-/* line 11, ../scss/app.scss */
+/* line 12, ../scss/app.scss */
 table thead {
   background: transparent;
 }
-/* line 15, ../scss/app.scss */
+/* line 16, ../scss/app.scss */
 table thead tr th {
   font-size: 1.15rem;
   padding-bottom: 1.25rem;
 }
-/* line 18, ../scss/app.scss */
+/* line 19, ../scss/app.scss */
 table thead tr th:nth-child(1) {
   width: 1rem;
 }
-/* line 21, ../scss/app.scss */
+/* line 22, ../scss/app.scss */
 table thead tr th:nth-child(3) {
   width: 12rem;
 }
-/* line 24, ../scss/app.scss */
+/* line 25, ../scss/app.scss */
 table thead tr th:nth-child(4) {
   width: 6rem;
 }
-/* line 27, ../scss/app.scss */
+/* line 28, ../scss/app.scss */
 table thead tr th:nth-child(5) {
   width: 1rem;
 }
-/* line 33, ../scss/app.scss */
+/* line 34, ../scss/app.scss */
 table tr {
   border-bottom: 1px solid #EEEEEE;
 }
-/* line 36, ../scss/app.scss */
+/* line 37, ../scss/app.scss */
 table tr .even {
   background-color: transparent;
 }
-/* line 39, ../scss/app.scss */
+/* line 40, ../scss/app.scss */
 table tr .alt {
   background-color: transparent;
 }
-/* line 42, ../scss/app.scss */
+/* line 43, ../scss/app.scss */
 table tr:nth-of-type(even) {
   background-color: transparent;
 }
-/* line 45, ../scss/app.scss */
+/* line 46, ../scss/app.scss */
 table tr td {
   padding: 0rem 0.625rem;
 }
-/* line 48, ../scss/app.scss */
+/* line 49, ../scss/app.scss */
 table tr td:nth-child(1) {
   padding: 0rem 0.625rem 0rem 0rem;
 }
-/* line 51, ../scss/app.scss */
+/* line 52, ../scss/app.scss */
 table tr td:nth-child(5) {
   padding: 0;
 }
 
-/* line 61, ../scss/app.scss */
+/* line 62, ../scss/app.scss */
 #login-form {
   background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
   background-size: 400px;
@@ -9514,7 +9540,7 @@ table tr td:nth-child(5) {
   width: 100%;
   height: 100%;
 }
-/* line 69, ../scss/app.scss */
+/* line 70, ../scss/app.scss */
 #login-form .login-form-box {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.65);
@@ -9522,50 +9548,50 @@ table tr td:nth-child(5) {
   position: relative;
   top: 40%;
 }
-/* line 75, ../scss/app.scss */
+/* line 76, ../scss/app.scss */
 #login-form .login-form-box .columns {
   padding-left: 0;
 }
-/* line 78, ../scss/app.scss */
+/* line 79, ../scss/app.scss */
 #login-form .login-form-box .login-btn {
   width: 100%;
 }
-/* line 83, ../scss/app.scss */
+/* line 84, ../scss/app.scss */
 #login-form .login-alert {
   color: #FFFFFF;
   padding-bottom: 1rem;
 }
-/* line 87, ../scss/app.scss */
+/* line 88, ../scss/app.scss */
 #login-form .olrctext {
   width: 400px;
   padding-bottom: 15px;
 }
 
-/* line 90, ../scss/app.scss */
+/* line 91, ../scss/app.scss */
 #header {
   background-color: #363636;
 }
-/* line 92, ../scss/app.scss */
+/* line 93, ../scss/app.scss */
 #header .service-logo {
   width: 60px;
   padding-top: 0.5rem;
 }
-/* line 96, ../scss/app.scss */
+/* line 97, ../scss/app.scss */
 #header .account-btns {
   text-align: right;
 }
-/* line 98, ../scss/app.scss */
+/* line 99, ../scss/app.scss */
 #header .account-btns .user
 button, #header .account-btns .button {
   background-color: #000000;
 }
-/* line 101, ../scss/app.scss */
+/* line 102, ../scss/app.scss */
 #header .account-btns .user
 button:focus, #header .account-btns .user
 button:hover, #header .account-btns .button:focus, #header .account-btns .button:hover {
   background-color: #242424;
 }
-/* line 106, ../scss/app.scss */
+/* line 107, ../scss/app.scss */
 #header .account-btns .username {
   padding-top: 0.625rem;
   padding-right: 0.8rem;
@@ -9575,76 +9601,76 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   color: #FFFFFF;
 }
 
-/* line 117, ../scss/app.scss */
+/* line 118, ../scss/app.scss */
 .header-alert {
   margin-bottom: 0px;
   padding: 0.875rem 0rem 0.875rem 0rem;
 }
 
-/* line 121, ../scss/app.scss */
+/* line 122, ../scss/app.scss */
 .content-body {
   margin-top: 1rem;
 }
 
-/* line 124, ../scss/app.scss */
+/* line 125, ../scss/app.scss */
 .reveal-modal {
   padding: 0.5rem 1.875rem;
 }
-/* line 126, ../scss/app.scss */
+/* line 127, ../scss/app.scss */
 .reveal-modal h2 {
   font-weight: bold;
 }
-/* line 129, ../scss/app.scss */
+/* line 130, ../scss/app.scss */
 .reveal-modal .close {
   background-color: #000000;
   float: right;
 }
-/* line 132, ../scss/app.scss */
+/* line 133, ../scss/app.scss */
 .reveal-modal .close:focus, .reveal-modal .close:hover {
   background-color: #242424;
 }
 
-/* line 138, ../scss/app.scss */
+/* line 139, ../scss/app.scss */
 #containerview {
   padding-bottom: 5rem;
 }
-/* line 140, ../scss/app.scss */
+/* line 141, ../scss/app.scss */
 #containerview .usage {
   color: #FFFFFF;
   font-weight: normal;
   font-size: 0.65rem;
   vertical-align: super;
 }
-/* line 150, ../scss/app.scss */
+/* line 151, ../scss/app.scss */
 #containerview #containertable .dropdown.button::after {
   border-color: #000000 transparent transparent transparent;
 }
-/* line 154, ../scss/app.scss */
+/* line 155, ../scss/app.scss */
 #containerview #containertable .file-btn {
   background-color: transparent;
   margin: 0px;
   color: #000000;
 }
-/* line 162, ../scss/app.scss */
+/* line 163, ../scss/app.scss */
 #containerview #containertable .file-btn:hover, #containerview #containertable .file-btn:focus {
   background-color: #EEEEEE;
 }
 
-/* line 175, ../scss/app.scss */
+/* line 176, ../scss/app.scss */
 .crumb-row {
   background-color: #363636;
   padding: 10px 0px 0px;
 }
-/* line 178, ../scss/app.scss */
+/* line 179, ../scss/app.scss */
 .crumb-row ul {
   margin-bottom: 0.2rem;
 }
 
-/* line 182, ../scss/app.scss */
+/* line 183, ../scss/app.scss */
 .action-btns {
   text-align: right;
 }
-/* line 184, ../scss/app.scss */
+/* line 185, ../scss/app.scss */
 .action-btns button, .action-btns .button {
   padding-top: 0.85rem;
   padding-right: 1.25rem;
@@ -9653,47 +9679,47 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin-bottom: 0;
   font-size: 0.85rem;
 }
-/* line 195, ../scss/app.scss */
+/* line 196, ../scss/app.scss */
 .action-btns .share {
   background-color: #3B862F;
 }
-/* line 197, ../scss/app.scss */
+/* line 198, ../scss/app.scss */
 .action-btns .share:focus, .action-btns .share:hover {
   background-color: #337328;
 }
-/* line 201, ../scss/app.scss */
+/* line 202, ../scss/app.scss */
 .action-btns .folder {
   background-color: #767676;
 }
-/* line 203, ../scss/app.scss */
+/* line 204, ../scss/app.scss */
 .action-btns .folder:focus, .action-btns .folder:hover {
   background-color: #656565;
 }
-/* line 207, ../scss/app.scss */
+/* line 208, ../scss/app.scss */
 .action-btns .columns {
   padding-right: 1.8rem;
 }
 
-/* line 211, ../scss/app.scss */
+/* line 212, ../scss/app.scss */
 #objectview {
   padding-bottom: 5rem;
 }
-/* line 217, ../scss/app.scss */
+/* line 218, ../scss/app.scss */
 #objectview #objecttable .dropdown.button::after {
   border-color: #000000 transparent transparent transparent;
 }
-/* line 221, ../scss/app.scss */
+/* line 222, ../scss/app.scss */
 #objectview #objecttable .file-btn {
   background-color: transparent;
   margin: 0px;
   color: #000000;
 }
-/* line 229, ../scss/app.scss */
+/* line 230, ../scss/app.scss */
 #objectview #objecttable .file-btn:hover, #objectview #objecttable .file-btn:focus {
   background-color: #EEEEEE;
 }
 
-/* line 241, ../scss/app.scss */
+/* line 242, ../scss/app.scss */
 .dropdown-btn {
   background-color: transparent;
   padding: 0.5rem;
@@ -9703,26 +9729,26 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin: 0;
   text-align: left;
 }
-/* line 249, ../scss/app.scss */
+/* line 250, ../scss/app.scss */
 .dropdown-btn:hover, .dropdown-btn:focus {
   color: #555555;
   background-color: #EEEEEE;
 }
 
-/* line 255, ../scss/app.scss */
+/* line 256, ../scss/app.scss */
 #fileForm .file-row {
   position: relative;
   border-bottom: 1px solid #EEEEEE;
 }
-/* line 259, ../scss/app.scss */
+/* line 260, ../scss/app.scss */
 #fileForm .file-row .row div:nth-child(1) {
   padding-left: 0rem;
 }
-/* line 262, ../scss/app.scss */
+/* line 263, ../scss/app.scss */
 #fileForm .file-row .row div:nth-child(4) {
   padding-right: 0rem;
 }
-/* line 266, ../scss/app.scss */
+/* line 267, ../scss/app.scss */
 #fileForm .file-row .file-progress {
   position: absolute;
   width: 100%;
@@ -9731,17 +9757,17 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin: 0;
   bottom: 0px;
 }
-/* line 274, ../scss/app.scss */
+/* line 275, ../scss/app.scss */
 #fileForm .file-row .progress {
   border: 0px;
   padding: 0;
   background-color: #FFFFFF;
 }
-/* line 278, ../scss/app.scss */
+/* line 279, ../scss/app.scss */
 #fileForm .file-row .progress .meter {
   background: #0074be;
 }
-/* line 282, ../scss/app.scss */
+/* line 283, ../scss/app.scss */
 #fileForm .file-row .icon {
   float: left;
   position: relative;
@@ -9751,7 +9777,7 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   overflow: hidden;
   padding: 10px;
 }
-/* line 291, ../scss/app.scss */
+/* line 292, ../scss/app.scss */
 #fileForm .file-row .preview {
   float: left;
   position: relative;
@@ -9760,34 +9786,34 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   overflow: hidden;
   padding-top: 5px;
 }
-/* line 299, ../scss/app.scss */
+/* line 300, ../scss/app.scss */
 #fileForm .file-row .filerowtext {
   position: relative;
   margin-left: 30px;
   float: left;
   padding-top: 10px;
 }
-/* line 305, ../scss/app.scss */
+/* line 306, ../scss/app.scss */
 #fileForm .file-row .filerowbtns {
   text-align: right;
   padding-top: 5px;
 }
-/* line 308, ../scss/app.scss */
+/* line 309, ../scss/app.scss */
 #fileForm .file-row .filerowbtns button, #fileForm .file-row .filerowbtns .button {
   margin-bottom: 10px;
 }
-/* line 312, ../scss/app.scss */
+/* line 313, ../scss/app.scss */
 #fileForm .file-row .name {
   font-size: 0.875rem;
   padding-top: 10px;
   font-weight: bold;
 }
-/* line 317, ../scss/app.scss */
+/* line 318, ../scss/app.scss */
 #fileForm .file-row .size {
   font-size: 0.875rem;
   padding-top: 10px;
 }
-/* line 323, ../scss/app.scss */
+/* line 324, ../scss/app.scss */
 #fileForm .progress {
   background-color: #FFFFFF;
   border: 0;
@@ -9795,78 +9821,78 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin-top: 10px;
   height: 20px;
 }
-/* line 330, ../scss/app.scss */
+/* line 331, ../scss/app.scss */
 #fileForm .progress-extended {
   margin-bottom: 10px;
   font-size: 0.875rem;
   font-weight: bold;
 }
-/* line 335, ../scss/app.scss */
+/* line 336, ../scss/app.scss */
 #fileForm .fileupload-progress {
   display: none;
 }
-/* line 339, ../scss/app.scss */
+/* line 340, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg {
   text-align: center;
   background: url("../../img/upload-bkg.png") no-repeat center center;
 }
-/* line 344, ../scss/app.scss */
+/* line 345, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .preloadmsg-txt {
   font-size: 1.5rem;
   font-weight: bold;
   padding-top: 12rem;
 }
-/* line 349, ../scss/app.scss */
+/* line 350, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .chrome {
   font-size: 0.8rem;
   padding-top: 8rem;
 }
-/* line 355, ../scss/app.scss */
+/* line 356, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .chrome img {
   width: 40px;
 }
 
-/* line 363, ../scss/app.scss */
+/* line 364, ../scss/app.scss */
 .fileinput-button {
   overflow: inherit !important;
 }
 
-/* line 366, ../scss/app.scss */
+/* line 367, ../scss/app.scss */
 .breadcrumbs {
   padding: 20px 0px;
   border: 0;
   background-color: transparent;
 }
-/* line 370, ../scss/app.scss */
+/* line 371, ../scss/app.scss */
 .breadcrumbs:hover {
   text-decoration: none;
 }
-/* line 373, ../scss/app.scss */
+/* line 374, ../scss/app.scss */
 .breadcrumbs li {
   text-transform: none;
   font-size: 1.25rem;
   font-weight: bold;
 }
-/* line 377, ../scss/app.scss */
+/* line 378, ../scss/app.scss */
 .breadcrumbs li:focus, .breadcrumbs li:hover {
   text-decoration: none;
 }
-/* line 381, ../scss/app.scss */
+/* line 382, ../scss/app.scss */
 .breadcrumbs a {
   color: #FFFFFF;
   text-decoration: none;
 }
-/* line 385, ../scss/app.scss */
+/* line 386, ../scss/app.scss */
 .breadcrumbs a:focus, .breadcrumbs a:hover {
   text-decoration: none;
   color: #dbdbdb;
 }
-/* line 391, ../scss/app.scss */
+/* line 392, ../scss/app.scss */
 .breadcrumbs .delete-container {
   top: -10px;
 }
 
-/* line 396, ../scss/app.scss */
+/* line 397, ../scss/app.scss */
 .loader:before,
 .loader:after,
 .loader {
@@ -9879,12 +9905,12 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation: load7 1.8s infinite ease-in-out;
 }
 
-/* line 407, ../scss/app.scss */
+/* line 408, ../scss/app.scss */
 #progress {
   display: none;
 }
 
-/* line 410, ../scss/app.scss */
+/* line 411, ../scss/app.scss */
 .loader {
   margin: 0em 4em 6em;
   font-size: 10px;
@@ -9897,19 +9923,19 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation-delay: -0.16s;
 }
 
-/* line 422, ../scss/app.scss */
+/* line 423, ../scss/app.scss */
 .loader:before {
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
 
-/* line 427, ../scss/app.scss */
+/* line 428, ../scss/app.scss */
 .loader:after {
   left: 3.5em;
 }
 
-/* line 430, ../scss/app.scss */
+/* line 431, ../scss/app.scss */
 .loader:before,
 .loader:after {
   content: '';

@@ -4,6 +4,8 @@
 {% load dateconv %}
 {% load lastpart %}
 {% load static %}
+
+<script src="{% static "js/helpers/tempurl.js" %}"></script>
 {% block content %}
 
     <h2 id="tempurl-title">Temporary URL</h2>
@@ -11,19 +13,17 @@
     <h4>{% trans 'Temporary URL for' %} {{container}}/{{objectname}}</h4>
     <p>Use the following URL to share this object. The URL is valid for {{expires_in_message}}.</p>
     <p>
-        <input type="text" id="generated-tempurl" style="width: 400px; display:inline;" value="{{url}}"></input>
+        <input type="text" id="generated-tempurl" value="{{url}}"></input>
         <span id="highlight-icon" class="glyphicons glyphicons-magic"></span>
     </p>
     <p>{% trans 'Please note that you cannot revoke this URL. It is valid until expiration!' %}</p>
 
-    <form action="{% url "tempurl" container=container objectname=objectname %}" method="post">
+    <form id="custom-temp-url" action="{% url "tempurl" container=container objectname=objectname %}" method="post">
         {% csrf_token %}
         {{tempurl_form}}
-        <input type="submit"/>
+        <input class="submit" type="submit"/>
     </form>
     <button type="button" id="close-tempurl" class="button close expand">Close</button>
-    <script src="{% static "js/helpers/tempurl.js" %}"></script>
-
 
 {% endblock %}
 
