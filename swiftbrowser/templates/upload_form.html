@@ -156,21 +156,8 @@
 		                    {% endblock %}
 
 		                </span>
-		                <span class="button fileinput-button small">
-		                    <span class="glyphicons glyphicons-folder-plus"></span>
-                            <span>Add Directories...</span>
-                            {% comment %}
-                                The file input for the upload form.
-                            {% endcomment %}
-                                <input
-                                    id="file" type="file" name="FILE_NAME" multiple
-                                    {% if accepted_mime_types %}
-                                        accept = '{{ accepted_mime_types|join:"," }}'
-                                    {% endif %}
-                                />
-                        </span>
-                        <span class="btn btn-success fileinput-button">
-                            <i class="glyphicon glyphicon-plus"></i>
+                        <span class="button fileinput-button small">
+                            <span class="glyphicons glyphicons-folder-plus"></span>
                             <span>Add Directories...</span>
                             {% comment %}
                                 The file input for the upload form.
