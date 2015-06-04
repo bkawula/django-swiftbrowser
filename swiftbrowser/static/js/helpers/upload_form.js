@@ -47,7 +47,9 @@ $( function() {
 
     .bind('fileuploadprocessstart', function (e) {
         $('#preloadmsg').hide();
-        $('.fileupload-progress').show();
+        if (files_added !== 1) {
+            $('.fileupload-progress').show();
+        }
         $('#start-upload').removeClass('disabled');
         $('#cancel-upload').removeClass('disabled');
     })
@@ -77,6 +79,7 @@ $( function() {
 
 function closeForm() {
     $('#fileForm').foundation({reveal : {close_on_background_click: true,close_on_esc:true}});
+
     setTimeout(function(){
         $('#fileForm').foundation('reveal', 'close');
         setTimeout(function(){
