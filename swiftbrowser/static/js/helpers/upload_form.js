@@ -18,16 +18,12 @@ $( function() {
 
     var formData = $('#fileupload').serializeArray();
     formData.push(
-        {name:"redirect",value:""},
-        {name:"max_file_size",value:"{{ max_file_size }}"},
-        {name:"max_file_count",value:"{{ max_file_count }}"},
-        {name:"expires",value:"{{ expires }}"},
-        {name:"signature",value:"{{ signature }}"}
+        {name:"redirect",value:""}
     );
 
     $('#fileupload').fileupload({
         formData: formData,
-        url: '{{ swift_url }}',
+        url: $(this).attr('action'),
         method:'POST',
         dataType:'text',
         sequentialUploads: true,
@@ -71,6 +67,7 @@ $( function() {
         // If all fiels have been processed, close the form.
         if (files_processed == files_added) {
             closeForm();
+            loadTable();
         }
     })
     .addClass('fileupload-processing');
@@ -92,6 +89,7 @@ function closeForm() {
             }).removeClass('disabled');
         }, 250);
     }, 250);
+
     if(files_uploaded > 0) {
         $('#messages').html(
             '<div data-alert class="alert-box success header-alert">' +

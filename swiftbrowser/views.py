@@ -225,7 +225,7 @@ def objectview(request, container, prefix=None):
     max_file_count = 1
 
     #To allow large files to upload, increase this window to 2hr.
-    expires = int(time.time() + 60 * 60 * 60 * 2)
+    expires = int(time.time() + 60 * 60 * 2)
 
     hmac_body = '%s\n%s\n%s\n%s\n%s' % (
         path,
@@ -278,7 +278,6 @@ def objecttable(request):
     auth_token = request.session.get('auth_token', '')
     container = request.session.get('container')
     prefix = request.session.get('prefix')
-
     try:
         meta, objects = client.get_container(
             storage_url,

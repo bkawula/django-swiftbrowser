@@ -66,6 +66,11 @@
         id="fileupload" action="{{ swift_url }}"
         method="POST" enctype="multipart/form-data">
     	{% csrf_token %}
+            <input type="hidden" name="max_file_size" value="{{ max_file_size }}">
+            <input type="hidden" name="max_file_count" value="{{ max_file_count }}">
+            <input type="hidden" name="expires" value="{{ expires }}">
+            <input type="hidden" name="signature" value="{{ signature }}">
+
         {% comment %}
          Redirect browsers with JavaScript disabled to the origin page
         {% endcomment %}
@@ -266,16 +271,10 @@
 
 
 		{% block JS_DOWNLOAD_TEMPLATE %}
-		{% comment %}
-		 The template to display files available for download
-		{% endcomment %}
-
 		<script id="template-download" type="text/x-tmpl">
-		{{ JQ_OPEN }} for (var i=0, file; file=o.files[i]; i++) { {{ JQ_CLOSE }}
-		{{ JQ_OPEN }}loadTable();{{ JQ_CLOSE }}
-		{{ JQ_OPEN }} } {{ JQ_CLOSE }}
-		</script>
-    {% endblock %}
+        </script>
+        {% endblock %}
+
 {% endblock %}
 
 {% block JS_SCRIPTS %}
