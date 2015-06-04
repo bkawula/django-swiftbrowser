@@ -1,9 +1,10 @@
 $('#close-upload').on('click', function(){
-    $('#fileForm').foundation('reveal', 'close')
+    $('#fileForm').foundation('reveal', 'close');
 });
 
-var filesuploaded = 0;
-var filesprocessed = 0;
+var files_added = 0; /* Track files added to the upload. */
+var files_processed = 0; /* Track files that are processed.*/
+var files_uploaded = 0; /* Track successful uploads. */
 $( function() {
     'use strict';
 
@@ -35,15 +36,20 @@ $( function() {
         previewMaxHeight:100
     })
 
+    // Keep a counter of files as they are added.
+    .bind('fileuploadadd', function (e, data) {
+        files_added += 1;
+    })
+
+    .bind('fileuploaddone', function (e, data) {
+        files_uploaded += 1;
+    })
+
     .bind('fileuploadprocessstart', function (e) {
         $('#preloadmsg').hide();
         $('.fileupload-progress').show();
         $('#start-upload').removeClass('disabled');
         $('#cancel-upload').removeClass('disabled');
-    })
-
-    .bind('fileuploadprocessdone', function (e, data) {
-        filesprocessed = filesprocessed + 1;
     })
 
     .bind('fileuploadsend', function (e, data) {
@@ -56,13 +62,12 @@ $( function() {
         });
     })
 
-    .bind('fileuploadfail', function (e, data) {
-        closeForm();
-    })
+    // Keep a counter of files as they are processed.
+    .bind('fileuploadalways', function (e, data) {
+        files_processed += 1;
 
-    .bind('fileuploadcompleted', function (e, data) {
-        filesuploaded = filesuploaded + 1;
-        if (filesprocessed == filesuploaded) {
+        // If all fiels have been processed, close the form.
+        if (files_processed == files_added) {
             closeForm();
         }
     })
@@ -84,12 +89,12 @@ function closeForm() {
             }).removeClass('disabled');
         }, 250);
     }, 250);
-    if(filesuploaded > 0) {
+    if(files_uploaded > 0) {
         $('#messages').html(
             '<div data-alert class="alert-box success header-alert">' +
                 '<div class="row" >' +
                     '<div class="small-12 columns">' +
-                        '<strong>Success.</strong> ' + filesuploaded +
+                        '<strong>Success.</strong> ' + files_uploaded +
                         ' files were added. <a href="#" class="close">&times;</a>' +
                     '</div>' +
                 '</div>' +
