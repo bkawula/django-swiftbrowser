@@ -278,7 +278,6 @@ def objecttable(request):
     auth_token = request.session.get('auth_token', '')
     container = request.session.get('container')
     prefix = request.session.get('prefix')
-
     try:
         meta, objects = client.get_container(
             storage_url,
