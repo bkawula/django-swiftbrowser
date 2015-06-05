@@ -15,10 +15,21 @@
             				<a href="{% url "containerview" %}">Containers</a>
             			</li>
             			<li>
-            				<a href="{% url "objectview" container=container %}">{{container}}</a>
-            				<a href="{% url "delete_container" container=container %}" onclick="return confirm('{% trans 'Delete container' %} {{container}}?');" title="Delete Container">
-                                <span class="glyphicons glyphicons-cloud-minus delete-container"></span>
-                            </a>
+							<a href="{% url "objectview" container=container %}">{{container}}</a>
+							{% comment %}
+							<button data-dropdown="container-opts" aria-controls="drop1" aria-expanded="false" class="button dropdown"></button><br>
+							<ul id="container-opts" data-dropdown-content class="f-dropdown" aria-hidden="true">
+							  <li>
+								  <a href="{% url "delete_container" container=container %}" onclick="return confirm('{% trans 'Delete container' %} {{container}}?');">
+									  <span class="glyphicons glyphicons-cloud-minus delete-container"></span>
+									  Delete this container
+								  </a>
+							  </li>
+							 
+							  
+							</ul>
+							{% endcomment %}
+							
             			</li>
             			{% for prefix in prefixes %}
             			<li>

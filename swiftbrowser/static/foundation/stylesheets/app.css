@@ -9835,68 +9835,84 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
 #fileForm .fileupload-progress {
   display: none;
 }
-/* line 343, ../scss/app.scss */
+/* line 342, ../scss/app.scss */
+#fileForm .fileinput-button input {
+  font-size: 50px;
+}
+/* line 347, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg {
   text-align: center;
   background: url("../../img/upload-bkg.png") no-repeat center center;
 }
-/* line 348, ../scss/app.scss */
+/* line 352, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .preloadmsg-txt {
   font-size: 1.5rem;
   font-weight: bold;
   padding-top: 12rem;
 }
-/* line 353, ../scss/app.scss */
+/* line 357, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .chrome {
   font-size: 0.8rem;
   padding-top: 8rem;
 }
-/* line 359, ../scss/app.scss */
+/* line 363, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .chrome img {
   width: 40px;
 }
 
-/* line 367, ../scss/app.scss */
+/* line 371, ../scss/app.scss */
 .fileinput-button {
   overflow: inherit !important;
 }
 
-/* line 370, ../scss/app.scss */
+/* line 374, ../scss/app.scss */
 .breadcrumbs {
   padding: 20px 0px;
   border: 0;
   background-color: transparent;
 }
-/* line 374, ../scss/app.scss */
+/* line 378, ../scss/app.scss */
 .breadcrumbs:hover {
   text-decoration: none;
 }
-/* line 377, ../scss/app.scss */
+/* line 381, ../scss/app.scss */
 .breadcrumbs li {
   text-transform: none;
   font-size: 1.25rem;
   font-weight: bold;
 }
-/* line 381, ../scss/app.scss */
+/* line 385, ../scss/app.scss */
 .breadcrumbs li:focus, .breadcrumbs li:hover {
   text-decoration: none;
 }
-/* line 385, ../scss/app.scss */
+/* line 389, ../scss/app.scss */
 .breadcrumbs a {
   color: #FFFFFF;
   text-decoration: none;
 }
-/* line 389, ../scss/app.scss */
+/* line 393, ../scss/app.scss */
 .breadcrumbs a:focus, .breadcrumbs a:hover {
   text-decoration: none;
   color: #dbdbdb;
 }
-/* line 395, ../scss/app.scss */
-.breadcrumbs .delete-container {
-  top: -10px;
+/* line 400, ../scss/app.scss */
+.breadcrumbs button, .breadcrumbs .button {
+  margin-bottom: 0;
+  padding: 14px 30px 0px 20px;
+  font-weight: bold;
+  background-color: transparent;
+}
+/* line 407, ../scss/app.scss */
+.breadcrumbs #container-opts li {
+  font-weight: normal;
+  font-size: 0.875rem;
+}
+/* line 412, ../scss/app.scss */
+.breadcrumbs #container-opts a:focus, .breadcrumbs #container-opts a:hover {
+  color: #555555;
 }
 
-/* line 400, ../scss/app.scss */
+/* line 419, ../scss/app.scss */
 .loader:before,
 .loader:after,
 .loader {
@@ -9909,12 +9925,12 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation: load7 1.8s infinite ease-in-out;
 }
 
-/* line 411, ../scss/app.scss */
+/* line 430, ../scss/app.scss */
 #progress {
   display: none;
 }
 
-/* line 414, ../scss/app.scss */
+/* line 433, ../scss/app.scss */
 .loader {
   margin: 0em 4em 6em;
   font-size: 10px;
@@ -9927,19 +9943,19 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation-delay: -0.16s;
 }
 
-/* line 426, ../scss/app.scss */
+/* line 445, ../scss/app.scss */
 .loader:before {
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
 
-/* line 431, ../scss/app.scss */
+/* line 450, ../scss/app.scss */
 .loader:after {
   left: 3.5em;
 }
 
-/* line 434, ../scss/app.scss */
+/* line 453, ../scss/app.scss */
 .loader:before,
 .loader:after {
   content: '';

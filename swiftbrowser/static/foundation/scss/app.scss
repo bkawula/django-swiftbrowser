@@ -339,6 +339,10 @@ table {
 	.fileupload-progress {
 		display:none;
 	}
+	.fileinput-button input { 
+		font-size: 50px;
+		
+	}
 	#fileupload {
 		#preloadmsg {
 			text-align:center;
@@ -392,8 +396,23 @@ table {
 		}
 
 	}
-	.delete-container {
-		top:-10px;
+	
+	button, .button {
+		margin-bottom:0;
+		padding:14px 30px 0px 20px;
+		font-weight:bold;
+		background-color:transparent;
+	}
+	#container-opts {
+		li {
+			font-weight:normal;
+			font-size: 0.875rem;
+		}
+		a {
+			&:focus, &:hover {
+				color:$charcoal;
+			}
+		}
 	}
 
 }
