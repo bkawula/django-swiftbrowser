@@ -1,0 +1,494 @@
+@import "settings";
+@import "foundation";
+@import "tempurl";
+
+table {
+	width:100%;
+	border-collapse: collapse;
+	border: 0px;
+	.icon {
+		font-size:24px;
+	}
+	thead {
+
+		background:transparent;
+		tr{
+			th {
+				font-size:1.15rem;
+				padding-bottom: 1.25rem;
+				&:nth-child(1) {
+					width:1rem;
+				}
+				&:nth-child(3) {
+					width:12rem;
+				}
+				&:nth-child(4) {
+					width:6rem;
+				}
+				&:nth-child(5) {
+					width:1rem;
+				}
+			}
+		}
+	}
+	tr {
+		border-bottom:1px solid $smoke;
+
+		.even {
+			background-color:transparent;
+		}
+		.alt {
+			background-color:transparent;
+		}
+		&:nth-of-type(even) {
+			background-color:transparent;
+		}
+		td {
+			padding: 0rem 0.625rem;
+
+			&:nth-child(1) {
+				padding: 0rem 0.625rem 0rem 0rem;
+			}
+			&:nth-child(5) {
+				padding: 0;
+			}
+		}
+
+	}
+
+
+}
+
+#login-form {
+	background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
+	background-size: 400px;
+	background-position:194px 0px;
+	background-color:#666666; height:100%;
+	position:absolute;
+	width:100%;
+	height:100%;
+	.login-form-box {
+		width:100%;
+		background-color:rgba(0,0,0,0.65);
+		padding: 50px 200px 10px;
+		position:relative;
+		top:40%;
+		.columns {
+			padding-left:0;
+		}
+		.login-btn {
+			width:100%;
+
+		}
+	}
+	.login-alert {
+		color:$white;
+		padding-bottom:1rem;
+	}
+	.olrctext {width:400px;padding-bottom:15px;}
+}
+
+#header {
+	background-color:#363636;
+	.service-logo {
+		width:60px;
+		padding-top:0.5rem;
+	}
+	.account-btns {
+		text-align:right;
+		.user
+		button, .button {
+			background-color:$black;
+			&:focus, &:hover {
+				background-color: scale-color($black, $lightness: +14%);
+			}
+
+		}
+		.username {
+		    padding-top: 0.625rem;
+		    padding-right: 0.8rem;
+		    padding-bottom: 0.6875rem;
+		    padding-left: 0.8rem;
+		    font-size: 0.6875rem;
+			color:$white;
+
+		}
+	}
+}
+.header-alert {
+	margin-bottom:0px;
+	padding: 0.875rem 0rem 0.875rem 0rem;
+}
+.content-body {
+	margin-top:1rem;
+}
+.reveal-modal {
+	padding: 0.5rem 1.875rem;
+	h2 {
+		font-weight:bold;
+	}
+	.close {
+		background-color:$black;
+		float:right;
+		&:focus, &:hover {
+			background-color: scale-color($black, $lightness: +14%);
+		}
+
+	}
+}
+#containerview {
+	padding-bottom: 5rem;
+	.usage {
+		color:$white;
+		font-weight:normal;
+		font-size:0.65rem;
+		vertical-align: super;
+	}
+
+	#containertable {
+
+
+		.dropdown.button::after {
+			border-color: $black transparent transparent transparent;
+
+		}
+		.file-btn {
+			background-color:transparent;
+			margin:0px;
+			color:$black;
+
+
+
+
+			&:hover, &:focus {
+				background-color:$smoke;
+
+
+			}
+
+
+		}
+
+	}
+
+
+}
+.crumb-row {
+	background-color:#363636;
+	padding:10px 0px 0px;
+	ul {
+		margin-bottom:0.2rem;
+	}
+}
+.action-btns {
+	text-align:right;
+	button, .button {
+		padding-top: 0.85rem;
+		padding-right: 1.25rem;
+		padding-bottom: 0.85rem;
+		padding-left: 1.25rem;
+		margin-bottom:0;
+		font-size:0.85rem;
+	}
+	.upload {
+
+	}
+	.share {
+		background-color:#3B862F;
+		&:focus, &:hover {
+			background-color: scale-color(#3B862F, $lightness: -14%);
+		}
+	}
+	.folder {
+		background-color:#767676;
+		&:focus, &:hover {
+			background-color: scale-color(#767676, $lightness: -14%);
+		}
+	}
+	.columns {
+		padding-right:1.8rem;
+	}
+}
+#objectview {
+
+	padding-bottom: 5rem;
+	#objecttable {
+
+
+		.dropdown.button::after {
+			border-color: $black transparent transparent transparent;
+
+		}
+		.file-btn {
+			background-color:transparent;
+			margin:0px;
+			color:$black;
+
+
+
+
+			&:hover, &:focus {
+				background-color:$smoke;
+
+
+			}
+
+
+		}
+
+	}
+
+}
+.dropdown-btn {
+	background-color:transparent;
+	padding:0.5rem;
+	color:$charcoal;
+	font-size: 0.875rem;
+	width:100%;
+	margin:0;
+	text-align:left;
+	&:hover, &:focus {
+		color:$charcoal;
+		background-color:$smoke;
+	}
+}
+#fileForm {
+	.file-row {
+		position:relative;
+		border-bottom:1px solid $smoke;
+		.row {
+			div:nth-child(1) {
+				padding-left: 0rem;
+			}
+			div:nth-child(4) {
+				padding-right: 0rem;
+			}
+		}
+		.file-progress {
+			position:absolute;
+			width:100%;
+			height:5px;
+			z-index:0;
+			margin:0;
+			bottom:0px;
+		}
+		.progress {
+			border:0px;
+			padding:0;
+			background-color:$white;
+			.meter {
+				background:$primary-color;
+			}
+		}
+		.icon {
+			float:left;
+			position:relative;
+			font-size:24px;
+			width:45px;
+			height:50px;
+			overflow:hidden;
+			padding:10px;
+		}
+		.preview {
+			float:left;
+			position:relative;
+			width:60px;
+			height:40px;
+			overflow:hidden;
+			padding-top:5px;
+		}
+		.filerowtext {
+			position:relative;
+			margin-left:30px;
+			float:left;
+			padding-top:10px;
+		}
+		.filerowbtns {
+			text-align:right;
+			padding-top:5px;
+			button, .button {
+				margin-bottom:10px;
+			}
+		}
+		.name {
+			font-size: 0.875rem;
+			padding-top:10px;
+			font-weight:bold;
+		}
+		.size {
+			  font-size: 0.875rem;
+			  padding-top:10px;
+		}
+
+	}
+	.progress {
+		background-color:$white;
+		border:0;
+		padding:0;
+		margin-top:10px;
+		height:20px;
+	}
+	.progress-extended {
+		margin-bottom: 10px;
+		  font-size: 0.875rem;
+		  font-weight: bold;
+	}
+	.fileupload-progress {
+		display:none;
+	}
+	#fileupload {
+		#preloadmsg {
+			text-align:center;
+			background: url("../../img/upload-bkg.png") no-repeat center center;
+
+
+			.preloadmsg-txt {
+				font-size:1.5rem;
+				font-weight:bold;
+				padding-top: 12rem;
+			}
+			.chrome {
+				font-size:0.8rem;
+				padding-top: 8rem;
+				.chrome-txt {
+
+				}
+				img {
+					width:40px;
+				}
+			}
+		}
+	}
+
+}
+.fileinput-button {
+	overflow:inherit !important;
+}
+.breadcrumbs {
+	padding:20px 0px;
+	border:0;
+	background-color:transparent;
+	&:hover {
+		text-decoration:none;
+	}
+	li {
+		text-transform:none;
+		font-size: 1.25rem;
+		font-weight:bold;
+		&:focus,&:hover {
+			text-decoration:none;
+		};
+	}
+	a {
+		//color:#78D2F7;
+		color:$white;
+		text-decoration:none;
+		&:focus, &:hover {
+			text-decoration:none;
+			color: scale-color($white, $lightness: -14%);
+		}
+
+	}
+	.delete-container {
+		top:-10px;
+	}
+
+}
+.loader:before,
+.loader:after,
+.loader {
+  border-radius: 50%;
+  width: 2.5em;
+  height: 2.5em;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+  animation: load7 1.8s infinite ease-in-out;
+}
+#progress {
+	display:none;
+}
+.loader {
+
+  margin: 0em 4em 6em;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+.loader:before {
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+.loader:after {
+  left: 3.5em;
+}
+.loader:before,
+.loader:after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+@-webkit-keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em $primary-color;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0 $primary-color;
+  }
+}
+@keyframes load7 {
+  0%,
+  80%,
+  100% {
+    box-shadow: 0 2.5em 0 -1.3em $primary-color;
+  }
+  40% {
+    box-shadow: 0 2.5em 0 0 $primary-color;
+  }
+}
+
+// Or selectively include components
+// @import
+//   "foundation/components/accordion",
+//   "foundation/components/alert-boxes",
+//   "foundation/components/block-grid",
+//   "foundation/components/breadcrumbs",
+//   "foundation/components/button-groups",
+//   "foundation/components/buttons",
+//   "foundation/components/clearing",
+//   "foundation/components/dropdown",
+//   "foundation/components/dropdown-buttons",
+//   "foundation/components/flex-video",
+//   "foundation/components/forms",
+//   "foundation/components/grid",
+//   "foundation/components/inline-lists",
+//   "foundation/components/joyride",
+//   "foundation/components/keystrokes",
+//   "foundation/components/labels",
+//   "foundation/components/magellan",
+//   "foundation/components/orbit",
+//   "foundation/components/pagination",
+//   "foundation/components/panels",
+//   "foundation/components/pricing-tables",
+//   "foundation/components/progress-bars",
+//   "foundation/components/reveal",
+//   "foundation/components/side-nav",
+//   "foundation/components/split-buttons",
+//   "foundation/components/sub-nav",
+//   "foundation/components/switches",
+//   "foundation/components/tables",
+//   "foundation/components/tabs",
+//   "foundation/components/thumbs",
+//   "foundation/components/tooltips",
+//   "foundation/components/top-bar",
+//   "foundation/components/type",
+//   "foundation/components/offcanvas",
+//   "foundation/components/visibility";
