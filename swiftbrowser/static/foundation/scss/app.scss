@@ -1,6 +1,7 @@
 @import "settings";
 @import "foundation";
 @import "tempurl";
+@import "uploadform";
 
 table {
 	width:100%;
@@ -339,9 +340,9 @@ table {
 	.fileupload-progress {
 		display:none;
 	}
-	.fileinput-button input { 
+	.fileinput-button input {
 		font-size: 50px;
-		
+
 	}
 	#fileupload {
 		#preloadmsg {
@@ -396,7 +397,7 @@ table {
 		}
 
 	}
-	
+
 	button, .button {
 		margin-bottom:0;
 		padding:14px 30px 0px 20px;

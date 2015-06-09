@@ -221,7 +221,7 @@ def objectview(request, container, prefix=None):
     public = False
     required_acl = ['.r:*', '.rlistings']
 
-    max_file_size = 10737418240
+    max_file_size = 5368709120
     max_file_count = 1
 
     #To allow large files to upload, increase this window to 2hr.
