@@ -66,25 +66,18 @@ $( function() {
         });
     })
 
-	.bind('fileuploadfail', function (e, data) {
-		files_added -= 1;
-		if (files_added == 0) {
-			$('#preloadmsg').show();
-			$('.fileupload-progress').hide();
-		}
-	})
-
     // Keep a counter of files as they are processed.
     .bind('fileuploadalways', function (e, data) {
         files_processed += 1;
 
         // If all fiels have been processed, close the form.
         if (files_processed == files_added) {
+            closeForm();
+            loadTable();
             files_added = 0;
             files_processed = 0;
             files_uploaded = 0;
-            closeForm();
-            loadTable();
+
         }
     })
     .addClass('fileupload-processing');
