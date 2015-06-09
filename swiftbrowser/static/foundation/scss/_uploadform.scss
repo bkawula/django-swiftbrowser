@@ -3,3 +3,13 @@
 		color: red;
 	}
 }
+
+.chrome-txt, span.directory-input {
+	display: none;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.chrome-txt, span.directory-input {
+		display: inline-block;
+	}
+}

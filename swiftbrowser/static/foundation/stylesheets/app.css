@@ -9470,6 +9470,17 @@ form#custom-temp-url input.submit {
   color: red;
 }
 
+/* line 7, ../scss/_uploadform.scss */
+.chrome-txt, span.directory-input {
+  display: none;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  /* line 12, ../scss/_uploadform.scss */
+  .chrome-txt, span.directory-input {
+    display: inline-block;
+  }
+}
 /* line 6, ../scss/app.scss */
 table {
   width: 100%;
