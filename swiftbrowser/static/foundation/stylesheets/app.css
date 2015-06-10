@@ -9481,71 +9481,76 @@ form#custom-temp-url input.submit {
     display: inline-block;
   }
 }
-/* line 6, ../scss/app.scss */
+/* line 2, ../scss/_objectview.scss */
+#progress.center-progress .loader {
+  margin: auto;
+}
+
+/* line 7, ../scss/app.scss */
 table {
   width: 100%;
   border-collapse: collapse;
   border: 0px;
 }
-/* line 10, ../scss/app.scss */
+/* line 11, ../scss/app.scss */
 table .icon {
   font-size: 24px;
 }
-/* line 13, ../scss/app.scss */
+/* line 14, ../scss/app.scss */
 table thead {
   background: transparent;
 }
-/* line 17, ../scss/app.scss */
+/* line 18, ../scss/app.scss */
 table thead tr th {
   font-size: 1.15rem;
   padding-bottom: 1.25rem;
 }
-/* line 20, ../scss/app.scss */
+/* line 21, ../scss/app.scss */
 table thead tr th:nth-child(1) {
   width: 1rem;
 }
-/* line 23, ../scss/app.scss */
+/* line 24, ../scss/app.scss */
 table thead tr th:nth-child(3) {
   width: 12rem;
 }
-/* line 26, ../scss/app.scss */
+/* line 27, ../scss/app.scss */
 table thead tr th:nth-child(4) {
   width: 6rem;
 }
-/* line 29, ../scss/app.scss */
+/* line 30, ../scss/app.scss */
 table thead tr th:nth-child(5) {
   width: 1rem;
 }
-/* line 35, ../scss/app.scss */
+/* line 36, ../scss/app.scss */
 table tr {
   border-bottom: 1px solid #EEEEEE;
 }
-/* line 38, ../scss/app.scss */
+/* line 39, ../scss/app.scss */
 table tr .even {
   background-color: transparent;
 }
-/* line 41, ../scss/app.scss */
+/* line 42, ../scss/app.scss */
 table tr .alt {
   background-color: transparent;
 }
-/* line 44, ../scss/app.scss */
+/* line 45, ../scss/app.scss */
 table tr:nth-of-type(even) {
   background-color: transparent;
 }
-/* line 47, ../scss/app.scss */
+/* line 48, ../scss/app.scss */
 table tr td {
   padding: 0rem 0.625rem;
 }
-/* line 50, ../scss/app.scss */
+/* line 51, ../scss/app.scss */
 table tr td:nth-child(1) {
   padding: 0rem 0.625rem 0rem 0rem;
 }
-/* line 53, ../scss/app.scss */
+/* line 54, ../scss/app.scss */
 table tr td:nth-child(5) {
   padding: 0;
 }
 
-/* line 63, ../scss/app.scss */
+/* line 64, ../scss/app.scss */
 #login-form {
   background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
   background-size: 400px;
@@ -9556,7 +9561,7 @@ table tr td:nth-child(5) {
   width: 100%;
   height: 100%;
 }
-/* line 71, ../scss/app.scss */
+/* line 72, ../scss/app.scss */
 #login-form .login-form-box {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.65);
@@ -9564,50 +9569,50 @@ table tr td:nth-child(5) {
   position: relative;
   top: 40%;
 }
-/* line 77, ../scss/app.scss */
+/* line 78, ../scss/app.scss */
 #login-form .login-form-box .columns {
   padding-left: 0;
 }
-/* line 80, ../scss/app.scss */
+/* line 81, ../scss/app.scss */
 #login-form .login-form-box .login-btn {
   width: 100%;
 }
-/* line 85, ../scss/app.scss */
+/* line 86, ../scss/app.scss */
 #login-form .login-alert {
   color: #FFFFFF;
   padding-bottom: 1rem;
 }
-/* line 89, ../scss/app.scss */
+/* line 90, ../scss/app.scss */
 #login-form .olrctext {
   width: 400px;
   padding-bottom: 15px;
 }
 
-/* line 92, ../scss/app.scss */
+/* line 93, ../scss/app.scss */
 #header {
   background-color: #363636;
 }
-/* line 94, ../scss/app.scss */
+/* line 95, ../scss/app.scss */
 #header .service-logo {
   width: 60px;
   padding-top: 0.5rem;
 }
-/* line 98, ../scss/app.scss */
+/* line 99, ../scss/app.scss */
 #header .account-btns {
   text-align: right;
 }
-/* line 100, ../scss/app.scss */
+/* line 101, ../scss/app.scss */
 #header .account-btns .user
 button, #header .account-btns .button {
   background-color: #000000;
 }
-/* line 103, ../scss/app.scss */
+/* line 104, ../scss/app.scss */
 #header .account-btns .user
 button:focus, #header .account-btns .user
 button:hover, #header .account-btns .button:focus, #header .account-btns .button:hover {
   background-color: #242424;
 }
-/* line 108, ../scss/app.scss */
+/* line 109, ../scss/app.scss */
 #header .account-btns .username {
   padding-top: 0.625rem;
   padding-right: 0.8rem;
@@ -9617,76 +9622,76 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   color: #FFFFFF;
 }
 
-/* line 119, ../scss/app.scss */
+/* line 120, ../scss/app.scss */
 .header-alert {
   margin-bottom: 0px;
   padding: 0.875rem 0rem 0.875rem 0rem;
 }
 
-/* line 123, ../scss/app.scss */
+/* line 124, ../scss/app.scss */
 .content-body {
   margin-top: 1rem;
 }
 
-/* line 126, ../scss/app.scss */
+/* line 127, ../scss/app.scss */
 .reveal-modal {
   padding: 0.5rem 1.875rem;
 }
-/* line 128, ../scss/app.scss */
+/* line 129, ../scss/app.scss */
 .reveal-modal h2 {
   font-weight: bold;
 }
-/* line 131, ../scss/app.scss */
+/* line 132, ../scss/app.scss */
 .reveal-modal .close {
   background-color: #000000;
   float: right;
 }
-/* line 134, ../scss/app.scss */
+/* line 135, ../scss/app.scss */
 .reveal-modal .close:focus, .reveal-modal .close:hover {
   background-color: #242424;
 }
 
-/* line 140, ../scss/app.scss */
+/* line 141, ../scss/app.scss */
 #containerview {
   padding-bottom: 5rem;
 }
-/* line 142, ../scss/app.scss */
+/* line 143, ../scss/app.scss */
 #containerview .usage {
   color: #FFFFFF;
   font-weight: normal;
   font-size: 0.65rem;
   vertical-align: super;
 }
-/* line 152, ../scss/app.scss */
+/* line 153, ../scss/app.scss */
 #containerview #containertable .dropdown.button::after {
   border-color: #000000 transparent transparent transparent;
 }
-/* line 156, ../scss/app.scss */
+/* line 157, ../scss/app.scss */
 #containerview #containertable .file-btn {
   background-color: transparent;
   margin: 0px;
   color: #000000;
 }
-/* line 164, ../scss/app.scss */
+/* line 165, ../scss/app.scss */
 #containerview #containertable .file-btn:hover, #containerview #containertable .file-btn:focus {
   background-color: #EEEEEE;
 }
 
-/* line 177, ../scss/app.scss */
+/* line 178, ../scss/app.scss */
 .crumb-row {
   background-color: #363636;
   padding: 10px 0px 0px;
 }
-/* line 180, ../scss/app.scss */
+/* line 181, ../scss/app.scss */
 .crumb-row ul {
   margin-bottom: 0.2rem;
 }
 
-/* line 184, ../scss/app.scss */
+/* line 185, ../scss/app.scss */
 .action-btns {
   text-align: right;
 }
-/* line 186, ../scss/app.scss */
+/* line 187, ../scss/app.scss */
 .action-btns button, .action-btns .button {
   padding-top: 0.85rem;
   padding-right: 1.25rem;
@@ -9695,47 +9700,47 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin-bottom: 0;
   font-size: 0.85rem;
 }
-/* line 197, ../scss/app.scss */
+/* line 198, ../scss/app.scss */
 .action-btns .share {
   background-color: #3B862F;
 }
-/* line 199, ../scss/app.scss */
+/* line 200, ../scss/app.scss */
 .action-btns .share:focus, .action-btns .share:hover {
   background-color: #337328;
 }
-/* line 203, ../scss/app.scss */
+/* line 204, ../scss/app.scss */
 .action-btns .folder {
   background-color: #767676;
 }
-/* line 205, ../scss/app.scss */
+/* line 206, ../scss/app.scss */
 .action-btns .folder:focus, .action-btns .folder:hover {
   background-color: #656565;
 }
-/* line 209, ../scss/app.scss */
+/* line 210, ../scss/app.scss */
 .action-btns .columns {
   padding-right: 1.8rem;
 }
 
-/* line 213, ../scss/app.scss */
+/* line 214, ../scss/app.scss */
 #objectview {
   padding-bottom: 5rem;
 }
-/* line 219, ../scss/app.scss */
+/* line 220, ../scss/app.scss */
 #objectview #objecttable .dropdown.button::after {
   border-color: #000000 transparent transparent transparent;
 }
-/* line 223, ../scss/app.scss */
+/* line 224, ../scss/app.scss */
 #objectview #objecttable .file-btn {
   background-color: transparent;
   margin: 0px;
   color: #000000;
 }
-/* line 231, ../scss/app.scss */
+/* line 232, ../scss/app.scss */
 #objectview #objecttable .file-btn:hover, #objectview #objecttable .file-btn:focus {
   background-color: #EEEEEE;
 }
 
-/* line 243, ../scss/app.scss */
+/* line 244, ../scss/app.scss */
 .dropdown-btn {
   background-color: transparent;
   padding: 0.5rem;
@@ -9745,26 +9750,26 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin: 0;
   text-align: left;
 }
-/* line 251, ../scss/app.scss */
+/* line 252, ../scss/app.scss */
 .dropdown-btn:hover, .dropdown-btn:focus {
   color: #555555;
   background-color: #EEEEEE;
 }
 
-/* line 257, ../scss/app.scss */
+/* line 258, ../scss/app.scss */
 #fileForm .file-row {
   position: relative;
   border-bottom: 1px solid #EEEEEE;
 }
-/* line 261, ../scss/app.scss */
+/* line 262, ../scss/app.scss */
 #fileForm .file-row .row div:nth-child(1) {
   padding-left: 0rem;
 }
-/* line 264, ../scss/app.scss */
+/* line 265, ../scss/app.scss */
 #fileForm .file-row .row div:nth-child(4) {
   padding-right: 0rem;
 }
-/* line 268, ../scss/app.scss */
+/* line 269, ../scss/app.scss */
 #fileForm .file-row .file-progress {
   position: absolute;
   width: 100%;
@@ -9773,17 +9778,17 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin: 0;
   bottom: 0px;
 }
-/* line 276, ../scss/app.scss */
+/* line 277, ../scss/app.scss */
 #fileForm .file-row .progress {
   border: 0px;
   padding: 0;
   background-color: #FFFFFF;
 }
-/* line 280, ../scss/app.scss */
+/* line 281, ../scss/app.scss */
 #fileForm .file-row .progress .meter {
   background: #0074be;
 }
-/* line 284, ../scss/app.scss */
+/* line 285, ../scss/app.scss */
 #fileForm .file-row .icon {
   float: left;
   position: relative;
@@ -9793,7 +9798,7 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   overflow: hidden;
   padding: 10px;
 }
-/* line 293, ../scss/app.scss */
+/* line 294, ../scss/app.scss */
 #fileForm .file-row .preview {
   float: left;
   position: relative;
@@ -9802,38 +9807,38 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   overflow: hidden;
   padding-top: 5px;
 }
-/* line 301, ../scss/app.scss */
+/* line 302, ../scss/app.scss */
 #fileForm .file-row .filerowtext {
   position: relative;
   margin-left: 30px;
   float: left;
   padding-top: 10px;
 }
-/* line 307, ../scss/app.scss */
+/* line 308, ../scss/app.scss */
 #fileForm .file-row .filerowbtns {
   text-align: right;
   padding-top: 5px;
 }
-/* line 310, ../scss/app.scss */
+/* line 311, ../scss/app.scss */
 #fileForm .file-row .filerowbtns button, #fileForm .file-row .filerowbtns .button {
   margin-bottom: 10px;
 }
-/* line 314, ../scss/app.scss */
+/* line 315, ../scss/app.scss */
 #fileForm .file-row .name {
   font-size: 0.875rem;
   padding-top: 10px;
   font-weight: bold;
 }
-/* line 319, ../scss/app.scss */
+/* line 320, ../scss/app.scss */
 #fileForm .file-row .size {
   font-size: 0.875rem;
   padding-top: 10px;
 }
-/* line 325, ../scss/app.scss */
+/* line 326, ../scss/app.scss */
 #fileForm .file-progress {
   display: none;
 }
-/* line 328, ../scss/app.scss */
+/* line 329, ../scss/app.scss */
 #fileForm .progress {
   background-color: #FFFFFF;
   border: 0;
@@ -9841,94 +9846,94 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin-top: 10px;
   height: 20px;
 }
-/* line 335, ../scss/app.scss */
+/* line 336, ../scss/app.scss */
 #fileForm .progress-extended {
   margin-bottom: 10px;
   font-size: 0.875rem;
   font-weight: bold;
 }
-/* line 340, ../scss/app.scss */
+/* line 341, ../scss/app.scss */
 #fileForm .fileupload-progress {
   display: none;
 }
-/* line 343, ../scss/app.scss */
+/* line 344, ../scss/app.scss */
 #fileForm .fileinput-button input {
   font-size: 50px;
 }
-/* line 348, ../scss/app.scss */
+/* line 349, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg {
   text-align: center;
   background: url("../../img/upload-bkg.png") no-repeat center center;
 }
-/* line 353, ../scss/app.scss */
+/* line 354, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .preloadmsg-txt {
   font-size: 1.5rem;
   font-weight: bold;
   padding-top: 12rem;
 }
-/* line 358, ../scss/app.scss */
+/* line 359, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .chrome {
   font-size: 0.8rem;
   padding-top: 8rem;
 }
-/* line 364, ../scss/app.scss */
+/* line 365, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .chrome img {
   width: 40px;
 }
 
-/* line 372, ../scss/app.scss */
+/* line 373, ../scss/app.scss */
 .fileinput-button {
   overflow: inherit !important;
 }
 
-/* line 375, ../scss/app.scss */
+/* line 376, ../scss/app.scss */
 .breadcrumbs {
   padding: 20px 0px;
   border: 0;
   background-color: transparent;
 }
-/* line 379, ../scss/app.scss */
+/* line 380, ../scss/app.scss */
 .breadcrumbs:hover {
   text-decoration: none;
 }
-/* line 382, ../scss/app.scss */
+/* line 383, ../scss/app.scss */
 .breadcrumbs li {
   text-transform: none;
   font-size: 1.25rem;
   font-weight: bold;
 }
-/* line 386, ../scss/app.scss */
+/* line 387, ../scss/app.scss */
 .breadcrumbs li:focus, .breadcrumbs li:hover {
   text-decoration: none;
 }
-/* line 390, ../scss/app.scss */
+/* line 391, ../scss/app.scss */
 .breadcrumbs a {
   color: #FFFFFF;
   text-decoration: none;
 }
-/* line 394, ../scss/app.scss */
+/* line 395, ../scss/app.scss */
 .breadcrumbs a:focus, .breadcrumbs a:hover {
   text-decoration: none;
   color: #dbdbdb;
 }
-/* line 401, ../scss/app.scss */
+/* line 402, ../scss/app.scss */
 .breadcrumbs button, .breadcrumbs .button {
   margin-bottom: 0;
   padding: 14px 30px 0px 20px;
   font-weight: bold;
   background-color: transparent;
 }
-/* line 408, ../scss/app.scss */
+/* line 409, ../scss/app.scss */
 .breadcrumbs #container-opts li {
   font-weight: normal;
   font-size: 0.875rem;
 }
-/* line 413, ../scss/app.scss */
+/* line 414, ../scss/app.scss */
 .breadcrumbs #container-opts a:focus, .breadcrumbs #container-opts a:hover {
   color: #555555;
 }
 
-/* line 420, ../scss/app.scss */
+/* line 421, ../scss/app.scss */
 .loader:before,
 .loader:after,
 .loader {
@@ -9941,12 +9946,12 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation: load7 1.8s infinite ease-in-out;
 }
 
-/* line 431, ../scss/app.scss */
+/* line 432, ../scss/app.scss */
 #progress {
   display: none;
 }
 
-/* line 434, ../scss/app.scss */
+/* line 435, ../scss/app.scss */
 .loader {
   margin: 0em 4em 6em;
   font-size: 10px;
@@ -9959,19 +9964,19 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation-delay: -0.16s;
 }
 
-/* line 446, ../scss/app.scss */
+/* line 447, ../scss/app.scss */
 .loader:before {
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
 
-/* line 451, ../scss/app.scss */
+/* line 452, ../scss/app.scss */
 .loader:after {
   left: 3.5em;
 }
 
-/* line 454, ../scss/app.scss */
+/* line 455, ../scss/app.scss */
 .loader:before,
 .loader:after {
   content: '';

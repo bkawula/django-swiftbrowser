@@ -3,6 +3,12 @@ $( document ).ready(function() {
 });
 
 function loadTable() {
+    $('#objecttable').html(
+        '<div id="progress" class="center-progress">' +
+            '<div class="loader">Loading...</div>' +
+        '</div>'
+    );
+    $("#progress").show();
     $.ajax({
         url: loadtable_url,
         success: function(data) {
