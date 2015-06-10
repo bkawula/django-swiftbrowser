@@ -1,58 +1,48 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
-
-<div id="login-form">
-	<h1 class="show-for-sr">Login</h1>
-<div class="login-form-box">
-	
-	<div>
-		<div>
-		<img class="olrctext" src="../static/img/olrc.png" alt="Ontario Library Research Cloud">
-	</div>
-<form method="post" action="{% url "login" %}">
-    {% csrf_token %}
-   
-    
-       
-        <div id="login-fields" class="row">
-			<div class="small-12 large-4 columns">
-            
-			<label class="show-for-sr">
-                <b>{% trans 'Username' %}</b>
-            </label>
-            <input class="form-control"  name="username" type="text" placeholder="{% trans 'Tenant:Username' %}">
-			
-			</div>
-			<div class="small-12 large-4 columns">
-            <label class="show-for-sr">
-                <b>{% trans 'Password' %}</b>
-            </label>
-            <input class="form-control" name="password" type="password" placeholder="{% trans 'Password' %}">
-			</div>
-			<div class="small-12 large-4 columns">
-			<button type="submit" class="button login-btn postfix">
-	            {% trans 'Login' %} <span class="icon-chevron-right icon-white"></span>
-	        </button>
-			</div>
-        </div>
-        
-    
-    <div class="login-alert">
-        {% if messages %}
-            {% for message in messages %}
-                {% if message.level == 40 %}
-                    <div class="alert alert-error">
-                        {{message|safe}}
+    <div id="login-form">
+        <h1 class="show-for-sr">Login</h1>
+        <div class="login-form-box">
+            <div>
+                <div>
+                   <img class="olrctext" src="../static/img/olrc.png" alt="Ontario Library Research Cloud">
+                </div>
+                <form method="post" action="{% url "login" %}">
+                    {% csrf_token %}
+                    <div id="login-fields" class="row">
+                        <div class="small-12 large-4 columns">
+                            <label class="show-for-sr">
+                                <b>{% trans 'Username' %}</b>
+                            </label>
+                            <input class="form-control"  name="username" type="text" placeholder="{% trans 'Tenant:Username' %}">
+                        </div>
+                        <div class="small-12 large-4 columns">
+                            <label class="show-for-sr">
+                                <b>{% trans 'Password' %}</b>
+                            </label>
+                            <input class="form-control" name="password" type="password" placeholder="{% trans 'Password' %}">
+                        </div>
+                        <div class="small-12 large-4 columns">
+                            <button type="submit" class="button login-btn postfix">
+                                {% trans 'Login' %} <span class="icon-chevron-right icon-white"></span>
+                            </button>
+                        </div>
                     </div>
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-		
+                    <div class="login-alert">
+                        {% if messages %}
+                            {% for message in messages %}
+                                {% if message.level == 40 %}
+                                    <div class="alert alert-error">
+                                        {{message|safe}}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-</form>
-</div>
-</div>
-</div>
 {% endblock %}
 
