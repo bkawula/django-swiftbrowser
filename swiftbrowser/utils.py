@@ -413,3 +413,8 @@ def remove_duplicates_from_acl(acls):
     acls = ','.join(cleaned_entries)
     return acls
 
+
+def get_default_temp_time(storage_url, auth_token):
+    """Return in seconds the header Default-Temp-Time for the given tenant."""
+    cont = client.head_account(storage_url, auth_token)
+    return cont.get('x-account-meta-default-temp-time', '')

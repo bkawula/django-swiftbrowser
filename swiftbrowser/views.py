@@ -30,12 +30,7 @@ from swiftbrowser.models import Photo
 from swiftbrowser.models import Document
 from swiftbrowser.forms import CreateContainerForm, PseudoFolderForm, \
     LoginForm, AddACLForm, DocumentForm, CustomTempURLForm
-from swiftbrowser.utils import replace_hyphens, prefix_list, \
-    pseudofolder_object_list, get_temp_key, get_base_url, get_temp_url, \
-    create_thumbnail, redirect_to_objectview_after_delete, \
-    get_original_account, create_pseudofolder_from_prefix, \
-    delete_given_object, delete_given_folder, session_valid, \
-    ajax_session_valid, get_acls, remove_duplicates_from_acl
+from swiftbrowser.utils import *
 
 import swiftbrowser
 
@@ -442,11 +437,23 @@ def tempurl(request, container, objectname):
     """ Displays a temporary URL for a given container object. Provide a form
     to request a custom temporary URL. """
 
-    # The time of the expiration of the tempurl can be defined through a post.
-    # The default is 7 days and 0 hours.
-    days_to_expiry = 7
-    hours_to_expiry = 0
+    # Check if tenant has a default temp time.
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    default_temp_time = get_default_temp_time(storage_url, auth_token)
 
+    if default_temp_time:
+        print("default temp time {}".format(default_temp_time))
+        days_to_expiry = int(default_temp_time) / (24 * 3600)
+        hours_to_expiry = (int(default_temp_time) % (24 * 3600)) / 3600
+    else:
+        # The time of the expiration of the tempurl can be defined through
+        # the tenant's headers or a post.
+        # The default is 7 days and 0 hours.
+        days_to_expiry = 7
+        hours_to_expiry = 0
+
+    # If the request is a formpost, use the data from the formpost.
     if (request.POST):
         tempurl_form = CustomTempURLForm(request.POST)
         if tempurl_form.is_valid():
