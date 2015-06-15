@@ -80,6 +80,17 @@ $( function() {
 
         }
     })
+	
+	// This is called when an item in the form is cancelled or removed.
+	.bind('fileuploadfail', function (e, data) {		
+		files_added -= 1;		
+		if (files_added == 0) {
+			$('#preloadmsg').show();
+			$('.fileupload-progress').hide();
+		}
+	})
+	
+	
     .addClass('fileupload-processing');
 
 });
