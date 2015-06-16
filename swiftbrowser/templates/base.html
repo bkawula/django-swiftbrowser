@@ -4,20 +4,23 @@
 {% block head %}
 {% if session.username %}
 <div id="header" >
-<div class="row" role="navigation">	
-	<div class="small-3 columns">
-		<a href="{% url "containerview" %}" ><img class="service-logo" src="{% static "img/olrc-logo-small.png" %}" alt="OLRC Browser"/></a>	   
-	</div>   
-	<div class="small-9 columns">
-		<div class="account-btns">
-			<span class="username">{{session.username}}</span>
-			<a class="button tiny" role="button" href="{% url "login" %}">
-			<span ></span>
-			{% trans 'Logout' %}
-			</a>
-		</div> 
+	<div class="row" role="navigation">
+		<div class="small-3 columns">
+			<a href="{% url "containerview" %}" ><img class="service-logo" src="{% static "img/olrc-logo-small.png" %}" alt="OLRC Browser"/></a>
+		</div>
+		<div class="small-9 columns">
+			<div class="account-btns">
+				<span class="username">{{session.username}}</span>
+				<a class="button tiny" role="button" href="{% url "settings_view" %}">
+					<span></span>Settings
+				</a>
+				<a class="button tiny" role="button" href="{% url "login" %}">
+				<span ></span>
+				{% trans 'Logout' %}
+				</a>
+			</div>
+		</div>
 	</div>
-</div>
 </div>
 {% else %}
 {% endif %}

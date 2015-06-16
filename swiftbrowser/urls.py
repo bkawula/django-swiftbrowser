@@ -2,11 +2,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import patterns, include, url
 
-from swiftbrowser.views import containerview, objectview, download,\
-    delete_object, login, tempurl, create_pseudofolder,\
-    create_container, delete_container, public_objectview, toggle_public,\
-    edit_acl, upload_delete, objecttable, delete_folder
-from swiftbrowser.utils import download_collection
+from swiftbrowser.views import *
+from swiftbrowser.utils import download_collection, set_default_temp_time
 
 from swiftbrowser.trashviews import move_to_trash, trashview, delete_trash,\
     restore_trash, move_collection_to_trash, restore_trash_collection
@@ -73,4 +70,9 @@ urlpatterns = patterns(
         download_collection,
         {'non_recursive': True},
         name="download_collection_nonrec"),
+    url(r'^settings$', settings_view, name="settings_view"),
+    url(
+        r'^set_default_tempurl_time$',
+        set_default_temp_time,
+        name="set_default_tempurl_time"),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

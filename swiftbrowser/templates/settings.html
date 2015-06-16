@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load l10n %}
+{% load i18n %}
+{% load dateconv %}
+{% load lastpart %}
+{% block content %}
+	<div id="containerview">
+		<div class="crumb-row" data-magellan-expedition="fixed">
+			<div class="row">
+				<div class="small-12 large-7 columns">
+					<ul class="breadcrumbs">
+						<li>
+							<a href="{% url "containerview" %}">Containers</a>
+							<span class="usage">
+								{{account_stat.x_account_bytes_used|filesizeformat}}
+								{% if account_stat.x_account_meta_quota_bytes %}
+								{% trans 'of' %}
+								{{account_stat.x_account_meta_quota_bytes|filesizeformat}}
+								{% endif %}
+								{% trans 'used' %}
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		{% include "messages.html" %}
+		<div class="row content-body">
+			<div id="containertable" class="small-12 columns">
+				<h1>Tenant Settings</h1>
+				<h2>Default Temp Url Time</h2>
+				<p>The following hours and days are used to calculate how long temp urls will last. The default is 7 days. You can change this here.</p>
+				<form id="custom-temp-url" action="{% url "set_default_tempurl_time" %}" method="post">
+			        {% csrf_token %}
+			        {{tempurl_form}}
+			        <input class="submit" type="submit" value="Update"/>
+			    </form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

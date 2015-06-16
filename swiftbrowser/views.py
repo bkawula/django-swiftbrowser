@@ -432,7 +432,7 @@ def public_objectview(request, account, container, prefix=None):
     )
 
 
-@session_valid
+# @session_valid
 def tempurl(request, container, objectname):
     """ Displays a temporary URL for a given container object. Provide a form
     to request a custom temporary URL. """
@@ -678,3 +678,35 @@ def upload_delete(request, pk):
         success = False
 
     return JFUResponse(request, success)
+
+
+@session_valid
+def settings_view(request):
+    """ Returns list of all objects in current container. """
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    # If temp url is set, display it, else, inform user the default is 7 days.
+    default_temp_time = get_default_temp_time(storage_url, auth_token)
+    if not default_temp_time:
+        default_temp_time = 604800  # 7 days in seconds
+
+    days_to_expiry = int(default_temp_time) / (24 * 3600)
+    hours_to_expiry = (int(default_temp_time) % (24 * 3600)) / 3600
+
+    tempurl_form = CustomTempURLForm(
+        initial={
+            'days': days_to_expiry,
+            'hours': hours_to_expiry,
+        }
+    )
+
+    return render_to_response(
+        "settings.html",
+        {
+            'session': request.session,
+            'tempurl_form': tempurl_form,
+        },
+        context_instance=RequestContext(request)
+    )
