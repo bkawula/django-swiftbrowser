@@ -6,11 +6,11 @@
 <table>
 	<thead>
 		<tr>
-			<th></th>
-			<th>{% trans 'Name' %}</th>
-			<th>{% trans 'Created' %}</th>
-			<th>{% trans 'Size' %}</th>
-			<th></th>
+			<th class="hide-for-small-only"></th>
+			<th class="hide-for-small-only">{% trans 'Name' %}</th>
+			<th class="hide-for-small-only">{% trans 'Created' %}</th>
+			<th class="hide-for-small-only">{% trans 'Size' %}</th>
+			<th class="hide-for-small-only"></th>
 		</tr>
 	</thead>
 	{% if folders or objects %}
@@ -25,8 +25,8 @@
 							<strong>{{folder.0|lastpart}}</strong>
 						</a>
 					</td>
-					<td></td>
-					<td></td>
+					<td class="hide-for-small-only"></td>
+					<td ></td>
 					<td>
 						<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn">
 							<span class="glyphicons glyphicons-cogwheel"></span>
@@ -87,8 +87,8 @@
 					<td>
 						<a href="{% url "download" container=container objectname=key.name %}" class="block">{{key.name|lastpart}}</a>
 					</td>
-					<td class="hidden-phone">{{key.last_modified|dateconv|date:"SHORT_DATETIME_FORMAT"}}</td>
-					<td class="hidden-phone">{{key.bytes|filesizeformat}}</td>
+					<td class="hide-for-small-only">{{key.last_modified|dateconv|date:"SHORT_DATETIME_FORMAT"}}</td>
+					<td >{{key.bytes|filesizeformat}}</td>
 					<td>
 						<button type="button" data-dropdown="file-opt{{forloop.counter}}" aria-controls="file-opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn">
 							<span class="glyphicons glyphicons-cogwheel"></span>
@@ -115,6 +115,7 @@
 								</a>
 							</li> %}
 							{% endcomment %}
+							
 						</ul>
 					</td>
 				</tr>
@@ -123,7 +124,10 @@
 	{% else %}
 		<tbody>
 			<tr>
-				<th colspan="5" class="center">
+				<th colspan="1" >
+					
+				</th>
+				<th colspan="4" class="center">
 					<strong>
 						{% trans 'There are no objects in this container yet. Upload new objects by clicking the blue button.' %}
 					</strong>
