@@ -100,7 +100,7 @@
 	var loadtable_url = '{% url "objecttable" %}';
 	{% if prefix %}
 	var create_folder_url = "{% url "create_pseudofolder" container=container prefix=prefix %}";
-	% else %}
+	{% else %}
 	var create_folder_url = "{% url "create_pseudofolder" container=container %}";
 	{% endif %}
 </script>
