@@ -7,8 +7,16 @@
 	<div id="containerview">
 		<div class="crumb-row" data-magellan-expedition="fixed">
 			<div class="row">
-				<div class="small-12 large-7 columns">
-					<ul class="breadcrumbs">
+				<div class="action-btns">
+					<div class="small-12 columns">
+						<button type="button" data-reveal-id="container" class="button folder new-container">
+							<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
+							Create Container
+						</button>
+					</div>
+				</div>
+				<div class="small-12 medium-7 columns breadcrumb">
+					<ul>
 						<li>
 							<a href="{% url "containerview" %}">Containers</a>
 							<span class="usage">
@@ -22,14 +30,7 @@
 						</li>
 					</ul>
 				</div>
-				<div class="row action-btns">
-					<div class="small-12 large-5 columns">
-						<button type="button" data-reveal-id="container" class="button folder">
-							<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
-							Create Container
-						</button>
-					</div>
-				</div>
+				
 			</div>
 		</div>
 		{% include "messages.html" %}
@@ -42,11 +43,11 @@
 				<table role="grid">
 					<thead>
 						<tr>
-							<th></th>
-							<th>{% trans 'Name' %}</th>
-							<th>{% trans 'Objects' %}</th>
-							<th>{% trans 'Size' %}</th>
-							<th></th>
+							<th class="hide-for-small-only"></th>
+							<th class="hide-for-small-only">{% trans 'Name' %}</th>
+							<th class="hide-for-small-only">{% trans 'Objects' %}</th>
+							<th class="hide-for-small-only">{% trans 'Size' %}</th>
+							<th class="hide-for-small-only"></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -60,7 +61,7 @@
 										<a href="{% url "objectview" container=container.name %}">{{container.name}}</a>
 									</strong>
 								</td>
-								<td>{{container.count}}</td>
+								<td class="hide-for-small-only">{{container.count}}</td>
 								<td>{{container.bytes|filesizeformat}}</td>
 								<td>
 									<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn">

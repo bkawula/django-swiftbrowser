@@ -9517,119 +9517,133 @@ table .icon {
 table thead {
   background: transparent;
 }
-/* line 19, ../scss/app.scss */
+/* line 18, ../scss/app.scss */
 table thead tr th {
   font-size: 1.15rem;
   padding-bottom: 1.25rem;
 }
-/* line 22, ../scss/app.scss */
+/* line 21, ../scss/app.scss */
 table thead tr th:nth-child(1) {
   width: 1rem;
 }
-/* line 25, ../scss/app.scss */
+/* line 24, ../scss/app.scss */
 table thead tr th:nth-child(3) {
   width: 12rem;
 }
-/* line 28, ../scss/app.scss */
+/* line 27, ../scss/app.scss */
 table thead tr th:nth-child(4) {
   width: 6rem;
 }
-/* line 31, ../scss/app.scss */
+/* line 30, ../scss/app.scss */
 table thead tr th:nth-child(5) {
   width: 1rem;
 }
-/* line 37, ../scss/app.scss */
+/* line 36, ../scss/app.scss */
 table tr {
   border-bottom: 1px solid #EEEEEE;
 }
-/* line 40, ../scss/app.scss */
+/* line 38, ../scss/app.scss */
 table tr .even {
   background-color: transparent;
 }
-/* line 43, ../scss/app.scss */
+/* line 41, ../scss/app.scss */
 table tr .alt {
   background-color: transparent;
 }
-/* line 46, ../scss/app.scss */
+/* line 44, ../scss/app.scss */
 table tr:nth-of-type(even) {
   background-color: transparent;
 }
-/* line 49, ../scss/app.scss */
+/* line 47, ../scss/app.scss */
 table tr td {
   padding: 0rem 0.625rem;
 }
-/* line 52, ../scss/app.scss */
+/* line 50, ../scss/app.scss */
 table tr td:nth-child(1) {
   padding: 0rem 0.625rem 0rem 0rem;
 }
-/* line 55, ../scss/app.scss */
+/* line 53, ../scss/app.scss */
 table tr td:nth-child(5) {
   padding: 0;
 }
 
-/* line 65, ../scss/app.scss */
-#login-form {
-  background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
-  background-size: 400px;
-  background-position: 194px 0px;
+/* line 59, ../scss/app.scss */
+#login {
+  background: url("../../img/background.jpg") no-repeat center center fixed;
+  background-size: cover;
   background-color: #666666;
   height: 100%;
   position: absolute;
   width: 100%;
   height: 100%;
 }
-/* line 73, ../scss/app.scss */
-#login-form .login-form-box {
+/* line 67, ../scss/app.scss */
+#login #login-form {
+  background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
+  background-size: 350px;
+  background-position: 24px 18px;
+  background-color: transparent;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+/* line 76, ../scss/app.scss */
+#login #login-form .login-form-box {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.65);
   padding: 50px 200px 10px;
   position: relative;
   top: 40%;
 }
-/* line 79, ../scss/app.scss */
-#login-form .login-form-box .columns {
+/* line 82, ../scss/app.scss */
+#login #login-form .login-form-box .columns {
   padding-left: 0;
 }
-/* line 82, ../scss/app.scss */
-#login-form .login-form-box .login-btn {
+/* line 85, ../scss/app.scss */
+#login #login-form .login-form-box .login-btn {
   width: 100%;
 }
-/* line 87, ../scss/app.scss */
-#login-form .login-alert {
+/* line 89, ../scss/app.scss */
+#login #login-form .login-alert {
   color: #FFFFFF;
   padding-bottom: 1rem;
 }
-/* line 91, ../scss/app.scss */
-#login-form .olrctext {
+/* line 93, ../scss/app.scss */
+#login #login-form .olrctext {
   width: 400px;
   padding-bottom: 15px;
 }
-
 /* line 94, ../scss/app.scss */
+#login #login-form .olrclogo {
+  width: 100%;
+}
+
+/* line 97, ../scss/app.scss */
 #header {
   background-color: #363636;
 }
-/* line 96, ../scss/app.scss */
+/* line 99, ../scss/app.scss */
 #header .service-logo {
-  width: 60px;
-  padding-top: 0.5rem;
+  width: 40px;
+  padding-top: 10px;
 }
-/* line 100, ../scss/app.scss */
+/* line 103, ../scss/app.scss */
 #header .account-btns {
   text-align: right;
 }
-/* line 102, ../scss/app.scss */
+/* line 105, ../scss/app.scss */
 #header .account-btns .user
 button, #header .account-btns .button {
   background-color: #000000;
 }
-/* line 105, ../scss/app.scss */
+/* line 108, ../scss/app.scss */
 #header .account-btns .user
 button:focus, #header .account-btns .user
 button:hover, #header .account-btns .button:focus, #header .account-btns .button:hover {
   background-color: #242424;
 }
-/* line 110, ../scss/app.scss */
+/* line 113, ../scss/app.scss */
 #header .account-btns .username {
   padding-top: 0.625rem;
   padding-right: 0.8rem;
@@ -9639,76 +9653,66 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   color: #FFFFFF;
 }
 
-/* line 121, ../scss/app.scss */
-.header-alert {
-  margin-bottom: 0px;
-  padding: 0.875rem 0rem 0.875rem 0rem;
-}
-
-/* line 125, ../scss/app.scss */
-.content-body {
-  margin-top: 1rem;
-}
-
-/* line 128, ../scss/app.scss */
-.reveal-modal {
-  padding: 0.5rem 1.875rem;
-}
-/* line 130, ../scss/app.scss */
-.reveal-modal h2 {
-  font-weight: bold;
-}
-/* line 133, ../scss/app.scss */
-.reveal-modal .close {
-  background-color: #000000;
-  float: right;
-}
-/* line 136, ../scss/app.scss */
-.reveal-modal .close:focus, .reveal-modal .close:hover {
-  background-color: #242424;
-}
-
-/* line 142, ../scss/app.scss */
-#containerview {
-  padding-bottom: 5rem;
-}
-/* line 144, ../scss/app.scss */
-#containerview .usage {
-  color: #FFFFFF;
-  font-weight: normal;
-  font-size: 0.65rem;
-  vertical-align: super;
-}
-/* line 154, ../scss/app.scss */
-#containerview #containertable .dropdown.button::after {
-  border-color: #000000 transparent transparent transparent;
-}
-/* line 158, ../scss/app.scss */
-#containerview #containertable .file-btn {
-  background-color: transparent;
-  margin: 0px;
-  color: #000000;
-}
-/* line 166, ../scss/app.scss */
-#containerview #containertable .file-btn:hover, #containerview #containertable .file-btn:focus {
-  background-color: #EEEEEE;
-}
-
-/* line 179, ../scss/app.scss */
+/* line 123, ../scss/app.scss */
 .crumb-row {
   background-color: #363636;
-  padding: 10px 0px 0px;
+  padding: 0px 0px 0px;
 }
-/* line 182, ../scss/app.scss */
+/* line 126, ../scss/app.scss */
 .crumb-row ul {
   margin-bottom: 0.2rem;
 }
+/* line 130, ../scss/app.scss */
+.crumb-row .breadcrumb:hover {
+  text-decoration: none;
+}
+/* line 133, ../scss/app.scss */
+.crumb-row .breadcrumb ul {
+  margin-left: 0;
+  margin-top: 5px;
+}
+/* line 137, ../scss/app.scss */
+.crumb-row .breadcrumb li {
+  float: left;
+  list-style-type: none;
+  text-transform: none;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+/* line 143, ../scss/app.scss */
+.crumb-row .breadcrumb li:focus, .crumb-row .breadcrumb li:hover {
+  text-decoration: none;
+}
+/* line 147, ../scss/app.scss */
+.crumb-row .breadcrumb a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+/* line 151, ../scss/app.scss */
+.crumb-row .breadcrumb a:focus, .crumb-row .breadcrumb a:hover {
+  text-decoration: none;
+  color: #dbdbdb;
+}
+/* line 156, ../scss/app.scss */
+.crumb-row .breadcrumb .glyphicons {
+  display: inherit;
+  width: 20px;
+  float: left;
+  margin: 5px 5px 5px;
+  color: #fff;
+}
+/* line 163, ../scss/app.scss */
+.crumb-row .breadcrumb .glyphicons-cloud {
+  margin: 5px 5px 5px 0px;
+}
 
-/* line 186, ../scss/app.scss */
+/* line 168, ../scss/app.scss */
 .action-btns {
   text-align: right;
+  float: right;
+  margin-bottom: 5px;
 }
-/* line 188, ../scss/app.scss */
+/* line 172, ../scss/app.scss */
 .action-btns button, .action-btns .button {
   padding-top: 0.85rem;
   padding-right: 1.25rem;
@@ -9717,47 +9721,98 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin-bottom: 0;
   font-size: 0.85rem;
 }
-/* line 199, ../scss/app.scss */
+/* line 183, ../scss/app.scss */
 .action-btns .share {
   background-color: #3B862F;
 }
-/* line 201, ../scss/app.scss */
+/* line 185, ../scss/app.scss */
 .action-btns .share:focus, .action-btns .share:hover {
   background-color: #337328;
 }
-/* line 205, ../scss/app.scss */
+/* line 189, ../scss/app.scss */
 .action-btns .folder {
   background-color: #767676;
 }
-/* line 207, ../scss/app.scss */
+/* line 191, ../scss/app.scss */
 .action-btns .folder:focus, .action-btns .folder:hover {
   background-color: #656565;
 }
-/* line 211, ../scss/app.scss */
-.action-btns .columns {
-  padding-right: 1.8rem;
+
+/* line 198, ../scss/app.scss */
+.header-alert {
+  margin-bottom: 0px;
+  padding: 0.875rem 0rem 0.875rem 0rem;
 }
 
-/* line 215, ../scss/app.scss */
+/* line 202, ../scss/app.scss */
+.content-body {
+  margin-top: 1rem;
+}
+
+/* line 205, ../scss/app.scss */
+.reveal-modal {
+  padding: 0.5rem 1.875rem;
+}
+/* line 207, ../scss/app.scss */
+.reveal-modal h2 {
+  font-weight: bold;
+}
+/* line 210, ../scss/app.scss */
+.reveal-modal .close {
+  background-color: #000000;
+  float: right;
+}
+/* line 213, ../scss/app.scss */
+.reveal-modal .close:focus, .reveal-modal .close:hover {
+  background-color: #242424;
+}
+
+/* line 218, ../scss/app.scss */
+#containerview {
+  padding-bottom: 5rem;
+}
+/* line 220, ../scss/app.scss */
+#containerview .usage {
+  color: #FFFFFF;
+  font-weight: normal;
+  font-size: 0.65rem;
+  vertical-align: super;
+}
+/* line 227, ../scss/app.scss */
+#containerview #containertable .dropdown.button::after {
+  border-color: #000000 transparent transparent transparent;
+}
+/* line 230, ../scss/app.scss */
+#containerview #containertable .file-btn {
+  background-color: transparent;
+  margin: 0px;
+  color: #000000;
+}
+/* line 234, ../scss/app.scss */
+#containerview #containertable .file-btn:hover, #containerview #containertable .file-btn:focus {
+  background-color: #EEEEEE;
+}
+
+/* line 241, ../scss/app.scss */
 #objectview {
   padding-bottom: 5rem;
 }
-/* line 221, ../scss/app.scss */
+/* line 244, ../scss/app.scss */
 #objectview #objecttable .dropdown.button::after {
   border-color: #000000 transparent transparent transparent;
 }
-/* line 225, ../scss/app.scss */
+/* line 247, ../scss/app.scss */
 #objectview #objecttable .file-btn {
   background-color: transparent;
   margin: 0px;
   color: #000000;
 }
-/* line 233, ../scss/app.scss */
+/* line 251, ../scss/app.scss */
 #objectview #objecttable .file-btn:hover, #objectview #objecttable .file-btn:focus {
   background-color: #EEEEEE;
 }
 
-/* line 245, ../scss/app.scss */
+/* line 257, ../scss/app.scss */
 .dropdown-btn {
   background-color: transparent;
   padding: 0.5rem;
@@ -9767,26 +9822,26 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin: 0;
   text-align: left;
 }
-/* line 253, ../scss/app.scss */
+/* line 265, ../scss/app.scss */
 .dropdown-btn:hover, .dropdown-btn:focus {
   color: #555555;
   background-color: #EEEEEE;
 }
 
-/* line 259, ../scss/app.scss */
+/* line 271, ../scss/app.scss */
 #fileForm .file-row {
   position: relative;
   border-bottom: 1px solid #EEEEEE;
 }
-/* line 263, ../scss/app.scss */
+/* line 275, ../scss/app.scss */
 #fileForm .file-row .row div:nth-child(1) {
   padding-left: 0rem;
 }
-/* line 266, ../scss/app.scss */
+/* line 278, ../scss/app.scss */
 #fileForm .file-row .row div:nth-child(4) {
   padding-right: 0rem;
 }
-/* line 270, ../scss/app.scss */
+/* line 282, ../scss/app.scss */
 #fileForm .file-row .file-progress {
   position: absolute;
   width: 100%;
@@ -9795,17 +9850,17 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin: 0;
   bottom: 0px;
 }
-/* line 278, ../scss/app.scss */
+/* line 290, ../scss/app.scss */
 #fileForm .file-row .progress {
   border: 0px;
   padding: 0;
   background-color: #FFFFFF;
 }
-/* line 282, ../scss/app.scss */
+/* line 294, ../scss/app.scss */
 #fileForm .file-row .progress .meter {
   background: #0074be;
 }
-/* line 286, ../scss/app.scss */
+/* line 298, ../scss/app.scss */
 #fileForm .file-row .icon {
   float: left;
   position: relative;
@@ -9815,7 +9870,7 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   overflow: hidden;
   padding: 10px;
 }
-/* line 295, ../scss/app.scss */
+/* line 307, ../scss/app.scss */
 #fileForm .file-row .preview {
   float: left;
   position: relative;
@@ -9824,38 +9879,38 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   overflow: hidden;
   padding-top: 5px;
 }
-/* line 303, ../scss/app.scss */
+/* line 315, ../scss/app.scss */
 #fileForm .file-row .filerowtext {
   position: relative;
   margin-left: 30px;
   float: left;
   padding-top: 10px;
 }
-/* line 309, ../scss/app.scss */
+/* line 321, ../scss/app.scss */
 #fileForm .file-row .filerowbtns {
   text-align: right;
   padding-top: 5px;
 }
-/* line 312, ../scss/app.scss */
+/* line 324, ../scss/app.scss */
 #fileForm .file-row .filerowbtns button, #fileForm .file-row .filerowbtns .button {
   margin-bottom: 10px;
 }
-/* line 316, ../scss/app.scss */
+/* line 328, ../scss/app.scss */
 #fileForm .file-row .name {
   font-size: 0.875rem;
   padding-top: 10px;
   font-weight: bold;
 }
-/* line 321, ../scss/app.scss */
+/* line 333, ../scss/app.scss */
 #fileForm .file-row .size {
   font-size: 0.875rem;
   padding-top: 10px;
 }
-/* line 327, ../scss/app.scss */
+/* line 339, ../scss/app.scss */
 #fileForm .file-progress {
   display: none;
 }
-/* line 330, ../scss/app.scss */
+/* line 342, ../scss/app.scss */
 #fileForm .progress {
   background-color: #FFFFFF;
   border: 0;
@@ -9863,94 +9918,47 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   margin-top: 10px;
   height: 20px;
 }
-/* line 337, ../scss/app.scss */
+/* line 349, ../scss/app.scss */
 #fileForm .progress-extended {
   margin-bottom: 10px;
   font-size: 0.875rem;
   font-weight: bold;
 }
-/* line 342, ../scss/app.scss */
+/* line 354, ../scss/app.scss */
 #fileForm .fileupload-progress {
   display: none;
 }
-/* line 345, ../scss/app.scss */
+/* line 357, ../scss/app.scss */
 #fileForm .fileinput-button input {
   font-size: 50px;
 }
-/* line 350, ../scss/app.scss */
+/* line 362, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg {
   text-align: center;
   background: url("../../img/upload-bkg.png") no-repeat center center;
 }
-/* line 355, ../scss/app.scss */
+/* line 367, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .preloadmsg-txt {
   font-size: 1.5rem;
   font-weight: bold;
   padding-top: 12rem;
 }
-/* line 360, ../scss/app.scss */
+/* line 372, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .chrome {
   font-size: 0.8rem;
   padding-top: 8rem;
 }
-/* line 366, ../scss/app.scss */
+/* line 378, ../scss/app.scss */
 #fileForm #fileupload #preloadmsg .chrome img {
   width: 40px;
 }
 
-/* line 374, ../scss/app.scss */
+/* line 386, ../scss/app.scss */
 .fileinput-button {
   overflow: inherit !important;
 }
 
-/* line 377, ../scss/app.scss */
-.breadcrumbs {
-  padding: 20px 0px;
-  border: 0;
-  background-color: transparent;
-}
-/* line 381, ../scss/app.scss */
-.breadcrumbs:hover {
-  text-decoration: none;
-}
-/* line 384, ../scss/app.scss */
-.breadcrumbs li {
-  text-transform: none;
-  font-size: 1.25rem;
-  font-weight: bold;
-}
-/* line 388, ../scss/app.scss */
-.breadcrumbs li:focus, .breadcrumbs li:hover {
-  text-decoration: none;
-}
-/* line 392, ../scss/app.scss */
-.breadcrumbs a {
-  color: #FFFFFF;
-  text-decoration: none;
-}
-/* line 396, ../scss/app.scss */
-.breadcrumbs a:focus, .breadcrumbs a:hover {
-  text-decoration: none;
-  color: #dbdbdb;
-}
-/* line 403, ../scss/app.scss */
-.breadcrumbs button, .breadcrumbs .button {
-  margin-bottom: 0;
-  padding: 14px 30px 0px 20px;
-  font-weight: bold;
-  background-color: transparent;
-}
-/* line 410, ../scss/app.scss */
-.breadcrumbs #container-opts li {
-  font-weight: normal;
-  font-size: 0.875rem;
-}
-/* line 415, ../scss/app.scss */
-.breadcrumbs #container-opts a:focus, .breadcrumbs #container-opts a:hover {
-  color: #555555;
-}
-
-/* line 422, ../scss/app.scss */
+/* line 390, ../scss/app.scss */
 .loader:before,
 .loader:after,
 .loader {
@@ -9963,12 +9971,12 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation: load7 1.8s infinite ease-in-out;
 }
 
-/* line 433, ../scss/app.scss */
+/* line 401, ../scss/app.scss */
 #progress {
   display: none;
 }
 
-/* line 436, ../scss/app.scss */
+/* line 404, ../scss/app.scss */
 .loader {
   margin: 0em 4em 6em;
   font-size: 10px;
@@ -9981,19 +9989,19 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   animation-delay: -0.16s;
 }
 
-/* line 448, ../scss/app.scss */
+/* line 416, ../scss/app.scss */
 .loader:before {
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
   animation-delay: -0.32s;
 }
 
-/* line 453, ../scss/app.scss */
+/* line 421, ../scss/app.scss */
 .loader:after {
   left: 3.5em;
 }
 
-/* line 456, ../scss/app.scss */
+/* line 424, ../scss/app.scss */
 .loader:before,
 .loader:after {
   content: '';
@@ -10019,5 +10027,134 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   }
   40% {
     box-shadow: 0 2.5em 0 0 #0074be;
+  }
+}
+@media only screen and (max-width: 40em) {
+  /* line 455, ../scss/app.scss */
+  #login #login-form {
+    background-size: 500px;
+    background-position: 10px 10px;
+  }
+  /* line 458, ../scss/app.scss */
+  #login #login-form .login-form-box {
+    top: 22%;
+    padding: 15px 10px 10px;
+  }
+  /* line 461, ../scss/app.scss */
+  #login #login-form .login-form-box .columns {
+    padding-right: 0;
+  }
+
+  /* line 469, ../scss/app.scss */
+  #header .columns {
+    padding: 0;
+  }
+  /* line 472, ../scss/app.scss */
+  #header .service-logo {
+    width: 32px;
+    padding-top: 5px;
+    padding-left: 5px;
+  }
+  /* line 477, ../scss/app.scss */
+  #header button, #header .button {
+    margin-bottom: 5px;
+  }
+
+  /* line 481, ../scss/app.scss */
+  .action-btns {
+    float: left;
+    width: 100%;
+    margin-bottom: 0px;
+  }
+  /* line 485, ../scss/app.scss */
+  .action-btns .columns {
+    padding: 0;
+  }
+  /* line 487, ../scss/app.scss */
+  .action-btns .columns .button {
+    width: 50%;
+    float: left;
+  }
+  /* line 491, ../scss/app.scss */
+  .action-btns .columns .new-container {
+    width: 100%;
+  }
+
+  /* line 496, ../scss/app.scss */
+  .crumb-row {
+    padding-top: 0px;
+  }
+  /* line 498, ../scss/app.scss */
+  .crumb-row .breadcrumb {
+    padding: 0;
+  }
+  /* line 500, ../scss/app.scss */
+  .crumb-row .breadcrumb ul {
+    margin-left: 5px;
+    margin-top: 0px;
+  }
+  /* line 504, ../scss/app.scss */
+  .crumb-row .breadcrumb li {
+    font-size: 1rem;
+  }
+
+  /* line 509, ../scss/app.scss */
+  #pseudoContainer {
+    padding-top: 4rem;
+  }
+
+  /* line 514, ../scss/app.scss */
+  #fileForm #fileupload .button {
+    width: 100%;
+  }
+  /* line 518, ../scss/app.scss */
+  #fileForm #fileupload #preloadmsg .preloadmsg-txt {
+    padding-top: 4rem;
+    font-size: 1rem;
+  }
+  /* line 522, ../scss/app.scss */
+  #fileForm #fileupload #preloadmsg .chrome {
+    padding-top: 4rem;
+  }
+
+  /* line 529, ../scss/app.scss */
+  .content-body .columns {
+    padding: 0px;
+  }
+
+  /* line 534, ../scss/app.scss */
+  .icon .filetypes, .icon .glyphicons {
+    padding-left: 5px;
+    font-size: 24px;
+  }
+
+  /* line 540, ../scss/app.scss */
+  #objecttable table tr td {
+    font-size: 12px;
+    padding: 0rem 0rem;
+  }
+  /* line 544, ../scss/app.scss */
+  #objecttable .dropdown.button, #objecttable button.dropdown {
+    padding: 1rem;
+    float: right;
+  }
+  /* line 547, ../scss/app.scss */
+  #objecttable .dropdown.button:after, #objecttable button.dropdown:after {
+    display: none;
+  }
+
+  /* line 553, ../scss/app.scss */
+  #containerview table tr td {
+    font-size: 12px;
+    padding: 0rem 0rem;
+  }
+  /* line 557, ../scss/app.scss */
+  #containerview .dropdown.button, #containerview button.dropdown {
+    padding: 1rem;
+    float: right;
+  }
+  /* line 560, ../scss/app.scss */
+  #containerview .dropdown.button:after, #containerview button.dropdown:after {
+    display: none;
   }
 }

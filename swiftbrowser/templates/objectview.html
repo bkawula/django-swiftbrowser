@@ -5,110 +5,104 @@
 {% load lastpart %}
 {% load staticfiles %}
 {% block content %}
-    <div id="objectview">
-        <link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">
-        <div class="crumb-row" data-magellan-expedition="fixed">
-            <div class="row" >
-                <div class="small-12 large-7 columns">
-                    <ul class="breadcrumbs">
-                        <li>
-                            <a href="{% url "containerview" %}">Containers</a>
-                        </li>
-                        <li>
-                            <a href="{% url "objectview" container=container %}">{{container}}</a>
-                            
-                           
-                        </li>
-                        {% for prefix in prefixes %}
-                            <li>
-                                <a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="row action-btns">
-                    <div class="small-12 large-5 columns">
-                        <button type="button" data-reveal-id="fileForm" class="button upload">
-                            <span class="glyphicons glyphicons-cloud-upload"></span>Upload Files
-                        </button>
-                        {% if public %}
-                            <button type="button" data-dropdown="drop2" aria-controls="drop2" aria-expanded="false" class="button share">
-                                <span class="glyphicons glyphicons-share"></span>Share
-                            </button>
-                        {% endif %}
-                        <button type="button" data-reveal-id="pseudoContainer" class="button folder">
-                            <span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
-                            New Folder
-                        </button>
-
-                        {% if public %}
-                        <div id="drop2" data-dropdown-content class="f-dropdown content" aria-hidden="true" tabindex="-1">
-                            <strong>{% trans 'Public URL:' %}</strong>
-                            <a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
-                                {{ base_url }}{% url "public_objectview" account=account container=container %}
-                            </a>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-            <div id="messages">
-                {% include "messages.html" %}
-            </div>
-        </div>
-        <div class="row">
-            <div class="small-12 columns"></div>
-        </div>
-        <div class="row content-body">
-            <div class="small-12 columns">
-                <div id="objecttable"></div>
-            </div>
-        </div>
-        <div class="reveal-modal" id="fileForm" data-reveal aria-labelledby="fileForm-title" aria-hidden="true" role="dialog">
-            <h2 id="fileForm-title">Add Files</h2>
-            {% load jfutags %}
-            {% comment %}
-                Passing in login as arbitrary upload handler since no server side
-                upload handler is actually used.
-            {% endcomment %}
-            {% jfu 'upload_form.html' 'login'%}
-        </div>
-        <div class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
-            <h2 id="pseudoContainer-title">Create a new folder</h2>
-            <a class="close-reveal-modal" aria-label="Close">&#215;</a>
-            <form method="POST" id="create-pseudofolder">
-                {% csrf_token %}
-                <div>
-                    <label for="foldername">
-                        {% trans "Enter your folder name here." %}
-                        {% trans "Please note that you can not rename it afterwards." %}
-                    </label>
-                    <div>
-                        <input id="foldername" name="foldername" class="input-xlarge" type="text" placeholder="{% trans "Folder Name" %}">
-                    </div>
-                </div>
-                <div>
-                    <button type="submit" class="button expand">{% trans 'Create' %}</button>
-                </div>
-            </form>
-            <div id="progress">
-               <div class="loader">Loading...</div>
-            </div>
-        </div>
-        <div class="reveal-modal" id="tempurl" data-reveal aria-labelledby="tempurl-title" aria-hidden="true" role="dialog"></div>
-    </div>
+<div id="objectview">
+	<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">
+	<div class="crumb-row" data-magellan-expedition="fixed">
+		<div class="row" >
+			<div class="action-btns">
+				<div class="small-12 columns">
+					<button type="button" data-reveal-id="fileForm" class="button upload">
+						<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Upload Files
+					</button>
+					{% if public %}
+					<button type="button" data-dropdown="drop2" aria-controls="drop2" aria-expanded="false" class="button share">
+						<span class="glyphicons glyphicons-share"></span>Share
+					</button>
+					{% endif %}
+					<button type="button" data-reveal-id="pseudoContainer" class="button folder">
+						<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
+						New Folder
+					</button>
+					{% if public %}
+					<div id="drop2" data-dropdown-content class="f-dropdown content" aria-hidden="true" tabindex="-1">
+						<strong>{% trans 'Public URL:' %}</strong>
+						<a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
+							{{ base_url }}{% url "public_objectview" account=account container=container %}
+						</a>
+					</div>
+					{% endif %}
+				</div>
+			</div>
+			<div class="small-12 medium-7 columns breadcrumb">
+				<ul>
+					<li>
+						<span class="glyphicons glyphicons-cloud"></span>
+						<a href="{% url "objectview" container=container %}">
+							{{container}}
+						</a>
+					</li>
+					{% for prefix in prefixes %}
+					<li>
+						<span class="glyphicons glyphicons-chevron-right"></span>
+						<a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+		<div id="messages">
+			{% include "messages.html" %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="small-12 columns"></div>
+	</div>
+	<div class="row content-body">
+		<div class="small-12 columns">
+			<div id="objecttable"></div>
+		</div>
+	</div>
+	<div class="reveal-modal" id="fileForm" data-reveal aria-labelledby="fileForm-title" aria-hidden="true" role="dialog">
+		<h2 id="fileForm-title">Add Files</h2>
+		{% load jfutags %}
+		{% comment %}
+		Passing in login as arbitrary upload handler since no server side upload handler is actually used.
+		{% endcomment %}
+		{% jfu 'upload_form.html' 'login'%}
+	</div>
+	<div class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
+		<h2 id="pseudoContainer-title">Create a new folder</h2>
+		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+		<form method="POST" id="create-pseudofolder">
+			{% csrf_token %}
+			<div>
+				<label for="foldername">
+					{% trans "Enter your folder name here." %}
+					{% trans "Please note that you can not rename it afterwards." %}
+				</label>
+				<div>
+					<input id="foldername" name="foldername" class="input-xlarge" type="text" placeholder="{% trans "Folder Name" %}">
+				</div>
+			</div>
+			<div>
+				<button type="submit" class="button expand">{% trans 'Create' %}</button>
+			</div>
+		</form>
+		<div id="progress">
+			<div class="loader">Loading...</div>
+		</div>
+	</div>
+	<div class="reveal-modal" id="tempurl" data-reveal aria-labelledby="tempurl-title" aria-hidden="true" role="dialog"></div>
+</div>
 {% endblock %}
 {% block jsadd %}
-
-    <script type="text/javascript">
-        var loadtable_url = '{% url "objecttable" %}';
-
-        {% if prefix %}
-            var create_folder_url = "{% url "create_pseudofolder" container=container prefix=prefix %}";
-        {% else %}
-            var create_folder_url = "{% url "create_pseudofolder" container=container %}";
-        {% endif %}
-
-    </script>
-    <script src="{{STATIC_URL}}js/helpers/objectview.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var loadtable_url = '{% url "objecttable" %}';
+	{% if prefix %}
+	var create_folder_url = "{% url "create_pseudofolder" container=container prefix=prefix %}";
+	{% else %}
+	var create_folder_url = "{% url "create_pseudofolder" container=container %}";
+	{% endif %}
+</script>
+<script src="{{STATIC_URL}}js/helpers/objectview.js" type="text/javascript"></script>
 {% endblock %}
