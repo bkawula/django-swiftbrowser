@@ -29,7 +29,7 @@ from jfu.http import upload_receive, UploadResponse, JFUResponse
 from swiftbrowser.models import Photo
 from swiftbrowser.models import Document
 from swiftbrowser.forms import CreateContainerForm, PseudoFolderForm, \
-    LoginForm, AddACLForm, DocumentForm, CustomTempURLForm
+    LoginForm, AddACLForm, DocumentForm, TimeForm
 from swiftbrowser.utils import *
 
 import swiftbrowser
@@ -432,7 +432,7 @@ def public_objectview(request, account, container, prefix=None):
     )
 
 
-# @session_valid
+@session_valid
 def tempurl(request, container, objectname):
     """ Displays a temporary URL for a given container object. Provide a form
     to request a custom temporary URL. """
@@ -443,7 +443,6 @@ def tempurl(request, container, objectname):
     default_temp_time = get_default_temp_time(storage_url, auth_token)
 
     if default_temp_time:
-        print("default temp time {}".format(default_temp_time))
         days_to_expiry = int(default_temp_time) / (24 * 3600)
         hours_to_expiry = (int(default_temp_time) % (24 * 3600)) / 3600
     else:
@@ -455,7 +454,7 @@ def tempurl(request, container, objectname):
 
     # If the request is a formpost, use the data from the formpost.
     if (request.POST):
-        tempurl_form = CustomTempURLForm(request.POST)
+        tempurl_form = TimeForm(request.POST)
         if tempurl_form.is_valid():
 
             days_to_expiry = float(tempurl_form.cleaned_data['days'])
@@ -480,9 +479,6 @@ def tempurl(request, container, objectname):
     container = unicode(container).encode('utf-8')
     objectname = unicode(objectname).encode('utf-8')
 
-    storage_url = request.session.get('storage_url', '')
-    auth_token = request.session.get('auth_token', '')
-
     url = get_temp_url(storage_url, auth_token,
                        container, objectname, seconds_to_expiry)
 
@@ -498,7 +494,7 @@ def tempurl(request, container, objectname):
         prefix += '/'
     prefixes = prefix_list(prefix)
 
-    tempurl_form = CustomTempURLForm()
+    tempurl_form = TimeForm()
 
     return render_to_response('tempurl.html',
                               {'url': url,
@@ -695,7 +691,7 @@ def settings_view(request):
     days_to_expiry = int(default_temp_time) / (24 * 3600)
     hours_to_expiry = (int(default_temp_time) % (24 * 3600)) / 3600
 
-    tempurl_form = CustomTempURLForm(
+    tempurl_form = TimeForm(
         initial={
             'days': days_to_expiry,
             'hours': hours_to_expiry,
@@ -710,3 +706,52 @@ def settings_view(request):
         },
         context_instance=RequestContext(request)
     )
+
+
+@session_valid
+def object_expiry(request, container, objectname):
+    """ Display object's expiry date if set. Provides form to set object's
+    expiry. """
+
+    # Check if tenant has a default temp time.
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    object_expiry_time = get_object_expiry_time(
+        storage_url,
+        auth_token,
+        container,
+        objectname)
+
+    if object_expiry_time:
+        expiry_status = "This object is set to expiry at " + time.strftime(
+            '%A, %B %-d, %Y at %-I:%M%p',
+            time.localtime(float(object_expiry_time))
+        )
+        days_to_expiry = (
+            int(object_expiry_time) - int(time.time())
+        ) / (24 * 3600)
+        hours_to_expiry = (
+            (int(object_expiry_time) - int(time.time())) % (24 * 3600)
+        ) / 3600
+    else:
+        expiry_status = "This object is not set to expire."
+        days_to_expiry = 0
+        hours_to_expiry = 0
+
+    form = TimeForm(
+        initial={
+            'days': days_to_expiry,
+            'hours': hours_to_expiry,
+        }
+    )
+
+    return render_to_response(
+        'object_expiry.html',
+        {
+            'account': storage_url.split('/')[-1],
+            'container': container,
+            'expiry_status': expiry_status,
+            'objectname': objectname,
+            'form': form
+        },
+        context_instance=RequestContext(request))

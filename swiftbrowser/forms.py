@@ -35,8 +35,8 @@ class DocumentForm(forms.Form):
     )
 
 
-class CustomTempURLForm(forms.Form):
-    ''' Custom Temp URL Form. Allows users to specify the duration a tempurl
-    will last by days.'''
+class TimeForm(forms.Form):
+    ''' Custom Temp URL Form. Allows users to specify time in hours and
+    days.'''
     days = forms.DecimalField(initial=0)
     hours = forms.DecimalField(initial=0)

@@ -3,3 +3,19 @@
 		margin: auto;
 	}
 }
+
+
+form#object-expiry-form {
+	input.submit {
+		font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+		font-weight: normal;
+		line-height: normal;
+		font-size: 1rem;
+ 		padding: 1rem 2rem 1.0625rem 2rem;
+		width: 100%;
+		background-color: black;
+		color: white;
+		border: none;
+		margin-bottom: 1rem;
+	}
+}

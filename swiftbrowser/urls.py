@@ -18,6 +18,10 @@ urlpatterns = patterns(
         name="toggle_public"),
     url(r'^tempurl/(?P<container>.+?)/(?P<objectname>.+?)$', tempurl,
         name="tempurl"),
+    url(
+        r'^object_expiry/(?P<container>.+?)/(?P<objectname>.+?)$',
+        object_expiry,
+        name="object_expiry"),
     url(r'^create_pseudofolder/(?P<container>.+?)/(?P<prefix>.+)?$',
         create_pseudofolder, name="create_pseudofolder"),
     url(r'^create_container$', create_container, name="create_container"),
@@ -75,4 +79,8 @@ urlpatterns = patterns(
         r'^set_default_tempurl_time$',
         set_default_temp_time,
         name="set_default_tempurl_time"),
+    url(
+        r'^set_object_expiry_time/(?P<container>.+?)/(?P<objectname>.+?)$',
+        set_object_expiry_time,
+        name="set_object_expiry_time"),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

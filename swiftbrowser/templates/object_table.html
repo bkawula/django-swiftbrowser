@@ -101,7 +101,13 @@
 
 									{% trans 'Temporary URL' %}
 								</button>
+							</li>
+							<li>
+								<button type="button" data-reveal-id="object-expiry" class="button dropdown-btn" data-reveal-ajax="{% url "object_expiry" container=container objectname=key.name %}">
+									<span class="glyphicons glyphicons-hourglass"></span>&nbsp;
 
+									{% trans 'Object Expiry' %}
+								</button>
 							</li>
 							<li>
 								<a href="{% url "delete_object" container=container objectname=key.name  %}" onclick="return confirm('{% trans 'Delete object' %} {{key.name}}?');" >
@@ -115,7 +121,6 @@
 								</a>
 							</li> %}
 							{% endcomment %}
-							
 						</ul>
 					</td>
 				</tr>
@@ -125,7 +130,7 @@
 		<tbody>
 			<tr>
 				<th colspan="1" >
-					
+
 				</th>
 				<th colspan="4" class="center">
 					<strong>

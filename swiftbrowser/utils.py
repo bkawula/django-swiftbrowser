@@ -25,7 +25,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from StringIO import StringIO
-from swiftbrowser.forms import LoginForm, CustomTempURLForm
+from swiftbrowser.forms import LoginForm, TimeForm
 import swiftbrowser.views
 
 logger = logging.getLogger(__name__)
@@ -420,11 +420,17 @@ def get_default_temp_time(storage_url, auth_token):
     return cont.get('x-account-meta-default-temp-time', '')
 
 
+def get_object_expiry_time(storage_url, auth_token, container, name):
+    """Return in seconds the header x-expiry-at for the given object."""
+    cont = client.head_object(storage_url, auth_token, container, name)
+    return cont.get('x-delete-at', '')
+
+
 def set_default_temp_time(request):
     """For the given account, set the default-temp-time. """
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-    tempurl_form = CustomTempURLForm(request.POST)
+    tempurl_form = TimeForm(request.POST)
 
     if tempurl_form.is_valid():
 
@@ -450,3 +456,48 @@ def set_default_temp_time(request):
         messages.error(request, "Invalid form.")
 
     return redirect(swiftbrowser.views.settings_view)
+
+
+@session_valid
+def set_object_expiry_time(request, container, objectname):
+    """For the given object, set the x-delete-at. """
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    form = TimeForm(request.POST)
+
+    if form.is_valid():
+
+        days_to_expiry = float(form.cleaned_data['days'])
+        hours_to_expiry = float(form.cleaned_data['hours'])
+
+        # When these values are zero, remove expiration by passing in
+        # emptry string.
+        if (days_to_expiry + hours_to_expiry == 0.0):
+            seconds_to_expiry = ""
+        else:
+            seconds_to_expiry = int(time.time()) + int(
+                days_to_expiry * 24 * 3600
+                + hours_to_expiry * 60 * 60)
+
+        try:
+            client.post_object(
+                storage_url,
+                auth_token,
+                container,
+                objectname,
+                {"x-delete-at": seconds_to_expiry})
+            messages.add_message(
+                request,
+                messages.INFO,
+                _("Object expiry time updated!"))
+        except Exception, e:
+            messages.error(request, "Error updating object expiry time.")
+
+        prefix = '/'.join(objectname.split('/')[:-1])
+        if prefix:
+            prefix += '/'
+        prefixes = prefix_list(prefix)
+    else:
+        messages.error(request, "Invalid form.")
+
+    return redirect(swiftbrowser.views.objectview, container, prefix)
