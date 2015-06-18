@@ -14,6 +14,10 @@ function loadTable() {
         success: function(data) {
             $('#objecttable').html(data);
             $(document).foundation();
+            $(".alert-box").click(function(e){
+
+                $(this).slideUp();
+            });
         }
     }).fail( function(data) {
         //On error, refresh the page. This will redirect to login
