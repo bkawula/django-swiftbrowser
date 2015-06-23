@@ -723,7 +723,7 @@ def object_expiry(request, container, objectname):
         objectname)
 
     if object_expiry_time:
-        expiry_status = "This object is set to expiry at " + time.strftime(
+        expiry_status = "This object is set to expire at " + time.strftime(
             '%A, %B %-d, %Y at %-I:%M%p',
             time.localtime(float(object_expiry_time))
         )
@@ -734,7 +734,7 @@ def object_expiry(request, container, objectname):
             (int(object_expiry_time) - int(time.time())) % (24 * 3600)
         ) / 3600
     else:
-        expiry_status = "This object is not set to expire."
+        expiry_status = "false"
         days_to_expiry = 0
         hours_to_expiry = 0
 

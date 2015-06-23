@@ -13,8 +13,12 @@
 		{% endif %}
 		{% if message.level == 40 %}
 			<div data-alert class="alert-box alert header-alert">
-				<strong>{% trans 'Warning!' %}</strong> {{message|safe}}
-				<a href="#" class="close">&times;</a>
+				<div class="row" >
+					<div class="small-12 columns">
+						<strong>{% trans 'Warning!' %}</strong> {{message|safe}}
+						<a href="#" class="close">&times;</a>
+					</div>
+				</div>
 			</div>
 		{% endif %}
 	{% endfor %}

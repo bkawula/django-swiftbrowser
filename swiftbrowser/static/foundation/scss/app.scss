@@ -4,6 +4,7 @@
 @import "uploadform";
 @import "objectview";
 @import "containerview";
+@import "settings_page";
 
 table {
 	width:100%;
@@ -55,6 +56,12 @@ table {
 			}
 		}
 	}
+}
+h1, h2, h3, h4, h5 {
+	font-weight:bold;
+}
+label {
+	font-weight:bold;
 }
 #login {
 	background: url("../../img/background.jpg") no-repeat center center fixed;
@@ -123,6 +130,7 @@ table {
 .crumb-row {
 	background-color:#363636;
 	padding:0px 0px 0px;
+	color:$white;
 	ul {
 		margin-bottom:0.2rem;
 	}
@@ -164,6 +172,9 @@ table {
 			margin: 5px 5px 5px 0px;
 		}	
 	}
+	.settings {
+		padding-bottom:11px;
+	}
 }
 .action-btns {
 	text-align:right;
@@ -204,6 +215,10 @@ table {
 }
 .reveal-modal {
 	padding: 0.5rem 1.875rem;
+	p {
+		font-size:0.875rem;
+
+	}
 	h2 {
 		font-weight:bold;
 	}
@@ -477,6 +492,7 @@ table {
 		button, .button {
 			margin-bottom:5px;
 		}
+
 	}
 	.action-btns { 
 		float:left;

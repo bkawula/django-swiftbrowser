@@ -12,16 +12,23 @@
     <a class="close-reveal-modal" aria-label="Close">&#215;</a>
     <h4>{% trans 'Temporary URL for' %} {{container}}/{{objectname}}</h4>
     <p>Use the following URL to share this object. The URL is valid for {{expires_in_message}}.</p>
-    <p>
-        <input type="text" id="generated-tempurl" value="{{url}}"></input>
-        <span id="highlight-icon" class="glyphicons glyphicons-magic"></span>
-    </p>
-    <p>{% trans 'Please note that you cannot revoke this URL. It is valid until expiration!' %}</p>
 
+		      <div class="row collapse">
+		        <div class="small-12 medium-8 columns">
+		          <input type="text" id="generated-tempurl" value="{{url}}"></input>
+		        </div>
+		        <div class="small-0 medium-4 columns">
+					<button id="highlight-icon" class="button postfix hide-for-small-only">Press&nbsp;to&nbsp;select&nbsp;text</button>
+		        
+		        </div>
+		      </div>
+		
+    <p>{% trans 'Please note that you cannot revoke this URL. It is valid until expiration!' %}</p>
+	<h4>Change expiration time</h4>
     <form id="custom-temp-url" action="{% url "tempurl" container=container objectname=objectname %}" method="post">
         {% csrf_token %}
         {{tempurl_form}}
-        <input class="submit" type="submit"/>
+        <input class="button expand" type="submit"/>
     </form>
     <button type="button" id="close-tempurl" class="button close expand">Close</button>
 

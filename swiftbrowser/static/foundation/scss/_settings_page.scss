@@ -1,0 +1,14 @@
+#settingsview {
+	p {line-height:1rem;}
+	h2 {
+		font-size:1.5rem;
+		font-weight:bold;
+	}
+}
+@media #{$small-only} {  
+	#settingsview { 
+		.row .row { 
+			margin:0 5px;
+		}
+	}
+}
