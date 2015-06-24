@@ -1,6 +1,10 @@
 @import "settings";
 @import "foundation";
 @import "tempurl";
+@import "uploadform";
+@import "objectview";
+@import "containerview";
+@import "settings_page";
 
 table {
 	width:100%;
@@ -10,7 +14,6 @@ table {
 		font-size:24px;
 	}
 	thead {
-
 		background:transparent;
 		tr{
 			th {
@@ -33,7 +36,6 @@ table {
 	}
 	tr {
 		border-bottom:1px solid $smoke;
-
 		.even {
 			background-color:transparent;
 		}
@@ -53,46 +55,57 @@ table {
 				padding: 0;
 			}
 		}
-
 	}
-
-
 }
-
-#login-form {
-	background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
-	background-size: 400px;
-	background-position:194px 0px;
-	background-color:#666666; height:100%;
+h1, h2, h3, h4, h5 {
+	font-weight:bold;
+}
+label {
+	font-weight:bold;
+}
+#login {
+	background: url("../../img/background.jpg") no-repeat center center fixed;
+	background-size: cover;
+	background-color:#666666; 
+	height:100%;
 	position:absolute;
 	width:100%;
 	height:100%;
-	.login-form-box {
+	#login-form {
+		background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
+		background-size: 350px;
+		background-position:24px 18px;
+		background-color:transparent; 
+		height:100%;
+		position:absolute;
 		width:100%;
-		background-color:rgba(0,0,0,0.65);
-		padding: 50px 200px 10px;
-		position:relative;
-		top:40%;
-		.columns {
-			padding-left:0;
-		}
-		.login-btn {
+		height:100%;
+		.login-form-box {
 			width:100%;
-
+			background-color:rgba(0,0,0,0.65);
+			padding: 50px 200px 10px;
+			position:relative;
+			top:40%;
+			.columns {
+				padding-left:0;
+			}
+			.login-btn {
+				width:100%;
+			}
 		}
+		.login-alert {
+			color:$white;
+			padding-bottom:1rem;
+		}
+		.olrctext {width:400px;padding-bottom:15px;}
+		.olrclogo {width:100%;}
 	}
-	.login-alert {
-		color:$white;
-		padding-bottom:1rem;
-	}
-	.olrctext {width:400px;padding-bottom:15px;}
 }
-
 #header {
 	background-color:#363636;
 	.service-logo {
-		width:60px;
-		padding-top:0.5rem;
+		width:40px;
+		padding-top:10px;
 	}
 	.account-btns {
 		text-align:right;
@@ -111,77 +124,62 @@ table {
 		    padding-left: 0.8rem;
 		    font-size: 0.6875rem;
 			color:$white;
-
 		}
-	}
-}
-.header-alert {
-	margin-bottom:0px;
-	padding: 0.875rem 0rem 0.875rem 0rem;
-}
-.content-body {
-	margin-top:1rem;
-}
-.reveal-modal {
-	padding: 0.5rem 1.875rem;
-	h2 {
-		font-weight:bold;
-	}
-	.close {
-		background-color:$black;
-		float:right;
-		&:focus, &:hover {
-			background-color: scale-color($black, $lightness: +14%);
-		}
-
-	}
-}
-#containerview {
-	padding-bottom: 5rem;
-	.usage {
-		color:$white;
-		font-weight:normal;
-		font-size:0.65rem;
-		vertical-align: super;
-	}
-
-	#containertable {
-
-
-		.dropdown.button::after {
-			border-color: $black transparent transparent transparent;
-
-		}
-		.file-btn {
-			background-color:transparent;
-			margin:0px;
-			color:$black;
-
-
-
-
-			&:hover, &:focus {
-				background-color:$smoke;
-
-
-			}
-
-
-		}
-
-	}
-
-
+	}	
 }
 .crumb-row {
 	background-color:#363636;
-	padding:10px 0px 0px;
+	padding:0px 0px 0px;
+	color:$white;
 	ul {
 		margin-bottom:0.2rem;
+	}
+	.breadcrumb {
+		&:hover {
+			text-decoration:none;
+		}
+		ul {
+			margin-left:0;
+			margin-top: 5px;	
+		}
+		li {
+			float:left;
+			list-style-type: none;
+			text-transform:none;
+			font-size: 1.25rem;
+			font-weight:bold;		  
+			&:focus,&:hover {
+				text-decoration:none;
+			}
+		}
+		a {
+			//color:#78D2F7;
+			color:$white;
+			text-decoration:none;
+			&:focus, &:hover {
+				text-decoration:none;
+				color: scale-color($white, $lightness: -14%);
+			}
+		}
+		.glyphicons {
+			display: inherit;
+			  width: 20px;
+			  float: left;
+			  margin: 5px 5px 5px;
+			  color: #fff;
+		}
+		.glyphicons-cloud {
+			margin: 5px 5px 5px 0px;
+		}	
+	}
+	.settings {
+		padding-bottom:11px;
 	}
 }
 .action-btns {
 	text-align:right;
+	float:right;
+	margin-bottom: 5px;
 	button, .button {
 		padding-top: 0.85rem;
 		padding-right: 1.25rem;
@@ -205,39 +203,71 @@ table {
 			background-color: scale-color(#767676, $lightness: -14%);
 		}
 	}
-	.columns {
-		padding-right:1.8rem;
+	.columns {		
 	}
 }
-#objectview {
+.header-alert {
+	margin-bottom:0px;
+	padding: 0.875rem 0rem 0.875rem 0rem;
+}
+.content-body {
+	margin-top:1rem;
+}
+.reveal-modal {
+	padding: 0.5rem 1.875rem;
+	p {
+		font-size:0.875rem;
 
+	}
+	h2 {
+		font-weight:bold;
+	}
+	.close {
+		background-color:$black;
+		float:right;
+		&:focus, &:hover {
+			background-color: scale-color($black, $lightness: +14%);
+		}
+	}
+}
+#containerview {
 	padding-bottom: 5rem;
-	#objecttable {
-
-
+	.usage {
+		color:$white;
+		font-weight:normal;
+		font-size:0.65rem;
+		vertical-align: super;
+	}
+	#containertable {
 		.dropdown.button::after {
 			border-color: $black transparent transparent transparent;
-
 		}
 		.file-btn {
 			background-color:transparent;
 			margin:0px;
 			color:$black;
-
-
-
-
 			&:hover, &:focus {
 				background-color:$smoke;
-
-
 			}
-
-
 		}
-
 	}
+}
 
+#objectview {
+	padding-bottom: 5rem;
+	#objecttable {
+		.dropdown.button::after {
+			border-color: $black transparent transparent transparent;
+		}
+		.file-btn {
+			background-color:transparent;
+			margin:0px;
+			color:$black;
+			&:hover, &:focus {
+				background-color:$smoke;
+			}
+		}
+	}
 }
 .dropdown-btn {
 	background-color:transparent;
@@ -339,6 +369,10 @@ table {
 	.fileupload-progress {
 		display:none;
 	}
+	.fileinput-button input {
+		font-size: 50px;
+
+	}
 	#fileupload {
 		#preloadmsg {
 			text-align:center;
@@ -367,36 +401,7 @@ table {
 .fileinput-button {
 	overflow:inherit !important;
 }
-.breadcrumbs {
-	padding:20px 0px;
-	border:0;
-	background-color:transparent;
-	&:hover {
-		text-decoration:none;
-	}
-	li {
-		text-transform:none;
-		font-size: 1.25rem;
-		font-weight:bold;
-		&:focus,&:hover {
-			text-decoration:none;
-		};
-	}
-	a {
-		//color:#78D2F7;
-		color:$white;
-		text-decoration:none;
-		&:focus, &:hover {
-			text-decoration:none;
-			color: scale-color($white, $lightness: -14%);
-		}
 
-	}
-	.delete-container {
-		top:-10px;
-	}
-
-}
 .loader:before,
 .loader:after,
 .loader {
@@ -457,6 +462,124 @@ table {
     box-shadow: 0 2.5em 0 0 $primary-color;
   }
 }
+
+@media #{$small-only} { 
+	#login {
+		
+		
+		#login-form {
+			background-size: 500px;
+			background-position: 10px 10px;
+			.login-form-box {
+				top:22%;
+				padding:15px 10px 10px;
+				.columns {
+					padding-right:0;
+				}
+			}
+		}
+	}
+	
+	#header {
+		.columns {
+			padding:0;
+		}
+		.service-logo {
+		    width: 32px;
+		    padding-top: 5px;
+		    padding-left: 5px;
+		}
+		button, .button {
+			margin-bottom:5px;
+		}
+
+	}
+	.action-btns { 
+		float:left;
+		width: 100%;
+		margin-bottom:0px;
+		.columns {
+			padding:0;
+			.button {
+				width:50%;
+				float:left;
+			}
+			.new-container {
+				width:100%;
+			}
+		}
+	}
+	.crumb-row {
+		padding-top:0px;
+		.breadcrumb {
+			padding: 0;
+			ul {
+				margin-left: 5px;
+				margin-top: 0px;
+			}
+			li {
+				font-size:1rem;
+			}
+		}
+	}
+	#pseudoContainer {
+		padding-top:4rem;
+	}
+	#fileForm {
+		#fileupload {
+			.button {
+				width:100%;
+			}
+			#preloadmsg {
+				.preloadmsg-txt {
+					padding-top:4rem;
+					font-size:1rem;
+		  	  }
+		  	  .chrome {
+		  		  padding-top:4rem;
+		  	  }
+	 		}
+		}
+	}
+	.content-body {
+		.columns {
+			padding:0px;
+		}
+	}
+	.icon {
+		.filetypes, .glyphicons {
+			padding-left: 5px;
+			font-size:24px;
+		}
+	}
+	#objecttable {
+		table tr td {
+			font-size:12px;
+			padding: 0rem 0rem;
+		}
+		.dropdown.button, button.dropdown {
+			padding:1rem;
+			float:right;
+			&:after{
+				display:none;
+			};
+		}
+	}
+	#containerview {
+		table tr td {
+			font-size:12px;
+			padding: 0rem 0rem;
+		}
+		.dropdown.button, button.dropdown {
+			padding:1rem;
+			float:right;
+			&:after{
+				display:none;
+			};
+		}
+	}
+}
+
 
 // Or selectively include components
 // @import

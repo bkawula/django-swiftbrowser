@@ -1,0 +1,32 @@
+
+{% load l10n %}
+{% load i18n %}
+{% load dateconv %}
+{% load lastpart %}
+{% load static %}
+
+<script src="{% static "js/helpers/object_expiry.js" %}"></script>
+{% block content %}
+<div id="object-expiry">
+    <h2 id="object-expiry-title">Object Expiry</h2>
+    <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+    <h4>{% trans 'Object expiry for' %} {{container}}/{{objectname}}</h4>
+    {% if expiry_status != "false" %}
+	<div class="alert-box alert">{{expiry_status}}.</div>
+	{% endif %}
+    {% if expiry_status == "false" %}
+	<div class="alert-box secondary">This object does not have an expiry date.</div>
+	{% endif %}
+	<p>Below you can set a date for this object to be deleted. To remove the expiration, submit the form with 0 in both fields.</p>
+    
+    <form id="object-expiry-form" action="{% url "set_object_expiry_time" container=container objectname=objectname %}" method="post">
+        {% csrf_token %}
+        {{form}}
+        <input class="button expand" type="submit" class="" />
+    </form>
+    <button type="button" id="close-tempurl" class="button close expand">Close</button>
+</div>
+{% endblock %}
+
+
+

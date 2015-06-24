@@ -1,0 +1,15 @@
+#delete-container-form {
+	button#delete-container-submit {
+		background-color: red;
+		width: 100%;
+		display: none;
+	}
+	span.container-name-holder {
+		color: red;
+	}
+}
+
+.progress {
+	height: 4em;
+	background-color: white;
+}

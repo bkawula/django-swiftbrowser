@@ -25,7 +25,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from StringIO import StringIO
-from swiftbrowser.forms import LoginForm
+from swiftbrowser.forms import LoginForm, TimeForm
 import swiftbrowser.views
 
 logger = logging.getLogger(__name__)
@@ -76,13 +76,11 @@ def pseudofolder_object_list(objects, prefix):
     for obj in objects:
         # Rackspace Cloudfiles uses application/directory
         # Cyberduck uses application/x-directory
-        
-        
-        
+
         if obj.get('content_type', None) in ('application/directory',
                                              'application/x-directory'):
             obj['subdir'] = obj['name']
-        
+
         if 'subdir' in obj:
             # make sure that there is a single slash at the end
             # Cyberduck appends a slash to the name of a pseudofolder
@@ -94,24 +92,32 @@ def pseudofolder_object_list(objects, prefix):
             #add extension to object for file icon display
             obj['extension'] = obj.get('name').split('.')[-1]
             if obj.get('extension', None) not in (
-            'pdf','png','txt','doc','rtf','log','tex','msg','text','wpd','wps','docx','page','csv',
-            'dat','tar','xml','vcf','pps','key','ppt','pptx','sdf','gbr','ged','mp3','m4a','waw',
-            'wma','mpa','iff','aif','ra','mid','m3v','swf','avi','asx','mp4','mpg',
-            'asf','vob','wmv','mov','srt','m4v','flv','rm','png','psd','psp','jpg','tif','tiff','gif',
-            'bmp','tga','thm','yuv','dds','ai','eps','ps','svg','pdf','pct','indd','xlr','xls','xlsx',
-            'db','dbf','mdb','pdb','sql','aacd','app','exe','com','bat','apk','jar','hsf','pif','vb',
-            'cgi','css','js','php','xhtml','htm','html','asp','cer','jsp','cfm','aspx','rss','csr',
-            'less','otf','ttf','font','fnt','eot','woff','zip','zipx','rar','targ','sitx','deb','pkg',
-            'rmp','cbr','gz','dmg','cue','bin','iso','hdf','vcd','bak','tmp','ics','msi','cfg','ini',
-            'prf'): obj['extension'] = 'other'
+                    'pdf', 'png', 'txt', 'doc', 'rtf', 'log', 'tex', 'msg',
+                    'text', 'wpd', 'wps', 'docx', 'page', 'csv', 'dat', 'tar',
+                    'xml', 'vcf', 'pps', 'key', 'ppt', 'pptx', 'sdf', 'gbr',
+                    'ged', 'mp3', 'm4a', 'waw', 'wma', 'mpa', 'iff', 'aif',
+                    'ra', 'mid', 'm3v', 'swf', 'avi', 'asx', 'mp4', 'mpg',
+                    'asf', 'vob', 'wmv', 'mov', 'srt', 'm4v', 'flv', 'rm',
+                    'png', 'psd', 'psp', 'jpg', 'tif', 'tiff', 'gif', 'bmp',
+                    'tga', 'thm', 'yuv', 'dds', 'ai', 'eps', 'ps', 'svg',
+                    'pdf', 'pct', 'indd', 'xlr', 'xls', 'xlsx', 'db', 'dbf',
+                    'mdb', 'pdb', 'sql', 'aacd', 'app', 'exe', 'com', 'bat',
+                    'apk', 'jar', 'hsf', 'pif', 'vb', 'cgi', 'css', 'js',
+                    'php', 'xhtml', 'htm', 'html', 'asp', 'cer', 'jsp', 'cfm',
+                    'aspx', 'rss', 'csr', 'less', 'otf', 'ttf', 'font', 'fnt',
+                    'eot', 'woff', 'zip', 'zipx', 'rar', 'targ', 'sitx', 'deb',
+                    'pkg', 'rmp', 'cbr', 'gz', 'dmg', 'cue', 'bin', 'iso',
+                    'hdf', 'vcd', 'bak', 'tmp', 'ics', 'msi', 'cfg', 'ini',
+                    'prf'):
+                obj['extension'] = 'other'
             objs.append(obj)
-            
+
     return (pseudofolders, objs)
 
 
 def redirect_to_objectview_after_delete(objectname, container):
     if objectname[-1] == '/':  # deleting a pseudofolder, move one level up
-            objectname = objectname[:-1]
+        objectname = objectname[:-1]
     prefix = '/'.join(objectname.split('/')[:-1])
     if prefix:
         prefix += '/'
@@ -259,6 +265,7 @@ def create_thumbnail(request, account, original_container_name, container,
         logger.error("Cannot create thumbnail for image %s."
                      "An IOError occured: %s" % (objectname, e.strerror))
 
+
 def delete_given_object(request, container, objectname):
     '''Delete the given object. '''
 
@@ -405,3 +412,92 @@ def remove_duplicates_from_acl(acls):
     cleaned_entries = list(set(entries))
     acls = ','.join(cleaned_entries)
     return acls
+
+
+def get_default_temp_time(storage_url, auth_token):
+    """Return in seconds the header Default-Temp-Time for the given tenant."""
+    cont = client.head_account(storage_url, auth_token)
+    return cont.get('x-account-meta-default-temp-time', '')
+
+
+def get_object_expiry_time(storage_url, auth_token, container, name):
+    """Return in seconds the header x-expiry-at for the given object."""
+    cont = client.head_object(storage_url, auth_token, container, name)
+    return cont.get('x-delete-at', '')
+
+
+def set_default_temp_time(request):
+    """For the given account, set the default-temp-time. """
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    tempurl_form = TimeForm(request.POST)
+
+    if tempurl_form.is_valid():
+
+        days_to_expiry = float(tempurl_form.cleaned_data['days'])
+        hours_to_expiry = float(tempurl_form.cleaned_data['hours'])
+
+        seconds_to_expiry = int(
+            days_to_expiry * 24 * 3600
+            + hours_to_expiry * 60 * 60)
+
+        try:
+            client.post_account(
+                storage_url,
+                auth_token,
+                {"x-account-meta-default-temp-time": seconds_to_expiry})
+            messages.add_message(
+                request,
+                messages.INFO,
+                _("Default Temp Url Time updated!"))
+        except Exception, e:
+            messages.error(request, "Error updating default temp url time")
+    else:
+        messages.error(request, "Invalid form.")
+
+    return redirect(swiftbrowser.views.settings_view)
+
+
+@session_valid
+def set_object_expiry_time(request, container, objectname):
+    """For the given object, set the x-delete-at. """
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    form = TimeForm(request.POST)
+
+    if form.is_valid():
+
+        days_to_expiry = float(form.cleaned_data['days'])
+        hours_to_expiry = float(form.cleaned_data['hours'])
+
+        # When these values are zero, remove expiration by passing in
+        # emptry string.
+        if (days_to_expiry + hours_to_expiry == 0.0):
+            seconds_to_expiry = ""
+        else:
+            seconds_to_expiry = int(time.time()) + int(
+                days_to_expiry * 24 * 3600
+                + hours_to_expiry * 60 * 60)
+
+        try:
+            client.post_object(
+                storage_url,
+                auth_token,
+                container,
+                objectname,
+                {"x-delete-at": seconds_to_expiry})
+            messages.add_message(
+                request,
+                messages.INFO,
+                _("Object expiry time updated!"))
+        except Exception, e:
+            messages.error(request, "Error updating object expiry time.")
+
+        prefix = '/'.join(objectname.split('/')[:-1])
+        if prefix:
+            prefix += '/'
+        prefixes = prefix_list(prefix)
+    else:
+        messages.error(request, "Invalid form.")
+
+    return redirect(swiftbrowser.views.objectview, container, prefix)

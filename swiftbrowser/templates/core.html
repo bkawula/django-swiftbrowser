@@ -5,9 +5,9 @@
 		<meta charset="utf-8">
 		<title>OLRC Browser</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="apple-mobile-web-app-capable" content="yes" />		
+		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<link href="{% static "foundation/stylesheets/app.css" %}" rel="stylesheet">
-		<link href="{% static "glyphicons/css/glyphicons.css" %}" rel="stylesheet">		
+		<link href="{% static "glyphicons/css/glyphicons.css" %}" rel="stylesheet">
 		<script src="{% static "foundation/bower_components/foundation/js/vendor/modernizr.js" %}"></script>
 		<script src="{% static "foundation/bower_components/foundation/js/vendor/jquery.js" %}"></script>
 		<script src="{% static "foundation/bower_components/foundation/js/foundation.min.js" %}"></script>
@@ -17,9 +17,7 @@
 		{% block head %}{% endblock %}
 		{% block content %}{% endblock %}
 		{% block footer %}{% endblock %}
-	    <script>
-	        $(document).foundation();
-	    </script>
-		{% block jsadd %}{% endblock %}		
+		<script src="{% static "foundation/js/app.js" %}"></script>
+		{% block jsadd %}{% endblock %}
 	</body>
 </html>

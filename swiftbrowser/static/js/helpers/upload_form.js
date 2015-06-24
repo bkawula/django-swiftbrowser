@@ -29,12 +29,16 @@ $( function() {
         sequentialUploads: true,
         recalculateProgress: false,
         previewMaxWidth:100,
-        previewMaxHeight:100
+        previewMaxHeight:100,
+        maxFileSize: $('#fileupload input[name=max_file_size]').val()
     })
 
     // Keep a counter of files as they are added.
     .bind('fileuploadadd', function (e, data) {
         files_added += 1;
+		if ($('#fileForm').hasClass('open') == false) {
+			$('#fileForm').foundation('reveal','open');
+		};
     })
 
     .bind('fileuploaddone', function (e, data) {
@@ -43,41 +47,50 @@ $( function() {
 
     .bind('fileuploadprocessstart', function (e) {
         $('#preloadmsg').hide();
-        
 		$('.fileupload-progress').show();
         $('#start-upload').removeClass('disabled');
         $('#cancel-upload').removeClass('disabled');
+    })
+
+	.bind('fileuploadprocessdone', function (e, data) {
         if (files_added > 1) {
             $('.file-progress').show();
         }
-    })
+	})
 
     .bind('fileuploadsend', function (e, data) {
         Foundation.libs.reveal.settings.close_on_background_click = false;
         $('#close-upload').off().addClass('disabled');
-
         $.each(data.files, function (index, file) {
-
             $('#fileForm').foundation({reveal : {close_on_background_click: false,close_on_esc:false}});
         });
     })
-	
-	.bind('fileuploadfail', function (e, data) {
-		
-		
-	})
-	
-	
+
     // Keep a counter of files as they are processed.
     .bind('fileuploadalways', function (e, data) {
         files_processed += 1;
-        
+
         // If all fiels have been processed, close the form.
         if (files_processed == files_added) {
             closeForm();
             loadTable();
+            files_added = 0;
+            files_processed = 0;
+            files_uploaded = 0;
+
         }
     })
+	
+	// This is called when an item in the form is cancelled or removed.
+	.bind('fileuploadfail', function (e, data) {		
+		files_added -= 1;		
+		if (files_added == 0) {
+			$('#preloadmsg').show();
+			$('.fileupload-progress').hide();
+		}
+	})
+	
+	
     .addClass('fileupload-processing');
 
 });
@@ -108,7 +121,7 @@ function closeForm() {
             $('#close-upload').on('click', function(){
                 $('#fileForm').foundation('reveal', 'close');
             }).removeClass('disabled');
-        }, 250);
+        }, 500);
     }, 250);
 
     if(files_uploaded > 0) {
