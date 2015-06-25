@@ -8,7 +8,7 @@
 	display: none;
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+body.chrome {
 	.chrome-txt, span.directory-input {
 		display: inline-block;
 	}

@@ -108,6 +108,12 @@ $('#cancel-upload').click(function(){
     }).removeClass('disabled');
 });
 
+//Add a special class for chrome
+if (navigator.userAgent.toLowerCase().match('chrome')) {
+    $("body").addClass("chrome");
+}
+
+
 function closeForm() {
     $('#fileForm').foundation({reveal : {close_on_background_click: true,close_on_esc:true}});
 
