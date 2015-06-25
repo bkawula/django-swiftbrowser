@@ -18,13 +18,13 @@
 	<div class="alert-box secondary">This object does not have an expiry date.</div>
 	{% endif %}
 	<p>Below you can set a date for this object to be deleted. To remove the expiration, submit the form with 0 in both fields.</p>
-    
+
     <form id="object-expiry-form" action="{% url "set_object_expiry_time" container=container objectname=objectname %}" method="post">
         {% csrf_token %}
         {{form}}
         <input class="button expand" type="submit" class="" />
     </form>
-    <button type="button" id="close-tempurl" class="button close expand">Close</button>
+    <button type="button" id="close-object-expiry" class="button close expand">Close</button>
 </div>
 {% endblock %}
 
