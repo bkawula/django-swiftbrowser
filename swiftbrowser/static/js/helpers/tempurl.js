@@ -9,7 +9,7 @@ $(function () {
     //Select the tempurl on modal open.
     $(document).on('opened.fndtn.reveal', '[data-reveal]', function () {
 
-    $("#generated-tempurl").select();
+        $("#generated-tempurl").select();
 
         //Select the tempurl on icon click.
         $("#highlight-icon").on("click", function () {
@@ -17,11 +17,12 @@ $(function () {
         });
 
        /* Ajax for custom temp url form submission. */
-       $("form#custom-temp-url").submit(function() {
+       $("form#custom-temp-url").submit(function(event) {
+
             var formData = {
                 'days'              : $('input[name=days]').val(),
                 'hours'             : $('input[name=hours]').val(),
-                'csrfmiddlewaretoken' : $('input[name=csrfmiddlewaretoken').val()
+                'csrfmiddlewaretoken' : $('input[name=csrfmiddlewaretoken]').val()
             };
 
             $.ajax({
