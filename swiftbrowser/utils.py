@@ -470,33 +470,44 @@ def set_object_expiry_time(request, container, objectname):
         days_to_expiry = float(form.cleaned_data['days'])
         hours_to_expiry = float(form.cleaned_data['hours'])
 
-        # When these values are zero, remove expiration by passing in
-        # emptry string.
+        # When these values are zero, remove expiration
         if (days_to_expiry + hours_to_expiry == 0.0):
-            seconds_to_expiry = ""
+            try:
+                client.post_object(
+                    storage_url,
+                    auth_token,
+                    container,
+                    objectname,
+                    {})
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    _("Object expiry time removed!"))
+            except Exception:
+                messages.error(request, "Error updating object expiry time.")
         else:
             seconds_to_expiry = int(time.time()) + int(
                 days_to_expiry * 24 * 3600
                 + hours_to_expiry * 60 * 60)
 
-        try:
-            client.post_object(
-                storage_url,
-                auth_token,
-                container,
-                objectname,
-                {"x-delete-at": seconds_to_expiry})
-            messages.add_message(
-                request,
-                messages.INFO,
-                _("Object expiry time updated!"))
-        except Exception, e:
-            messages.error(request, "Error updating object expiry time.")
+            try:
+                client.post_object(
+                    storage_url,
+                    auth_token,
+                    container,
+                    objectname,
+                    {"x-delete-at": seconds_to_expiry})
+                messages.add_message(
+                    request,
+                    messages.INFO,
+                    _("Object expiry time updated!"))
+            except Exception:
+                messages.error(request, "Error updating object expiry time.")
 
         prefix = '/'.join(objectname.split('/')[:-1])
         if prefix:
             prefix += '/'
-        prefixes = prefix_list(prefix)
+
     else:
         messages.error(request, "Invalid form.")
 
