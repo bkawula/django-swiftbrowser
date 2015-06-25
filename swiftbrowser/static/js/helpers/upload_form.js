@@ -80,17 +80,17 @@ $( function() {
 
         }
     })
-	
+
 	// This is called when an item in the form is cancelled or removed.
-	.bind('fileuploadfail', function (e, data) {		
-		files_added -= 1;		
+	.bind('fileuploadfail', function (e, data) {
+		files_added -= 1;
 		if (files_added == 0) {
 			$('#preloadmsg').show();
 			$('.fileupload-progress').hide();
 		}
 	})
-	
-	
+
+
     .addClass('fileupload-processing');
 
 });
@@ -216,11 +216,10 @@ $.blueimp.fileupload.prototype._onAdd = function (e, data) {
         */
 
         if (element.relativePath) {
-            var element = new File([element], element.relativePath + element.name, {type: "text/plain"});
+            element = new File([element], element.relativePath + element.name, {type: "text/plain"});
 
         } else if (element.webkitRelativePath){
-            console.log(typeof element.webkitRelativePath);
-            var element = new File([element], element.webkitRelativePath + element.name, {type: "text/plain"});
+            element = new File([element], element.webkitRelativePath, {type: "text/plain"});
 
         }
         var newData = $.extend({}, data);
