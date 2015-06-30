@@ -1,52 +1,59 @@
-function loadTable() {
-  $('#objecttable').html(
-    '<div id="progress" class="center-progress">' +
-      '<div class="loader">Loading...</div>' +
-      '</div>'
-  );
-  $("#progress").show();
-  /*global loadtable_url: true*/
-  $.ajax({
-    url: loadtable_url,
-    success: function (data) {
-      $('#objecttable').html(data);
-      $(document).foundation();
-      $(".alert-box").click(function () {
+$( document ).ready(function() {
+    loadTable();
+
+});
+
+/*
+    After a table is loaded, new events need to be applied to the page.
+*/
+function applyTableEvents() {
+
+    //Re-apply foundation
+    $(document).foundation();
+
+    //Reapply dismiss of alert boxes
+    $(".alert-box").click(function(e){
         $(this).slideUp();
-      });
-    }
-  }).fail(function () {
-    /*global location: true*/
-    //On error, refresh the page. This will redirect to login
-    //if session is expired.
-    location.reload();
-  });
+    });
+
+    //Delete object bindng.
+    $("a.delete-object").on("click",function(e) {
+        //Prompt user to confirm.
+        if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
+            showLoader();
+            $("#progress").show();
+        } else {
+            e.preventDefault();
+        }
+    });
+
+}
+/*
+    Display the loader in the object table.
+*/
+function showLoader() {
+
+    $('#objecttable').html(
+        '<div id="progress" class="center-progress">' +
+            '<div class="loader">Loading...</div>' +
+        '</div>'
+    );
 }
 
-function addMessage(text, extra_tags) {
-  if (extra_tags === 'success') {
-    $("#messages").html(
-      '<div data-alert class="alert-box success header-alert">' +
-        '<div class="row" >' +
-        '<div class="small-12 columns">' +
-        '<strong>Success.</strong> ' + text +
-        '<a href="#" class="close">&times;</a>' +
-        '</div>' +
-        '</div>' +
-        '</div>'
-    );
-  } else if (extra_tags === 'error') {
-    $("#messages").html(
-      '<div data-alert class="alert-box alert header-alert">' +
-        '<div class="row" >' +
-            '<div class="small-12 columns">' +
-        '<strong>Error.</strong> ' + text +
-        '<a href="#" class="close">&times;</a>' +
-        '</div>' +
-        '</div>' +
-        '</div>'
-    );
-  }
+function loadTable() {
+    showLoader();
+    $("#progress").show();
+    $.ajax({
+        url: loadtable_url,
+        success: function(data) {
+            $('#objecttable').html(data);
+            applyTableEvents();
+        }
+    }).fail( function(data) {
+        //On error, refresh the page. This will redirect to login
+        //if session is expired.
+        location.reload();
+    });
 }
 
 function create_folder() {

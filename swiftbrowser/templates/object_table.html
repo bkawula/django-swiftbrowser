@@ -111,7 +111,7 @@
 								</button>
 							</li>
 							<li>
-								<a href="{% url "delete_object" container=container objectname=key.name  %}" onclick="return confirm('{% trans 'Delete object' %} {{key.name}}?');" >
+								<a class="delete-object" data-name="{{key.name}}" href="{% url "delete_object" container=container objectname=key.name  %}" >
 									<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete Object' %}
 								</a>
 							</li>
