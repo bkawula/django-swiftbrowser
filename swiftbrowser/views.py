@@ -120,12 +120,23 @@ def create_container(request):
     form = CreateContainerForm(request.POST or None)
     if form.is_valid():
         container = form.cleaned_data['containername']
+
+        #Check container does not already exist
         try:
-            client.put_container(storage_url, auth_token, container, headers)
-            messages.add_message(request, messages.INFO,
-                                 _("Container created."))
-        except client.ClientException:
-            messages.add_message(request, messages.ERROR, _("Access denied."))
+            client.get_container(storage_url, auth_token, container)
+            messages.add_message(
+                request,
+                messages.ERROR,
+                _("Container {0} already exists.".format(container)))
+        except:
+            try:
+                client.put_container(
+                    storage_url, auth_token, container, headers)
+                messages.add_message(request, messages.INFO,
+                                     _("Container created."))
+            except client.ClientException:
+                messages.add_message(
+                    request, messages.ERROR, _("Access denied."))
 
         return redirect(containerview)
 
