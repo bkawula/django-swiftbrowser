@@ -60,7 +60,8 @@
 								</a>
 							</li>
 							<li>
-								<a href="{% url "delete_folder" container=container objectname=folder.1 %}" onclick="return double_confirm('{{folder.1}}')" >
+								<a class="delete-folder" data-name="{{folder.1}}" href="{% url "delete_folder" container=container objectname=folder.1 %}">
+
 									<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete folder' %}
 								</a>
 							</li>

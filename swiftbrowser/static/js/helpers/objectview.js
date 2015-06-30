@@ -16,12 +16,27 @@ function applyTableEvents() {
         $(this).slideUp();
     });
 
-    //Delete object bindng.
+    //Delete object binding.
     $("a.delete-object").on("click",function(e) {
         //Prompt user to confirm.
         if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
             showLoader();
             $("#progress").show();
+        } else {
+            e.preventDefault();
+        }
+    });
+
+    //Delete folder binding.
+    $("a.delete-folder").on("click", function(e) {
+
+        if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
+            if (confirm("This will delete " + $(this).attr("data-name")+" and all it's contents. Are you sure?")) {
+                showLoader();
+                $("#progress").show();
+            } else {
+                e.preventDefault();
+            }
         } else {
             e.preventDefault();
         }
@@ -38,6 +53,21 @@ function showLoader() {
             '<div class="loader">Loading...</div>' +
         '</div>'
     );
+}
+
+
+function double_confirm() {
+    var confirm1 = confirm('Delete folder?');
+    if (confirm1) {
+        var confirm2 = confirm('Deleting this folder will delete everything in the folder. Are you sure?');
+        if (confirm2) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 function loadTable() {
