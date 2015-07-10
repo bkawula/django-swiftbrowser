@@ -2,7 +2,6 @@
 {% load l10n %}
 {% load i18n %}
 {% load dateconv %}
-{% load lastpart %}
 {% load staticfiles %}
 {% block content %}
 <div id="objectview">
@@ -59,7 +58,16 @@
 	</div>
 	<div class="row content-body">
 		<div class="small-12 columns">
-			<div id="objecttable"></div>
+			<div id="objecttable" ng-controller="ObjectTableCtrl">
+				<div ng-if="initialLoad">
+				    <div id="progress" class="center-progress">
+			            <div class="loader">Loading...</div>
+			        </div>
+				</div>
+				<div ng-cloak>
+					<ng-include src="'{% static 'templates/object_table.html' %}'"></ng-include>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="reveal-modal" id="fileForm" data-reveal aria-labelledby="fileForm-title" aria-hidden="true" role="dialog">
@@ -70,25 +78,25 @@
 		{% endcomment %}
 		{% jfu 'upload_form.html' 'login'%}
 	</div>
-	<div class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
+	<div ng-controller="CreateFolderCtrl" class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
 		<h2 id="pseudoContainer-title">Create a new folder</h2>
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-		<form method="POST" id="create-pseudofolder">
-			{% csrf_token %}
+		<form ng-show="showForm" method="POST" id="create-pseudofolder" ng-submit="createFolder()">
+			<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
 			<div>
 				<label for="foldername">
 					{% trans "Enter your folder name here." %}
 					{% trans "Please note that you can not rename it afterwards." %}
 				</label>
 				<div>
-					<input id="foldername" name="foldername" class="input-xlarge" type="text" placeholder="{% trans "Folder Name" %}">
+					<input ng-model="formData.foldername" id="foldername" name="foldername" class="input-xlarge" type="text" placeholder="{% trans "Folder Name" %}">
 				</div>
 			</div>
 			<div>
 				<button type="submit" class="button expand">{% trans 'Create' %}</button>
 			</div>
 		</form>
-		<div id="progress">
+		<div ng-show="showLoader">
 			<div class="loader">Loading...</div>
 		</div>
 	</div>
@@ -97,13 +105,7 @@
 </div>
 {% endblock %}
 {% block jsadd %}
-<script type="text/javascript">
-	var loadtable_url = '{% url "objecttable" %}';
-	{% if prefix %}
-	var create_folder_url = "{% url "create_pseudofolder" container=container prefix=prefix %}";
-	{% else %}
-	var create_folder_url = "{% url "create_pseudofolder" container=container %}";
-	{% endif %}
-</script>
 <script src="{{STATIC_URL}}js/helpers/objectview.js" type="text/javascript"></script>
+<script src="{{STATIC_URL}}foundation/bower_components/angular/angular.min.js" type="text/javascript"></script>
+<script src="{{STATIC_URL}}js/helpers/angular_object_table.js" type="text/javascript"></script>
 {% endblock %}

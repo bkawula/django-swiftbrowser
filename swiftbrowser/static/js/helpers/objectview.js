@@ -1,6 +1,5 @@
 $( document ).ready(function() {
-    loadTable();
-
+    //loadTable();
 });
 
 /*
@@ -70,21 +69,21 @@ function double_confirm() {
     }
 }
 
-function loadTable() {
-    showLoader();
-    $("#progress").show();
-    $.ajax({
-        url: loadtable_url,
-        success: function(data) {
-            $('#objecttable').html(data);
-            applyTableEvents();
-        }
-    }).fail( function(data) {
-        //On error, refresh the page. This will redirect to login
-        //if session is expired.
-        location.reload();
-    });
-}
+// function loadTable() {
+//     showLoader();
+//     $("#progress").show();
+//     $.ajax({
+//         url: loadtable_url,
+//         success: function(data) {
+//             $('#objecttable').html(data);
+//             applyTableEvents();
+//         }
+//     }).fail( function(data) {
+//         //On error, refresh the page. This will redirect to login
+//         //if session is expired.
+//         location.reload();
+//     });
+// }
 
 function create_folder() {
   /*global create_folder_url: true*/
@@ -116,18 +115,7 @@ function create_folder() {
 }
 
 $(document).ready(function () {
-  loadTable();
-});
-
-$('input[id=file]').change(function () {
-  $('#filetmp').val($(this).val());
-});
-
-$('#create-pseudofolder').on('submit', function (event) {
-  event.preventDefault();
-  $("#create-pseudofolder").hide();
-  $("#pseudoContainer #progress").show();
-  create_folder();
+  //loadTable();
 });
 
 
@@ -139,7 +127,6 @@ $(document).ready(function () {
     if (contentType === "application/javascript" || contentType === "application/json") {
       var json = $.parseJSON(xhr.responseText);
 
-
       $.each(json.django_messages, function (i, item) {
         addMessage(item.message, item.extra_tags);
       });
@@ -150,3 +137,36 @@ $(document).ready(function () {
     });
   /*jslint unparam: false*/
 });
+
+// $('#create-pseudofolder').on('submit', function(event){
+//     event.preventDefault();
+//     $("#create-pseudofolder").hide();
+//     $("#progress").show();
+//     create_folder();
+
+// });
+
+// function create_folder() {
+//     $.ajax({
+//         method: "POST",
+//         url: create_folder_url,
+//         data: $('#create-pseudofolder').serialize()
+//     }).done(function() {
+//         $('#pseudoContainer').foundation('reveal', 'close');
+//         loadTable();
+//         $("#create-pseudofolder").show();
+//         $("#progress").hide();
+//     }).always(function(data, textStatus, jqXHR) {
+
+//         var contentType = jqXHR.getResponseHeader("Content-Type");
+
+//         if (contentType == "application/javascript" || contentType == "application/json") {
+//             var json = $.parseJSON(jqXHR.responseText);
+
+//             $.each(json.django_messages, function (i, item) {
+//                 addMessage(item.message, item.extra_tags);
+//             });
+//         }
+//     });
+// };
+

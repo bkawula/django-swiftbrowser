@@ -1,0 +1,94 @@
+<table>
+	<thead>
+		<tr>
+			<th class="hide-for-small-only"></th>
+			<th class="hide-for-small-only">Name</th>
+			<th class="hide-for-small-only">Created</th>
+			<th class="hide-for-small-only">Size</th>
+			<th class="hide-for-small-only"></th>
+		</tr>
+	</thead>
+	<tbody ng-if="objects.length || folders.length">
+		<tr ng-repeat="folder in folders">
+			<td class="icon">
+				<span class="glyphicons glyphicons-folder-closed"></span>
+			</td>
+			<td>
+				<a href="/objects/{{container}}/{{folder[0]}}">
+					<strong>{{folder[0]|removeLastChar}}</strong>
+				</a>
+			</td>
+			<td class="hide-for-small-only"></td>
+			<td ></td>
+			<td>
+				<button type="button" data-dropdown="opt{{$index}}" aria-controls="opt{{$index}}" aria-expanded="false" class="button dropdown file-btn">
+					<span class="glyphicons glyphicons-cogwheel"></span>
+				</button>
+				<br>
+				<ul id="opt{{$index}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
+					<li>
+						<a href="/download_collection/{{container}}/{{folder[0]}}">
+							<span class="glyphicons glyphicons-cloud-download"></span> Download
+						</a>
+					</li>
+					<li>
+						<a href="/download_collection_nonrec/{{container}}/{{folder[0]}}">
+							<span class="glyphicons glyphicons-cloud-download"></span>Download nonrecursive
+						</a>
+					</li>
+					<li>
+						<a class="delete-folder" data-name="{{folder[1]}}" href="/delete_folder/{{container}}/{{folder[1]}}">
+							<span class="glyphicons glyphicons-fire"></span>Delete folder
+						</a>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr ng-repeat="key in objects" on-last-repeat>
+			<td class="icon">
+				<span ng-if="key.extension !=='other'" class="filetypes filetypes-{{key.extension}}"></span>
+				<span ng-if="!(key.extension !='other')" class="glyphicons glyphicons-file"></span>
+			</td>
+			<td>
+				<a href="/download/{{container}}/{{key.name}}" class="block">{{key.name}}</a>
+			</td>
+			<td class="hide-for-small-only">{{key.last_modified | date:'medium'}}</td>
+			<td >{{key.bytes|formatByte}}</td>
+			<td>
+				<button type="button" data-dropdown="file-opt{{$index}}" aria-controls="file-opt{{$index}}" aria-expanded="false" class="button dropdown file-btn">
+					<span class="glyphicons glyphicons-cogwheel"></span>
+				</button>
+				<br>
+				<ul id="file-opt{{$index}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
+					<li>
+						<button type="button" data-reveal-id="tempurl" class="button dropdown-btn" data-reveal-ajax="/tempurl/{{container}}/{{key.name}}">
+							<span class="glyphicons glyphicons-clock"></span>&nbsp;
+							Temporary URL
+						</button>
+					</li>
+					<li>
+						<button type="button" data-reveal-id="object-expiry" class="button dropdown-btn" data-reveal-ajax="/object_expiry/{{container}}/{{key.name}}">
+							<span class="glyphicons glyphicons-hourglass"></span>&nbsp;
+							Object Expiry
+						</button>
+					</li>
+					<li>
+						<a class="delete-object" data-name="{{key.name}}" href="/delete/{{container}}/{{key.name}}" >
+							<span class="glyphicons glyphicons-fire"></span>&nbsp;
+							Delete Object
+						</a>
+					</li>
+				</ul>
+			</td>
+			</td>
+		</tr>
+	</tbody>
+	<tbody ng-if="!(objects.length || folders.length)">
+		<tr>
+			<th colspan="1" ></th>
+			<th colspan="4" class="center">
+				<strong>There are no objects in this container yet. Upload new objects by clicking the blue button.</strong>
+			</th>
+		</tr>
+	</tbody>
+</table>
