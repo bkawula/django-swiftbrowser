@@ -4,7 +4,7 @@ from django.conf.urls import patterns, include, url
 
 from swiftbrowser.views import *
 from swiftbrowser.utils import download_collection, set_default_temp_time
-from swiftbrowser.angular_handlers import get_object_table
+from swiftbrowser.angular_handlers import *
 
 from swiftbrowser.trashviews import move_to_trash, trashview, delete_trash,\
     restore_trash, move_collection_to_trash, restore_trash_collection
@@ -88,4 +88,8 @@ urlpatterns = patterns(
         r'^get_object_table/$',
         get_object_table,
         name="get_object_table"),
+    url(
+        r'^get_users/$',
+        get_users,
+        name="get_users"),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

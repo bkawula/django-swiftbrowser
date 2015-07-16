@@ -1,0 +1,19 @@
+<h3>Users</h3>
+<table>
+	<tr>
+		<th>Username</th>
+		<th>Name</th>
+		<th>Email</th>
+		<th>ID</th>
+		<th>Enabled</th>
+		<th>Tenant ID</th>
+	</tr>
+	<tr ng-repeat="user in users">
+		<td>{{user.username}}</td>
+		<td>{{user.name}}</td>
+		<td>{{user.email}}</td>
+		<td>{{user.id}}</td>
+		<td>{{user.enabled}}</td>
+		<td>{{user.tenantId}}</td>
+	</tr>
+</table>

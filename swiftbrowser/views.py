@@ -12,6 +12,7 @@ import zipfile
 import json
 from StringIO import StringIO
 from swiftclient import client
+
 from django.shortcuts import render_to_response, redirect, render
 from django.template import RequestContext
 from django.contrib import messages
@@ -56,6 +57,7 @@ def login(request):
                 request.session['storage_url'] = storage_url
                 request.session['username'] = username
                 request.session['user'] = username
+                request.session['password'] = password
 
                 return redirect(containerview)
 
@@ -65,7 +67,8 @@ def login(request):
                     e)))
 
             # Generic login failure message.
-            except:
+            except Exception, e:
+                print(e)
                 messages.error(request, _("Login failed."))
         # Generic login failure on invalid forms.
         else:
@@ -687,7 +690,7 @@ def upload_delete(request, pk):
     return JFUResponse(request, success)
 
 
-@session_valid
+# @session_valid
 def settings_view(request):
     """ Returns list of all objects in current container. """
 
