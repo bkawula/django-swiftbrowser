@@ -522,3 +522,12 @@ def set_object_expiry_time(request, container, objectname):
         messages.error(request, "Invalid form.")
 
     return redirect(swiftbrowser.views.objectview, container, prefix)
+
+
+def split_tenant_user_names(username):
+    '''Given a username in the format 'tenant:user' return the tenant and user
+    separatel.'''
+
+    tenant_name = username[0:username.index(":")]
+    user = username[username.index(":") + 1:]
+    return tenant_name, user
