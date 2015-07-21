@@ -17,3 +17,12 @@
 		<td>{{user.tenantId}}</td>
 	</tr>
 </table>
+<h3>Create User</h3>
+
+<form method="POST" ng-submit="createUser()">
+	<labeL>Email</labeL>
+	<input ng-model="formData.email" type="text"/>
+	<labeL>Password</labeL>
+	<input ng-model="formData.password" type="text"/>
+	<input class="button" type="submit" value="Create User">
+</form>

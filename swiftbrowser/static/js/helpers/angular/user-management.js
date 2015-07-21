@@ -1,35 +1,36 @@
 var app = angular.module('user-management', []);
 
-app.controller('UserManagementCtrl', function ($scope, users) {
+app.controller('UserManagementCtrl', function ($scope, $http, users) {
 
   //This function is called after angular.element is finished.
-  $scope.users = users.users;
-  console.log(users.users);
-})
+  $scope.users = users.users; /* User data */
+  $scope.formData = {}; /* Holder for form data. */
 
-  //Event for when last row in object table has been rendered.
-  .directive('onLastRepeat', function () {
-    return function (scope, element, attrs) {
-      if (scope.$last) {
-        setTimeout(function () {
-          scope.$emit('onRepeatLast', element, attrs);
-        }, 1);
-      }
-    };
-  })
+   //Handler for submiting new user form.
+  $scope.createUser = function () {
 
-  .directive('ngUpdateHidden', function () {
-    return function (scope, el, attr) {
-      var model = attr['ngModel'];
-      scope.$watch(model, function (nv) {
-        el.val(nv);
+    //Submit the form
+    $http({
+      method  : 'POST',
+      url     : '/create_user/',
+      data    : $.param($scope.formData),  // pass in data as strings
+      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+      .success(function (data) {
+        console.log(data);
+      })
+      .error(function (data) {
+        //TODO: Display error message
+        console.log(data);
+        $("html").html(data);
       });
-    };
-  });
+  };
+});
 
-/* Init of angular*/
-angular.element(document).ready(user_management_init);
-
+/* Added in for CSRF support. */
+app.config(function ($httpProvider) {
+  $httpProvider.defaults.headers.post['X-CSRFToken'] = $('input[name=csrfmiddlewaretoken]').val();
+});
 
 /*
   Initiatialize requests for user management functions.
@@ -48,3 +49,6 @@ function user_management_init() {
     }
   );
 }
+
+/* Init of angular*/
+angular.element(document).ready(user_management_init);

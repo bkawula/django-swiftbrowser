@@ -40,3 +40,9 @@ class TimeForm(forms.Form):
     days.'''
     days = forms.DecimalField(initial=0)
     hours = forms.DecimalField(initial=0)
+
+
+class CreateUserForm(forms.Form):
+    ''' Form for creating new users on Keystone.'''
+    email = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=100)

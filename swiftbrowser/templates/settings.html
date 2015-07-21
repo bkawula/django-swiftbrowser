@@ -25,7 +25,7 @@
 		<div class="row" ng-controller="UserManagementCtrl">
 			<div class="columns small-12">
 				<h2>User Management</h2>
-
+				<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
 				<ng-include src="'{% static 'templates/user_management.html' %}'"></ng-include>
 			</div>
 		</div>
