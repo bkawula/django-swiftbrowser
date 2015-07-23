@@ -5,10 +5,17 @@
 		font-weight:bold;
 	}
 }
-@media #{$small-only} {  
-	#settingsview { 
-		.row .row { 
+@media #{$small-only} {
+	#settingsview {
+		.row .row {
 			margin:0 5px;
 		}
 	}
+}
+
+.alert-box {
+	display: none;
+}
+.display-on {
+    display: block !important;
 }

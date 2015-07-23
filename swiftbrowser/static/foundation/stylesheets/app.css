@@ -9520,6 +9520,16 @@ form#object-expiry-form input.submit {
     margin: 0 5px;
   }
 }
+/* line 16, ../scss/_settings_page.scss */
+.alert-box {
+  display: none;
+}
+
+/* line 19, ../scss/_settings_page.scss */
+.display-on {
+  display: block !important;
+}
+
 /* line 9, ../scss/app.scss */
 table {
   width: 100%;

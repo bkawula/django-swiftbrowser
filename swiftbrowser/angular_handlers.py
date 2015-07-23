@@ -112,7 +112,7 @@ def create_user(request):
 
     #Create user
     try:
-        response = keystone_usermanager.create(
+        keystone_usermanager.create(
             name=email,
             password=password,
             tenant_id=tenant.id,

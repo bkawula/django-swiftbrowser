@@ -1,6 +1,6 @@
-var app = angular.module('user-management', []);
+var app = angular.module('userManagement', ['messages']);
 
-app.controller('UserManagementCtrl', function ($scope, $http, users) {
+app.controller('UserManagementCtrl', function ($scope, $http, users, MessagesHandler) {
 
   //This function is called after angular.element is finished.
   $scope.users = users.users; /* User data */
@@ -17,15 +17,18 @@ app.controller('UserManagementCtrl', function ($scope, $http, users) {
       headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
     })
       .success(function (data) {
-        console.log(data);
+        if (data.success) {
+          MessagesHandler.newSuccessMessage(data.success);
+        } else {
+          MessagesHandler.newErrorMessage(data.error);
+        }
       })
       .error(function (data) {
-        //TODO: Display error message
-        console.log(data);
-        $("html").html(data);
+        MessagesHandler.newErrorMessage("Error creating user.");
       });
   };
 });
+
 
 /* Added in for CSRF support. */
 app.config(function ($httpProvider) {
@@ -45,7 +48,7 @@ function user_management_init() {
       app.constant('users', response.data);
 
       //Init the controller
-      angular.bootstrap(document, ['user-management']);
+      angular.bootstrap(document, ['userManagement']);
     }
   );
 }
