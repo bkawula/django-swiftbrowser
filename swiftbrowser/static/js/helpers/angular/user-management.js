@@ -19,6 +19,11 @@ app.controller('UserManagementCtrl', function ($scope, $http, users, MessagesHan
       .success(function (data) {
         if (data.success) {
           MessagesHandler.newSuccessMessage(data.success);
+          $http.get('/get_users').then(
+            function (response) {
+
+              $scope.users = response.data.users;
+            });
         } else {
           MessagesHandler.newErrorMessage(data.error);
         }
