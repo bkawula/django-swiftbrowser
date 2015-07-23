@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect
 
 from swiftclient import client
@@ -75,7 +75,7 @@ def get_users(request):
         user_objects = keystone_usermanager.list(tenant.id)
         users = keystone_users_to_list(user_objects)
     except Exception, e:
-        print(e)
+        return HttpResponse(e, status=500)
 
     return JsonResponse({'users': users})
 
@@ -117,9 +117,9 @@ def create_user(request):
             password=password,
             tenant_id=tenant.id,
         )
+        # Add user as a "_member_" to the tenant
+        keystone_client.roles.add_user_role(email, "_member_", tenant_name)
     except Exception, e:
-        return JsonReponse({
-            'error': e
-        })
+        return HttpResponse(e, status=500)
 
     return JsonResponse({'success': 'User created'})

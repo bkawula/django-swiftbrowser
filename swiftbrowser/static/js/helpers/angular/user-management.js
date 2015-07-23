@@ -28,8 +28,8 @@ app.controller('UserManagementCtrl', function ($scope, $http, users, MessagesHan
           MessagesHandler.newErrorMessage(data.error);
         }
       })
-      .error(function (data) {
-        MessagesHandler.newErrorMessage("Error creating user.");
+      .error(function (data, status, headers, config) {
+        MessagesHandler.newErrorMessage(data);
       });
   };
 });
