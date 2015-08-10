@@ -110,15 +110,24 @@ def create_user(request):
     else:
         return JsonResponse({'error': 'invalid form'})
 
-    #Create user
     try:
-        keystone_usermanager.create(
+        #Create user. New users' usernames will be their email address.
+        new_user = keystone_usermanager.create(
             name=email,
             password=password,
             tenant_id=tenant.id,
         )
-        # Add user as a "_member_" to the tenant
-        keystone_client.roles.add_user_role(email, "_member_", tenant_name)
+
+        # Add user to role
+        role_manager = keystone_client.roles
+
+        # Loop through the roles and add the user to the role swiftoperator
+        for role in role_manager.list():
+            if role.name == "swiftoperator":
+
+                # Give the user a role of swiftoperator for this tenant.
+                role_manager.add_user_role(new_user.id, role.id, tenant.id)
+
     except Exception, e:
         return HttpResponse(e, status=500)
 

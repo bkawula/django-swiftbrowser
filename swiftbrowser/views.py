@@ -690,7 +690,7 @@ def upload_delete(request, pk):
     return JFUResponse(request, success)
 
 
-# @session_valid
+@session_valid
 def settings_view(request):
     """ Returns list of all objects in current container. """
 
