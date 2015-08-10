@@ -319,12 +319,25 @@ def session_valid(fn):
 
         storage_url = args[0].session.get('storage_url', '')
         auth_token = args[0].session.get('auth_token', '')
+        username = args[0].session.get('username', '')
+        password = args[0].session.get('password', '')
 
         try:
             client.head_account(storage_url, auth_token)
             return fn(*args, **kw)
         except:
-            messages.error(args[0], _("Session expired."))
+
+            #Attempt to get a new auth token
+            try:
+                auth_version = settings.SWIFT_AUTH_VERSION or 1
+                (storage_url, auth_token) = client.get_auth(
+                    settings.SWIFT_AUTH_URL, username, password,
+                    auth_version=auth_version)
+                request.session['auth_token'] = auth_token
+                request.session['storage_url'] = storage_url
+                return fn(*args, **kw)
+            except:
+                messages.error(args[0], _("Session expired."))
         return redirect(swiftbrowser.views.login)
 
     return wrapper
@@ -339,12 +352,26 @@ def ajax_session_valid(fn):
 
         storage_url = args[0].session.get('storage_url', '')
         auth_token = args[0].session.get('auth_token', '')
+        username = args[0].session.get('username', '')
+        password = args[0].session.get('password', '')
 
         try:
             client.head_account(storage_url, auth_token)
             return fn(*args, **kw)
         except:
-            messages.error(args[0], _("Session expired."))
+
+            #Attempt to get a new auth token
+            try:
+                auth_version = settings.SWIFT_AUTH_VERSION or 1
+                (storage_url, auth_token) = client.get_auth(
+                    settings.SWIFT_AUTH_URL, username, password,
+                    auth_version=auth_version)
+                request.session['auth_token'] = auth_token
+                request.session['storage_url'] = storage_url
+
+                return fn(*args, **kw)
+            except:
+                messages.error(args[0], _("Session expired."))
         return {'errors': 'true'}
 
     return wrapper
