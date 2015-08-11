@@ -46,3 +46,8 @@ class CreateUserForm(forms.Form):
     ''' Form for creating new users on Keystone.'''
     email = forms.CharField(max_length=100)
     password = forms.CharField(max_length=100)
+
+
+class DeleteUserForm(forms.Form):
+    ''' Form for deleting a user on Keystone.'''
+    user_id = forms.CharField(max_length=100)

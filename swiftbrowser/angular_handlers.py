@@ -8,7 +8,7 @@ from swiftbrowser.utils import ajax_session_valid, get_base_url, prefix_list, \
     pseudofolder_object_list, split_tenant_user_names
 from swiftbrowser.views import containerview
 from swiftbrowser.angular_utils import *
-from swiftbrowser.forms import CreateUserForm
+from swiftbrowser.forms import CreateUserForm, DeleteUserForm
 import keystoneclient.v2_0.client
 
 
@@ -84,51 +84,67 @@ def get_users(request):
 def create_user(request):
     '''Create a user with the given form post information.'''
 
-    username = request.session.get('username', '')
-    tenant_name, user = split_tenant_user_names(username)
-    password = request.session.get('password', '')
-
-    try:
-        keystone_client = keystoneclient.v2_0.client.Client(
-            username=user, password=password, tenant_name=tenant_name,
-            auth_url=settings.SWAUTH_URL)
-
-        keystone_usermanager = keystone_client.users
-    except Exception, e:
-        print(e)
-        return redirect(containerview)
-
-    # Get tenant id from list of tenants
-    for tenants in keystone_client.tenants.list():
-        if tenants.name == tenant_name:
-            tenant = tenants
-
+    # Check submission is valid
     form = CreateUserForm(request.POST)
+
     if (form.is_valid()):
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
     else:
         return JsonResponse({'error': 'invalid form'})
 
+    # Get keystone object
+    keystone_client = get_keystoneclient(request)
+
+    username = request.session.get('username', '')
+    tenant_name, username = split_tenant_user_names(username)
+
+    # Get tenant from list of tenants
+    for tenants in keystone_client.tenants.list():
+        if tenants.name == tenant_name:
+            tenant_id = tenants.id
+            break
     try:
         #Create user. New users' usernames will be their email address.
-        new_user = keystone_usermanager.create(
-            name=email,
-            password=password,
-            tenant_id=tenant.id,
-        )
+        new_user = keystone_client.users.create(
+            name=email, password=password, tenant_id=tenant_id)
 
-        # Add user to role
-        role_manager = keystone_client.roles
-
-        # Loop through the roles and add the user to the role swiftoperator
-        for role in role_manager.list():
+        # Loop through the roles and find the role swiftoperator
+        for role in keystone_client.roles.list():
             if role.name == "swiftoperator":
 
                 # Give the user a role of swiftoperator for this tenant.
-                role_manager.add_user_role(new_user.id, role.id, tenant.id)
+                keystone_client.roles.add_user_role(
+                    new_user.id, role.id, tenant_id)
+                break
 
     except Exception, e:
         return HttpResponse(e, status=500)
 
     return JsonResponse({'success': 'User created'})
+
+
+@ajax_session_valid
+def delete_user(request):
+    '''Create a user with the given form post information.'''
+
+    form = DeleteUserForm(request.POST)
+    if (form.is_valid()):
+        user_id = form.cleaned_data['user_id']
+    else:
+        return JsonResponse({'error': 'invalid form'})
+
+    keystone_client = get_keystoneclient(request)
+
+    # Do not allow users to delete themselves
+    for role in keystone_client.roles.list():
+        if role.name == "admin":
+            return JsonResponse({'error': 'You cannot delete admins.'})
+
+    try:
+        keystone_client.users.delete(user_id)
+
+    except Exception, e:
+        return HttpResponse(e, status=500)
+
+    return JsonResponse({'success': 'User deleted'})

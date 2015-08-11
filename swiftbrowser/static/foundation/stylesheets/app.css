@@ -9530,6 +9530,16 @@ form#object-expiry-form input.submit {
   display: block !important;
 }
 
+/* line 24, ../scss/_settings_page.scss */
+#delete-user-form button#delete-user-submit {
+  background-color: red;
+  width: 100%;
+}
+/* line 29, ../scss/_settings_page.scss */
+#delete-user-form span.user-name-holder {
+  color: red;
+}
+
 /* line 9, ../scss/app.scss */
 table {
   width: 100%;

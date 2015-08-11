@@ -15,14 +15,29 @@
 		<td>{{user.id}}</td>
 		<td>{{user.enabled}}</td>
 		<td>{{user.tenantId}}</td>
+		<td ng-click="openDeleteUser(user)">Delete</td>
 	</tr>
 </table>
 <h3>Create User</h3>
 
-<form method="POST" ng-submit="createUser()">
+<form ng-submit="createUser()" method="POST">
 	<labeL>Email</labeL>
-	<input ng-model="formData.email" type="text"/>
+	<input ng-model="createUserFormData.email" type="text"/>
 	<labeL>Password</labeL>
-	<input ng-model="formData.password" type="password"/>
+	<input ng-model="createUserFormData.password" type="password"/>
 	<input class="button" type="submit" value="Create User">
 </form>
+
+<div class="reveal-modal" id="delete-user" data-reveal aria-labelledby="user-title" aria-hidden="true" role="dialog">
+	<h2>Delete User</h2>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	<form id="delete-user-form" method="POST" ng-submit="deleteUser()">
+        <label for="containername">This will permanently delete the user <span class="user-name-holder">{{selectedUser.username}}</span>. Type in the user name to delete the user.</label>
+        <input ng-model="confirm_delete_user" class="enter-user-name input-xlarge" type="text" placeholder="User Name">
+		<button ng-show="selectedUser.username == confirm_delete_user" id="delete-user-submit" type="submit">I understand the consequences, Delete this user.</button>
+        <span id="cancel-delete" class="button expand" ng-click="closeDeleteForm()">Cancel</span>
+	</form>
+	<div id="progress" class="progress">
+		<div class="loader">Loading...</div>
+	</div>
+</div>

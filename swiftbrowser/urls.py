@@ -90,4 +90,5 @@ urlpatterns = patterns(
         name="get_object_table"),
     url(r'^get_users/$', get_users, name="get_users"),
     url(r'^create_user/$', create_user, name="create_user"),
+    url(r'^delete_user/$', delete_user, name="delete_user"),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

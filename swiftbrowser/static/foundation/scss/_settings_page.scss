@@ -19,3 +19,14 @@
 .display-on {
     display: block !important;
 }
+
+#delete-user-form {
+	button#delete-user-submit {
+		background-color: red;
+		width: 100%;
+	}
+
+	span.user-name-holder {
+		color: red;
+	}
+}
