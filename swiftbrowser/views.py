@@ -56,8 +56,19 @@ def login(request):
                 request.session['auth_token'] = auth_token
                 request.session['storage_url'] = storage_url
                 request.session['username'] = username
-                request.session['user'] = username
                 request.session['password'] = password
+
+                tenant_name, user = split_tenant_user_names(username)
+                request.session['user'] = user
+                request.session['tenant_name'] = tenant_name
+
+                # Upon successful retrieval of a token, if we're unable to
+                # head the account, then the user is not an admin or
+                # swiftoperator and has access to only a container.
+                try:
+                    client.head_account(storage_url, auth_token)
+                except:
+                    request.session['norole'] = True
 
                 return redirect(containerview)
 
@@ -87,6 +98,10 @@ def login(request):
 def containerview(request):
     """ Returns a list of all containers in current account. """
 
+    # Users with no role will not be able to list containers.
+    if request.session.get('norole'):
+        # Redirect them to the container that is their username.
+        return redirect(objectview, request.session.get('user'))
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
@@ -175,10 +190,10 @@ def objectview(request, container, prefix=None):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-    account = client.head_account(storage_url, auth_token)
-    url_key = account.get('x-account-meta-temp-url-key', '')
+    # account = client.head_account(storage_url, auth_token)
+    # url_key = account.get('x-account-meta-temp-url-key', '')
 
-    key = url_key
+    # key = url_key
     request.session['container'] = container
     request.session['prefix'] = prefix
 
@@ -202,10 +217,13 @@ def objectview(request, container, prefix=None):
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
 
-    # Check CORS header - BASE_URL should be in there
+    # Check CORS header - BASE_URL should be in there. Do not perform this check
+    # for users with no role. No role users will not be accessing containers
+    # in any way except for swiftbrowser. Hence their container has the proper
+    # headers. Norole users are unable to set the header anyways.
     if meta.get(
         'x-container-meta-access-control-allow-origin'
-    ) != '*':
+    ) != settings.BASE_URL and not request.session['norole']:
 
         # Add CORS headers so user can upload to this container.
         headers = {
@@ -218,7 +236,8 @@ def objectview(request, container, prefix=None):
             client.put_container(storage_url, auth_token, container, headers)
 
         except client.ClientException:
-            messages.add_message(request, messages.ERROR, _("Access denied."))
+            messages.add_message(request, messages.ERROR, _(
+                "Access denied, unable to set CORS header."))
             return redirect(containerview)
 
     prefixes = prefix_list(prefix)
@@ -243,7 +262,7 @@ def objectview(request, container, prefix=None):
         max_file_count,
         expires
     )
-    signature = hmac.new(key, hmac_body, sha1).hexdigest()
+    # signature = hmac.new(key, hmac_body, sha1).hexdigest()
 
     # if not key:
     #     messages.add_message(request, messages.ERROR, _("Access denied."))
@@ -260,7 +279,7 @@ def objectview(request, container, prefix=None):
         "objectview.html",
         {
             'swift_url': swift_url,
-            'signature': signature,
+            # 'signature': signature,
             'redirect_url': redirect_url,
             'container': container,
             'objects': objs,

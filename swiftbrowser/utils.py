@@ -366,8 +366,8 @@ def ajax_session_valid(fn):
                 (storage_url, auth_token) = client.get_auth(
                     settings.SWIFT_AUTH_URL, username, password,
                     auth_version=auth_version)
-                request.session['auth_token'] = auth_token
-                request.session['storage_url'] = storage_url
+                args[0].session['auth_token'] = auth_token
+                args[0].session['storage_url'] = storage_url
 
                 return fn(*args, **kw)
             except:

@@ -69,6 +69,8 @@ def get_users(request):
     for tenants in keystone_client.tenants.list():
         if tenants.name == tenant_name:
             tenant = tenants
+            request.session['tenant_id'] = tenant.id
+            break
 
     # Get users within the tenant
     try:
@@ -96,27 +98,30 @@ def create_user(request):
     # Get keystone object
     keystone_client = get_keystoneclient(request)
 
-    username = request.session.get('username', '')
-    tenant_name, username = split_tenant_user_names(username)
+    tenant_id = request.session.get('tenant_id', '')
+    tenant_name = request.session.get('tenant_name', '')
 
-    # Get tenant from list of tenants
-    for tenants in keystone_client.tenants.list():
-        if tenants.name == tenant_name:
-            tenant_id = tenants.id
-            break
     try:
         #Create user. New users' usernames will be their email address.
-        new_user = keystone_client.users.create(
+        keystone_client.users.create(
             name=email, password=password, tenant_id=tenant_id)
 
-        # Loop through the roles and find the role swiftoperator
-        for role in keystone_client.roles.list():
-            if role.name == "swiftoperator":
+    except Exception, e:
+        return HttpResponse(e, status=500)
 
-                # Give the user a role of swiftoperator for this tenant.
-                keystone_client.roles.add_user_role(
-                    new_user.id, role.id, tenant_id)
-                break
+    # Create a container for that user with matching name.
+    try:
+        headers = {
+            'X-Container-Meta-Access-Control-Expose-Headers':
+            'Access-Control-Allow-Origin',
+            'X-Container-Meta-Access-Control-Allow-Origin': settings.BASE_URL,
+            'X-Container-Read': tenant_name + ":" + email,
+            'X-Container-Write': tenant_name + ":" + email
+        }
+        storage_url = request.session.get('storage_url', '')
+        auth_token = request.session.get('auth_token', '')
+
+        client.put_container(storage_url, auth_token, email, headers)
 
     except Exception, e:
         return HttpResponse(e, status=500)
@@ -136,8 +141,11 @@ def delete_user(request):
 
     keystone_client = get_keystoneclient(request)
 
+    tenant_id = request.session.get('tenant_id', '')
+
+    roles = keystone_client.users.list_roles(user_id, tenant_id)
     # Do not allow users to delete themselves
-    for role in keystone_client.roles.list():
+    for role in roles:
         if role.name == "admin":
             return JsonResponse({'error': 'You cannot delete admins.'})
 
