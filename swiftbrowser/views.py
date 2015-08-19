@@ -190,10 +190,6 @@ def objectview(request, container, prefix=None):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-    # account = client.head_account(storage_url, auth_token)
-    # url_key = account.get('x-account-meta-temp-url-key', '')
-
-    # key = url_key
     request.session['container'] = container
     request.session['prefix'] = prefix
 
@@ -217,13 +213,13 @@ def objectview(request, container, prefix=None):
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
 
-    # Check CORS header - BASE_URL should be in there. Do not perform this check
-    # for users with no role. No role users will not be accessing containers
-    # in any way except for swiftbrowser. Hence their container has the proper
-    # headers. Norole users are unable to set the header anyways.
+    # Check CORS header - BASE_URL should be in there. Do not perform this
+    # check for users with no role. No role users will not be accessing
+    # containers in any way except for swiftbrowser. Hence their container has
+    # the proper headers. Norole users are unable to set the header anyways.
     if meta.get(
         'x-container-meta-access-control-allow-origin'
-    ) != settings.BASE_URL and not request.session['norole']:
+    ) != settings.BASE_URL and not request.session.get('norole', False):
 
         # Add CORS headers so user can upload to this container.
         headers = {
@@ -255,23 +251,6 @@ def objectview(request, container, prefix=None):
     #To allow large files to upload, increase this window to 2hr.
     expires = int(time.time() + 60 * 60 * 2)
 
-    hmac_body = '%s\n%s\n%s\n%s\n%s' % (
-        path,
-        '',
-        max_file_size,
-        max_file_count,
-        expires
-    )
-    # signature = hmac.new(key, hmac_body, sha1).hexdigest()
-
-    # if not key:
-    #     messages.add_message(request, messages.ERROR, _("Access denied."))
-    #     if prefix:
-    #         return redirect(containerview, container=container,
-        #prefix=prefix)
-    #     else:
-    #         return redirect(containerview, container=container)
-
     if [x for x in read_acl if x in required_acl]:
         public = True
 
@@ -279,7 +258,6 @@ def objectview(request, container, prefix=None):
         "objectview.html",
         {
             'swift_url': swift_url,
-            # 'signature': signature,
             'redirect_url': redirect_url,
             'container': container,
             'objects': objs,

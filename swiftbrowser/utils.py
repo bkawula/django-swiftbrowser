@@ -172,7 +172,7 @@ def create_pseudofolder_from_prefix(storage_url, auth_token, container,
     return prefixlist
 
 
-def get_temp_key(storage_url, auth_token):
+def get_temp_key(storage_url, auth_token, container):
     """ Tries to get meta-temp-url key from account.
     If not set, generate tempurl and save it to acocunt.
     This requires at least account owner rights. """
@@ -180,6 +180,14 @@ def get_temp_key(storage_url, auth_token):
     try:
         account = client.get_account(storage_url, auth_token)
     except client.ClientException:
+
+        #Try to get the container temp url key instead
+        try:
+            container = client.get_container(
+                storage_url, auth_token, container)
+            return container[0].get('x-container-meta-temp-url-key')
+        except client.ClientException:
+            return None
         return None
 
     key = account[0].get('x-account-meta-temp-url-key')
@@ -196,7 +204,7 @@ def get_temp_key(storage_url, auth_token):
 
 
 def get_temp_url(storage_url, auth_token, container, objectname, expires=600):
-    key = get_temp_key(storage_url, auth_token)
+    key = get_temp_key(storage_url, auth_token, container)
     if not key:
         return None
 

@@ -1,3 +1,5 @@
+import string
+import random
 from django.conf import settings
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
@@ -110,14 +112,21 @@ def create_user(request):
         return HttpResponse(e, status=500)
 
     # Create a container for that user with matching name.
+    chars = string.ascii_lowercase + string.digits
+    key = ''
+    for x in range(32):
+        key += random.choice(chars)
+
+    headers = {
+        'X-Container-Meta-Access-Control-Expose-Headers':
+        'Access-Control-Allow-Origin',
+        'X-Container-Meta-Access-Control-Allow-Origin': settings.BASE_URL,
+        'X-Container-Read': tenant_name + ":" + email,
+        'X-Container-Write': tenant_name + ":" + email,
+        'X-Container-Meta-Temp-URL-Key': key
+    }
+
     try:
-        headers = {
-            'X-Container-Meta-Access-Control-Expose-Headers':
-            'Access-Control-Allow-Origin',
-            'X-Container-Meta-Access-Control-Allow-Origin': settings.BASE_URL,
-            'X-Container-Read': tenant_name + ":" + email,
-            'X-Container-Write': tenant_name + ":" + email
-        }
         storage_url = request.session.get('storage_url', '')
         auth_token = request.session.get('auth_token', '')
 
