@@ -70,13 +70,14 @@ $( function() {
     .bind('fileuploadalways', function (e, data) {
         files_processed += 1;
 
-        // If all fiels have been processed, close the form.
+        // If all files have been processed, close the form.
         if (files_processed == files_added) {
             closeForm();
             loadTable();
             files_added = 0;
             files_processed = 0;
             files_uploaded = 0;
+            $(".crumb-row.fixed").remove();
 
         }
     })
