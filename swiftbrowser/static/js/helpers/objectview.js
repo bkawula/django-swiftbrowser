@@ -44,7 +44,7 @@ function addMessage(text, extra_tags) {
             '<div data-alert class="alert-box success header-alert">' +
                 '<div class="row" >' +
                     '<div class="small-12 columns">' +
-                '<strong>{% trans "Success." %}</strong> ' + text +
+                '<strong>Success.</strong> ' + text +
                 '<a href="#" class="close">&times;</a>' +
                 '</div>' +
                 '</div>' +
@@ -55,7 +55,7 @@ function addMessage(text, extra_tags) {
             '<div data-alert class="alert-box alert header-alert">' +
                 '<div class="row" >' +
                     '<div class="small-12 columns">' +
-                '<strong>{% trans "Error." %}</strong> ' + text +
+                '<strong>Error.</strong> ' + text +
                 '<a href="#" class="close">&times;</a>' +
                 '</div>' +
                 '</div>' +
