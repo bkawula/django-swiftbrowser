@@ -1,0 +1,144 @@
+h1, h2, h3, h4, h5 {
+	font-weight: bold;
+}
+
+label {
+	font-weight: bold;
+}
+
+table {
+	border: 0px;
+	border-collapse: collapse;
+	width: 100%;
+
+	thead {
+		background:transparent;
+
+		tr {
+			th {
+				font-size: 1.15rem;
+				padding-bottom: 1.25rem;
+
+				&:nth-child(1) {
+					width: 1rem;
+				}
+
+				&:nth-child(3) {
+					width: 12rem;
+				}
+
+				&:nth-child(4) {
+					width: 6rem;
+				}
+
+				&:nth-child(5) {
+					width: 1rem;
+				}
+			}
+		}
+	}
+
+	tr {
+		border-bottom: 1px solid $smoke;
+
+		td {
+			padding: 0rem 0.625rem;
+
+			&:nth-child(1) {
+				padding: 0rem 0.625rem 0rem 0rem;
+			}
+
+			&:nth-child(5) {
+				padding: 0;
+			}
+		}
+
+		.alt {
+			background-color: transparent;
+		}
+
+		.even {
+			background-color: transparent;
+		}
+
+		&:nth-of-type(even) {
+			background-color: transparent;
+		}
+	}
+
+	.icon {
+		font-size: 24px;
+	}
+}
+
+.action-btns {
+	float: right;
+	margin-bottom: 5px;
+	text-align: right;
+
+	button, .button {
+		font-size: 0.85rem;
+		margin-bottom: 0;
+		padding-top: 0.85rem;
+		padding-right: 1.25rem;
+		padding-bottom: 0.85rem;
+		padding-left: 1.25rem;
+	}
+
+	.folder {
+		background-color: #767676;
+
+		&:focus, &:hover {
+			background-color: scale-color(#767676, $lightness: -14%);
+		}
+	}
+
+	.share {
+		background-color: #3B862F;
+
+		&:focus, &:hover {
+			background-color: scale-color(#3B862F, $lightness: -14%);
+		}
+	}
+}
+
+.content-body {
+	margin-top: 1rem;
+}
+
+@media #{$small-only} {
+
+	.action-btns {
+		float: left;
+		margin-bottom: 0px;
+		width: 100%;
+
+		.columns {
+			padding: 0;
+
+			.button {
+				float: left;
+				width: 50%;
+			}
+
+			.new-container {
+				width: 100%;
+			}
+		}
+	}
+
+	.content-body {
+		.columns {
+			padding: 0px;
+		}
+	}
+
+	.icon {
+		.filetypes, .glyphicons {
+			padding-left: 5px;
+			font-size: 24px;
+		}
+	}
+}
+
+

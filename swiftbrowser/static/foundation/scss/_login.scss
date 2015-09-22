@@ -1,0 +1,66 @@
+#login {
+	background: url("../../img/background.jpg") no-repeat center center fixed;
+	background-size: cover;
+	background-color: #666666;
+	height: 100%;
+	position: absolute;
+	width: 100%;
+
+	#login-form {
+		background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
+		background-size: 350px;
+		background-position: 24px 18px;
+		background-color: transparent;
+		height: 100%;
+		position: absolute;
+		width: 100%;
+
+		.login-alert {
+			color: $white;
+			padding-bottom: 1rem;
+		}
+
+		.login-form-box {
+			background-color: rgba(0,0,0,0.65);
+			padding: 50px 200px 10px;
+			position: relative;
+			top: 40%;
+			width: 100%;
+
+			.columns {
+				padding-left: 0;
+			}
+
+			.login-btn {
+				width: 100%;
+			}
+		}
+
+		.olrclogo {
+			width: 100%;
+		}
+
+		.olrctext {
+			padding-bottom: 15px;
+			width: 400px;
+		}
+	}
+}
+
+@media #{$small-only} {
+	#login {
+		#login-form {
+			background-position: 10px 10px;
+			background-size: 500px;
+
+			.login-form-box {
+				padding: 15px 10px 10px;
+				top: 22%;
+
+				.columns {
+					padding-right: 0;
+				}
+			}
+		}
+	}
+}

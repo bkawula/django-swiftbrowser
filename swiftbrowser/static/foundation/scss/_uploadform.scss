@@ -1,6 +1,136 @@
-.template-upload {
-	strong.error.text-danger {
-		color: red;
+body.chrome {
+	.chrome-txt, span.directory-input {
+		display: inline-block;
+	}
+}
+
+#fileForm {
+	#fileupload {
+		#preloadmsg {
+			background: url("../../img/upload-bkg.png") no-repeat center center;
+			text-align: center;
+
+			.chrome {
+				font-size: 0.8rem;
+				padding-top: 8rem;
+
+				img {
+					width:40px;
+				}
+			}
+
+			.preloadmsg-txt {
+				font-size:1.5rem;
+				font-weight:bold;
+				padding-top: 12rem;
+			}
+		}
+	}
+
+	.fileupload-progress {
+		display:none;
+	}
+
+	.fileinput-button input {
+		font-size: 50px;
+
+	}
+
+	.file-progress {
+		display:none;
+	}
+
+	.file-row {
+		border-bottom: 1px solid $smoke;
+		position: relative;
+
+		.filerowbtns {
+			text-align: right;
+			padding-top: 5px;
+			button, .button {
+				margin-bottom: 10px;
+			}
+		}
+
+		.filerowtext {
+			position: relative;
+			margin-left: 30px;
+			float: left;
+			padding-top: 10px;
+		}
+
+		.file-progress {
+			bottom: 0px;
+			height: 5px;
+			margin: 0;
+			position: absolute;
+			width: 100%;
+			z-index: 0;
+		}
+
+		.icon {
+			float: left;
+			font-size: 24px;
+			height: 50px;
+			overflow: hidden;
+			padding: 10px;
+			position: relative;
+			width: 45px;
+		}
+
+		.preview {
+			float: left;
+			height: 40px;
+			overflow: hidden;
+			padding-top: 5px;
+			position: relative;
+			width: 60px;
+		}
+
+		.progress {
+			border: 0px;
+			padding: 0;
+			background-color: $white;
+
+			.meter {
+				background: $primary-color;
+			}
+		}
+
+		.row {
+			div:nth-child(1) {
+				padding-left: 0rem;
+			}
+
+			div:nth-child(4) {
+				padding-right: 0rem;
+			}
+		}
+
+		.name {
+			font-size: 0.875rem;
+			font-weight: bold;
+			padding-top: 10px;
+		}
+
+		.size {
+			font-size: 0.875rem;
+			padding-top: 10px;
+		}
+	}
+
+	.progress {
+		background-color: $white;
+		border: 0;
+		height: 20px;
+		margin-top: 10px;
+		padding: 0;
+	}
+
+	.progress-extended {
+		font-size: 0.875rem;
+		font-weight: bold;
+		margin-bottom: 10px;
 	}
 }
 
@@ -8,8 +138,12 @@
 	display: none;
 }
 
-body.chrome {
-	.chrome-txt, span.directory-input {
-		display: inline-block;
+.fileinput-button {
+	overflow: inherit !important;
+}
+
+.template-upload {
+	strong.error.text-danger {
+		color: red;
 	}
 }

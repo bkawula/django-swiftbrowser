@@ -1,15 +1,43 @@
+#containerview {
+	padding-bottom: 5rem;
+
+	#containertable {
+		.dropdown.button::after {
+			border-color: $black transparent transparent transparent;
+		}
+
+		.file-btn {
+			background-color: transparent;
+			color: $black;
+			margin: 0px;
+
+			&:hover, &:focus {
+				background-color: $smoke;
+			}
+		}
+	}
+
+	.usage {
+		color: $white;
+		font-size: 0.65rem;
+		font-weight: normal;
+		vertical-align: super;
+	}
+}
+
 #delete-container-form {
 	button#delete-container-submit {
 		background-color: red;
-		width: 100%;
 		display: none;
+		width: 100%;
 	}
+
 	span.container-name-holder {
 		color: red;
 	}
 }
 
 .progress {
-	height: 4em;
 	background-color: white;
+	height: 4em;
 }

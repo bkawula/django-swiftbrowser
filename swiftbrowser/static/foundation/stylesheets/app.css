@@ -9439,182 +9439,150 @@ th.hide-for-touch {
     display: none !important;
   }
 }
-/* line 1, ../scss/_tempurl.scss */
-#close-tempurl {
-  margin: 0 0 1.25rem;
-}
-
-/* line 6, ../scss/_tempurl.scss */
-form#custom-temp-url input.submit {
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-  font-weight: normal;
-  line-height: normal;
-  font-size: 1rem;
-  padding: 1rem 2rem 1.0625rem 2rem;
-  width: 100%;
-  background-color: black;
-  color: white;
-  border: none;
-  margin-bottom: 1rem;
-}
-
-/* line 2, ../scss/_uploadform.scss */
-.template-upload strong.error.text-danger {
-  color: red;
-}
-
-/* line 7, ../scss/_uploadform.scss */
-.chrome-txt, span.directory-input {
-  display: none;
-}
-
-/* line 12, ../scss/_uploadform.scss */
-body.chrome .chrome-txt, body.chrome span.directory-input {
-  display: inline-block;
-}
-
-/* line 9, ../scss/_objectview.scss */
-form#object-expiry-form input.submit {
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-  font-weight: normal;
-  line-height: normal;
-  font-size: 1rem;
-  padding: 1rem 2rem 1.0625rem 2rem;
-  width: 100%;
-  background-color: black;
-  color: white;
-  border: none;
-  margin-bottom: 1rem;
-}
-
-/* line 2, ../scss/_containerview.scss */
-#delete-container-form button#delete-container-submit {
-  background-color: red;
-  width: 100%;
-  display: none;
-}
-/* line 7, ../scss/_containerview.scss */
-#delete-container-form span.container-name-holder {
-  color: red;
-}
-
-/* line 12, ../scss/_containerview.scss */
-.progress {
-  height: 4em;
-  background-color: white;
-}
-
-/* line 2, ../scss/_settings_page.scss */
-#settingsview p {
-  line-height: 1rem;
-}
-/* line 3, ../scss/_settings_page.scss */
-#settingsview h2 {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-@media only screen and (max-width: 40em) {
-  /* line 10, ../scss/_settings_page.scss */
-  #settingsview .row .row {
-    margin: 0 5px;
-  }
-}
-/* line 16, ../scss/_settings_page.scss */
-.alert-box {
-  display: none;
-}
-
-/* line 19, ../scss/_settings_page.scss */
-.display-on {
-  display: block !important;
-}
-
-/* line 24, ../scss/_settings_page.scss */
-#delete-user-form button#delete-user-submit {
-  background-color: red;
-  width: 100%;
-}
-/* line 29, ../scss/_settings_page.scss */
-#delete-user-form span.user-name-holder {
-  color: red;
-}
-
-/* line 9, ../scss/app.scss */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 0px;
-}
-/* line 13, ../scss/app.scss */
-table .icon {
-  font-size: 24px;
-}
-/* line 16, ../scss/app.scss */
-table thead {
-  background: transparent;
-}
-/* line 19, ../scss/app.scss */
-table thead tr th {
-  font-size: 1.15rem;
-  padding-bottom: 1.25rem;
-}
-/* line 22, ../scss/app.scss */
-table thead tr th:nth-child(1) {
-  width: 1rem;
-}
-/* line 25, ../scss/app.scss */
-table thead tr th:nth-child(3) {
-  width: 12rem;
-}
-/* line 28, ../scss/app.scss */
-table thead tr th:nth-child(4) {
-  width: 6rem;
-}
-/* line 31, ../scss/app.scss */
-table thead tr th:nth-child(5) {
-  width: 1rem;
-}
-/* line 37, ../scss/app.scss */
-table tr {
-  border-bottom: 1px solid #EEEEEE;
-}
-/* line 39, ../scss/app.scss */
-table tr .even {
-  background-color: transparent;
-}
-/* line 42, ../scss/app.scss */
-table tr .alt {
-  background-color: transparent;
-}
-/* line 45, ../scss/app.scss */
-table tr:nth-of-type(even) {
-  background-color: transparent;
-}
-/* line 48, ../scss/app.scss */
-table tr td {
-  padding: 0rem 0.625rem;
-}
-/* line 51, ../scss/app.scss */
-table tr td:nth-child(1) {
-  padding: 0rem 0.625rem 0rem 0rem;
-}
-/* line 54, ../scss/app.scss */
-table tr td:nth-child(5) {
-  padding: 0;
-}
-
-/* line 60, ../scss/app.scss */
+/* line 1, ../scss/_general.scss */
 h1, h2, h3, h4, h5 {
   font-weight: bold;
 }
 
-/* line 63, ../scss/app.scss */
+/* line 5, ../scss/_general.scss */
 label {
   font-weight: bold;
 }
 
-/* line 66, ../scss/app.scss */
+/* line 9, ../scss/_general.scss */
+table {
+  border: 0px;
+  border-collapse: collapse;
+  width: 100%;
+}
+/* line 14, ../scss/_general.scss */
+table thead {
+  background: transparent;
+}
+/* line 18, ../scss/_general.scss */
+table thead tr th {
+  font-size: 1.15rem;
+  padding-bottom: 1.25rem;
+}
+/* line 22, ../scss/_general.scss */
+table thead tr th:nth-child(1) {
+  width: 1rem;
+}
+/* line 26, ../scss/_general.scss */
+table thead tr th:nth-child(3) {
+  width: 12rem;
+}
+/* line 30, ../scss/_general.scss */
+table thead tr th:nth-child(4) {
+  width: 6rem;
+}
+/* line 34, ../scss/_general.scss */
+table thead tr th:nth-child(5) {
+  width: 1rem;
+}
+/* line 41, ../scss/_general.scss */
+table tr {
+  border-bottom: 1px solid #EEEEEE;
+}
+/* line 44, ../scss/_general.scss */
+table tr td {
+  padding: 0rem 0.625rem;
+}
+/* line 47, ../scss/_general.scss */
+table tr td:nth-child(1) {
+  padding: 0rem 0.625rem 0rem 0rem;
+}
+/* line 51, ../scss/_general.scss */
+table tr td:nth-child(5) {
+  padding: 0;
+}
+/* line 56, ../scss/_general.scss */
+table tr .alt {
+  background-color: transparent;
+}
+/* line 60, ../scss/_general.scss */
+table tr .even {
+  background-color: transparent;
+}
+/* line 64, ../scss/_general.scss */
+table tr:nth-of-type(even) {
+  background-color: transparent;
+}
+/* line 69, ../scss/_general.scss */
+table .icon {
+  font-size: 24px;
+}
+
+/* line 74, ../scss/_general.scss */
+.action-btns {
+  float: right;
+  margin-bottom: 5px;
+  text-align: right;
+}
+/* line 79, ../scss/_general.scss */
+.action-btns button, .action-btns .button {
+  font-size: 0.85rem;
+  margin-bottom: 0;
+  padding-top: 0.85rem;
+  padding-right: 1.25rem;
+  padding-bottom: 0.85rem;
+  padding-left: 1.25rem;
+}
+/* line 88, ../scss/_general.scss */
+.action-btns .folder {
+  background-color: #767676;
+}
+/* line 91, ../scss/_general.scss */
+.action-btns .folder:focus, .action-btns .folder:hover {
+  background-color: #656565;
+}
+/* line 96, ../scss/_general.scss */
+.action-btns .share {
+  background-color: #3B862F;
+}
+/* line 99, ../scss/_general.scss */
+.action-btns .share:focus, .action-btns .share:hover {
+  background-color: #337328;
+}
+
+/* line 105, ../scss/_general.scss */
+.content-body {
+  margin-top: 1rem;
+}
+
+@media only screen and (max-width: 40em) {
+  /* line 111, ../scss/_general.scss */
+  .action-btns {
+    float: left;
+    margin-bottom: 0px;
+    width: 100%;
+  }
+  /* line 116, ../scss/_general.scss */
+  .action-btns .columns {
+    padding: 0;
+  }
+  /* line 119, ../scss/_general.scss */
+  .action-btns .columns .button {
+    float: left;
+    width: 50%;
+  }
+  /* line 124, ../scss/_general.scss */
+  .action-btns .columns .new-container {
+    width: 100%;
+  }
+
+  /* line 131, ../scss/_general.scss */
+  .content-body .columns {
+    padding: 0px;
+  }
+
+  /* line 137, ../scss/_general.scss */
+  .icon .filetypes, .icon .glyphicons {
+    padding-left: 5px;
+    font-size: 24px;
+  }
+}
+/* line 1, ../scss/_login.scss */
 #login {
   background: url("../../img/background.jpg") no-repeat center center fixed;
   background-size: cover;
@@ -9622,9 +9590,8 @@ label {
   height: 100%;
   position: absolute;
   width: 100%;
-  height: 100%;
 }
-/* line 74, ../scss/app.scss */
+/* line 9, ../scss/_login.scss */
 #login #login-form {
   background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
   background-size: 350px;
@@ -9633,442 +9600,552 @@ label {
   height: 100%;
   position: absolute;
   width: 100%;
-  height: 100%;
 }
-/* line 83, ../scss/app.scss */
-#login #login-form .login-form-box {
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.65);
-  padding: 50px 200px 10px;
-  position: relative;
-  top: 40%;
-}
-/* line 89, ../scss/app.scss */
-#login #login-form .login-form-box .columns {
-  padding-left: 0;
-}
-/* line 92, ../scss/app.scss */
-#login #login-form .login-form-box .login-btn {
-  width: 100%;
-}
-/* line 96, ../scss/app.scss */
+/* line 18, ../scss/_login.scss */
 #login #login-form .login-alert {
   color: #FFFFFF;
   padding-bottom: 1rem;
 }
-/* line 100, ../scss/app.scss */
-#login #login-form .olrctext {
-  width: 400px;
-  padding-bottom: 15px;
+/* line 23, ../scss/_login.scss */
+#login #login-form .login-form-box {
+  background-color: rgba(0, 0, 0, 0.65);
+  padding: 50px 200px 10px;
+  position: relative;
+  top: 40%;
+  width: 100%;
 }
-/* line 101, ../scss/app.scss */
+/* line 30, ../scss/_login.scss */
+#login #login-form .login-form-box .columns {
+  padding-left: 0;
+}
+/* line 34, ../scss/_login.scss */
+#login #login-form .login-form-box .login-btn {
+  width: 100%;
+}
+/* line 39, ../scss/_login.scss */
 #login #login-form .olrclogo {
   width: 100%;
 }
+/* line 43, ../scss/_login.scss */
+#login #login-form .olrctext {
+  padding-bottom: 15px;
+  width: 400px;
+}
 
-/* line 104, ../scss/app.scss */
+@media only screen and (max-width: 40em) {
+  /* line 52, ../scss/_login.scss */
+  #login #login-form {
+    background-position: 10px 10px;
+    background-size: 500px;
+  }
+  /* line 56, ../scss/_login.scss */
+  #login #login-form .login-form-box {
+    padding: 15px 10px 10px;
+    top: 22%;
+  }
+  /* line 60, ../scss/_login.scss */
+  #login #login-form .login-form-box .columns {
+    padding-right: 0;
+  }
+}
+/* line 1, ../scss/_header.scss */
 #header {
   background-color: #363636;
 }
-/* line 106, ../scss/app.scss */
-#header .service-logo {
-  width: 40px;
-  padding-top: 10px;
-}
-/* line 110, ../scss/app.scss */
+/* line 4, ../scss/_header.scss */
 #header .account-btns {
   text-align: right;
 }
-/* line 112, ../scss/app.scss */
-#header .account-btns .user
-button, #header .account-btns .button {
+/* line 7, ../scss/_header.scss */
+#header .account-btns .user button, #header .account-btns .button {
   background-color: #000000;
 }
-/* line 115, ../scss/app.scss */
-#header .account-btns .user
-button:focus, #header .account-btns .user
-button:hover, #header .account-btns .button:focus, #header .account-btns .button:hover {
+/* line 10, ../scss/_header.scss */
+#header .account-btns .user button:focus, #header .account-btns .user button:hover, #header .account-btns .button:focus, #header .account-btns .button:hover {
   background-color: #242424;
 }
-/* line 120, ../scss/app.scss */
+/* line 16, ../scss/_header.scss */
 #header .account-btns .username {
+  color: #FFFFFF;
+  font-size: 0.6875rem;
   padding-top: 0.625rem;
   padding-right: 0.8rem;
   padding-bottom: 0.6875rem;
   padding-left: 0.8rem;
-  font-size: 0.6875rem;
-  color: #FFFFFF;
+}
+/* line 26, ../scss/_header.scss */
+#header .service-logo {
+  padding-top: 10px;
+  width: 40px;
 }
 
-/* line 130, ../scss/app.scss */
+/* line 32, ../scss/_header.scss */
 .crumb-row {
   background-color: #363636;
-  padding: 0px 0px 0px;
   color: #FFFFFF;
+  padding: 0px 0px 0px;
 }
-/* line 134, ../scss/app.scss */
+/* line 37, ../scss/_header.scss */
 .crumb-row ul {
   margin-bottom: 0.2rem;
 }
-/* line 138, ../scss/app.scss */
-.crumb-row .breadcrumb:hover {
-  text-decoration: none;
-}
-/* line 141, ../scss/app.scss */
+/* line 42, ../scss/_header.scss */
 .crumb-row .breadcrumb ul {
   margin-left: 0;
   margin-top: 5px;
 }
-/* line 145, ../scss/app.scss */
+/* line 47, ../scss/_header.scss */
 .crumb-row .breadcrumb li {
   float: left;
-  list-style-type: none;
-  text-transform: none;
   font-size: 1.25rem;
   font-weight: bold;
+  list-style-type: none;
+  text-transform: none;
 }
-/* line 151, ../scss/app.scss */
+/* line 54, ../scss/_header.scss */
 .crumb-row .breadcrumb li:focus, .crumb-row .breadcrumb li:hover {
   text-decoration: none;
 }
-/* line 155, ../scss/app.scss */
+/* line 59, ../scss/_header.scss */
 .crumb-row .breadcrumb a {
   color: #FFFFFF;
   text-decoration: none;
 }
-/* line 159, ../scss/app.scss */
+/* line 63, ../scss/_header.scss */
 .crumb-row .breadcrumb a:focus, .crumb-row .breadcrumb a:hover {
-  text-decoration: none;
   color: #dbdbdb;
+  text-decoration: none;
 }
-/* line 164, ../scss/app.scss */
+/* line 69, ../scss/_header.scss */
+.crumb-row .breadcrumb:hover {
+  text-decoration: none;
+}
+/* line 73, ../scss/_header.scss */
 .crumb-row .breadcrumb .glyphicons {
+  color: #fff;
   display: inherit;
-  width: 20px;
   float: left;
   margin: 5px 5px 5px;
-  color: #fff;
+  width: 20px;
 }
-/* line 171, ../scss/app.scss */
+/* line 81, ../scss/_header.scss */
 .crumb-row .breadcrumb .glyphicons-cloud {
   margin: 5px 5px 5px 0px;
 }
-/* line 175, ../scss/app.scss */
+/* line 86, ../scss/_header.scss */
 .crumb-row .settings {
   padding-bottom: 11px;
 }
 
-/* line 179, ../scss/app.scss */
-.action-btns {
-  text-align: right;
-  float: right;
-  margin-bottom: 5px;
-}
-/* line 183, ../scss/app.scss */
-.action-btns button, .action-btns .button {
-  padding-top: 0.85rem;
-  padding-right: 1.25rem;
-  padding-bottom: 0.85rem;
-  padding-left: 1.25rem;
-  margin-bottom: 0;
-  font-size: 0.85rem;
-}
-/* line 194, ../scss/app.scss */
-.action-btns .share {
-  background-color: #3B862F;
-}
-/* line 196, ../scss/app.scss */
-.action-btns .share:focus, .action-btns .share:hover {
-  background-color: #337328;
-}
-/* line 200, ../scss/app.scss */
-.action-btns .folder {
-  background-color: #767676;
-}
-/* line 202, ../scss/app.scss */
-.action-btns .folder:focus, .action-btns .folder:hover {
-  background-color: #656565;
-}
-
-/* line 209, ../scss/app.scss */
+/* line 91, ../scss/_header.scss */
 .header-alert {
   margin-bottom: 0px;
   padding: 0.875rem 0rem 0.875rem 0rem;
 }
 
-/* line 213, ../scss/app.scss */
-.content-body {
-  margin-top: 1rem;
-}
+@media only screen and (max-width: 40em) {
+  /* line 98, ../scss/_header.scss */
+  #header button, #header .button {
+    margin-bottom: 5px;
+  }
+  /* line 102, ../scss/_header.scss */
+  #header .columns {
+    padding: 0;
+  }
+  /* line 106, ../scss/_header.scss */
+  #header .service-logo {
+    padding-left: 5px;
+    padding-top: 5px;
+    width: 32px;
+  }
 
-/* line 216, ../scss/app.scss */
+  /* line 113, ../scss/_header.scss */
+  .crumb-row {
+    padding-top: 0px;
+  }
+  /* line 116, ../scss/_header.scss */
+  .crumb-row .breadcrumb {
+    padding: 0;
+  }
+  /* line 119, ../scss/_header.scss */
+  .crumb-row .breadcrumb li {
+    font-size: 1rem;
+  }
+  /* line 123, ../scss/_header.scss */
+  .crumb-row .breadcrumb ul {
+    margin-left: 5px;
+    margin-top: 0px;
+  }
+
+  /* line 130, ../scss/_header.scss */
+  #pseudoContainer {
+    padding-top: 4rem;
+  }
+}
+/* line 1, ../scss/_reveal_modal.scss */
 .reveal-modal {
   padding: 0.5rem 1.875rem;
 }
-/* line 218, ../scss/app.scss */
-.reveal-modal p {
-  font-size: 0.875rem;
-}
-/* line 222, ../scss/app.scss */
+/* line 4, ../scss/_reveal_modal.scss */
 .reveal-modal h2 {
   font-weight: bold;
 }
-/* line 225, ../scss/app.scss */
+/* line 8, ../scss/_reveal_modal.scss */
+.reveal-modal p {
+  font-size: 0.875rem;
+}
+/* line 12, ../scss/_reveal_modal.scss */
 .reveal-modal .close {
   background-color: #000000;
   float: right;
 }
-/* line 228, ../scss/app.scss */
+/* line 16, ../scss/_reveal_modal.scss */
 .reveal-modal .close:focus, .reveal-modal .close:hover {
   background-color: #242424;
 }
 
-/* line 233, ../scss/app.scss */
-#containerview {
-  padding-bottom: 5rem;
-}
-/* line 235, ../scss/app.scss */
-#containerview .usage {
-  color: #FFFFFF;
+/* line 2, ../scss/_tempurl.scss */
+form#custom-temp-url input.submit {
+  background-color: black;
+  border: none;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  line-height: normal;
+  font-size: 1rem;
   font-weight: normal;
-  font-size: 0.65rem;
-  vertical-align: super;
-}
-/* line 242, ../scss/app.scss */
-#containerview #containertable .dropdown.button::after {
-  border-color: #000000 transparent transparent transparent;
-}
-/* line 245, ../scss/app.scss */
-#containerview #containertable .file-btn {
-  background-color: transparent;
-  margin: 0px;
-  color: #000000;
-}
-/* line 249, ../scss/app.scss */
-#containerview #containertable .file-btn:hover, #containerview #containertable .file-btn:focus {
-  background-color: #EEEEEE;
-}
-
-/* line 256, ../scss/app.scss */
-#objectview {
-  padding-bottom: 5rem;
-}
-/* line 259, ../scss/app.scss */
-#objectview #objecttable .dropdown.button::after {
-  border-color: #000000 transparent transparent transparent;
-}
-/* line 262, ../scss/app.scss */
-#objectview #objecttable .file-btn {
-  background-color: transparent;
-  margin: 0px;
-  color: #000000;
-}
-/* line 266, ../scss/app.scss */
-#objectview #objecttable .file-btn:hover, #objectview #objecttable .file-btn:focus {
-  background-color: #EEEEEE;
-}
-
-/* line 272, ../scss/app.scss */
-.dropdown-btn {
-  background-color: transparent;
-  padding: 0.5rem;
-  color: #555555;
-  font-size: 0.875rem;
+  margin-bottom: 1rem;
+  padding: 1rem 2rem 1.0625rem 2rem;
   width: 100%;
-  margin: 0;
-  text-align: left;
-}
-/* line 280, ../scss/app.scss */
-.dropdown-btn:hover, .dropdown-btn:focus {
-  color: #555555;
-  background-color: #EEEEEE;
 }
 
-/* line 286, ../scss/app.scss */
+/* line 16, ../scss/_tempurl.scss */
+#close-tempurl {
+  margin: 0 0 1.25rem;
+}
+
+/* line 2, ../scss/_uploadform.scss */
+body.chrome .chrome-txt, body.chrome span.directory-input {
+  display: inline-block;
+}
+
+/* line 9, ../scss/_uploadform.scss */
+#fileForm #fileupload #preloadmsg {
+  background: url("../../img/upload-bkg.png") no-repeat center center;
+  text-align: center;
+}
+/* line 13, ../scss/_uploadform.scss */
+#fileForm #fileupload #preloadmsg .chrome {
+  font-size: 0.8rem;
+  padding-top: 8rem;
+}
+/* line 17, ../scss/_uploadform.scss */
+#fileForm #fileupload #preloadmsg .chrome img {
+  width: 40px;
+}
+/* line 22, ../scss/_uploadform.scss */
+#fileForm #fileupload #preloadmsg .preloadmsg-txt {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding-top: 12rem;
+}
+/* line 30, ../scss/_uploadform.scss */
+#fileForm .fileupload-progress {
+  display: none;
+}
+/* line 34, ../scss/_uploadform.scss */
+#fileForm .fileinput-button input {
+  font-size: 50px;
+}
+/* line 39, ../scss/_uploadform.scss */
+#fileForm .file-progress {
+  display: none;
+}
+/* line 43, ../scss/_uploadform.scss */
 #fileForm .file-row {
-  position: relative;
   border-bottom: 1px solid #EEEEEE;
-}
-/* line 290, ../scss/app.scss */
-#fileForm .file-row .row div:nth-child(1) {
-  padding-left: 0rem;
-}
-/* line 293, ../scss/app.scss */
-#fileForm .file-row .row div:nth-child(4) {
-  padding-right: 0rem;
-}
-/* line 297, ../scss/app.scss */
-#fileForm .file-row .file-progress {
-  position: absolute;
-  width: 100%;
-  height: 5px;
-  z-index: 0;
-  margin: 0;
-  bottom: 0px;
-}
-/* line 305, ../scss/app.scss */
-#fileForm .file-row .progress {
-  border: 0px;
-  padding: 0;
-  background-color: #FFFFFF;
-}
-/* line 309, ../scss/app.scss */
-#fileForm .file-row .progress .meter {
-  background: #0074be;
-}
-/* line 313, ../scss/app.scss */
-#fileForm .file-row .icon {
-  float: left;
   position: relative;
-  font-size: 24px;
-  width: 45px;
-  height: 50px;
-  overflow: hidden;
-  padding: 10px;
 }
-/* line 322, ../scss/app.scss */
-#fileForm .file-row .preview {
-  float: left;
-  position: relative;
-  width: 60px;
-  height: 40px;
-  overflow: hidden;
+/* line 47, ../scss/_uploadform.scss */
+#fileForm .file-row .filerowbtns {
+  text-align: right;
   padding-top: 5px;
 }
-/* line 330, ../scss/app.scss */
+/* line 50, ../scss/_uploadform.scss */
+#fileForm .file-row .filerowbtns button, #fileForm .file-row .filerowbtns .button {
+  margin-bottom: 10px;
+}
+/* line 55, ../scss/_uploadform.scss */
 #fileForm .file-row .filerowtext {
   position: relative;
   margin-left: 30px;
   float: left;
   padding-top: 10px;
 }
-/* line 336, ../scss/app.scss */
-#fileForm .file-row .filerowbtns {
-  text-align: right;
+/* line 62, ../scss/_uploadform.scss */
+#fileForm .file-row .file-progress {
+  bottom: 0px;
+  height: 5px;
+  margin: 0;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
+/* line 71, ../scss/_uploadform.scss */
+#fileForm .file-row .icon {
+  float: left;
+  font-size: 24px;
+  height: 50px;
+  overflow: hidden;
+  padding: 10px;
+  position: relative;
+  width: 45px;
+}
+/* line 81, ../scss/_uploadform.scss */
+#fileForm .file-row .preview {
+  float: left;
+  height: 40px;
+  overflow: hidden;
   padding-top: 5px;
+  position: relative;
+  width: 60px;
 }
-/* line 339, ../scss/app.scss */
-#fileForm .file-row .filerowbtns button, #fileForm .file-row .filerowbtns .button {
-  margin-bottom: 10px;
+/* line 90, ../scss/_uploadform.scss */
+#fileForm .file-row .progress {
+  border: 0px;
+  padding: 0;
+  background-color: #FFFFFF;
 }
-/* line 343, ../scss/app.scss */
+/* line 95, ../scss/_uploadform.scss */
+#fileForm .file-row .progress .meter {
+  background: #0074be;
+}
+/* line 101, ../scss/_uploadform.scss */
+#fileForm .file-row .row div:nth-child(1) {
+  padding-left: 0rem;
+}
+/* line 105, ../scss/_uploadform.scss */
+#fileForm .file-row .row div:nth-child(4) {
+  padding-right: 0rem;
+}
+/* line 110, ../scss/_uploadform.scss */
 #fileForm .file-row .name {
   font-size: 0.875rem;
-  padding-top: 10px;
   font-weight: bold;
+  padding-top: 10px;
 }
-/* line 348, ../scss/app.scss */
+/* line 116, ../scss/_uploadform.scss */
 #fileForm .file-row .size {
   font-size: 0.875rem;
   padding-top: 10px;
 }
-/* line 354, ../scss/app.scss */
-#fileForm .file-progress {
-  display: none;
-}
-/* line 357, ../scss/app.scss */
+/* line 122, ../scss/_uploadform.scss */
 #fileForm .progress {
   background-color: #FFFFFF;
   border: 0;
-  padding: 0;
-  margin-top: 10px;
   height: 20px;
+  margin-top: 10px;
+  padding: 0;
 }
-/* line 364, ../scss/app.scss */
+/* line 130, ../scss/_uploadform.scss */
 #fileForm .progress-extended {
-  margin-bottom: 10px;
   font-size: 0.875rem;
   font-weight: bold;
-}
-/* line 369, ../scss/app.scss */
-#fileForm .fileupload-progress {
-  display: none;
-}
-/* line 372, ../scss/app.scss */
-#fileForm .fileinput-button input {
-  font-size: 50px;
-}
-/* line 377, ../scss/app.scss */
-#fileForm #fileupload #preloadmsg {
-  text-align: center;
-  background: url("../../img/upload-bkg.png") no-repeat center center;
-}
-/* line 382, ../scss/app.scss */
-#fileForm #fileupload #preloadmsg .preloadmsg-txt {
-  font-size: 1.5rem;
-  font-weight: bold;
-  padding-top: 12rem;
-}
-/* line 387, ../scss/app.scss */
-#fileForm #fileupload #preloadmsg .chrome {
-  font-size: 0.8rem;
-  padding-top: 8rem;
-}
-/* line 393, ../scss/app.scss */
-#fileForm #fileupload #preloadmsg .chrome img {
-  width: 40px;
+  margin-bottom: 10px;
 }
 
-/* line 401, ../scss/app.scss */
+/* line 137, ../scss/_uploadform.scss */
+.chrome-txt, span.directory-input {
+  display: none;
+}
+
+/* line 141, ../scss/_uploadform.scss */
 .fileinput-button {
   overflow: inherit !important;
 }
 
-/* line 405, ../scss/app.scss */
-.loader:before,
-.loader:after,
-.loader {
-  border-radius: 50%;
-  width: 2.5em;
-  height: 2.5em;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-  -webkit-animation: load7 1.8s infinite ease-in-out;
-  animation: load7 1.8s infinite ease-in-out;
+/* line 146, ../scss/_uploadform.scss */
+.template-upload strong.error.text-danger {
+  color: red;
 }
 
-/* line 416, ../scss/app.scss */
+/* line 2, ../scss/_objectview.scss */
+form#object-expiry-form input.submit {
+  border: none;
+  background-color: black;
+  color: white;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  line-height: normal;
+  font-size: 1rem;
+  font-weight: normal;
+  margin-bottom: 1rem;
+  padding: 1rem 2rem 1.0625rem 2rem;
+  width: 100%;
+}
+
+/* line 16, ../scss/_objectview.scss */
+#objectview {
+  padding-bottom: 5rem;
+}
+/* line 20, ../scss/_objectview.scss */
+#objectview #objecttable .dropdown.button::after {
+  border-color: #000000 transparent transparent transparent;
+}
+/* line 24, ../scss/_objectview.scss */
+#objectview #objecttable .file-btn {
+  background-color: transparent;
+  color: #000000;
+  margin: 0px;
+}
+/* line 29, ../scss/_objectview.scss */
+#objectview #objecttable .file-btn:hover, #objectview #objecttable .file-btn:focus {
+  background-color: #EEEEEE;
+}
+
+/* line 36, ../scss/_objectview.scss */
+.dropdown-btn {
+  background-color: transparent;
+  color: #555555;
+  font-size: 0.875rem;
+  margin: 0;
+  padding: 0.5rem;
+  text-align: left;
+  width: 100%;
+}
+/* line 45, ../scss/_objectview.scss */
+.dropdown-btn:hover, .dropdown-btn:focus {
+  color: #555555;
+  background-color: #EEEEEE;
+}
+
+/* line 1, ../scss/_containerview.scss */
+#containerview {
+  padding-bottom: 5rem;
+}
+/* line 5, ../scss/_containerview.scss */
+#containerview #containertable .dropdown.button::after {
+  border-color: #000000 transparent transparent transparent;
+}
+/* line 9, ../scss/_containerview.scss */
+#containerview #containertable .file-btn {
+  background-color: transparent;
+  color: #000000;
+  margin: 0px;
+}
+/* line 14, ../scss/_containerview.scss */
+#containerview #containertable .file-btn:hover, #containerview #containertable .file-btn:focus {
+  background-color: #EEEEEE;
+}
+/* line 20, ../scss/_containerview.scss */
+#containerview .usage {
+  color: #FFFFFF;
+  font-size: 0.65rem;
+  font-weight: normal;
+  vertical-align: super;
+}
+
+/* line 29, ../scss/_containerview.scss */
+#delete-container-form button#delete-container-submit {
+  background-color: red;
+  display: none;
+  width: 100%;
+}
+/* line 35, ../scss/_containerview.scss */
+#delete-container-form span.container-name-holder {
+  color: red;
+}
+
+/* line 40, ../scss/_containerview.scss */
+.progress {
+  background-color: white;
+  height: 4em;
+}
+
+/* line 2, ../scss/_settings_page.scss */
+#delete-user-form button#delete-user-submit {
+  background-color: red;
+  width: 100%;
+}
+/* line 7, ../scss/_settings_page.scss */
+#delete-user-form span.user-name-holder {
+  color: red;
+}
+
+/* line 13, ../scss/_settings_page.scss */
+#settingsview p {
+  line-height: 1rem;
+}
+/* line 17, ../scss/_settings_page.scss */
+#settingsview h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* line 23, ../scss/_settings_page.scss */
+.alert-box {
+  display: none;
+}
+
+/* line 27, ../scss/_settings_page.scss */
+.display-on {
+  display: block !important;
+}
+
+@media only screen and (max-width: 40em) {
+  /* line 33, ../scss/_settings_page.scss */
+  #settingsview .row .row {
+    margin: 0 5px;
+  }
+}
+/* line 1, ../scss/_loader.scss */
 #progress {
   display: none;
 }
 
-/* line 419, ../scss/app.scss */
+/* line 5, ../scss/_loader.scss */
+.loader:before, .loader:after, .loader {
+  animation: load7 1.8s infinite ease-in-out;
+  animation-fill-mode: both;
+  border-radius: 50%;
+  height: 2.5em;
+  width: 2.5em;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
+}
+
+/* line 15, ../scss/_loader.scss */
 .loader {
-  margin: 0em 4em 6em;
+  animation-delay: -0.16s;
   font-size: 10px;
+  margin: 0em 4em 6em;
   position: relative;
   text-indent: -9999em;
-  -webkit-transform: translateZ(0);
-  -ms-transform: translateZ(0);
   transform: translateZ(0);
+  -ms-transform: translateZ(0);
   -webkit-animation-delay: -0.16s;
-  animation-delay: -0.16s;
+  -webkit-transform: translateZ(0);
 }
 
-/* line 431, ../scss/app.scss */
-.loader:before {
-  left: -3.5em;
-  -webkit-animation-delay: -0.32s;
-  animation-delay: -0.32s;
-}
-
-/* line 436, ../scss/app.scss */
+/* line 27, ../scss/_loader.scss */
 .loader:after {
   left: 3.5em;
 }
 
-/* line 439, ../scss/app.scss */
-.loader:before,
-.loader:after {
+/* line 31, ../scss/_loader.scss */
+.loader:before {
+  animation-delay: -0.32s;
+  left: -3.5em;
+  -webkit-animation-delay: -0.32s;
+}
+
+/* line 37, ../scss/_loader.scss */
+.loader:before, .loader:after {
   content: '';
   position: absolute;
   top: 0;
 }
 
 @-webkit-keyframes load7 {
-  0%,
-  80%,
-  100% {
+  0%, 80%, 100% {
     box-shadow: 0 2.5em 0 -1.3em #0074be;
   }
   40% {
@@ -10076,141 +10153,10 @@ button:hover, #header .account-btns .button:focus, #header .account-btns .button
   }
 }
 @keyframes load7 {
-  0%,
-  80%,
-  100% {
+  0%, 80%, 100% {
     box-shadow: 0 2.5em 0 -1.3em #0074be;
   }
   40% {
     box-shadow: 0 2.5em 0 0 #0074be;
-  }
-}
-@media only screen and (max-width: 40em) {
-  /* line 470, ../scss/app.scss */
-  #login #login-form {
-    background-size: 500px;
-    background-position: 10px 10px;
-  }
-  /* line 473, ../scss/app.scss */
-  #login #login-form .login-form-box {
-    top: 22%;
-    padding: 15px 10px 10px;
-  }
-  /* line 476, ../scss/app.scss */
-  #login #login-form .login-form-box .columns {
-    padding-right: 0;
-  }
-
-  /* line 484, ../scss/app.scss */
-  #header .columns {
-    padding: 0;
-  }
-  /* line 487, ../scss/app.scss */
-  #header .service-logo {
-    width: 32px;
-    padding-top: 5px;
-    padding-left: 5px;
-  }
-  /* line 492, ../scss/app.scss */
-  #header button, #header .button {
-    margin-bottom: 5px;
-  }
-
-  /* line 497, ../scss/app.scss */
-  .action-btns {
-    float: left;
-    width: 100%;
-    margin-bottom: 0px;
-  }
-  /* line 501, ../scss/app.scss */
-  .action-btns .columns {
-    padding: 0;
-  }
-  /* line 503, ../scss/app.scss */
-  .action-btns .columns .button {
-    width: 50%;
-    float: left;
-  }
-  /* line 507, ../scss/app.scss */
-  .action-btns .columns .new-container {
-    width: 100%;
-  }
-
-  /* line 512, ../scss/app.scss */
-  .crumb-row {
-    padding-top: 0px;
-  }
-  /* line 514, ../scss/app.scss */
-  .crumb-row .breadcrumb {
-    padding: 0;
-  }
-  /* line 516, ../scss/app.scss */
-  .crumb-row .breadcrumb ul {
-    margin-left: 5px;
-    margin-top: 0px;
-  }
-  /* line 520, ../scss/app.scss */
-  .crumb-row .breadcrumb li {
-    font-size: 1rem;
-  }
-
-  /* line 525, ../scss/app.scss */
-  #pseudoContainer {
-    padding-top: 4rem;
-  }
-
-  /* line 530, ../scss/app.scss */
-  #fileForm #fileupload .button {
-    width: 100%;
-  }
-  /* line 534, ../scss/app.scss */
-  #fileForm #fileupload #preloadmsg .preloadmsg-txt {
-    padding-top: 4rem;
-    font-size: 1rem;
-  }
-  /* line 538, ../scss/app.scss */
-  #fileForm #fileupload #preloadmsg .chrome {
-    padding-top: 4rem;
-  }
-
-  /* line 545, ../scss/app.scss */
-  .content-body .columns {
-    padding: 0px;
-  }
-
-  /* line 550, ../scss/app.scss */
-  .icon .filetypes, .icon .glyphicons {
-    padding-left: 5px;
-    font-size: 24px;
-  }
-
-  /* line 556, ../scss/app.scss */
-  #objecttable table tr td {
-    font-size: 12px;
-    padding: 0rem 0rem;
-  }
-  /* line 560, ../scss/app.scss */
-  #objecttable .dropdown.button, #objecttable button.dropdown {
-    padding: 1rem;
-    float: right;
-  }
-  /* line 563, ../scss/app.scss */
-  #objecttable .dropdown.button:after, #objecttable button.dropdown:after {
-    display: none;
-  }
-
-  /* line 569, ../scss/app.scss */
-  #containerview table tr td {
-    font-size: 12px;
-    padding: 0rem 0rem;
-  }
-  /* line 573, ../scss/app.scss */
-  #containerview .dropdown.button, #containerview button.dropdown {
-    padding: 1rem;
-    float: right;
-  }
-  /* line 576, ../scss/app.scss */
-  #containerview .dropdown.button:after, #containerview button.dropdown:after {
-    display: none;
   }
 }
