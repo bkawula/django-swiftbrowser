@@ -114,59 +114,5 @@ function create_folder() {
   /*jslint unparam: false*/
 }
 
-$(document).ready(function () {
-  //loadTable();
-});
 
-
-$(document).ready(function () {
-  /*jslint unparam: true*/
-  $('#messages').ajaxComplete(function (e, xhr, settings) {
-    var contentType = xhr.getResponseHeader("Content-Type");
-
-    if (contentType === "application/javascript" || contentType === "application/json") {
-      var json = $.parseJSON(xhr.responseText);
-
-      $.each(json.django_messages, function (i, item) {
-        addMessage(item.message, item.extra_tags);
-      });
-    }
-  })
-    .ajaxError(function () {
-      addMessage("There was an error processing your request, please try again.", "error");
-    });
-  /*jslint unparam: false*/
-});
-
-// $('#create-pseudofolder').on('submit', function(event){
-//     event.preventDefault();
-//     $("#create-pseudofolder").hide();
-//     $("#progress").show();
-//     create_folder();
-
-// });
-
-// function create_folder() {
-//     $.ajax({
-//         method: "POST",
-//         url: create_folder_url,
-//         data: $('#create-pseudofolder').serialize()
-//     }).done(function() {
-//         $('#pseudoContainer').foundation('reveal', 'close');
-//         loadTable();
-//         $("#create-pseudofolder").show();
-//         $("#progress").hide();
-//     }).always(function(data, textStatus, jqXHR) {
-
-//         var contentType = jqXHR.getResponseHeader("Content-Type");
-
-//         if (contentType == "application/javascript" || contentType == "application/json") {
-//             var json = $.parseJSON(jqXHR.responseText);
-
-//             $.each(json.django_messages, function (i, item) {
-//                 addMessage(item.message, item.extra_tags);
-//             });
-//         }
-//     });
-// };
 

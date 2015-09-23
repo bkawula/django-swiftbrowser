@@ -40,12 +40,12 @@ app.controller('ObjectTableCtrl', function ($scope, items) {
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
       })
         .success(function (data) {
-          console.log($scope.formData);
 
           $('#pseudoContainer').foundation('reveal', 'close');
           get_object_table();
-          $("#create-pseudofolder").show();
-          $("#progress").hide();
+          $scope.showForm = 1;
+          $scope.showLoader = 0;
+          $scope.formData.foldername = "";
         })
         .error(function(data) {
           //TODO: Display error message
