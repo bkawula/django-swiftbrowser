@@ -59,10 +59,11 @@ function create_folder() {
   })
     .always(function (data, textStatus, jqXHR) {
 
-      $('#pseudoContainer').foundation('reveal', 'close');
       loadTable();
+      $('#pseudoContainer').foundation('reveal', 'close');
       $("#create-pseudofolder").show();
-      $("#progress").hide();
+      $("#pseudoContainer #progress").hide();
+      $("input#foldername").val("");
       var contentType = jqXHR.getResponseHeader("Content-Type");
 
       if (contentType === "application/javascript" || contentType === "application/json") {
@@ -88,7 +89,7 @@ $('input[id=file]').change(function () {
 $('#create-pseudofolder').on('submit', function (event) {
   event.preventDefault();
   $("#create-pseudofolder").hide();
-  $("#progress").show();
+  $("#pseudoContainer #progress").show();
   create_folder();
 });
 
