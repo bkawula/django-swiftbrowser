@@ -1,5 +1,23 @@
 var app = angular.module('object-table', []);
 
+/*
+  Get the data for the object table.
+*/
+function get_object_table() {
+  var initInjector = angular.injector(['ng']);
+  var $http = initInjector.get('$http');
+  $http.get('/get_object_table').then(
+    function (response) {
+
+      //Store data in constant called items
+      app.constant('items', response.data);
+
+      //Init the controller
+      angular.bootstrap(document, ['object-table']);
+    }
+  );
+}
+
 app.controller('ObjectTableCtrl', function ($scope, items) {
 
   //This function is called after angular.element is finished.
@@ -39,7 +57,7 @@ app.controller('ObjectTableCtrl', function ($scope, items) {
         data    : $.param($scope.formData),  // pass in data as strings
         headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
       })
-        .success(function (data) {
+        .success(function () {
 
           $('#pseudoContainer').foundation('reveal', 'close');
           get_object_table();
@@ -47,7 +65,7 @@ app.controller('ObjectTableCtrl', function ($scope, items) {
           $scope.showLoader = 0;
           $scope.formData.foldername = "";
         })
-        .error(function(data) {
+        .error(function () {
           //TODO: Display error message
           console.log($scope.formData);
         });
@@ -90,7 +108,7 @@ app.controller('ObjectTableCtrl', function ($scope, items) {
 
   .directive('ngUpdateHidden', function () {
     return function (scope, el, attr) {
-      var model = attr['ngModel'];
+      var model = attr.ngModel;
       scope.$watch(model, function (nv) {
         el.val(nv);
       });
@@ -98,30 +116,14 @@ app.controller('ObjectTableCtrl', function ($scope, items) {
   });
 
 /* Added in for CSRF support. */
-app.config(function($httpProvider) {
-    $httpProvider.defaults.headers.post['X-CSRFToken'] = $('input[name=csrfmiddlewaretoken]').val();
+app.config(function ($httpProvider) {
+  $httpProvider.defaults.headers.post['X-CSRFToken'] = $('input[name=csrfmiddlewaretoken]').val();
 });
 
 angular.element(document).ready(get_object_table);
 
 
-/*
-  Get the data for the object table.
-*/
-function get_object_table() {
-  var initInjector = angular.injector(['ng']);
-  var $http = initInjector.get('$http');
-  $http.get('/get_object_table').then(
-    function (response) {
 
-      //Store data in constant called items
-      app.constant('items', response.data);
-
-      //Init the controller
-      angular.bootstrap(document, ['object-table']);
-    }
-  );
-}
 
 /*
 TODO: replace with loader angular logic
@@ -129,39 +131,40 @@ TODO: replace with loader angular logic
 */
 function showLoader() {
 
-    $('#objecttable').html(
-        '<div id="progress" class="center-progress">' +
-            '<div class="loader">Loading...</div>' +
-        '</div>'
-    );
+  $('#objecttable').html(
+    '<div id="progress" class="center-progress">' +
+      '<div class="loader">Loading...</div>' +
+      '</div>'
+  );
 }
 
 /*
     After a table is loaded, new events need to be applied to the page.
 */
-app.applyTableEvents = function() {
+app.applyTableEvents = function () {
 
   //Re-apply foundation
   $(document).foundation();
 
   //Reapply dismiss of alert boxes
-  $(".alert-box").click(function(e){
-      $(this).slideUp();
+  $(".alert-box").click(function () {
+    $(this).slideUp();
   });
 
   //Delete object binding.
-  $("a.delete-object").on("click",function(e) {
-      //Prompt user to confirm.
-      if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
-          showLoader();
-          $("#progress").show();
-      } else {
-          e.preventDefault();
-      }
+  $("a.delete-object").on("click", function (e) {
+    //Prompt user to confirm.
+    /*global confirm: true*/
+    if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
+      showLoader();
+      $("#progress").show();
+    } else {
+      e.preventDefault();
+    }
   });
 
   //Delete folder binding.
-  $("a.delete-folder").on("click", function(e) {
+  $("a.delete-folder").on("click", function (e) {
 
     if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
       if (confirm("This will delete " + $(this).attr("data-name") + " and all it's contents. Are you sure?")) {
