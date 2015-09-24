@@ -86,12 +86,19 @@ app.controller('ObjectTableCtrl', function ($scope, items) {
     };
   })
 
-  //Remove the last char in string. Used to display folders without it's last "/"
-  .filter('removeLastChar', function () {
+  /*
+  Format the pseudo folder:
+    from "folder/name/"
+    to "name"
+  */
+  .filter('formatPseudoFolder', function () {
     'use strict';
 
     return function (string) {
-      return string.substring(0, string.length - 1);
+
+      var stripped = string.substring(0, string.length - 1);
+      var split = stripped.split("/");
+      return split[split.length - 1];
     };
   })
 
