@@ -32,6 +32,22 @@
 							<span class="glyphicons glyphicons-cogwheel"></span>
 						</button>
 						<br>
+
+						<script>
+							function double_confirm (folder) {
+								var confirm1 = confirm('Delete folder' + folder + "?");
+								if (confirm1) {
+									var confirm2 = confirm('Deleting this folder will delete everything in the folder. Are you sure?');
+									if (confirm2) {
+										return true;
+									} else {
+										return false;
+									}
+								} else {
+									return false;
+								}
+							}
+						</script>
 						<ul id="opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
 							<li>
 								<a href="{% url "download_collection" container=container prefix=folder.0 %}">
@@ -44,22 +60,7 @@
 								</a>
 							</li>
 							<li>
-								<script>
-									function double_confirm() {
-										var confirm1 = confirm('{% trans 'Delete folder' %} {{folder.1}}?');
-										if (confirm1) {
-											var confirm2 = confirm('Deleting this folder will delete everything in the folder. Are you sure?');
-											if (confirm2) {
-												return true;
-											} else {
-												return false;
-											}
-										} else {
-											return false;
-										}
-									}
-								</script>
-								<a href="{% url "delete_folder" container=container objectname=folder.1 %}" onclick="return double_confirm()" >
+								<a href="{% url "delete_folder" container=container objectname=folder.1 %}" onclick="return double_confirm('{{folder.1}}')" >
 									<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete folder' %}
 								</a>
 							</li>
