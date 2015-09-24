@@ -1,8 +1,8 @@
 var app = angular.module('object-table', []);
 
-/*
-  Get the data for the object table.
-*/
+/**
+  * Initiate object table data for the controller.
+ */
 function get_object_table() {
   var initInjector = angular.injector(['ng']);
   var $http = initInjector.get('$http');
@@ -18,7 +18,7 @@ function get_object_table() {
   );
 }
 
-app.controller('ObjectTableCtrl', function ($scope, items) {
+app.controller('ObjectTableCtrl', function ($scope, $http, items) {
 
   //This function is called after angular.element is finished.
   $scope.folders = items.folders;
@@ -28,10 +28,23 @@ app.controller('ObjectTableCtrl', function ($scope, items) {
   $scope.$on('onRepeatLast', function () {
     app.applyTableEvents();
   });
+
+  function refreshObjectTable() {
+    $http.get('/get_object_table').then(
+      function (response) {
+        $scope.folders = response.data.folders;
+        console.log(response.data);
+      }
+    );
+  }
+
+  $scope.$on("refreshObjectTable", function () {
+    refreshObjectTable();
+  });
 })
 
   //Controller for new folder form.
-  .controller('CreateFolderCtrl', function ($scope, $http, items) {
+  .controller('CreateFolderCtrl', function ($scope, $http, $rootScope, items) {
 
     $scope.showForm = 1; /* Variable for toggling the form after submission. */
     $scope.showLoader = 0; /* Variable for toggling the loader. */
@@ -40,7 +53,7 @@ app.controller('ObjectTableCtrl', function ($scope, items) {
 
     //Add prefix for new folders that will be in existing folders.
     if (items.folder_prefix) {
-      create_folder_url += items.folder_prefix + "/";
+      create_folder_url += items.folder_prefix;
     }
 
     //Handler for submiting new folder form.
@@ -60,7 +73,7 @@ app.controller('ObjectTableCtrl', function ($scope, items) {
         .success(function () {
 
           $('#pseudoContainer').foundation('reveal', 'close');
-          get_object_table();
+          $rootScope.$broadcast('refreshObjectTable');
           $scope.showForm = 1;
           $scope.showLoader = 0;
           $scope.formData.foldername = "";
@@ -128,9 +141,6 @@ app.config(function ($httpProvider) {
 });
 
 angular.element(document).ready(get_object_table);
-
-
-
 
 /*
 TODO: replace with loader angular logic
