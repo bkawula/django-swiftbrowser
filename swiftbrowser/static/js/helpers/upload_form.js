@@ -124,7 +124,7 @@ $(function () {
       // If all files have been processed, close the form.
       if (files_processed > files_added) {
         closeForm();
-        // loadTable();
+        angular.element("#objecttable").scope().refreshObjectTable();
         files_added = 0;
         files_processed = 0;
         files_uploaded = 0;

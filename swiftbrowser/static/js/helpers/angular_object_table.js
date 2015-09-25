@@ -33,10 +33,10 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items) {
     $http.get('/get_object_table').then(
       function (response) {
         $scope.folders = response.data.folders;
-        console.log(response.data);
       }
     );
   }
+  $scope.refreshObjectTable = refreshObjectTable;
 
   $scope.$on("refreshObjectTable", function () {
     refreshObjectTable();
