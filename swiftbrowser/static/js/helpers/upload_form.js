@@ -20,6 +20,7 @@ function closeForm() {
     }, 500);
   }, 250);
 
+
   if (files_uploaded > 0) {
     $('#messages').html(
       '<div data-alert class="alert-box success header-alert">' +
@@ -78,6 +79,7 @@ $(function () {
       }
     })
 
+    //Called on successful file upload
     .bind('fileuploaddone', function () {
       files_uploaded += 1;
     })
@@ -108,9 +110,12 @@ $(function () {
       });
     })
 
-    // This is called when an item in the form is cancelled or removed.
-    .bind('fileuploadfail', function () {
-      files_added -= 1;
+    // This is called when an item in the form is cancelled, files removed and
+    // when files fail.
+    .bind('fileuploadfail', function (e, data) {
+      if (data.errorThrown === "abort") {
+        files_added -= 1;
+      }
       if (files_added === 0) {
         $('#preloadmsg').show();
         $('.fileupload-progress').hide();
@@ -122,7 +127,7 @@ $(function () {
       files_processed += 1;
 
       // If all files have been processed, close the form.
-      if (files_processed > files_added) {
+      if (files_processed === files_added) {
         closeForm();
         angular.element("#objecttable").scope().refreshObjectTable();
         files_added = 0;
