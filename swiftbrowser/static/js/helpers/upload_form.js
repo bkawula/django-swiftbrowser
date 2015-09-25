@@ -97,7 +97,6 @@ $(function () {
 
     .bind('fileuploadsend', function (e, data) {
       /*global Foundation: true*/
-      console.log(e);
       Foundation.libs.reveal.settings.close_on_background_click = false;
       $('#close-upload').off().addClass('disabled');
       $.each(data.files, function () {
@@ -109,27 +108,27 @@ $(function () {
       });
     })
 
-    // Keep a counter of files as they are processed.
-    .bind('fileuploadalways', function () {
-      files_processed += 1;
-
-      // If all files have been processed, close the form.
-      if (files_processed === files_added) {
-        closeForm();
-        // loadTable();
-        files_added = 0;
-        files_processed = 0;
-        files_uploaded = 0;
-        $(".crumb-row.fixed").remove();
-      }
-    })
-
     // This is called when an item in the form is cancelled or removed.
     .bind('fileuploadfail', function () {
       files_added -= 1;
       if (files_added === 0) {
         $('#preloadmsg').show();
         $('.fileupload-progress').hide();
+      }
+    })
+
+    // Keep a counter of files as they are processed.
+    .bind('fileuploadalways', function () {
+      files_processed += 1;
+
+      // If all files have been processed, close the form.
+      if (files_processed > files_added) {
+        closeForm();
+        // loadTable();
+        files_added = 0;
+        files_processed = 0;
+        files_uploaded = 0;
+        $(".crumb-row.fixed").remove();
       }
     })
 
