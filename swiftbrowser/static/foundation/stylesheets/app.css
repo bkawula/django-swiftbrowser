@@ -9994,8 +9994,12 @@ form#object-expiry-form input.submit {
 #objectview #objecttable .file-btn:hover, #objectview #objecttable .file-btn:focus {
   background-color: #EEEEEE;
 }
+/* line 33, ../scss/_objectview.scss */
+#objectview #objecttable .glyphicons-cloud-download:before, #objectview #objecttable .glyphicons-fire:before {
+  margin-right: 0.15em;
+}
 
-/* line 36, ../scss/_objectview.scss */
+/* line 39, ../scss/_objectview.scss */
 .dropdown-btn {
   background-color: transparent;
   color: #555555;
@@ -10005,7 +10009,7 @@ form#object-expiry-form input.submit {
   text-align: left;
   width: 100%;
 }
-/* line 45, ../scss/_objectview.scss */
+/* line 48, ../scss/_objectview.scss */
 .dropdown-btn:hover, .dropdown-btn:focus {
   color: #555555;
   background-color: #EEEEEE;

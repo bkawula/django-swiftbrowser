@@ -13,18 +13,19 @@
     <h4>{% trans 'Temporary URL for' %} {{container}}/{{objectname}}</h4>
     <p>Use the following URL to share this object. The URL is valid for {{expires_in_message}}.</p>
 
-		      <div class="row collapse">
-		        <div class="small-12 medium-8 columns">
-		          <input type="text" id="generated-tempurl" value="{{url}}"></input>
-		        </div>
-		        <div class="small-0 medium-4 columns">
-					<button id="highlight-icon" class="button postfix hide-for-small-only">Press&nbsp;to&nbsp;select&nbsp;text</button>
-		        
-		        </div>
-		      </div>
-		
+      <div class="row collapse">
+        <div class="small-12 medium-8 columns">
+          <input type="text" id="generated-tempurl" value="{{url}}"></input>
+        </div>
+        <div class="small-0 medium-4 columns">
+			<button id="highlight-icon" class="button postfix hide-for-small-only">Press&nbsp;to&nbsp;select&nbsp;text</button>
+
+        </div>
+      </div>
+
     <p>{% trans 'Please note that you cannot revoke this URL. It is valid until expiration!' %}</p>
-	<h4>Change expiration time</h4>
+	<h4>Custom expiration time</h4>
+	<p>Using the form below, you can create a custom temporary URL for this object.</p>
     <form id="custom-temp-url" action="{% url "tempurl" container=container objectname=objectname %}" method="post">
         {% csrf_token %}
         {{tempurl_form}}

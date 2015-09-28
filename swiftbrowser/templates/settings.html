@@ -37,7 +37,7 @@
 						<div class="row">
 							<div class="small-12 medium-7 columns">
 								<h3>Default Temp Url Time</h3>
-								<p>The following hours and days are used to calculate how long temp urls will last. The default is 7 days. You can change this here.</p>
+								<p>Swiftbrowser can create temporary URLs for files, allowing direct downloads to file that can be shared with anyone. Being temporary links, they are only valid for a limited time. The fields below are used to calculate how long temporary URLs will last. </p>
 								<form id="custom-temp-url" action="{% url "set_default_tempurl_time" %}" method="post">
 							        {% csrf_token %}
 							        {{tempurl_form}}
