@@ -1,0 +1,44 @@
+.angular-alert-box {
+    background-color: #0074be;
+    border-color: #0064a3;
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF;
+	display: none;
+    font-size: 0.8125rem;
+    font-weight: normal;
+    margin-bottom: 1.25rem;
+    padding: 0.875rem 1.5rem 0.875rem 0.875rem;
+    position: relative;
+    transition: opacity 300ms ease-out;
+
+	&.success {
+	    background-color: #3B862F;
+	    border-color: #337328;
+	}
+	&.alert {
+	    background-color: #f04124;
+	    border-color: #de2d0f;
+	}
+	.close {
+	    background: inherit;
+	    color: #333333;
+	    font-size: 1.375rem;
+	    line-height: .9;
+	    margin-top: -0.6875rem;
+	    opacity: 0.3;
+	    padding: 0 6px 4px;
+	    position: absolute;
+	    right: 0.25rem;
+	    top: 50%;
+	}
+}
+
+.header-alert {
+	margin-bottom: 0px;
+	padding: 0.875rem 0rem 0.875rem 0rem;
+}
+
+.display-on {
+    display: block !important;
+}

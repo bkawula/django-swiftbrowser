@@ -9737,47 +9737,41 @@ table .icon {
   padding-bottom: 11px;
 }
 
-/* line 91, ../scss/_header.scss */
-.header-alert {
-  margin-bottom: 0px;
-  padding: 0.875rem 0rem 0.875rem 0rem;
-}
-
 @media only screen and (max-width: 40em) {
-  /* line 98, ../scss/_header.scss */
+  /* line 93, ../scss/_header.scss */
   #header button, #header .button {
     margin-bottom: 5px;
   }
-  /* line 102, ../scss/_header.scss */
+  /* line 97, ../scss/_header.scss */
   #header .columns {
     padding: 0;
   }
-  /* line 106, ../scss/_header.scss */
+  /* line 101, ../scss/_header.scss */
   #header .service-logo {
     padding-left: 5px;
     padding-top: 5px;
     width: 32px;
   }
 
-  /* line 113, ../scss/_header.scss */
+  /* line 108, ../scss/_header.scss */
   .crumb-row {
     padding-top: 0px;
   }
-  /* line 116, ../scss/_header.scss */
+  /* line 111, ../scss/_header.scss */
   .crumb-row .breadcrumb {
     padding: 0;
   }
-  /* line 119, ../scss/_header.scss */
+  /* line 114, ../scss/_header.scss */
   .crumb-row .breadcrumb li {
     font-size: 1rem;
   }
-  /* line 123, ../scss/_header.scss */
+  /* line 118, ../scss/_header.scss */
   .crumb-row .breadcrumb ul {
     margin-left: 5px;
     margin-top: 0px;
   }
 
-  /* line 130, ../scss/_header.scss */
+  /* line 125, ../scss/_header.scss */
   #pseudoContainer {
     padding-top: 4rem;
   }
@@ -10080,18 +10074,8 @@ form#object-expiry-form input.submit {
   font-weight: bold;
 }
 
-/* line 23, ../scss/_settings_page.scss */
-.alert-box {
-  display: none;
-}
-
-/* line 27, ../scss/_settings_page.scss */
-.display-on {
-  display: block !important;
-}
-
 @media only screen and (max-width: 40em) {
-  /* line 33, ../scss/_settings_page.scss */
+  /* line 25, ../scss/_settings_page.scss */
   #settingsview .row .row {
     margin: 0 5px;
   }
@@ -10159,4 +10143,53 @@ form#object-expiry-form input.submit {
   40% {
     box-shadow: 0 2.5em 0 0 #0074be;
   }
+}
+/* line 1, ../scss/_messages.scss */
+.angular-alert-box {
+  background-color: #0074be;
+  border-color: #0064a3;
+  border-style: solid;
+  border-width: 1px;
+  color: #FFFFFF;
+  display: none;
+  font-size: 0.8125rem;
+  font-weight: normal;
+  margin-bottom: 1.25rem;
+  padding: 0.875rem 1.5rem 0.875rem 0.875rem;
+  position: relative;
+  transition: opacity 300ms ease-out;
+}
+/* line 15, ../scss/_messages.scss */
+.angular-alert-box.success {
+  background-color: #3B862F;
+  border-color: #337328;
+}
+/* line 19, ../scss/_messages.scss */
+.angular-alert-box.alert {
+  background-color: #f04124;
+  border-color: #de2d0f;
+}
+/* line 23, ../scss/_messages.scss */
+.angular-alert-box .close {
+  background: inherit;
+  color: #333333;
+  font-size: 1.375rem;
+  line-height: .9;
+  margin-top: -0.6875rem;
+  opacity: 0.3;
+  padding: 0 6px 4px;
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+}
+
+/* line 37, ../scss/_messages.scss */
+.header-alert {
+  margin-bottom: 0px;
+  padding: 0.875rem 0rem 0.875rem 0rem;
+}
+
+/* line 42, ../scss/_messages.scss */
+.display-on {
+  display: block !important;
 }

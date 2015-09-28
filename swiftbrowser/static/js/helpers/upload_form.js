@@ -33,6 +33,27 @@ function closeForm() {
         '</div>'
     );
   }
+
+  //Display error if any uploads fail
+  var failed_count = files_added - files_uploaded;
+  if (failed_count) {
+    var failure_message = "Failed to upload " + failed_count;
+    if (failed_count === 1) {
+      failure_message += " file.";
+    } else {
+      failure_message += " files.";
+    }
+    angular.element("#objecttable").scope().MessagesHandler.newErrorMessage(failure_message);
+  } else {
+    var success_message;
+    if (files_uploaded === 1) {
+      success_message = "Successfully uploaded 1 file.";
+    } else {
+      success_message = "Successfully uploaded " + files_uploaded + " files.";
+    }
+    angular.element("#objecttable").scope().MessagesHandler.newSuccessMessage(success_message);
+  }
+
   files_uploaded = 0;
   files_added = 0;
   files_processed = 0;

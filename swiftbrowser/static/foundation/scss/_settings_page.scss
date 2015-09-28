@@ -20,14 +20,6 @@
 	}
 }
 
-.alert-box {
-	display: none;
-}
-
-.display-on {
-    display: block !important;
-}
-
 @media #{$small-only} {
 	#settingsview {
 		.row .row {

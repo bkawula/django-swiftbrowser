@@ -1,4 +1,4 @@
-var app = angular.module('object-table', []);
+var app = angular.module('object-table', ['messages']);
 
 /**
   * Initiate object table data for the controller.
@@ -18,7 +18,7 @@ function get_object_table() {
   );
 }
 
-app.controller('ObjectTableCtrl', function ($scope, $http, items) {
+app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandler) {
 
   //This function is called after angular.element is finished.
   $scope.folders = items.folders;
@@ -38,9 +38,14 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items) {
   }
   $scope.refreshObjectTable = refreshObjectTable;
 
+  // Provide upload_form.js access to internal function
   $scope.$on("refreshObjectTable", function () {
     refreshObjectTable();
   });
+
+  // Provide upload_form.js access to internal function
+  $scope.MessagesHandler = MessagesHandler;
+
 })
 
   //Controller for new folder form.
