@@ -21,30 +21,7 @@
 				</div>
 			</div>
 		</div>
-		<div ng-controller="MessagesCtrl">
-		    <div ng-class="{ 'display-on': displaySuccess}" data-alert class="alert-box success header-alert">
-                <div class="row" >
-                    <div class="small-12 columns">
-		                <strong>Success.</strong>
-		                {% verbatim %}
-		                {{successMessage}}
-						{% endverbatim %}
-		                <a href="#" class="close">&times;</a>
-	                </div>
-                </div>
-            </div>
-            <div ng-class="{ 'display-on': displayError}" data-alert class="alert-box alert header-alert">
-                <div class="row" >
-                    <div class="small-12 columns">
-		                <strong>Error.</strong>
-		                {% verbatim %}
-		                {{errorMessage}}
-		                {% endverbatim %}
-		                <a href="#" class="close">&times;</a>
-	                </div>
-                </div>
-            </div>
-        </div>
+		{% include "messages.html" %}
 <!-- 		<div class="row" ng-controller="UserManagementCtrl">
 			<div class="columns small-12">
 				<h2>User Management</h2>
