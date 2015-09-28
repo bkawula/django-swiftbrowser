@@ -190,6 +190,10 @@ def objectview(request, container, prefix=None):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
+    account = client.head_account(storage_url, auth_token)
+    url_key = account.get('x-account-meta-temp-url-key', '')
+    key = url_key
+
     request.session['container'] = container
     request.session['prefix'] = prefix
 
@@ -251,6 +255,16 @@ def objectview(request, container, prefix=None):
     #To allow large files to upload, increase this window to 2hr.
     expires = int(time.time() + 60 * 60 * 2)
 
+    hmac_body = '%s\n%s\n%s\n%s\n%s' % (
+        path,
+        '',
+        max_file_size,
+        max_file_count,
+        expires
+    )
+
+    signature = hmac.new(key, hmac_body, sha1).hexdigest()
+
     if [x for x in read_acl if x in required_acl]:
         public = True
 
@@ -258,6 +272,7 @@ def objectview(request, container, prefix=None):
         "objectview.html",
         {
             'swift_url': swift_url,
+            'signature': signature,
             'redirect_url': redirect_url,
             'container': container,
             'objects': objs,
