@@ -54,28 +54,7 @@
 		</div>
 	</div>
 	<div ng-controller="MessagesCtrl">
-	    <div ng-class="{'display-on': displaySuccess}" class="angular-alert-box success header-alert">
-            <div class="row" >
-                <div class="small-12 columns">
-	                <strong>Success.</strong>
-	                {% verbatim %}
-	                {{successMessage}}
-					{% endverbatim %}
-	                <a href="#" ng-click="successOff" class="close">&times;</a>
-                </div>
-            </div>
-        </div>
-        <div ng-class="{'display-on': displayError}" class="angular-alert-box alert header-alert">
-            <div class="row" >
-                <div class="small-12 columns">
-	                <strong>Error.</strong>
-	                {% verbatim %}
-	                {{errorMessage}}
-	                {% endverbatim %}
-	                <a ng-click="errorOff()" href="#" class="close">&times;</a>
-                </div>
-            </div>
-        </div>
+		<ng-include src="'{% static 'templates/messages.html' %}'"></ng-include>
     </div>
 	<div class="row">
 		<div class="small-12 columns"></div>

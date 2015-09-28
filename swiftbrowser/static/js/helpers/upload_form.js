@@ -20,20 +20,6 @@ function closeForm() {
     }, 500);
   }, 250);
 
-
-  if (files_uploaded > 0) {
-    $('#messages').html(
-      '<div data-alert class="alert-box success header-alert">' +
-        '<div class="row" >' +
-        '<div class="small-12 columns">' +
-        '<strong>Success.</strong> ' + files_uploaded +
-        ' files were added. <a href="#" class="close">&times;</a>' +
-        '</div>' +
-        '</div>' +
-        '</div>'
-    );
-  }
-
   //Display error if any uploads fail
   var failed_count = files_added - files_uploaded;
   if (failed_count) {
