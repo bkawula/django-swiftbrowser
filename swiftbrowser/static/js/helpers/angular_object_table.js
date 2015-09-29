@@ -96,7 +96,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
     'use strict';
 
     return function (size) {
-      var exp = Math.log(size) / Math.log(1024);
+      var exp = parseInt(Math.log(size) / Math.log(1024), 10);
       if (exp < 1) {
         exp = 0;
       }
