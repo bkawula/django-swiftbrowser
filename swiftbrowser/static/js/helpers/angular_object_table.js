@@ -175,6 +175,7 @@ app.applyTableEvents = function () {
   });
 
   //Delete object binding.
+  $("a.delete-object").off("click");
   $("a.delete-object").on("click", function (e) {
     //Prompt user to confirm.
     /*global confirm: true*/
@@ -187,6 +188,7 @@ app.applyTableEvents = function () {
   });
 
   //Delete folder binding.
+  $("a.delete-folder").off("click");
   $("a.delete-folder").on("click", function (e) {
 
     if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
