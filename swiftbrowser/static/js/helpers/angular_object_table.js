@@ -33,6 +33,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
     $http.get('/get_object_table').then(
       function (response) {
         $scope.folders = response.data.folders;
+        $scope.objects = response.data.objects;
       }
     );
   }
