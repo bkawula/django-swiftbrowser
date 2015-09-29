@@ -330,22 +330,27 @@ def session_valid(fn):
         username = args[0].session.get('username', '')
         password = args[0].session.get('password', '')
 
-        try:
-            client.head_account(storage_url, auth_token)
-            return fn(*args, **kw)
-        except:
-
-            #Attempt to get a new auth token
+        # If the following variables are available, attempt to get an
+        # auth token
+        if (storage_url and auth_token and username and password):
             try:
-                auth_version = settings.SWIFT_AUTH_VERSION or 1
-                (storage_url, auth_token) = client.get_auth(
-                    settings.SWIFT_AUTH_URL, username, password,
-                    auth_version=auth_version)
-                args[0].session['auth_token'] = auth_token
-                args[0].session['storage_url'] = storage_url
+                client.head_account(storage_url, auth_token)
                 return fn(*args, **kw)
             except:
-                messages.error(args[0], _("Session expired."))
+
+                #Attempt to get a new auth token
+                try:
+                    auth_version = settings.SWIFT_AUTH_VERSION or 1
+                    (storage_url, auth_token) = client.get_auth(
+                        settings.SWIFT_AUTH_URL, username, password,
+                        auth_version=auth_version)
+                    args[0].session['auth_token'] = auth_token
+                    args[0].session['storage_url'] = storage_url
+                    return fn(*args, **kw)
+                except:
+                    # Failure to get an auth token, tell the user the session
+                    # has expired.
+                    messages.error(args[0], _("Session expired."))
         return redirect(swiftbrowser.views.login)
 
     return wrapper
