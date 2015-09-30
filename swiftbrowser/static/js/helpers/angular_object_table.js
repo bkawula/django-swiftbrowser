@@ -1,12 +1,19 @@
 var app = angular.module('object-table', ['messages']);
 
+/*
+  Obtain the base url of the application to make calls to the server.
+*/
+app.config(["$provide", function ($provide) {
+  $provide.value("baseurl", $("#baseurl").attr("href"));
+}]);
+
 /**
   * Initiate object table data for the controller.
  */
 function get_object_table() {
   var initInjector = angular.injector(['ng']);
   var $http = initInjector.get('$http');
-  $http.get('/get_object_table').then(
+  $http.get($("#baseurl").attr("href") + 'get_object_table').then(
     function (response) {
 
       //Store data in constant called items
@@ -18,7 +25,7 @@ function get_object_table() {
   );
 }
 
-app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandler) {
+app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandler, baseurl) {
 
   //This function is called after angular.element is finished.
   $scope.folders = items.folders;
@@ -30,7 +37,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
   });
 
   function refreshObjectTable() {
-    $http.get('/get_object_table').then(
+    $http.get(baseurl + 'get_object_table').then(
       function (response) {
         $scope.folders = response.data.folders;
         $scope.objects = response.data.objects;
