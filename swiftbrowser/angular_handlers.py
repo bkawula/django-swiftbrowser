@@ -41,10 +41,13 @@ def get_object_table(request):
     account = storage_url.split('/')[-1]
 
     return JsonResponse({
-        'container': container,
-        'objects': objs,
-        'folders': pseudofolders,
-        'folder_prefix': prefix
+        'success': True,
+        "data": {
+            'container': container,
+            'objects': objs,
+            'folders': pseudofolders,
+            'folder_prefix': prefix
+        }
     })
 
 

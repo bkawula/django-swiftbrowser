@@ -17,7 +17,7 @@ function get_object_table() {
     function (response) {
 
       //Store data in constant called items
-      app.constant('items', response.data);
+      app.constant('items', response.data.data);
 
       //Init the controller
       angular.bootstrap(document, ['object-table']);
@@ -39,8 +39,8 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
   function refreshObjectTable() {
     $http.get(baseurl + 'get_object_table').then(
       function (response) {
-        $scope.folders = response.data.folders;
-        $scope.objects = response.data.objects;
+        $scope.folders = response.data.data.folders;
+        $scope.objects = response.data.data.objects;
       }
     );
   }
