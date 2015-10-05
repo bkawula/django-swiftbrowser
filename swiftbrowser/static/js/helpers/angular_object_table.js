@@ -13,7 +13,7 @@ app.config(["$provide", function ($provide) {
 function get_object_table() {
   var initInjector = angular.injector(['ng']);
   var $http = initInjector.get('$http');
-  $http.get($("#baseurl").attr("href") + 'get_object_table').then(
+  $http.get($("#baseurl").attr("href") + 'get_object_table/').then(
     function (response) {
 
       //Store data in constant called items
@@ -31,13 +31,14 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
   $scope.folders = items.folders;
   $scope.objects = items.objects;
   $scope.container = items.container;
+  $scope.baseurl = baseurl;
 
   $scope.$on('onRepeatLast', function () {
     app.applyTableEvents();
   });
 
   function refreshObjectTable() {
-    $http.get(baseurl + 'get_object_table').then(
+    $http.get(baseurl + 'get_object_table/').then(
       function (response) {
         $scope.folders = response.data.data.folders;
         $scope.objects = response.data.data.objects;
@@ -57,12 +58,13 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
 })
 
   //Controller for new folder form.
-  .controller('CreateFolderCtrl', function ($scope, $http, $rootScope, items) {
+  .controller('CreateFolderCtrl', function ($scope, $http, $rootScope, items, baseurl) {
 
     $scope.showForm = 1; /* Variable for toggling the form after submission. */
     $scope.showLoader = 0; /* Variable for toggling the loader. */
     $scope.formData = {}; /* Holder for form data. */
-    var create_folder_url = "/create_pseudofolder/" + items.container + "/";
+
+    var create_folder_url = baseurl + "create_pseudofolder/" + items.container + "/";
 
     //Add prefix for new folders that will be in existing folders.
     if (items.folder_prefix) {

@@ -14,7 +14,7 @@
 				<span class="glyphicons glyphicons-folder-closed"></span>
 			</td>
 			<td>
-				<a href="/objects/{{container}}/{{folder[0]}}">
+				<a href="{{baseurl}}objects/{{container}}/{{folder[0]}}">
 					<strong>{{folder[0]|formatPseudoFolder}}</strong>
 				</a>
 			</td>
@@ -27,17 +27,17 @@
 				<br>
 				<ul id="opt{{$index}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
 					<li>
-						<a href="/download_collection/{{container}}/{{folder[0]}}">
+						<a href="{{baseurl}}download_collection/{{container}}/{{folder[0]}}">
 							<span class="glyphicons glyphicons-cloud-download"></span> Download
 						</a>
 					</li>
 					<li>
-						<a href="/download_collection_nonrec/{{container}}/{{folder[0]}}">
+						<a href="{{baseurl}}download_collection_nonrec/{{container}}/{{folder[0]}}">
 							<span class="glyphicons glyphicons-cloud-download"></span> Download nonrecursive
 						</a>
 					</li>
 					<li>
-						<a class="delete-folder" data-name="{{folder[1]}}" href="/delete_folder/{{container}}/{{folder[1]}}">
+						<a class="delete-folder" data-name="{{folder[1]}}" href="{{baseurl}}delete_folder/{{container}}/{{folder[1]}}">
 							<span class="glyphicons glyphicons-fire"></span> Delete folder
 						</a>
 					</li>
@@ -50,7 +50,7 @@
 				<span ng-if="!(key.extension !='other')" class="glyphicons glyphicons-file"></span>
 			</td>
 			<td>
-				<a href="/download/{{container}}/{{key.name}}" class="block">{{key.name}}</a>
+				<a href="{{baseurl}}download/{{container}}/{{key.name}}" class="block">{{key.name}}</a>
 			</td>
 			<td class="hide-for-small-only">{{key.last_modified | date:'medium'}}</td>
 			<td >{{key.bytes|formatByte}}</td>
@@ -61,19 +61,19 @@
 				<br>
 				<ul id="file-opt{{$index}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
 					<li>
-						<button type="button" data-reveal-id="tempurl" class="button dropdown-btn" data-reveal-ajax="/tempurl/{{container}}/{{key.name}}">
+						<button type="button" data-reveal-id="tempurl" class="button dropdown-btn" data-reveal-ajax="{{baseurl}}tempurl/{{container}}/{{key.name}}">
 							<span class="glyphicons glyphicons-clock"></span>&nbsp;
 							Temporary URL
 						</button>
 					</li>
 					<li>
-						<button type="button" data-reveal-id="object-expiry" class="button dropdown-btn" data-reveal-ajax="/object_expiry/{{container}}/{{key.name}}">
+						<button type="button" data-reveal-id="object-expiry" class="button dropdown-btn" data-reveal-ajax="{{baseurl}}object_expiry/{{container}}/{{key.name}}">
 							<span class="glyphicons glyphicons-hourglass"></span>&nbsp;
 							Object Expiry
 						</button>
 					</li>
 					<li>
-						<a class="delete-object" data-name="{{key.name}}" href="/delete/{{container}}/{{key.name}}" >
+						<a class="delete-object" data-name="{{key.name}}" href="{{baseurl}}delete/{{container}}/{{key.name}}" >
 							<span class="glyphicons glyphicons-fire"></span>&nbsp;
 							Delete Object
 						</a>
