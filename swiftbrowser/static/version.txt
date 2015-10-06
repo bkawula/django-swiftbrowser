@@ -1,0 +1,3 @@
+VERSION = No_build_version
+BRANCH_TAG = refs/heads/master
+BUILD_TIME = 2015-10-06-00:00:00
