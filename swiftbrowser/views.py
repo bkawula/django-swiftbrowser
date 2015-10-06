@@ -781,3 +781,7 @@ def object_expiry(request, container, objectname):
             'form': form
         },
         context_instance=RequestContext(request))
+        
+def get_version(request):
+    return render_to_response('version.html',
+        context_instance=RequestContext(request))
