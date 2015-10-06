@@ -91,4 +91,5 @@ urlpatterns = patterns(
     url(r'^get_users/$', get_users, name="get_users"),
     url(r'^create_user/$', create_user, name="create_user"),
     url(r'^delete_user/$', delete_user, name="delete_user"),
+    url(r'^version.info/$', get_version, name="get_version"),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
