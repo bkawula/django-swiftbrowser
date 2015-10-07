@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-swiftbrowser',
-    version='0.1',
+    version='1.0.0',
     packages=['swiftbrowser'],
     include_package_data=True,
     license='Apache License (2.0)',
@@ -18,7 +18,7 @@ setup(
     author='Christian Schwede',
     author_email='info@cschwede.de',
     install_requires=[
-        'django>=1.5',
+        'django>=1.8',
         'python-swiftclient',
         'django-jfu',
         'PIL',
