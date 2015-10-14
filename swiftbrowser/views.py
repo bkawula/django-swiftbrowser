@@ -190,9 +190,19 @@ def objectview(request, container, prefix=None):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-    account = client.head_account(storage_url, auth_token)
-    url_key = account.get('x-account-meta-temp-url-key', '')
-    key = url_key
+
+    # Users with no role use container keys
+    if request.session.get('norole'):
+
+        container_object = client.head_container(
+            storage_url, auth_token, container)
+        key = container_object.get('x-container-meta-temp-url-key', '')
+
+    # Regular users use account keys
+    else:
+
+        account = client.head_account(storage_url, auth_token)
+        key = account.get('x-account-meta-temp-url-key', '')
 
     request.session['container'] = container
     request.session['prefix'] = prefix
