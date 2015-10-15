@@ -11,10 +11,12 @@
 		<div class="small-9 columns">
 			<div class="account-btns">
 				<span class="username">{{session.username}}</span>
-				
-				<a class="button tiny" role="button" href="{% url "settings_view" %}" title="Settings">
-					<span class="glyphicons glyphicons-adjust-alt"></span> <span class="hide-for-small-only">Settings</span>
-				</a>
+
+				{% if not session.norole %}
+					<a class="button tiny" role="button" href="{% url "settings_view" %}" title="Settings">
+						<span class="glyphicons glyphicons-adjust-alt"></span> <span class="hide-for-small-only">Settings</span>
+					</a>
+				{% endif%}
 				<a class="button tiny" role="button" href="{% url "login" %}" title="Logout">
 				<span class="glyphicons glyphicons-exit"></span> <span class="hide-for-small-only">{% trans 'Logout' %}</span>
 				</a>
