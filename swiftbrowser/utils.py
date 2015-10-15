@@ -203,8 +203,15 @@ def get_temp_key(storage_url, auth_token, container):
     return key
 
 
-def get_temp_url(storage_url, auth_token, container, objectname, expires=600):
-    key = get_temp_key(storage_url, auth_token, container)
+def get_temp_url(storage_url, auth_token, container, objectname, key,
+                 expires=600):
+    '''Get the temp url for the object.'''
+
+    # Check to see if key already exists. If not get a new key.
+    if not key:
+        key = get_temp_key(storage_url, auth_token, container)
+
+    # If new key could not be obtain, return
     if not key:
         return None
 
@@ -465,9 +472,14 @@ def remove_duplicates_from_acl(acls):
 
 
 def get_default_temp_time(storage_url, auth_token):
-    """Return in seconds the header Default-Temp-Time for the given tenant."""
-    cont = client.head_account(storage_url, auth_token)
-    return cont.get('x-account-meta-default-temp-time', '')
+    """Return in seconds the header Default-Temp-Time for the given tenant.
+    If an exception is caught, return 0."""
+
+    try:
+        cont = client.head_account(storage_url, auth_token)
+        return cont.get('x-account-meta-default-temp-time', '')
+    except:
+        return 0
 
 
 def get_object_expiry_time(storage_url, auth_token, container, name):

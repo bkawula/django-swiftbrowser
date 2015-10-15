@@ -197,6 +197,7 @@ def objectview(request, container, prefix=None):
         container_object = client.head_container(
             storage_url, auth_token, container)
         key = container_object.get('x-container-meta-temp-url-key', '')
+        request.session["key"] = key
 
     # Regular users use account keys
     else:
@@ -515,8 +516,9 @@ def tempurl(request, container, objectname):
     container = unicode(container).encode('utf-8')
     objectname = unicode(objectname).encode('utf-8')
 
-    url = get_temp_url(storage_url, auth_token,
-                       container, objectname, seconds_to_expiry)
+    key = unicode(request.session.get('key', '')).encode('utf-8')
+    url = get_temp_url(storage_url, auth_token, container, objectname, key,
+                       seconds_to_expiry)
 
     if not url:
         messages.add_message(request, messages.ERROR, _("Access denied."))
