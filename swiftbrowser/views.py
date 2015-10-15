@@ -522,9 +522,6 @@ def tempurl(request, container, objectname):
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(objectview, container=container)
 
-    # Convert the URL to show the domain and not the IP
-    url = re.sub('.*(\d{1,3}\.){3}\d{1,3}', settings.SWIFT_DOMAIN_NAME, url)
-
     prefix = '/'.join(objectname.split('/')[:-1])
     if prefix:
         prefix += '/'

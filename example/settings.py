@@ -95,7 +95,6 @@ STORAGE_URL = 'http://127.0.0.1:8080/v1/'
 BASE_URL = 'http://127.0.0.1:8080'
 SWAUTH_URL = 'http://127.0.0.1:5000/auth/v2'
 STATIC_DIR = 'swiftbrowser/static'
-SWIFT_DOMAIN_NAME = 'http://your.cluser.domain'
 
 TIME_ZONE = 'America/Toronto'
 LANGUAGE_CODE = 'en-en'
