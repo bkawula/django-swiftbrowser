@@ -424,10 +424,13 @@ def download_collection(request, container, prefix=None, non_recursive=False):
         messages.add_message(
             request, messages.ERROR, _("Unable to download, no files found."))
 
-        # remove the last prefix. ex "dir1/dir2/" -> "dir1"
-        prefix = prefix[0:prefix.rfind('/', 0, prefix.rfind('/'))]
-        return redirect(
-            swiftbrowser.views.objectview, container=container, prefix=prefix)
+        if prefix:  # Return user to object view
+            # remove the last prefix. ex "dir1/dir2/" -> "dir1"
+            prefix = prefix[0:prefix.rfind('/', 0, prefix.rfind('/'))]
+            return redirect(swiftbrowser.views.objectview, container=container,
+                            prefix=prefix)
+        else:  # Return user to the container view
+            return redirect(swiftbrowser.views.containerview)
 
     output = StringIO()
     zipf = zipfile.ZipFile(output, 'w')
