@@ -168,3 +168,21 @@ def delete_user(request):
         return HttpResponse(e, status=500)
 
     return JsonResponse({'success': 'User deleted'})
+
+
+@ajax_session_valid
+def get_acl(request, container):
+    """ Read and return the Read and Write ACL of the given container. """
+
+    # Check if tenant has a default temp time.
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    cont = client.head_container(storage_url, auth_token, container)
+    readers = cont.get('x-container-read', '')
+    writers = cont.get('x-container-write', '')
+
+    return JsonResponse({
+        "read_acl": readers,
+        "write_acl": writers
+    })

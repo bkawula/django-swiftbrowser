@@ -39,7 +39,7 @@ urlpatterns = patterns(
         name="objectview"),
     url(r'^object_table/', objecttable, name="objecttable"),
     # url(r'upload/', upload, name='jfu_upload'),
-    url(r'^acls/(?P<container>.+?)/$', edit_acl, name="edit_acl"),
+    url(r'^get_acls/(?P<container>.+?)/$', get_acl, name="get_acl"),
     url(r'^delete/(?P<pk>.+)$', upload_delete, name='jfu_delete'),
     #url(
     #   r'^thumbnails/(?P<container>.+?)/(?P<objectname>.+?)$',

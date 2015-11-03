@@ -4,6 +4,10 @@
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 		<form id="edit-access-form" method="POST" action="" id="create-container">
 		    {% csrf_token %}
+		    <label>Read Access:</label>
+		    <input type="text" ng-model="read_acl"/>
+		    <label>Write Access:</label>
+		    <input type="text" ng-model="write_acl"/>
 			<button type="submit">Update</button>
 	        <span id="cancel-edit-access" class="button expand">Close</span>
 		</form>
