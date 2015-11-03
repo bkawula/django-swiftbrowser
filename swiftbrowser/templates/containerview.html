@@ -69,15 +69,6 @@
 									</button>
 									<br>
 									<ul id="opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
-										{% comment %}
-											{%
-											{% url "edit_acl" container=container.name as edit_acl_url %}
-											{% if edit_acl_url %}
-											<li><a href="{{ edit_acl_url }}"><span class="glyphicons glyphicons-user"></span> {% trans 'Sharing' %}</a></li>
-											<li class="divider" />
-											{% endif %}
-											%}
-										{% endcomment %}
 										<li>
 											<a href="{% url "download_collection" container=container.name %}">
 												<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download' %}
@@ -92,6 +83,11 @@
 										<li>
 											<a class="delete-container-link" data-reveal-id="delete-container" data-container-name="{{container.name}}" data-url="{% url 'delete_container' container=container.name %}">
 												<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete container' %}
+											</a>
+										</li>
+										<li>
+											<a href="" data-reveal-id="edit-acl" class="edit-acl" data-container-name="{{container.name}}">
+												<span class="glyphicons glyphicons-pencil"></span> {% trans 'Edit Access' %}
 											</a>
 										</li>
 										{% comment %}
@@ -158,6 +154,7 @@
 				<div class="loader">Loading...</div>
 			</div>
 		</div>
+		{% include "acl.html" %}
 	</div>
     <script src="{{STATIC_URL}}js/helpers/containerview.js" type="text/javascript"></script>
 {% endblock %}
