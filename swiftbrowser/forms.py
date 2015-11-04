@@ -51,3 +51,9 @@ class CreateUserForm(forms.Form):
 class DeleteUserForm(forms.Form):
     ''' Form for deleting a user on Keystone.'''
     user_id = forms.CharField(max_length=100)
+
+
+class UpdateACLForm(forms.Form):
+    ''' Form for updating container ACLs'''
+    read_acl = forms.CharField()
+    write_acl = forms.CharField()

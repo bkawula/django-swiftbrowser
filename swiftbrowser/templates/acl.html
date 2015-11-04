@@ -2,12 +2,12 @@
 	<div class="reveal-modal" id="edit-acl" data-reveal aria-labelledby="container-title" aria-hidden="true" role="dialog" ng-controller="AclCtrl">
 		<h2 id="container-title">Edit Access</h2>
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-		<form id="edit-access-form" method="POST" action="" id="create-container">
+		<form id="edit-access-form" method="POST" id="create-container" ng-submit="setACLs()">
 		    {% csrf_token %}
 		    <label>Read Access:</label>
-		    <input type="text" ng-model="read_acl"/>
+		    <input type="text" ng-model="read_acl" name="read_acl"/>
 		    <label>Write Access:</label>
-		    <input type="text" ng-model="write_acl"/>
+		    <input type="text" ng-model="write_acl" name="write_acl"/>
 			<button type="submit">Update</button>
 	        <span id="cancel-edit-access" class="button expand">Close</span>
 		</form>

@@ -28,6 +28,33 @@ app.controller('AclCtrl', function ($scope, $http, baseurl) {
     );
   };
 
+  /*
+    Set the ACLs
+  */
+  $scope.setACLs = function () {
+    $http({
+      method  : "POST",
+      url     : baseurl + 'set_acls/' + $scope.container + "/",
+      data    : $.param(
+        {
+          "read_acl": $scope.read_acl,
+          "write_acl": $scope.write_acl,
+          "csrfmiddlewaretoken": $('input[name=csrfmiddlewaretoken]').val()
+        }
+      ),  // pass in data as strings
+      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
+    })
+      .success(
+        function (response) {
+          if (response.error) {
+            console.log("error");
+            console.log(response.error);
+          } else {
+            console.log("noerror");
+          }
+        }
+      );
+  };
 });
 
 

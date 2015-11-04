@@ -10,7 +10,7 @@ from swiftbrowser.utils import ajax_session_valid, get_base_url, prefix_list, \
     pseudofolder_object_list, split_tenant_user_names
 from swiftbrowser.views import containerview
 from swiftbrowser.angular_utils import *
-from swiftbrowser.forms import CreateUserForm, DeleteUserForm
+from swiftbrowser.forms import CreateUserForm, DeleteUserForm, UpdateACLForm
 import keystoneclient.v2_0.client
 
 
@@ -171,10 +171,9 @@ def delete_user(request):
 
 
 @ajax_session_valid
-def get_acl(request, container):
+def get_acls(request, container):
     """ Read and return the Read and Write ACL of the given container. """
 
-    # Check if tenant has a default temp time.
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
@@ -186,3 +185,33 @@ def get_acl(request, container):
         "read_acl": readers,
         "write_acl": writers
     })
+
+
+@ajax_session_valid
+def set_acls(request, container):
+    """For the given container, set the ACLs. """
+
+    form = UpdateACLForm(request.POST)
+
+    if (form.is_valid()):
+        read_acl = form.cleaned_data['read_acl']
+        write_acl = form.cleaned_data['write_acl']
+    else:
+        return JsonResponse({'error': 'invalid form'})
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    headers = {'X-Container-Read': read_acl,
+               'X-Container-Write': write_acl}
+    try:
+        client.post_container(storage_url, auth_token,
+                              container, headers)
+
+        return JsonResponse({
+            "success": "Successfully updated ACL.",
+            "read_acl": read_acl,
+            "write_acl": write_acl
+        })
+    except client.ClientException:
+        return JsonResponse({'error': 'Unable to update ACL.'})
