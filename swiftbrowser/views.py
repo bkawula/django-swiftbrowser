@@ -356,8 +356,9 @@ def download(request, container, objectname):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-    url = swiftbrowser.utils.get_temp_url(storage_url, auth_token,
-                                          container, objectname)
+    key = unicode(request.session.get('key', '')).encode('utf-8')
+    url = swiftbrowser.utils.get_temp_url(storage_url, auth_token, container,
+                                          objectname, key)
     if not url:
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(objectview, container=container)
