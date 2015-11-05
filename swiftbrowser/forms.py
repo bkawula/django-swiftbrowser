@@ -48,5 +48,5 @@ class DeleteUserForm(forms.Form):
 
 class UpdateACLForm(forms.Form):
     ''' Form for updating container ACLs'''
-    read_acl = forms.CharField()
-    write_acl = forms.CharField()
+    read_acl = forms.CharField(required=False)
+    write_acl = forms.CharField(required=False)
