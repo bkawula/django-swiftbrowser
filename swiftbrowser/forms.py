@@ -11,13 +11,6 @@ class CreateContainerForm(forms.Form):
     containername = forms.CharField(max_length=100)
 
 
-class AddACLForm(forms.Form):
-    """ Form for ACLs """
-    username = forms.CharField(max_length=100)
-    read = forms.BooleanField(required=False)
-    write = forms.BooleanField(required=False)
-
-
 class PseudoFolderForm(forms.Form):
     """ Upload form """
     foldername = forms.CharField(max_length=100)
