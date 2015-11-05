@@ -20,7 +20,7 @@ app.controller('AclCtrl', function ($scope, $http, baseurl, MessagesHandler) {
     Get the current read and write ACLs
   */
   $scope.getACLs = function (container) {
-    $http.get(baseurl + 'get_acls/' + container).then(
+    $http.get(baseurl + 'get_acls/' + container + "/").then(
       function (response) {
         $scope.read_acl = response.data.read_acl;
         $scope.write_acl = response.data.write_acl;
