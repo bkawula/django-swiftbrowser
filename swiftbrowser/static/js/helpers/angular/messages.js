@@ -31,13 +31,13 @@ angular.module('messages', [])
     $scope.$on('newMessageErrorAvailable', function () {
       $scope.errorMessage = MessagesHandler.message;
       $scope.displayError = true;
-      $scope.$apply();
+      $scope.$applyAsync();
     });
 
     $scope.$on('newMessageSuccessAvailable', function () {
       $scope.successMessage = MessagesHandler.message;
       $scope.displaySuccess = true;
-      $scope.$apply();
+      $scope.$applyAsync();
     });
 
     $scope.errorOff = function () {

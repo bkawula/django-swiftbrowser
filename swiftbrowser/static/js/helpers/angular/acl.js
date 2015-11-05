@@ -1,6 +1,6 @@
-var app = angular.module('acl', []);
+var app = angular.module('acl', ['messages']);
 
-app.controller('AclCtrl', function ($scope, $http, baseurl) {
+app.controller('AclCtrl', function ($scope, $http, baseurl, MessagesHandler) {
 
   $scope.container = ''; /*  The container who's ACL will be edited. */
   $scope.baseurl = baseurl; /* The base url of swiftbrowser. */
@@ -47,10 +47,9 @@ app.controller('AclCtrl', function ($scope, $http, baseurl) {
       .success(
         function (response) {
           if (response.error) {
-            console.log("error");
-            console.log(response.error);
+            MessagesHandler.newErrorMessage(response.error);
           } else {
-            console.log("noerror");
+            MessagesHandler.newSuccessMessage(response.success);
           }
         }
       );

@@ -214,4 +214,4 @@ def set_acls(request, container):
             "write_acl": write_acl
         })
     except client.ClientException:
-        return JsonResponse({'error': 'Unable to update ACL.'})
+        return JsonResponse({'error': 'Error updating ACL.'})
