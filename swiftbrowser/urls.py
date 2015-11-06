@@ -37,15 +37,9 @@ urlpatterns = patterns(
         name="delete_folder"),
     url(r'^objects/(?P<container>.+?)/(?P<prefix>(.+)+)?$', objectview,
         name="objectview"),
-    url(r'^object_table/', objecttable, name="objecttable"),
-    # url(r'upload/', upload, name='jfu_upload'),
     url(r'^get_acls/(?P<container>.+?)/$', get_acls, name="get_acls"),
     url(r'^set_acls/(?P<container>.+?)/$', set_acls, name="set_acls"),
     url(r'^delete/(?P<pk>.+)$', upload_delete, name='jfu_delete'),
-    #url(
-    #   r'^thumbnails/(?P<container>.+?)/(?P<objectname>.+?)$',
-    #   serve_thumbnail,
-    #  name="serve_thumbnail"),
     url(
         r'^move_to_trash/(?P<container>.+?)/(?P<objectname>.+?)$',
         move_to_trash,
