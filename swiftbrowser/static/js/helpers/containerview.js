@@ -1,3 +1,19 @@
+$(document).foundation();
+
+/*
+	Focus on the text box when Create Container modal is opened.
+*/
+$(document).on('opened.fndtn.reveal', '#container[data-reveal]', function () {
+    $("#create-container-name").first().focus();
+});
+
+/*
+    Clear the create container textbox when modal is closed.
+*/
+$(document).on('closed.fndtn.reveal', '#container[data-reveal]', function () {
+    $("#create-container-name").first().val("");
+});
+
 $('#create-container').on('submit', function(event) {
 	// Hide the submit button.
 	$("#create-container").hide();
