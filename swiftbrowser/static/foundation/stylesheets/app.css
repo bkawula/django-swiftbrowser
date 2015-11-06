@@ -10148,6 +10148,11 @@ form#object-expiry-form input.submit {
     box-shadow: 0 2.5em 0 0 #0074be;
   }
 }
+/* line 63, ../scss/_loader.scss */
+#angular-loader #progress {
+  display: block;
+}
+
 /* line 1, ../scss/_messages.scss */
 .angular-alert-box {
   background-color: #0074be;

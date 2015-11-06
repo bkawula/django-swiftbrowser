@@ -157,18 +157,6 @@ app.config(function ($httpProvider) {
 
 angular.element(document).ready(get_object_table);
 
-/*
-TODO: replace with loader angular logic
-    Display the loader in the object table.
-*/
-function showLoader() {
-
-  $('#objecttable').html(
-    '<div id="progress" class="center-progress">' +
-      '<div class="loader">Loading...</div>' +
-      '</div>'
-  );
-}
 
 /*
     After a table is loaded, new events need to be applied to the page.
@@ -188,10 +176,7 @@ app.applyTableEvents = function () {
   $("a.delete-object").on("click", function (e) {
     //Prompt user to confirm.
     /*global confirm: true*/
-    if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
-      showLoader();
-      $("#progress").show();
-    } else {
+    if (!confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
       e.preventDefault();
     }
   });
@@ -201,10 +186,7 @@ app.applyTableEvents = function () {
   $("a.delete-folder").on("click", function (e) {
 
     if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
-      if (confirm("This will delete " + $(this).attr("data-name") + " and all it's contents. Are you sure?")) {
-        showLoader();
-        $("#progress").show();
-      } else {
+      if (!confirm("This will delete " + $(this).attr("data-name") + " and all it's contents. Are you sure?")) {
         e.preventDefault();
       }
     } else {
