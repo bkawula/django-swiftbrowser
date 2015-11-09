@@ -146,7 +146,7 @@
 			<form id="delete-container-form" method="POST" action="" id="create-container">
 			    {% csrf_token %}
 		        <label for="containername">This will permanently delete the container <span class="container-name-holder"></span>. Type in the container name to delete the container.</label>
-	            <input id="containername" name="containername" autocomplete="off" class="enter-container-name input-xlarge" type="text" placeholder="{% trans "Container Name" %}">
+	            <input id="delete-container-name" name="containername" autocomplete="off" class="enter-container-name input-xlarge" type="text" placeholder="{% trans "Container Name" %}">
 				<button id="delete-container-submit" type="submit">I understand the consequences, Delete this container.</button>
 		        <span id="cancel-delete" class="button expand">{% trans 'Cancel' %}</span>
 			</form>

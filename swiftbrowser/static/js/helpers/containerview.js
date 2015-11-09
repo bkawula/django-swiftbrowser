@@ -14,6 +14,25 @@ $(document).on('closed.fndtn.reveal', '#container[data-reveal]', function () {
     $("#create-container-name").first().val("");
 });
 
+/*
+	Focus on the text box when Delete Container modal is opened.
+*/
+$(document).on('opened.fndtn.reveal', '#delete-container[data-reveal]', function () {
+    $("#delete-container-name").first().focus();
+
+	//Hide the delete button
+	$("#delete-container-submit").hide();
+	//Clear the input
+	$("input.enter-container-name").val("");
+});
+
+/*
+	Clear the textbox when delete container modal is closed. Hide the confirmation button
+*/
+$(document).on('closed.fndtn.reveal', '#delete-container[data-reveal]', function () {
+    $("#create-container-name").first().val("");
+});
+
 $('#create-container').on('submit', function(event) {
 	// Hide the submit button.
 	$("#create-container").hide();
@@ -27,13 +46,8 @@ $("form#delete-container-form").on('submit', function() {
 	$(".progress").show();
 });
 
-//Cancel button for delete container modal
+//Bind the cancel button to the modal closing delete container modal
 $('#cancel-delete').on('click', function() {
-
-	//Hide the delete button
-	$("#delete-container-submit").hide();
-	//Clear the input
-	$("input.enter-container-name").val("");
 	$('#delete-container').foundation('reveal', 'close');
 });
 
