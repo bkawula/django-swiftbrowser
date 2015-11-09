@@ -40,10 +40,12 @@ $('#create-container').on('submit', function(event) {
 	$(".progress").show();
 });
 
-$("form#delete-container-form").on('submit', function() {
-	$("#delete-container-submit").hide();
-	$("#cancel-delete").hide();
-	$(".progress").show();
+/*
+	Disable the delete container form from submitting. Form to be re-enabled
+	when the user confirms by typing in the container name.
+*/
+$("form#delete-container-form").on('submit', function(e) {
+	e.preventDefault();
 });
 
 //Bind the cancel button to the modal closing delete container modal
@@ -70,6 +72,20 @@ function delete_container_check() {
 	var container_name = $("form#delete-container-form span.container-name-holder").html();
 	if (user_input == container_name) {
 		$("#delete-container-submit").slideDown();
+
+		/*Enable the form. */
+		$("form#delete-container-form").unbind("submit");
+
+		/* Show the loader*/
+		$("form#delete-container-form").on('submit', function() {
+			$("#delete-container-submit").hide();
+			$("#cancel-delete").hide();
+			$(".progress").show();
+		});
+
+		/* Stop the keyup checks. */
+		$("input.enter-container-name").unbind("keyup");
+
 		return true;
 	} else {
 		$("#delete-container-submit").hide();
