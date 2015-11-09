@@ -30,7 +30,7 @@ from jfu.http import upload_receive, UploadResponse, JFUResponse
 from swiftbrowser.models import Photo
 from swiftbrowser.models import Document
 from swiftbrowser.forms import CreateContainerForm, PseudoFolderForm, \
-    LoginForm, DocumentForm, TimeForm
+    LoginForm, DocumentForm, TimeForm, UpdateACLForm
 from swiftbrowser.utils import *
 
 import swiftbrowser
@@ -124,3 +124,50 @@ def delete_container(request, container):
         messages.add_message(request, messages.ERROR, _("Access denied."))
 
     return redirect(containerview)
+
+
+@ajax_session_valid
+def get_acls(request, container):
+    """ Read and return the Read and Write ACL of the given container. """
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    cont = client.head_container(storage_url, auth_token, container)
+    readers = cont.get('x-container-read', '')
+    writers = cont.get('x-container-write', '')
+
+    return JsonResponse({
+        "read_acl": readers,
+        "write_acl": writers
+    })
+
+
+@ajax_session_valid
+def set_acls(request, container):
+    """For the given container, set the ACLs. """
+
+    form = UpdateACLForm(request.POST)
+
+    if (form.is_valid()):
+        read_acl = form.cleaned_data['read_acl']
+        write_acl = form.cleaned_data['write_acl']
+    else:
+        return JsonResponse({'error': 'invalid form'})
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    headers = {'X-Container-Read': read_acl,
+               'X-Container-Write': write_acl}
+    try:
+        client.post_container(storage_url, auth_token,
+                              container, headers)
+
+        return JsonResponse({
+            "success": "Successfully updated ACL.",
+            "read_acl": read_acl,
+            "write_acl": write_acl
+        })
+    except client.ClientException:
+        return JsonResponse({'error': 'Error updating ACL.'})

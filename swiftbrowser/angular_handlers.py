@@ -15,43 +15,6 @@ import keystoneclient.v2_0.client
 
 
 @ajax_session_valid
-def get_object_table(request):
-    """ Returns json object of all objects in current container. """
-
-    storage_url = request.session.get('storage_url', '')
-    auth_token = request.session.get('auth_token', '')
-    container = request.session.get('container')
-    prefix = request.session.get('prefix')
-
-    try:
-        meta, objects = client.get_container(
-            storage_url,
-            auth_token,
-            container,
-            delimiter='/',
-            prefix=prefix)
-
-    except client.ClientException:
-        messages.add_message(request, messages.ERROR, _("Access denied."))
-        return redirect(containerview)
-
-    prefixes = prefix_list(prefix)
-    pseudofolders, objs = pseudofolder_object_list(objects, prefix)
-    base_url = get_base_url(request)
-    account = storage_url.split('/')[-1]
-
-    return JsonResponse({
-        'success': True,
-        "data": {
-            'container': container,
-            'objects': objs,
-            'folders': pseudofolders,
-            'folder_prefix': prefix
-        }
-    })
-
-
-@ajax_session_valid
 def get_users(request):
     """ Returns json object of all tenants in the current  """
 
@@ -168,50 +131,3 @@ def delete_user(request):
         return HttpResponse(e, status=500)
 
     return JsonResponse({'success': 'User deleted'})
-
-
-@ajax_session_valid
-def get_acls(request, container):
-    """ Read and return the Read and Write ACL of the given container. """
-
-    storage_url = request.session.get('storage_url', '')
-    auth_token = request.session.get('auth_token', '')
-
-    cont = client.head_container(storage_url, auth_token, container)
-    readers = cont.get('x-container-read', '')
-    writers = cont.get('x-container-write', '')
-
-    return JsonResponse({
-        "read_acl": readers,
-        "write_acl": writers
-    })
-
-
-@ajax_session_valid
-def set_acls(request, container):
-    """For the given container, set the ACLs. """
-
-    form = UpdateACLForm(request.POST)
-
-    if (form.is_valid()):
-        read_acl = form.cleaned_data['read_acl']
-        write_acl = form.cleaned_data['write_acl']
-    else:
-        return JsonResponse({'error': 'invalid form'})
-
-    storage_url = request.session.get('storage_url', '')
-    auth_token = request.session.get('auth_token', '')
-
-    headers = {'X-Container-Read': read_acl,
-               'X-Container-Write': write_acl}
-    try:
-        client.post_container(storage_url, auth_token,
-                              container, headers)
-
-        return JsonResponse({
-            "success": "Successfully updated ACL.",
-            "read_acl": read_acl,
-            "write_acl": write_acl
-        })
-    except client.ClientException:
-        return JsonResponse({'error': 'Error updating ACL.'})

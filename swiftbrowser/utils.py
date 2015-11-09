@@ -458,14 +458,6 @@ def download_collection(request, container, prefix=None, non_recursive=False):
     return response
 
 
-def get_acls(storage_url, auth_token, container):
-    """ Returns ACLs of given container. """
-    cont = client.head_container(storage_url, auth_token, container)
-    readers = cont.get('x-container-read', '')
-    writers = cont.get('x-container-write', '')
-    return (readers, writers)
-
-
 def remove_duplicates_from_acl(acls):
     """ Removes possible duplicates from a comma-separated list. """
     entries = acls.split(',')
