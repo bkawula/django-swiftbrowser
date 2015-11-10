@@ -3,7 +3,6 @@
 #pylint:disable=R0924
 from django import forms
 from django.conf import settings
-#from utils import get_keystone_tenants
 
 
 class CreateContainerForm(forms.Form):
@@ -31,8 +30,17 @@ class DocumentForm(forms.Form):
 class TimeForm(forms.Form):
     ''' Custom Temp URL Form. Allows users to specify time in hours and
     days.'''
-    days = forms.DecimalField(initial=0)
-    hours = forms.DecimalField(initial=0)
+    days = forms.DecimalField(initial=0, required=False)
+    hours = forms.DecimalField(initial=0, required=False)
+
+    def clean(self):
+        '''Check for empty fields. If fields are empty, set them to the inital
+        value.'''
+        cleaned_data = super(TimeForm, self).clean()
+        for name in self.fields:
+            if (not self[name].value()):
+                cleaned_data[name] = self.fields[name].initial
+        return cleaned_data
 
 
 class CreateUserForm(forms.Form):
