@@ -88,10 +88,12 @@ def login(request):
             messages.error(request, _("Login failed."))
     else:
         form = LoginForm(None)
+        username = ""
 
     return render_to_response(
         'login.html',
-        {'form': form},
+        {'form': form,
+        'username': username},
         context_instance=RequestContext(request)
     )
 
