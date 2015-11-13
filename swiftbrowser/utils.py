@@ -580,9 +580,9 @@ def split_tenant_user_names(username):
     return tenant_name, user
 
 
-def split_acl(acl):
+def split_read_acl(acl):
     '''Given an acl from a container, return a dictionary with a list of users,
-    referers and a boolean value for public and rlistings.
+    referers (as domains) and a boolean value for public and rlistings.
 
     Ex.
 
@@ -593,4 +593,4 @@ def split_acl(acl):
         "public": false,
     }
     '''
-    return
+    return {}
