@@ -578,3 +578,19 @@ def split_tenant_user_names(username):
     tenant_name = username[0:username.index(":")]
     user = username[username.index(":") + 1:]
     return tenant_name, user
+
+
+def split_acl(acl):
+    '''Given an acl from a container, return a dictionary with a list of users,
+    referers and a boolean value for public and rlistings.
+
+    Ex.
+
+    {
+        "users": ["tenant:user", "tenant:user2"],
+        "referers": ["domain.com"],
+        "rlistings": false,
+        "public": false,
+    }
+    '''
+    return
