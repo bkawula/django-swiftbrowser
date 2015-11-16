@@ -593,4 +593,30 @@ def split_read_acl(acl):
         "public": false,
     }
     '''
-    return {}
+
+    items = acl.split(",")
+    users = []
+    referers = []
+    rlistings = False
+    public = False
+
+    for item in items:
+        if item == "":
+            break
+        if item[0:3] == ".r:":
+            # Check for public
+            if item == ".r:*":
+                public = True
+            else:
+                referers.append(item[3:])
+        elif item == ".rlistings":
+            rlistings = True
+        else:
+            users.append(item)
+
+    return {
+        "users": users,
+        "referers": referers,
+        "rlistings": rlistings,
+        "public": public,
+    }

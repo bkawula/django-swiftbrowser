@@ -43,7 +43,7 @@ class SplitAclTest(TestCase):
     def test_user_multiple(self):
         '''Test multiple users on the acl'''
 
-        acl = "tenant:user1,tenant:user2,tenant:user3, user4"
+        acl = "tenant:user1,tenant:user2,tenant:user3,user4"
         split = split_read_acl(acl)
         self.assertEqual(4, len(split))
         self.assertEqual("tenant:user1", split["users"][0])
@@ -76,9 +76,9 @@ class SplitAclTest(TestCase):
 
         self.assertEqual(4, len(split["referers"]))
         self.assertEqual("example.com", split["referers"][0])
-        self.assertEqual("domain.com", split["referers"][0])
-        self.assertEqual("swiftbrowser.com", split["referers"][0])
-        self.assertEqual("abc.com", split["referers"][0])
+        self.assertEqual("domain.com", split["referers"][1])
+        self.assertEqual("swiftbrowser.com", split["referers"][2])
+        self.assertEqual("abc.com", split["referers"][3])
 
         self.assertEqual(0, len(split["users"]))
         self.assertFalse(split["rlistings"])
@@ -167,10 +167,10 @@ class SplitAclTest(TestCase):
         acl = ".rlistings,user1,user2,tenant:user3"
         split = split_read_acl(acl)
 
-        self.assertEqual(4, len(split["users"]))
+        self.assertEqual(3, len(split["users"]))
         self.assertEqual("user1", split["users"][0])
         self.assertEqual("user2", split["users"][1])
-        self.assertEqual("user3", split["users"][2])
+        self.assertEqual("tenant:user3", split["users"][2])
         self.assertEqual(0, len(split["referers"]))
         self.assertTrue(split["rlistings"])
         self.assertFalse(split["public"])
@@ -178,7 +178,7 @@ class SplitAclTest(TestCase):
     def test_multiple_referers_multiple_users(self):
         '''Test when a container has multiple referers and multiple users.'''
 
-        acl = ".r:domain.com,user1,user2.r:abc.com,.r:swiftbrowser.com,user3"
+        acl = ".r:domain.com,user1,user2,.r:abc.com,.r:swiftbrowser.com,user3"
         split = split_read_acl(acl)
 
         self.assertEqual(3, len(split["users"]))
@@ -196,8 +196,8 @@ class SplitAclTest(TestCase):
         '''Test when a container has public set, rlistings set, multiple
         referers and multiple users.'''
 
-        acl = ".r:*,user1,domain.com,user2,.rlistings,"
-        "user3,domain2.com,abc.com"
+        acl = (".r:*,user1,.r:domain.com,user2,.rlistings,"
+               "user3,.r:domain2.com,.r:abc.com")
         split = split_read_acl(acl)
 
         self.assertEqual(3, len(split["users"]))
