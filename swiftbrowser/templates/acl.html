@@ -12,18 +12,30 @@
 				    <h4>Users</h4>
 				    <div ng-repeat="user in read_acl.users track by $index">
 				    	<input type="text" ng-model="read_acl.users[$index]" name="read_acl"/>
+				    	<a ng-click="remove_read_user($index)">
+				    		<span class="glyphicons glyphicons-remove-2"></span>
+				    	</a>
 				    </div>
 					<form ng-submit="add_read_user()">
-				    	<input type="text" placeholder="enter user" ng-model="read_new_user"/>ff
+				    	<input type="text" placeholder="enter user" ng-model="read_new_user"/>
+				    	<a ng-click="add_read_user()">
+				    		<span type="submit" class="glyphicons glyphicons-plus"></span>
+				    	</a>
 					</form>
 				</div>
 				<div class="columns small-4">
 					<h4>Referrers</h4>
 				    <div ng-repeat="referrer in read_acl.referrers track by $index">
 				    	<input type="text" ng-model="read_acl.referrers[$index]" name="read_acl"/>
+				    	<a ng-click="remove_read_referrer($index)">
+				    		<span class="glyphicons glyphicons-remove-2"></span>
+				    	</a>
 				    </div>
 					<form ng-submit="add_read_referrer()">
 				    	<input type="text" placeholder="enter referrer" ng-model="read_new_referrer"/>
+				    	<a ng-click="add_read_referrer()">
+				    		<span type="submit" class="glyphicons glyphicons-plus"></span>
+				    	</a>
 					</form>
 				</div>
 				<div class="columns small-4">
@@ -41,9 +53,15 @@
 				    <h4>Users</h4>
 				    <div ng-repeat="user in write_acl.users track by $index">
 				    	<input type="text" ng-model="write_acl.users[$index]" name="write_acl"/>
+				    	<a ng-click="remove_write_user($index)">
+				    		<span class="glyphicons glyphicons-remove-2"></span>
+				    	</a>
 				    </div>
 					<form ng-submit="add_write_user()">
 				    	<input type="text" placeholder="enter user" ng-model="write_new_user"/>
+				    	<a ng-click="add_write_user()">
+				    		<span type="submit" class="glyphicons glyphicons-plus"></span>
+				    	</a>
 					</form>
 				</div>
 				<div class="columns small-4">

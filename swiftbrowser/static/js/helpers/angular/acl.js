@@ -78,6 +78,16 @@ app.controller('AclCtrl', function ($scope, $http, baseurl, MessagesHandler) {
     }
   };
 
+  /* Remove the given index from the read user list. */
+  $scope.remove_read_user = function (index) {
+    $scope.read_acl.users.splice(index, 1);
+  };
+
+  /* Remove the given index from the read referrer list. */
+  $scope.remove_read_referrer = function (index) {
+    $scope.read_acl.referrers.splice(index, 1);
+  };
+
   /*
     Add new user to the write acl.
   */
@@ -96,6 +106,11 @@ app.controller('AclCtrl', function ($scope, $http, baseurl, MessagesHandler) {
       $scope.read_acl.referrers.push($scope.read_new_referrer);
       $scope.read_new_referrer = "";
     }
+  };
+
+  /* Remove the given index from the read user list. */
+  $scope.remove_write_user = function (index) {
+    $scope.write_acl.users.splice(index, 1);
   };
 
   /*
