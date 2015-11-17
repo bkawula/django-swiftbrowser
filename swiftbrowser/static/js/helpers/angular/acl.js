@@ -32,14 +32,26 @@ app.controller('AclCtrl', function ($scope, $http, baseurl, MessagesHandler) {
     Set the ACLs
   */
   $scope.setACLs = function () {
+
+    // Update new inputs
+    $scope.add_read_user();
+    $scope.add_write_user();
+    $scope.add_read_referrer();
+
+    //Concat acls
+    var read = $scope.concat_read_acl();
+    var write = $scope.concat_write_acl();
+
+    console.log(read);
+    console.log(write);
+
     $http({
       method  : "POST",
       url     : baseurl + 'set_acls/' + $scope.container + "/",
       data    : $.param(
         {
-          "read_acl": $scope.read_acl,
-          "write_acl": $scope.write_acl,
-          "csrfmiddlewaretoken": $('input[name=csrfmiddlewaretoken]').val()
+          "read_acl": read,
+          "write_acl": write,
         }
       ),  // pass in data as strings
       headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -51,6 +63,7 @@ app.controller('AclCtrl', function ($scope, $http, baseurl, MessagesHandler) {
           } else {
             MessagesHandler.newSuccessMessage(response.success);
           }
+          $scope.getACLs($scope.container);
         }
       );
   };
@@ -58,33 +71,74 @@ app.controller('AclCtrl', function ($scope, $http, baseurl, MessagesHandler) {
   /*
     Add new user to the read acl.
   */
-  $scope.add_read_user = function (user) {
-    $scope.read_acl.users.push(user);
-    $scope.read_new_user = "";
+  $scope.add_read_user = function () {
+    if ($scope.read_new_user) {
+      $scope.read_acl.users.push($scope.read_new_user);
+      $scope.read_new_user = "";
+    }
   };
 
   /*
     Add new user to the write acl.
   */
-  $scope.add_write_user = function (user) {
-    $scope.write_acl.users.push(user);
-    $scope.write_new_user = "";
+  $scope.add_write_user = function () {
+    if ($scope.write_new_user) {
+      $scope.write_acl.users.push($scope.write_new_user);
+      $scope.write_new_user = "";
+    }
   };
 
   /*
     Add new referrer to the read acl.
   */
-  $scope.add_read_referrer = function (referrer) {
-    $scope.read_acl.referrers.push(referrer);
-    $scope.read_new_referrer = "";
+  $scope.add_read_referrer = function () {
+    if ($scope.read_new_referrer) {
+      $scope.read_acl.referrers.push($scope.read_new_referrer);
+      $scope.read_new_referrer = "";
+    }
   };
 
   /*
-    Add new referrer to the write acl.
+    Concatenate and return the read ACL
   */
-  $scope.add_write_referrer = function (referrer) {
-    $scope.write_acl.referrers.push(referrer);
-    $scope.write_new_referrer = "";
+  $scope.concat_read_acl = function () {
+    var acl = "";
+    var i;
+
+    for (i = 0; i < $scope.read_acl.users.length; i++) {
+      acl += $scope.read_acl.users[i] + ",";
+    }
+
+    for (i = 0; i < $scope.read_acl.referrers.length; i++) {
+      acl += ".r:" + $scope.read_acl.referrers[i] + ",";
+    }
+
+    if ($scope.read_acl["public"]) {
+      acl += ".r:*,";
+    }
+    if ($scope.read_acl.rlistings) {
+      acl += ".rlistings";
+    }
+
+    acl = acl.replace(/(,$)/g, "");
+
+    return acl;
+  };
+
+  /*
+    Concatenate and return the write ACL
+  */
+  $scope.concat_write_acl = function () {
+    var acl = "";
+    var i;
+
+    for (i = 0; i < $scope.write_acl.users.length; i++) {
+      acl += $scope.write_acl.users[i] + ",";
+    }
+
+    acl = acl.replace(/(,$)/g, "");
+
+    return acl;
   };
 
 });
