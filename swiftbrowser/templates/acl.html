@@ -6,12 +6,63 @@
 	            <ng-include src="'{{STATIC_URL}}templates/messages.html'"></ng-include>
 		    </div>
 			<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+		    <h3>Read Access:</h3>
+		    <div class="row">
+		    	<div class="columns small-4">
+				    <h4>Users</h4>
+				    <div ng-repeat="user in read_acl.users">
+				    	<input type="text" ng-model="read_acl.users[$index]" name="read_acl"/>
+				    </div>
+					<form ng-submit="add_read_user(read_new_user)">
+				    	<input type="text" placeholder="enter user" ng-model="read_new_user"/>
+					</form>
+				</div>
+				<div class="columns small-4">
+					<h4>Referrers</h4>
+				    <div ng-repeat="referrer in read_acl.referrers">
+				    	<input type="text" ng-model="read_acl.referrers[$index]" name="read_acl"/>
+				    </div>
+					<form ng-submit="add_read_referrer(read_new_referrer)">
+				    	<input type="text" placeholder="enter referrer" ng-model="read_new_referrer"/>
+					</form>
+				</div>
+				<div class="columns small-4">
+					<h4>Other</h4>
+					<input type="checkbox" ng-model="read_acl.public"/>
+					<label>Public</label>
+					<br>
+					<input type="checkbox" ng-model="read_acl.rlistings"/>
+					<label>Listings allowed</label>
+				</div>
+			</div>
+			<h3>Write Access:</h3>
+		    <div class="row">
+		    	<div class="columns small-4">
+				    <h4>Users</h4>
+				    <div ng-repeat="user in write_acl.users">
+				    	<input type="text" ng-model="write_acl.users[$index]" name="write_acl"/>
+				    </div>
+					<form ng-submit="add_write_user(write_new_user)">
+				    	<input type="text" placeholder="enter user" ng-model="write_new_user"/>
+					</form>
+				</div>
+				<div class="columns small-4">
+					<h4>Referrers</h4>
+				    <div ng-repeat="referrer in write_acl.referrers">
+				    	<input type="text" ng-model="write_acl.referrers[$index]" name="write_acl"/>
+				    </div>
+					<form ng-submit="add_write_referrer(write_new_referrer)">
+				    	<input type="text" placeholder="enter referrer" ng-model="write_new_referrer"/>
+					</form>
+				</div>
+				<div class="columns small-4">
+					<h4>Other</h4>
+					<input type="checkbox" ng-model="write_acl.public"/>
+					<label>Public</label>
+				</div>
+			</div>
 			<form id="edit-access-form" method="POST" id="create-container" ng-submit="setACLs()">
 			    {% csrf_token %}
-			    <label>Read Access:</label>
-			    <input type="text" ng-model="read_acl" name="read_acl"/>
-			    <label>Write Access:</label>
-			    <input type="text" ng-model="write_acl" name="write_acl"/>
 				<button type="submit" class="expand">Update</button>
 		        <span id="cancel-edit-access" class="button expand close">Close</span>
 			</form>

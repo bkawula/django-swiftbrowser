@@ -134,12 +134,12 @@ def get_acls(request, container):
     auth_token = request.session.get('auth_token', '')
 
     cont = client.head_container(storage_url, auth_token, container)
-    readers = cont.get('x-container-read', '')
-    writers = cont.get('x-container-write', '')
+    readers = split_acl(cont.get('x-container-read', ''))
+    writers = split_acl(cont.get('x-container-write', ''))
 
     return JsonResponse({
         "read_acl": readers,
-        "write_acl": writers
+        "write_acl": writers,
     })
 
 

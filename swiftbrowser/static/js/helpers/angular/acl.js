@@ -54,6 +54,39 @@ app.controller('AclCtrl', function ($scope, $http, baseurl, MessagesHandler) {
         }
       );
   };
+
+  /*
+    Add new user to the read acl.
+  */
+  $scope.add_read_user = function (user) {
+    $scope.read_acl.users.push(user);
+    $scope.read_new_user = "";
+  };
+
+  /*
+    Add new user to the write acl.
+  */
+  $scope.add_write_user = function (user) {
+    $scope.write_acl.users.push(user);
+    $scope.write_new_user = "";
+  };
+
+  /*
+    Add new referrer to the read acl.
+  */
+  $scope.add_read_referrer = function (referrer) {
+    $scope.read_acl.referrers.push(referrer);
+    $scope.read_new_referrer = "";
+  };
+
+  /*
+    Add new referrer to the write acl.
+  */
+  $scope.add_write_referrer = function (referrer) {
+    $scope.write_acl.referrers.push(referrer);
+    $scope.write_new_referrer = "";
+  };
+
 });
 
 
