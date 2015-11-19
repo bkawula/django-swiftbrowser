@@ -3,3 +3,4 @@ include README.md
 recursive-include swiftbrowser/static *
 recursive-include swiftbrowser/templates *
 recursive-include swiftbrowser/templatetags *
+recursive-include swiftbrowser/views *
