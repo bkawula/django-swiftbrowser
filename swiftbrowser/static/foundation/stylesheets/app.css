@@ -10058,6 +10058,21 @@ form#object-expiry-form input.submit {
   height: 4em;
 }
 
+/* line 46, ../scss/_containerview.scss */
+#edit-acl input[type="text"] {
+  width: 90%;
+  display: inline;
+}
+/* line 50, ../scss/_containerview.scss */
+#edit-acl span.glyphicons {
+  top: 10px;
+  left: 7px;
+}
+/* line 53, ../scss/_containerview.scss */
+#edit-acl span.glyphicons.glyphicons-remove-2 {
+  color: #ADADAD;
+}
+
 /* line 2, ../scss/_settings_page.scss */
 #delete-user-form button#delete-user-submit {
   background-color: red;
