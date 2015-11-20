@@ -21,7 +21,8 @@ def containerview(request):
     # Users with no role will not be able to list containers.
     if request.session.get('norole'):
         # Redirect them to the container that is their username.
-        return redirect(objectview, request.session.get('user'))
+        return redirect(swiftbrowser.views.objects.objectview,
+                        request.session.get('user'))
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
