@@ -2,40 +2,23 @@
 # -*- coding: utf-8 -*-
 #pylint:disable=E1101
 import os
-import time
-import urlparse
-import hmac
-import re
-from hashlib import sha1
 import logging
-import zipfile
-import json
-from StringIO import StringIO
 from swiftclient import client
 
-from django.shortcuts import render_to_response, redirect, render
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.contrib import messages
-from django.contrib.messages import get_messages
 from django.conf import settings
-from django.http import HttpResponseRedirect
-from django.http import HttpResponse, HttpResponseServerError, \
-    HttpResponseForbidden
 from django.http import JsonResponse
-from django.views import generic
 from django.views.decorators.http import require_POST
 from django.utils.translation import ugettext as _
-from django.core.urlresolvers import reverse
-from jfu.http import upload_receive, UploadResponse, JFUResponse
+from jfu.http import JFUResponse
 from swiftbrowser.models import Photo
-from swiftbrowser.models import Document
-from swiftbrowser.forms import CreateContainerForm, PseudoFolderForm, \
-    LoginForm, DocumentForm, TimeForm
+from swiftbrowser.forms import PseudoFolderForm, LoginForm, TimeForm
 from swiftbrowser.utils import *
 from swiftbrowser.views.containers import containerview
 from swiftbrowser.views.objects import objectview
 
-import swiftbrowser
 
 logger = logging.getLogger(__name__)
 

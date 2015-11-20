@@ -16,8 +16,7 @@ from hashlib import sha1
 from swiftclient import client
 
 from django.http import HttpResponse
-from django.shortcuts import render_to_response, redirect
-from django.template import RequestContext
+from django.shortcuts import redirect
 from django.contrib import messages
 from django.conf import settings
 
@@ -25,7 +24,7 @@ from django.conf import settings
 from django.utils.translation import ugettext as _
 
 from StringIO import StringIO
-from swiftbrowser.forms import LoginForm, TimeForm
+from swiftbrowser.forms import TimeForm
 import swiftbrowser.views
 
 logger = logging.getLogger(__name__)
