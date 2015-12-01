@@ -619,3 +619,42 @@ def split_acl(acl):
         "rlistings": rlistings,
         "public": public,
     }
+
+
+def get_first_nonconsecutive(objs):
+    '''Given a list of strings, return the first nonconsecutive digit starting
+    from one. '''
+
+    # Create a list of the segments by name as integers
+    int_list = [int(obj) for obj in objs]
+
+    int_list.sort()
+
+    # Empty case
+    if len(int_list) == 0:
+        return 1
+
+    # Needs to start with 1
+    if int_list[0] != 1:
+        return 1
+
+    i = 0
+    while (i < len(int_list)):
+        if (int_list[i] != i + 1):
+            return i + 1
+        i += 1
+
+    return int_list[-1] + 1
+
+
+def calculate_segment_size(size):
+    '''Given a size, return the size of segments an object of this size would
+    need to create a SLO. SLO objects have a maximum of 1000 segments with
+    segments being a minimum of 1MB'''
+
+    # Files 1048576000B (1000 MB) or less require the minimum segment size of
+    # 1048576B (1MB)
+    if size <= 1048576000:
+        return 1048576
+
+    return int(math.ceil(size / 1000))

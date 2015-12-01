@@ -211,3 +211,86 @@ class SplitAclTest(TestCase):
         self.assertEqual("abc.com", split["referrers"][2])
         self.assertTrue(split["rlistings"])
         self.assertTrue(split["public"])
+
+
+class GetNonConsecutiveTest(TestCase):
+
+    def test_empty(self):
+        '''Test an empty set.'''
+
+        objects = []
+        self.assertEqual(get_first_nonconsecutive(objects), 1)
+
+    def test_segment_one_missing(self):
+        '''Test when segment number one is missing.'''
+
+        objects = ["0002", "0003", "0004", "0005", "0006", "0007", "0008",
+                   "0009", "0010", "0011", "0012", "0013", "0014"]
+        self.assertEqual(get_first_nonconsecutive(objects), 1)
+
+    def test_sequential_numbers(self):
+        '''Test a list of objects that are perfectly sequential.'''
+
+        objects = ["0001", "0002", "0003", "0004", "0005", "0006", "0007",
+                   "0008", "0009", "0010", "0011", "0012", "0013", "0014"]
+        self.assertEqual(get_first_nonconsecutive(objects), 15)
+
+    def test_sequential_numbers_small(self):
+        '''Test a small list of objects that are perfectly sequential.'''
+
+        objects = ["0001", "0002"]
+        self.assertEqual(get_first_nonconsecutive(objects), 3)
+
+    def test_set_size_one(self):
+        '''Test a list with one digit.'''
+
+        objects = ["0001"]
+        self.assertEqual(get_first_nonconsecutive(objects), 2)
+
+    def test_set_size_one_incorrect(self):
+        '''Test a list with one digit that is not one.'''
+
+        objects = ["0002"]
+        self.assertEqual(get_first_nonconsecutive(objects), 1)
+
+    def test_break_in_sequence_after_one(self):
+        '''Test a set where the break in sequence is after 1.'''
+
+        objects = ["0001", "0003", "0004", "0005", "0006", "0007", "0008",
+                   "0009", "0010", "0011", "0012", "0013", "0014"]
+        self.assertEqual(get_first_nonconsecutive(objects), 2)
+
+    def test_break_in_sequence_middle(self):
+        '''Test a break in sequence in the middle.'''
+
+        objects = ["0001", "0002", "0003", "0004", "0005", "0007", "0008",
+                   "0009", "0010", "0011", "0012", "0013", "0014"]
+        self.assertEqual(get_first_nonconsecutive(objects), 6)
+
+    def test_large_break_in_sequence_middle(self):
+        '''Test a break in sequence in the middle.'''
+
+        objects = ["0001", "0002", "0003", "0004", "0005", "0014", "0015",
+                   "0016"]
+        self.assertEqual(get_first_nonconsecutive(objects), 6)
+
+    def test_break_in_sequence_near_end(self):
+        '''Test a break in sequence at the end.'''
+
+        objects = ["0001", "0002", "0003", "0004", "0005", "0006", "0007",
+                   "0008", "0009", "0010", "0011", "0012", "0014"]
+        self.assertEqual(get_first_nonconsecutive(objects), 13)
+
+    def test_duplicate(self):
+        '''Test when there is a duplicate.'''
+
+        objects = ["0001", "0002", "0003", "0004", "0005", "0006", "0006",
+                   "0007", "0008", "0009", "0010", "0011", "0012", "0014"]
+        self.assertEqual(get_first_nonconsecutive(objects), 7)
+
+    def test_duplicate_break(self):
+        '''Test when there is a duplicate and a break following immediately.'''
+
+        objects = ["0001", "0002", "0003", "0004", "0005", "0006", "0006",
+                   "0008", "0009", "0010", "0011", "0012", "0014"]
+        self.assertEqual(get_first_nonconsecutive(objects), 7)

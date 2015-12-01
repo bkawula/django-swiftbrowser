@@ -58,3 +58,10 @@ class UpdateACLForm(forms.Form):
     ''' Form for updating container ACLs'''
     read_acl = forms.CharField(required=False)
     write_acl = forms.CharField(required=False)
+
+
+class StartSloForm(forms.Form):
+    ''' Form for starting a SLO. '''
+    file_name = forms.CharField()
+    file_size = forms.CharField()
+    prefix = forms.CharField(required=False)
