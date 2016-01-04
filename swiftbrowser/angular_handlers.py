@@ -25,7 +25,7 @@ def get_users(request):
     try:
         keystone_client = keystoneclient.v2_0.client.Client(
             username=user, password=password, tenant_name=tenant_name,
-            auth_url=settings.SWAUTH_URL)
+            auth_url=settings.SWIFT_AUTH_URL)
 
         keystone_usermanager = keystone_client.users
 
