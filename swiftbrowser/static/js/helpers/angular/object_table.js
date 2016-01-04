@@ -130,6 +130,20 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
     };
   })
 
+  /*
+  Format filename
+    from "folder/name/file.mp4"
+    to "file.mp4"
+  */
+  .filter('formatFileName', function () {
+    'use strict';
+
+    return function (string) {
+      var split = string.split("/");
+      return split[split.length - 1];
+    };
+  })
+
   //Event for when last row in object table has been rendered.
   .directive('onLastRepeat', function () {
     return function (scope, element, attrs) {

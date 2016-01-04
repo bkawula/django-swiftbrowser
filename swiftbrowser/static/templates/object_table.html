@@ -50,7 +50,7 @@
 				<span ng-if="!(key.extension !='other')" class="glyphicons glyphicons-file"></span>
 			</td>
 			<td>
-				<a href="{{baseurl}}download/{{container}}/{{key.name}}" class="block">{{key.name}}</a>
+				<a href="{{baseurl}}download/{{container}}/{{key.name}}" class="block">{{key.name | formatFileName}}</a>
 			</td>
 			<td class="hide-for-small-only">{{key.last_modified | date : 'medium' : '-1000'}}</td>
 			<td >{{key.bytes|formatByte}}</td>
