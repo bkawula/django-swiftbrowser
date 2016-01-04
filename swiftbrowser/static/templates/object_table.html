@@ -52,7 +52,7 @@
 			<td>
 				<a href="{{baseurl}}download/{{container}}/{{key.name}}" class="block">{{key.name}}</a>
 			</td>
-			<td class="hide-for-small-only">{{key.last_modified | date:'medium'}}</td>
+			<td class="hide-for-small-only">{{key.last_modified | date : 'medium' : '-1000'}}</td>
 			<td >{{key.bytes|formatByte}}</td>
 			<td>
 				<button type="button" data-dropdown="file-opt{{$index}}" aria-controls="file-opt{{$index}}" aria-expanded="false" class="button dropdown file-btn">
