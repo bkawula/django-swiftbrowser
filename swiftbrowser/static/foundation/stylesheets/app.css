@@ -10015,6 +10015,27 @@ form#object-expiry-form input.submit {
   background-color: #EEEEEE;
 }
 
+/* line 55, ../scss/_objectview.scss */
+#slo-upload .slo-progress {
+  width: 100%;
+  height: 50px;
+}
+/* line 59, ../scss/_objectview.scss */
+#slo-upload .slo-progress-wrap {
+  display: none;
+  background: #0074be;
+  margin: 20px 0;
+  overflow: hidden;
+  position: relative;
+}
+/* line 65, ../scss/_objectview.scss */
+#slo-upload .slo-progress-wrap .slo-progress-bar {
+  background: #ddd;
+  left: 0;
+  position: absolute;
+  top: 0;
+}
+
 /* line 1, ../scss/_containerview.scss */
 #containerview {
   padding-bottom: 5rem;

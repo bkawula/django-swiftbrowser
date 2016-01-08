@@ -28,24 +28,15 @@ def get_segment_number(file_name, request, container, prefix=None):
     content_type = 'application/directory'
     obj = None
 
-    try:
-        client.put_object(storage_url, auth_token,
-                          container, foldername, obj,
-                          content_type=content_type)
+    client.put_object(storage_url, auth_token, container, foldername, obj,
+                      content_type=content_type)
 
-        meta, objects = client.get_container(storage_url, auth_token,
-                                             container, delimiter='/',
-                                             prefix=foldername)
+    meta, objects = client.get_container(storage_url, auth_token, container,
+                                         delimiter='/', prefix=foldername)
 
-        pseudofolders, objs = pseudofolder_object_list(objects, prefix)
+    pseudofolders, objs = pseudofolder_object_list(objects, prefix)
 
-        return get_first_nonconsecutive(objs)
-
-    except client.ClientException:
-        messages.add_message(
-            request, messages.ERROR, _("Access denied."))
-
-    return 0
+    return get_first_nonconsecutive(objs)
 
 
 def initialize_slo(request, container, prefix=None):
@@ -60,9 +51,15 @@ def initialize_slo(request, container, prefix=None):
             file_name = form.cleaned_data["file_name"]
             file_size = float(form.cleaned_data["file_size"])
 
+            try:
+                segment_number = get_segment_number(file_name, request,
+                                                    container, prefix)
+            except client.ClientException, e:
+
+                return HttpResponse(e, status=500)
+
             response = {
-                "next_segment": get_segment_number(file_name, request,
-                                                   container, prefix),
+                "next_segment": segment_number,
                 "segment_size": calculate_segment_size(file_size),
             }
 

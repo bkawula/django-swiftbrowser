@@ -11,6 +11,7 @@ import zipfile
 import random
 import re
 import Image
+import math
 from hashlib import sha1
 
 from swiftclient import client
@@ -626,7 +627,7 @@ def get_first_nonconsecutive(objs):
     from one. '''
 
     # Create a list of the segments by name as integers
-    int_list = [int(obj) for obj in objs]
+    int_list = [int(obj["name"].split("/")[-1]) for obj in objs]
 
     int_list.sort()
 
