@@ -34,7 +34,6 @@ def objectview(request, container, prefix=None):
         container_object = client.head_container(
             storage_url, auth_token, container)
         key = container_object.get('x-container-meta-temp-url-key', '')
-        request.session["key"] = key
 
     # Regular users use account keys
     else:
@@ -44,6 +43,7 @@ def objectview(request, container, prefix=None):
 
     request.session['container'] = container
     request.session['prefix'] = prefix
+    request.session["key"] = key
 
     redirect_url = get_base_url(request)
     redirect_url += reverse('objectview', kwargs={'container': container, })
@@ -111,7 +111,8 @@ def objectview(request, container, prefix=None):
         expires
     )
 
-    signature = hmac.new(key, hmac_body, sha1).hexdigest()
+    signature = hmac.new(
+        key.encode('ascii', 'ignore'), hmac_body, sha1).hexdigest()
 
     if [x for x in read_acl if x in required_acl]:
         public = True

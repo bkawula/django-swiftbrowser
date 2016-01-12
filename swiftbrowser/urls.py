@@ -19,7 +19,7 @@ urlpatterns = patterns(
         name="delete_folder"),
     url(r'^create_pseudofolder/(?P<container>.+?)/(?P<prefix>.+)?$',
         create_pseudofolder, name="create_pseudofolder"),
-    url(r'^delete/(?P<pk>.+)$', upload_delete, name='jfu_delete'),
+    # url(r'^delete/(?P<pk>.+)$', upload_delete, name='jfu_delete'),
     url(r'^settings$', settings_view, name="settings_view"),
     url(r'^version.info/$', get_version, name="get_version"),
     url(r'^toggle_public/(?P<container>.+?)/$', toggle_public,

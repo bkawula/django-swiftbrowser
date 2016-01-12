@@ -88,9 +88,14 @@
 		<h2>Static Large Objects</h2>
 	    <input type="file" file-model="myFile"/>
 	    {% if prefix %}
-	    	<form id="slo-form" method="POST" action="{{swift_url}}" data-initial-action="{% url "initialize_slo" container=container prefix=prefix %}" enctype="multipart/form-data">
+	    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
+	    	data-initial-action="{% url "initialize_slo" container=container prefix=prefix %}"
+	    	data-create-manifest="{% url "create_manifest" container=container prefix=prefix %}"
+	    	>
 	    {% else %}
-	    	<form id="slo-form" method="POST" action="{{swift_url}}" data-initial-action="{% url "initialize_slo" container=container %}" enctype="multipart/form-data">
+	    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
+	    	data-initial-action="{% url "initialize_slo" container=container %}"
+	    	data-create-manifest="{% url "create_manifest" container=container %}" >
 	    {% endif %}
             <input type="hidden" name="max_file_size" value="{{ max_file_size }}">
             <input type="hidden" name="max_file_count" value="{{ max_file_count }}">
@@ -103,6 +108,7 @@
 		<div class="slo-progress-wrap slo-progress">
 		  <div class="slo-progress-bar slo-progress"></div>
 		</div>
+		<div id="#slo-message"></div>
 	</div>
 	<div ng-controller="CreateFolderCtrl" class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
 		<h2 id="pseudoContainer-title">Create a new folder</h2>
