@@ -66,3 +66,60 @@ def initialize_slo(request, container, prefix=None):
             return JsonResponse(response)
 
     return HttpResponse("invalid form", status=500)
+
+
+def create_manifest(request, container, prefix=None):
+    '''Given a file name, upload a manifest file assuming the segments are held
+    in a "<file_name>_segments" pseudo folder.
+
+    Return an error if the upload of the manifest fails.
+
+    Return an HTTP request with status 201 if no issues.
+    '''
+    if (request.POST):
+        form = StartSloForm(request.POST)
+        if form.is_valid():
+
+            # Get objects in the segment folder
+            file_name = form.cleaned_data["file_name"]
+
+            if prefix:
+                foldername = prefix + '/' + file_name + '_segments'
+            else:
+                foldername = file_name + '_segments'
+
+            storage_url = request.session.get('storage_url', '')
+            auth_token = request.session.get('auth_token', '')
+
+            foldername = os.path.normpath(foldername)
+            foldername = foldername.strip('/')
+            foldername += '/'
+
+            meta, objects = client.get_container(
+                storage_url, auth_token, container, delimiter='/',
+                prefix=foldername, headers=["ETag"])
+
+            pseudofolders, objs = pseudofolder_object_list(objects, prefix)
+
+            # Create
+
+            manifest = []
+
+            for obj in objs:
+                manifest.append(create_manifest_entry(obj))
+
+            return HttpResponse("Successfully uploaded " + file_name,
+                                status=201)
+
+    return HttpResponse("invalid form", status=500)
+
+
+def create_manifest_entry(obj):
+    '''Create and return a dictionary with the necessary manifest
+    variables for the given segment.'''
+
+    return {
+        "path": obj["name"],
+        "etag": obj["ETag"],
+        "size_bytes": obj["bytes"],
+    }

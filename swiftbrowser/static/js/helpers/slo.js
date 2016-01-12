@@ -88,6 +88,10 @@ function upload_segments(data) {
 
     var total_segments = Math.ceil(file.size / segment_size);
 
+    if (total_segments < segment_number) {
+        create_manifest();
+    }
+
     //While the entire file has not been uploaded, upload segments.
     while (segment_start < file.size) {
 
@@ -100,7 +104,8 @@ function upload_segments(data) {
         fd.append('expires', $("#slo-upload form input[name='expires']").val());
         fd.append('signature', $("#slo-upload form input[name='signature']").val());
         fd.append('redirect', "");
-        fd.append("FILE_NAME", segment, file.name + "_segments/" + segment_number);
+        var padded = pad(segment_number, 4);
+        fd.append("FILE_NAME", segment, file.name + "_segments/" + padded);
 
         var xhr = new XMLHttpRequest();
         xhr.open('POST', url, true);
@@ -123,6 +128,9 @@ function upload_segments(data) {
                 }, animationLength);
 
                 if (done === total_segments) {
+
+                    $("#slo-message").html("Segments uploaded. Creating manifest ...");
+
                     //Create manifest
                     create_manifest();
                 }
@@ -140,10 +148,11 @@ function upload_segments(data) {
 /*
     Submit query to Swiftbrowser to create the manifest for the SLO.
 */
-function create_manfiest() {
+function create_manifest() {
 
+    var file = $("#slo-upload input")[0].files[0];
     var formData = {
-        file_name            : file_name,
+        file_name            : file.name,
         csrfmiddlewaretoken  : $('input[name=csrfmiddlewaretoken]').val(),
         file_size            : file.size
     };
@@ -157,16 +166,27 @@ function create_manfiest() {
     */
     $.ajax({
         type        : 'POST',
-        url         : $("#slo-upload form").attr("data-initial-action"),
+        url         : $("#slo-upload form").attr("data-create-manifest"),
         data        : formData,
         dataType    : 'html',
         encode      : true,
         asych       : false
     })
 
-    .success(upload_segments)
+    .success(function (data)  {
+        console.log(data);
+    })
 
     .error(function(error) {
         console.log(error.responseText);
     });
+}
+
+/*
+    Return a string with leading zeroes for the given int such that the
+    resulting string has size number of digits.
+*/
+function pad(num, size) {
+    var s = "000000000" + num;
+    return s.substr(s.length-size);
 }

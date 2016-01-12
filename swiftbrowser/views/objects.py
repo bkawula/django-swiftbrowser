@@ -111,7 +111,8 @@ def objectview(request, container, prefix=None):
         expires
     )
 
-    signature = hmac.new(key, hmac_body, sha1).hexdigest()
+    signature1 = hmac.new(key, hmac_body, sha1)
+    signature = signature1.hexdigest()
 
     if [x for x in read_acl if x in required_acl]:
         public = True
