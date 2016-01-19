@@ -101,8 +101,8 @@
             <input type="hidden" name="max_file_count" value="{{ max_file_count }}">
             <input type="hidden" name="expires" value="{{ expires }}">
 			<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
-			<input type="hidden" class="swift_url" value="{{swift_url}}">
-			<input type="hidden" name="signature" value="{{signature}}">
+			<input type="hidden" class="swift_url" value="{{swift_slo_url}}">
+			<input type="hidden" name="signature" value="{{slo_signature}}">
 		    <button class="upload">upload me</button>
 		</form>
 		<div class="slo-progress-wrap slo-progress">

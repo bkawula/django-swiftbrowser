@@ -48,14 +48,6 @@ def objectview(request, container, prefix=None):
     redirect_url = get_base_url(request)
     redirect_url += reverse('objectview', kwargs={'container': container, })
 
-    swift_url = storage_url + '/' + container + '/'
-    if prefix:
-        swift_url += prefix
-        redirect_url += prefix
-
-    url_parts = urlparse.urlparse(swift_url)
-    path = url_parts.path
-
     try:
         meta, objects = client.get_container(storage_url, auth_token,
                                              container, delimiter='/',
@@ -97,22 +89,16 @@ def objectview(request, container, prefix=None):
     public = False
     required_acl = ['.r:*', '.rlistings']
 
-    max_file_size = 5368709120
-    max_file_count = 1
 
-    #To allow large files to upload, increase this window to 2hr.
-    expires = int(time.time() + 60 * 60 * 2)
+    swift_url = storage_url + '/' + container + '/'
+    swift_slo_url = storage_url + '/' + container + '_segments/'
+    if prefix:
+        swift_url += prefix
+        swift_slo_url += prefix
+        redirect_url += prefix
 
-    hmac_body = '%s\n%s\n%s\n%s\n%s' % (
-        path,
-        '',
-        max_file_size,
-        max_file_count,
-        expires
-    )
-
-    signature = hmac.new(
-        key.encode('ascii', 'ignore'), hmac_body, sha1).hexdigest()
+    signature = create_formpost_signature(swift_url, key)
+    slo_signature = create_formpost_signature(swift_slo_url, key)
 
     if [x for x in read_acl if x in required_acl]:
         public = True
@@ -121,7 +107,9 @@ def objectview(request, container, prefix=None):
         "objectview.html",
         {
             'swift_url': swift_url,
+            'swift_slo_url': swift_slo_url,
             'signature': signature,
+            'slo_signature': slo_signature,
             'redirect_url': redirect_url,
             'container': container,
             'objects': objs,
@@ -132,9 +120,9 @@ def objectview(request, container, prefix=None):
             'base_url': base_url,
             'account': account,
             'public': public,
-            'max_file_size': max_file_size,
-            'max_file_count': max_file_count,
-            'expires': expires,
+            'max_file_size': 5368709120,
+            'max_file_count': 1,
+            'expires': int(time.time() + 60 * 60 * 2),
         },
         context_instance=RequestContext(request)
     )

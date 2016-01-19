@@ -2,6 +2,7 @@ import os
 import json
 from tempfile import TemporaryFile, NamedTemporaryFile
 
+from django.conf import settings
 from django.http import JsonResponse, HttpResponse
 
 from swiftclient import client
@@ -43,31 +44,43 @@ def get_segment_number(file_name, request, container, prefix=None):
 
 def initialize_slo(request, container, prefix=None):
     '''Initiate a slo upload.
+
+    Create a segments container.
+
     Return the segment number the upload should start at.
     Return the size of the segments.
+    Return swift_url
     '''
-    if (request.POST):
-        form = StartSloForm(request.POST)
-        if form.is_valid():
 
-            file_name = form.cleaned_data["file_name"]
-            file_size = float(form.cleaned_data["file_size"])
+    # Check POST
+    if not (request.POST):
+        return HttpResponse("No POST in request.", status=500)
 
-            try:
-                segment_number = get_segment_number(file_name, request,
-                                                    container, prefix)
-            except client.ClientException, e:
+    # Check form is valid.
+    form = StartSloForm(request.POST)
+    if not form.is_valid():
+        return HttpResponse("Invalid Form.", status=500)
 
-                return HttpResponse(e, status=500)
+    # Create container for the segments
+    if not create_segments_container(request, container):
+        return HttpResponse("Unable to create container", status=500)
 
-            response = {
-                "next_segment": segment_number,
-                "segment_size": calculate_segment_size(file_size),
-            }
+    file_name = form.cleaned_data["file_name"]
+    file_size = float(form.cleaned_data["file_size"])
 
-            return JsonResponse(response)
+    try:
+        segment_number = get_segment_number(file_name, request,
+                                            container + "_segments", prefix)
+    except client.ClientException, e:
 
-    return HttpResponse("invalid form", status=500)
+        return HttpResponse(e, status=500)
+
+    response = {
+        "next_segment": segment_number,
+        "segment_size": calculate_segment_size(file_size),
+    }
+
+    return JsonResponse(response)
 
 
 def create_manifest(request, container, prefix=None):
@@ -98,8 +111,8 @@ def create_manifest(request, container, prefix=None):
             foldername += '/'
 
             meta, objects = client.get_container(
-                storage_url, auth_token, container, delimiter='/',
-                prefix=foldername)
+                storage_url, auth_token, container + "_segments",
+                delimiter='/', prefix=foldername)
 
             pseudofolders, objs = pseudofolder_object_list(objects, prefix)
 
@@ -111,7 +124,7 @@ def create_manifest(request, container, prefix=None):
             for segment in objs:
 
                 manifest.append({
-                    "path": container + "/" + segment["name"].encode('ascii', 'ignore'),
+                    "path": "/" + container + "_segments/" + segment["name"],
                     "etag": segment["hash"].encode('ascii', 'ignore'),
                     "size_bytes": str(segment["bytes"]),
                 })
@@ -126,7 +139,8 @@ def create_manifest(request, container, prefix=None):
 
                     #TODO: add prefix to file_name
                     client.put_object(
-                        storage_url, auth_token, container.encode('ascii', 'ignore'), file_name, f,
+                        storage_url, auth_token,
+                        container.encode('ascii', 'ignore'), file_name, f,
                         query_string="multipart-manifest=put")
                 except Exception, e:
                     return HttpResponse("Failed to upload manifest.",
@@ -136,3 +150,23 @@ def create_manifest(request, container, prefix=None):
                                 status=201)
 
     return HttpResponse("invalid form", status=500)
+
+
+def create_segments_container(request, container):
+    '''For the given container, create a container with the name
+    <container>_segments. Return true on success.'''
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    headers = {
+        'X-Container-Meta-Access-Control-Expose-Headers':
+        'Access-Control-Allow-Origin',
+        'X-Container-Meta-Access-Control-Allow-Origin': settings.BASE_URL
+    }
+
+    try:
+        client.put_container(
+            storage_url, auth_token, container + "_segments", headers)
+        return True
+    except:
+        return False

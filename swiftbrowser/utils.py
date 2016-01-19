@@ -659,3 +659,30 @@ def calculate_segment_size(size):
         return 1048576
 
     return int(math.ceil(size / 1000))
+
+
+def create_formpost_signature(swift_url, key):
+    '''Create and return a signature for form posts.'''
+
+    url_parts = urlparse.urlparse(swift_url)
+
+    path = url_parts.path
+
+    max_file_size = 5368709120
+    max_file_count = 1
+
+    #To allow large files to upload, increase this window to 2hr.
+    expires = int(time.time() + 60 * 60 * 2)
+
+    hmac_body = '%s\n%s\n%s\n%s\n%s' % (
+        path,
+        '',
+        max_file_size,
+        max_file_count,
+        expires
+    )
+
+    signature = hmac.new(
+        key.encode('ascii', 'ignore'), hmac_body, sha1).hexdigest()
+
+    return signature
