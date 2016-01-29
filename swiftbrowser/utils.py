@@ -237,20 +237,15 @@ def create_thumbnail(request, account, original_container_name, container,
                               account)
     except client.ClientException:
         try:
-            client.put_container(
-                storage_url,
-                auth_token,
-                account)
+            client.put_container(storage_url, auth_token, account)
         except client.ClientException as e:
             logger.error("Cannot put container %s. Error: %s "
                          % (container, str(e)))
             return None
     try:
         headers, content = client.get_object(
-            storage_url,
-            auth_token,
-            container,
-            objectname)
+            storage_url, auth_token, container, objectname,
+            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
 
         im = Image.open(StringIO(content))
         im.thumbnail(settings.THUMBNAIL_SIZE, Image.ANTIALIAS)
@@ -287,7 +282,9 @@ def delete_given_object(request, container, objectname):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
-    client.delete_object(storage_url, auth_token, container, objectname)
+    client.delete_object(
+        storage_url, auth_token, container, objectname,
+        headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
 
 
 def delete_given_folder(request, container, foldername):
@@ -297,7 +294,9 @@ def delete_given_folder(request, container, foldername):
 
     # Get all objects within folder.
     meta, objects = client.get_container(
-        storage_url, auth_token, container, delimiter='/', prefix=foldername)
+        storage_url, auth_token, container,
+        headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')},
+        delimiter='/', prefix=foldername)
 
     # Recursive call to delete subfolders.
     pseudofolders, objs = pseudofolder_object_list(objects, foldername)
@@ -411,6 +410,7 @@ def download_collection(request, container, prefix=None, non_recursive=False):
             storage_url,
             auth_token,
             container,
+            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')},
             delimiter=delimiter,
             prefix=prefix
         )
@@ -437,8 +437,9 @@ def download_collection(request, container, prefix=None, non_recursive=False):
     for o in objs:
         name = o['name']
         try:
-            x, content = client.get_object(storage_url, auth_token, container,
-                                           name)
+            x, content = client.get_object(
+                storage_url, auth_token, container, name,
+                headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
         except client.ClientException:
             return HttpResponseForbidden()
 

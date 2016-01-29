@@ -49,9 +49,9 @@ def objectview(request, container, prefix=None):
     redirect_url += reverse('objectview', kwargs={'container': container, })
 
     try:
-        meta, objects = client.get_container(storage_url, auth_token,
-                                             container, delimiter='/',
-                                             prefix=prefix)
+        meta, objects = client.get_container(
+            storage_url, auth_token, container, delimiter='/', prefix=prefix,
+            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
 
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
@@ -73,7 +73,8 @@ def objectview(request, container, prefix=None):
         }
 
         try:
-            client.put_container(storage_url, auth_token, container, headers)
+            client.put_container(
+                storage_url, auth_token, container, headers)
 
         except client.ClientException:
             messages.add_message(request, messages.ERROR, _(
@@ -88,7 +89,6 @@ def objectview(request, container, prefix=None):
     read_acl = meta.get('x-container-read', '').split(',')
     public = False
     required_acl = ['.r:*', '.rlistings']
-
 
     swift_url = storage_url + '/' + container + '/'
     swift_slo_url = storage_url + '/' + container + '_segments/'
@@ -139,11 +139,8 @@ def get_object_table(request):
 
     try:
         meta, objects = client.get_container(
-            storage_url,
-            auth_token,
-            container,
-            delimiter='/',
-            prefix=prefix)
+            storage_url, auth_token, container, delimiter='/', prefix=prefix,
+            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
 
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
@@ -330,11 +327,8 @@ def public_objectview(request, account, container, prefix=None):
     auth_token = ' '
     try:
         _meta, objects = client.get_container(
-            storage_url,
-            auth_token,
-            container,
-            delimiter='/',
-            prefix=prefix
+            storage_url, auth_token, container, delimiter='/', prefix=prefix,
+            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')}
         )
 
     except client.ClientException:

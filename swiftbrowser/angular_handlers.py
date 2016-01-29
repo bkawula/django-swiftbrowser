@@ -96,7 +96,8 @@ def create_user(request):
         storage_url = request.session.get('storage_url', '')
         auth_token = request.session.get('auth_token', '')
 
-        client.put_container(storage_url, auth_token, email, headers)
+        client.put_container(
+            storage_url, auth_token, email, headers)
 
     except Exception, e:
         return HttpResponse(e, status=500)

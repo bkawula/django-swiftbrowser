@@ -11,7 +11,7 @@ from swiftbrowser.utils import pseudofolder_object_list, \
     get_first_nonconsecutive, calculate_segment_size
 
 
-def get_segment_number(file_name, request, container, prefix=None):
+def get_segment_number(request, file_name, container, prefix=None):
     '''Return the segment number a given file should create next. If it is 0,
     create a pseudo folder for the file. The folder is created if it doesn't
     exist. '''
@@ -34,8 +34,9 @@ def get_segment_number(file_name, request, container, prefix=None):
     client.put_object(storage_url, auth_token, container, foldername, obj,
                       content_type=content_type)
 
-    meta, objects = client.get_container(storage_url, auth_token, container,
-                                         delimiter='/', prefix=foldername)
+    meta, objects = client.get_container(
+        storage_url, auth_token, container, delimiter='/', prefix=foldername,
+        headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
 
     pseudofolders, objs = pseudofolder_object_list(objects, prefix)
 
@@ -69,7 +70,7 @@ def initialize_slo(request, container, prefix=None):
     file_size = float(form.cleaned_data["file_size"])
 
     try:
-        segment_number = get_segment_number(file_name, request,
+        segment_number = get_segment_number(request, file_name,
                                             container + "_segments", prefix)
     except client.ClientException, e:
 
@@ -112,7 +113,8 @@ def create_manifest(request, container, prefix=None):
 
             meta, objects = client.get_container(
                 storage_url, auth_token, container + "_segments",
-                delimiter='/', prefix=foldername)
+                delimiter='/', prefix=foldername,
+                headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
 
             pseudofolders, objs = pseudofolder_object_list(objects, prefix)
 

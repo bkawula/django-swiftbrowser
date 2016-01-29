@@ -62,7 +62,9 @@ def create_container(request):
 
         #Check container does not already exist
         try:
-            client.get_container(storage_url, auth_token, container)
+            client.get_container(
+                storage_url, auth_token, container,
+                headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
             messages.add_message(
                 request,
                 messages.ERROR,
@@ -93,11 +95,14 @@ def delete_container(request, container):
     auth_token = request.session.get('auth_token', '')
 
     try:
-        _m, objects = client.get_container(storage_url, auth_token, container)
+        _m, objects = client.get_container(
+            storage_url, auth_token, container,
+            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
         for obj in objects:
-            client.delete_object(storage_url, auth_token,
-                                 container, obj['name'])
-        client.delete_container(storage_url, auth_token, container)
+            client.delete_object(
+                storage_url, auth_token, container, obj['name'],
+                headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
+        client.delete_container(storage_url, auth_token, container,)
         messages.add_message(request, messages.INFO, _("Container deleted."))
     except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))

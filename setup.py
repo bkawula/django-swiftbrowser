@@ -19,7 +19,7 @@ setup(
     author_email='info@cschwede.de',
     install_requires=[
         'django>=1.8',
-        'python-swiftclient',
+        'python-swiftclient>=2.7',
         'django-jfu',
         'PIL',
     ],
