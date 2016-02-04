@@ -9822,6 +9822,16 @@ table .icon {
 .reveal-modal .close:focus, .reveal-modal .close:hover {
   background-color: #242424;
 }
+/* line 22, ../scss/_reveal_modal.scss */
+.reveal-modal button.confirm-delete {
+  background-color: red;
+  display: none;
+  width: 100%;
+}
+/* line 28, ../scss/_reveal_modal.scss */
+.reveal-modal span.container-name-holder, .reveal-modal span.folder-name-holder {
+  color: red;
+}
 
 /* line 2, ../scss/_tempurl.scss */
 form#custom-temp-url input.submit {
@@ -10040,27 +10050,6 @@ form#object-expiry-form input.submit {
   background-color: #EEEEEE;
 }
 
-/* line 55, ../scss/_objectview.scss */
-#slo-upload .slo-progress {
-  width: 100%;
-  height: 50px;
-}
-/* line 59, ../scss/_objectview.scss */
-#slo-upload .slo-progress-wrap {
-  display: none;
-  background: #0074be;
-  margin: 20px 0;
-  overflow: hidden;
-  position: relative;
-}
-/* line 65, ../scss/_objectview.scss */
-#slo-upload .slo-progress-wrap .slo-progress-bar {
-  background: #ddd;
-  left: 0;
-  position: absolute;
-  top: 0;
-}
-
 /* line 1, ../scss/_containerview.scss */
 #containerview {
   padding-bottom: 5rem;
@@ -10087,34 +10076,23 @@ form#object-expiry-form input.submit {
   vertical-align: super;
 }
 
-/* line 29, ../scss/_containerview.scss */
-#delete-container-form button#delete-container-submit {
-  background-color: red;
-  display: none;
-  width: 100%;
-}
-/* line 35, ../scss/_containerview.scss */
-#delete-container-form span.container-name-holder {
-  color: red;
-}
-
-/* line 40, ../scss/_containerview.scss */
+/* line 28, ../scss/_containerview.scss */
 .progress {
   background-color: white;
   height: 4em;
 }
 
-/* line 46, ../scss/_containerview.scss */
+/* line 34, ../scss/_containerview.scss */
 #edit-acl input[type="text"] {
   width: 90%;
   display: inline;
 }
-/* line 50, ../scss/_containerview.scss */
+/* line 38, ../scss/_containerview.scss */
 #edit-acl span.glyphicons {
   top: 10px;
   left: 7px;
 }
-/* line 53, ../scss/_containerview.scss */
+/* line 41, ../scss/_containerview.scss */
 #edit-acl span.glyphicons.glyphicons-remove-2 {
   color: #ADADAD;
 }
@@ -10212,6 +10190,29 @@ form#object-expiry-form input.submit {
 /* line 63, ../scss/_loader.scss */
 #angular-loader #progress {
   display: block;
+}
+
+/* CSS progress bar used in SLO and delete folder. */
+/* line 2, ../scss/_css_progress_bar.scss */
+.css-progress {
+  width: 100%;
+  height: 50px;
+}
+
+/* line 6, ../scss/_css_progress_bar.scss */
+.css-progress-wrap {
+  display: none;
+  background: #0074be;
+  margin: 20px 0;
+  overflow: hidden;
+  position: relative;
+}
+/* line 12, ../scss/_css_progress_bar.scss */
+.css-progress-wrap .css-progress-bar {
+  background: #ddd;
+  left: 0;
+  position: absolute;
+  top: 0;
 }
 
 /* line 1, ../scss/_messages.scss */

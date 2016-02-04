@@ -17,4 +17,15 @@
 			background-color: scale-color($black, $lightness: +14%);
 		}
 	}
+
+
+	button.confirm-delete {
+		background-color: red;
+		display: none;
+		width: 100%;
+	}
+
+	span.container-name-holder, span.folder-name-holder {
+		color: red;
+	}
 }

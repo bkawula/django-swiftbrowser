@@ -17,7 +17,7 @@ from swiftbrowser.models import Photo
 from swiftbrowser.forms import PseudoFolderForm, LoginForm, TimeForm
 from swiftbrowser.utils import *
 from swiftbrowser.views.containers import containerview
-from swiftbrowser.views.objects import objectview
+from swiftbrowser.views.objects import objectview, _get_total_objects
 
 from openstack_auth.utils import get_project_list, get_session
 from openstack_auth.plugin import PasswordPlugin
@@ -117,20 +117,35 @@ def login(request):
 
 @session_valid
 def delete_folder(request, container, objectname):
-    """ Deletes a pseudo folder. """
+    """ Delete the folder """
 
     try:
         delete_given_folder(request, container, objectname)
-        messages.add_message(request, messages.INFO, _("Folder deleted."))
+
     except client.ClientException:
-        messages.add_message(request, messages.ERROR, _("Access denied."))
-        return redirect(objectview, container=container)
+        return HttpResponse(e, status=500)
+
+    return JsonResponse({
+        'success': True,
+    })
+
+
+@session_valid
+def delete_folder_form(request, container, objectname):
+    """ Display delete folder modal """
+
     if objectname[-1] == '/':  # deleting a pseudofolder, move one level up
-        objectname = objectname[:-1]
-    prefix = '/'.join(objectname.split('/')[:-1])
-    if prefix:
-        prefix += '/'
-    return redirect(objectview, container=container, prefix=prefix)
+        foldername = objectname[:-1].split("/")[-1]
+
+    return render_to_response(
+        'delete_folder.html',
+        {
+            'foldername': foldername,
+            'objectname': objectname,
+            'container': container,
+            'total_objects': _get_total_objects(request, container, objectname)
+        },
+        context_instance=RequestContext(request))
 
 
 @session_valid

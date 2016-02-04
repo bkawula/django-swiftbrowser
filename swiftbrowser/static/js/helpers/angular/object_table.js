@@ -195,16 +195,17 @@ app.applyTableEvents = function () {
     }
   });
 
-  //Delete folder binding.
-  $("a.delete-folder").off("click");
-  $("a.delete-folder").on("click", function (e) {
 
-    if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
-      if (!confirm("This will delete " + $(this).attr("data-name") + " and all it's contents. Are you sure?")) {
-        e.preventDefault();
-      }
-    } else {
-      e.preventDefault();
-    }
-  });
+  //Delete folder binding.
+  // $("a.delete-folder").off("click");
+  // $("a.delete-folder").on("click", function (e) {
+
+  //   if (confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
+  //     if (!confirm("This will delete " + $(this).attr("data-name") + " and all it's contents. Are you sure?")) {
+  //       e.preventDefault();
+  //     }
+  //   } else {
+  //     e.preventDefault();
+  //   }
+  // });
 };

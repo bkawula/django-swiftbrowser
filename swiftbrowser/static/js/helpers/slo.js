@@ -16,7 +16,7 @@ $('#slo-upload button.upload').click(slo_upload);
 function slo_upload() {
 
     //Display progress bar
-    $(".slo-progress-wrap").toggle(true);
+    $(".css-progress-wrap").toggle(true);
 
     var file = $("#slo-upload input")[0].files[0];
     if (!file) {
@@ -117,13 +117,13 @@ function upload_segments(data) {
 
                 //Update the progress bar.            done++;
                 var getPercent = (done/total_segments);
-                var getProgressWrapWidth = $('.slo-progress-wrap').width();
+                var getProgressWrapWidth = $('.css-progress-wrap').width();
                 var progressTotal = getPercent * getProgressWrapWidth;
                 var animationLength = 500;
 
                 // on page load, animate percentage bar to data percentage length
                 // .stop() used to prevent animation queueing
-                $('.slo-progress-bar').stop().animate({
+                $('.css-progress-bar').stop().animate({
                     left: progressTotal
                 }, animationLength);
 

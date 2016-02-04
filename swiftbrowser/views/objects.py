@@ -354,3 +354,70 @@ def public_objectview(request, account, container, prefix=None):
         },
         context_instance=RequestContext(request)
     )
+
+
+@session_valid
+def get_object_count(request, container, foldername):
+    """Returns total number of objects in the folder."""
+
+    # Check POST
+    if not (request.POST):
+        return HttpResponse("No POST in request.", status=500)
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+
+    try:
+        _m, objects = client.get_container(
+            storage_url, auth_token, container, full_listing=True,
+            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
+    except client.ClientException, e:
+        return HttpResponse(e, status=500)
+
+    return JsonResponse({
+        'success': True,
+        "data": {
+            'object_count': object_count,
+        }
+    })
+
+
+@session_valid
+def get_total_objects(request, container, objectname):
+    """ Return the total number of objects under as Json in an HTTP Response
+    object. """
+
+    return JsonResponse({
+        'success': True,
+        "data": {
+            'total': _get_total_objects(request, container, objectname)
+        }
+    })
+
+
+@session_valid
+def _get_total_objects(request, container, objectname):
+    """ Return the total number of objects under a pseudofolder. """
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    container = request.session.get('container')
+    prefix = request.session.get('prefix')
+    if prefix:
+        prefix += objectname
+    else:
+        prefix = objectname
+
+    try:
+        meta, objects = client.get_container(
+            storage_url, auth_token, container, delimiter='/', prefix=prefix,
+            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')},
+            full_listing=True)
+
+    except client.ClientException:
+        messages.add_message(request, messages.ERROR, _("Access denied."))
+        return redirect(containerview)
+
+    pseudofolders, objs = pseudofolder_object_list(objects, prefix)
+
+    return len(objs)

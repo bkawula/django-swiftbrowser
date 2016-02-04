@@ -37,9 +37,9 @@
 						</a>
 					</li>
 					<li>
-						<a class="delete-folder" data-name="{{folder[1]}}" href="{{baseurl}}delete_folder/{{container}}/{{folder[1]}}">
+						<button class="delete-folder dropdown-btn" data-name="{{folder[0]|formatPseudoFolder}}" data-reveal-id="delete-folder"  data-reveal-ajax="{{baseurl}}delete_folder_form/{{container}}/{{folder[1]}}">
 							<span class="glyphicons glyphicons-fire"></span> Delete folder
-						</a>
+						</button>
 					</li>
 				</ul>
 			</td>
@@ -79,7 +79,6 @@
 						</a>
 					</li>
 				</ul>
-			</td>
 			</td>
 		</tr>
 	</tbody>

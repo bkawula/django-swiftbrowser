@@ -14,12 +14,14 @@ urlpatterns = patterns(
 
     # views/main.py
     url(r'^login/$', login, name="login"),
+    url(r'^delete_folder_form/(?P<container>.+?)/(?P<objectname>.+?)$',
+        delete_folder_form,
+        name="delete_folder_form"),
     url(r'^delete_folder/(?P<container>.+?)/(?P<objectname>.+?)$',
         delete_folder,
         name="delete_folder"),
     url(r'^create_pseudofolder/(?P<container>.+?)/(?P<prefix>.+)?$',
         create_pseudofolder, name="create_pseudofolder"),
-    # url(r'^delete/(?P<pk>.+)$', upload_delete, name='jfu_delete'),
     url(r'^settings$', settings_view, name="settings_view"),
     url(r'^version.info/$', get_version, name="get_version"),
     url(r'^toggle_public/(?P<container>.+?)/$', toggle_public,
@@ -27,6 +29,9 @@ urlpatterns = patterns(
     url(r'^switch_tenant/(?P<tenant>.+?)$',
         switch_tenant,
         name="switch_tenant"),
+    url(r'^get_total_objects/(?P<container>.+?)/(?P<objectname>.+?)$',
+        get_total_objects,
+        name="get_total_objects"),
 
     #views/containers.py
     url(r'^$', containerview, name="containerview"),
@@ -50,6 +55,8 @@ urlpatterns = patterns(
         object_expiry, name="object_expiry"),
     url(r'^public/(?P<account>.+?)/(?P<container>.+?)/(?P<prefix>(.+)+)?$',
         public_objectview, name="public_objectview"),
+    url(r'^get_object_count/(?P<container>.+?)/(?P<objectname>.+?)$',
+        get_object_count, name="get_object_count"),
 
     # views/slo.py
     url(r'^initialize_slo/(?P<container>.+?)/(?P<prefix>(.+)+)?$',
