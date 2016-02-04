@@ -105,8 +105,8 @@
 			<input type="hidden" name="signature" value="{{slo_signature}}">
 		    <button class="upload">upload me</button>
 		</form>
-		<div class="slo-progress-wrap slo-progress">
-		  <div class="slo-progress-bar slo-progress"></div>
+		<div class="css-progress-wrap css-progress">
+		  <div class="css-progress-bar css-progress"></div>
 		</div>
 		<div id="#slo-message"></div>
 	</div>
@@ -134,11 +134,12 @@
 	</div>
 	<div class="reveal-modal" id="tempurl" data-reveal aria-labelledby="tempurl-title" aria-hidden="true" role="dialog"></div>
 	<div class="reveal-modal" id="object-expiry" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog"></div>
+	<div class="reveal-modal" id="delete-folder" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog"></div>
 </div>
 {% endblock %}
 {% block jsadd %}
 <script src="{{STATIC_URL}}foundation/bower_components/angular/angular.min.js" type="text/javascript"></script>
-	<script src="{{STATIC_URL}}js/helpers/angular/messages.js" type="text/javascript"></script>
+<script src="{{STATIC_URL}}js/helpers/angular/messages.js" type="text/javascript"></script>
 <script src="{{STATIC_URL}}js/helpers/angular/object_table.js" type="text/javascript"></script>
 <script src="{{STATIC_URL}}js/helpers/slo.js" type="text/javascript"></script>
 {% endblock %}

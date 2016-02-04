@@ -1,0 +1,18 @@
+/* CSS progress bar used in SLO and delete folder. */
+.css-progress {
+	width: 100%;
+	height: 50px;
+}
+.css-progress-wrap {
+	display: none;
+	background: #0074be;
+	margin: 20px 0;
+	overflow: hidden;
+	position: relative;
+	.css-progress-bar {
+		background: #ddd;
+		left: 0;
+		position: absolute;
+		top: 0;
+	}
+}

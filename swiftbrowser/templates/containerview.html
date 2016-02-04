@@ -143,7 +143,7 @@
 		<div class="reveal-modal" id="delete-container" data-reveal aria-labelledby="container-title" aria-hidden="true" role="dialog">
 			<h2 id="container-title">Delete Container</h2>
 			<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-			<form id="delete-container-form" method="POST" action="" id="create-container">
+			<form id="delete-container-form" method="POST" action="">
 			    {% csrf_token %}
 		        <label for="containername">This will permanently delete the container <span class="container-name-holder"></span>. Type in the container name to delete the container.</label>
 	            <input id="delete-container-name" name="containername" autocomplete="off" class="enter-container-name input-xlarge" type="text" placeholder="{% trans "Container Name" %}">
