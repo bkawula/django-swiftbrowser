@@ -19,6 +19,11 @@ from swiftbrowser.utils import *
 from swiftbrowser.views.containers import containerview
 from swiftbrowser.views.objects import objectview
 
+from openstack_auth.utils import get_project_list, get_session
+from openstack_auth.plugin import PasswordPlugin
+import keystoneauth1.identity
+from keystoneclient.v2_0 import client as v2_client
+
 
 logger = logging.getLogger(__name__)
 
@@ -31,25 +36,55 @@ def login(request):
     if (request.POST):
         form = LoginForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
+            user = form.cleaned_data['username']
             password = form.cleaned_data['password']
             try:
+
+                tenant_specified = user.find(":") > 0
+                if tenant_specified:
+                    # The user has specifed the tenant they want to login to
+                    tenant_name, user = split_tenant_user_names(user)
+
+                # Authenticate with keystone
+                unscoped_auth = keystoneauth1.identity.v2.Password(
+                    auth_url=settings.SWIFT_AUTH_URL,
+                    username=user,
+                    password=password)
+                unscoped_auth_ref = unscoped_auth.get_access(get_session())
+                keystone_token = unscoped_auth_ref.auth_token
+                keystoneclient = v2_client.Client(
+                    token=keystone_token,
+                    endpoint="https://olrcdev.scholarsportal.info:5000/v2.0/")
+                tenants = keystoneclient.tenants
+                projects = tenants.list()
+
+                # Save tenants the user is part of.
+                request.session["tenants"] = \
+                    [project.name for project in projects]
+
+                # When the user does not specify a tenant on login, use the
+                # first tenant as a default.
+                if not tenant_specified:
+                    tenant_name = request.session["tenants"][0]
+
+                # Authenticate with swift
+                username = tenant_name + ":" + user
                 auth_version = settings.SWIFT_AUTH_VERSION or 1
                 (storage_url, auth_token) = client.get_auth(
                     settings.SWIFT_AUTH_URL, username, password,
                     auth_version=auth_version)
+
                 request.session['auth_token'] = auth_token
                 request.session['storage_url'] = storage_url
-                request.session['username'] = username
                 request.session['password'] = password
-
-                tenant_name, user = split_tenant_user_names(username)
                 request.session['user'] = user
+                request.session['username'] = username
                 request.session['tenant_name'] = tenant_name
 
                 # Upon successful retrieval of a token, if we're unable to
                 # head the account, then the user is not an admin or
                 # swiftoperator and has access to only a container.
+
                 try:
                     client.head_account(storage_url, auth_token)
                 except:
@@ -57,26 +92,25 @@ def login(request):
 
                 return redirect(containerview)
 
-            # Specify why the login failed.
+            # Swift authentication error.
             except client.ClientException, e:
-                messages.error(request, _("Login failed: {0}".format(
-                    e)))
+                messages.error(request, _("Login failed: {0}".format(e)))
 
-            # Generic login failure message.
+            # Other error.
             except Exception, e:
-                print(e)
-                messages.error(request, _("Login failed."))
-        # Generic login failure on invalid forms.
+                messages.error(request, _("Login failed: {0}").format(e))
+
+        # Login failure on invalid forms.
         else:
             messages.error(request, _("Login failed."))
     else:
         form = LoginForm(None)
-        username = ""
+        user = ""
 
     return render_to_response(
         'login.html',
         {'form': form,
-        'username': username},
+        'username': user},
         context_instance=RequestContext(request)
     )
 

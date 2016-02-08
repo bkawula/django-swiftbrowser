@@ -8,7 +8,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-swiftbrowser',
-    version='1.2.3',
+    version='1.2.4',
     packages=['swiftbrowser'],
     include_package_data=True,
     license='Apache License (2.0)',
@@ -22,6 +22,8 @@ setup(
         'python-swiftclient>=2.7',
         'django-jfu',
         'PIL',
+        'keystoneauth1>=2.2.0',
+        'django-openstack-auth>=2.1.1',
     ],
     zip_safe=False,
     classifiers=[

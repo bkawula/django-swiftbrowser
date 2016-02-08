@@ -3,27 +3,28 @@
 {% load staticfiles %}
 {% block head %}
 {% if session.username %}
-<div id="header" >
-	<div class="row" role="navigation">
-		<div class="small-3 columns">
-			<a href="{% url "containerview" %}" ><img class="service-logo" src="{% static "img/olrc-logo-small.png" %}" alt="OLRC Browser"/></a>
-		</div>
-		<div class="small-9 columns">
-			<div class="account-btns">
-				<span class="username">{{session.username}}</span>
-
-				{% if not session.norole %}
-					<a class="button tiny" role="button" href="{% url "settings_view" %}" title="Settings">
-						<span class="glyphicons glyphicons-adjust-alt"></span> <span class="hide-for-small-only">Settings</span>
+	<div id="header" >
+		<div class="row" role="navigation">
+			<div class="small-3 columns">
+				<a href="{% url "containerview" %}" ><img class="service-logo" src="{% static "img/olrc-logo-small.png" %}" alt="OLRC Browser"/></a>
+			</div>
+			<div class="small-9 columns">
+				<div class="account-btns">
+					<span class="username">{{session.tenant_name}}</span>
+					<span class="username">{{session.user}}</span>
+					{% if not session.norole %}
+						<a class="button tiny" role="button" href="{% url "settings_view" %}" title="Settings">
+							<span class="glyphicons glyphicons-adjust-alt"></span> <span class="hide-for-small-only">Settings</span>
+						</a>
+					{% endif%}
+					<a class="button tiny" role="button" href="{% url "login" %}" title="Logout">
+						<span class="glyphicons glyphicons-exit"></span>
+						<span class="hide-for-small-only">{% trans 'Logout' %}</span>
 					</a>
-				{% endif%}
-				<a class="button tiny" role="button" href="{% url "login" %}" title="Logout">
-				<span class="glyphicons glyphicons-exit"></span> <span class="hide-for-small-only">{% trans 'Logout' %}</span>
-				</a>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 {% else %}
 {% endif %}
 {% endblock %}
