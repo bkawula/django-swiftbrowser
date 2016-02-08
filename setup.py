@@ -22,6 +22,8 @@ setup(
         'python-swiftclient>=2.7',
         'django-jfu',
         'PIL',
+        'keystoneauth1',
+        'openstackauth',
     ],
     zip_safe=False,
     classifiers=[
