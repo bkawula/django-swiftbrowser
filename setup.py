@@ -23,7 +23,7 @@ setup(
         'django-jfu',
         'PIL',
         'keystoneauth1',
-        'openstackauth',
+        'django_openstack_auth',
     ],
     zip_safe=False,
     classifiers=[
