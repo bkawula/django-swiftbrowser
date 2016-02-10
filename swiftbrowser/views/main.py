@@ -55,6 +55,7 @@ def login(request):
                 keystoneclient = v2_client.Client(
                     token=keystone_token,
                     endpoint="https://olrcdev.scholarsportal.info:5000/v2.0/")
+
                 tenant_manager = keystoneclient.tenants
                 projects = tenant_manager.list()
 
