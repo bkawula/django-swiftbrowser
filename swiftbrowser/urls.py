@@ -24,6 +24,9 @@ urlpatterns = patterns(
     url(r'^version.info/$', get_version, name="get_version"),
     url(r'^toggle_public/(?P<container>.+?)/$', toggle_public,
         name="toggle_public"),
+    url(r'^switch_tenant/(?P<tenant>.+?)$',
+        switch_tenant,
+        name="switch_tenant"),
 
     #views/containers.py
     url(r'^$', containerview, name="containerview"),

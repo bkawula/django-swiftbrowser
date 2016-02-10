@@ -55,8 +55,8 @@ def login(request):
                 keystoneclient = v2_client.Client(
                     token=keystone_token,
                     endpoint="https://olrcdev.scholarsportal.info:5000/v2.0/")
-                tenants = keystoneclient.tenants
-                projects = tenants.list()
+                tenant_manager = keystoneclient.tenants
+                projects = tenant_manager.list()
 
                 # Save tenants the user is part of.
                 request.session["tenants"] = \
@@ -248,3 +248,23 @@ def settings_view(request):
 def get_version(request):
     return render_to_response('version.html',
                               context_instance=RequestContext(request))
+
+
+@session_valid
+def switch_tenant(request, tenant):
+    """ Switch the user to another tenant. Authenticate under the new tenant
+    and redirect to the container view. """
+
+    user = request.session.get('user', '')
+    password = request.session.get('password', '')
+    username = tenant + ":" + user
+    auth_version = settings.SWIFT_AUTH_VERSION or 1
+    (storage_url, auth_token) = client.get_auth(
+        settings.SWIFT_AUTH_URL, username, password,
+        auth_version=auth_version)
+
+    request.session['auth_token'] = auth_token
+    request.session['storage_url'] = storage_url
+    request.session['tenant_name'] = tenant
+
+    return redirect(containerview)
