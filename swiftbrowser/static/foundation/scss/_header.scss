@@ -21,6 +21,32 @@
 		    padding-bottom: 0.6875rem;
 		    padding-left: 0.8rem;
 		}
+
+		div.tenant-wrapper {
+			display: inline-block;
+
+			span, li {
+				color: $white;
+			    font-size: 0.6875rem;
+			    padding-top: 0.625rem;
+			    padding-right: 0.8rem;
+			    padding-bottom: 0.6875rem;
+			    padding-left: 0.8rem;
+			}
+			ul {
+				background-color: black;
+				border-color: black;
+				&:before {
+					border-color: black;
+				}
+				li {
+					display: block;
+					a {
+						color: $white;
+					}
+				}
+			}
+		}
 	}
 
 	.service-logo {

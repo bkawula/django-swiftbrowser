@@ -6,17 +6,38 @@
 	<div id="header" >
 		<div class="row" role="navigation">
 			<div class="small-3 columns">
-				<a href="{% url "containerview" %}" ><img class="service-logo" src="{% static "img/olrc-logo-small.png" %}" alt="OLRC Browser"/></a>
+				<a href="{% url "containerview" %}" >
+					<img class="service-logo" src="{% static "img/olrc-logo-small.png" %}" alt="OLRC Browser"/>
+				</a>
 			</div>
 			<div class="small-9 columns">
 				<div class="account-btns">
-					<span class="username">{{session.tenant_name}}</span>
 					<span class="username">{{session.user}}</span>
+					<div class="tenant-wrapper">
+						<span class="button tiny tenant-name" data-dropdown="tenant-dropdown">
+							{{session.tenant_name}}
+						</span>
+						{% ifequal session.tenants|length  1 %}
+						{% else %}
+							<ul id="tenant-dropdown" data-dropdown-content class="f-dropdown left">
+								{% for alternative_tenant in session.tenants %}
+									{% if alternative_tenant != session.tenant_name %}
+										<li class="button tiny">
+											<a href="{% url "switch_tenant" tenant=alternative_tenant %}">
+												{{alternative_tenant}}
+											</a>
+										</li>
+									{% endif %}
+								{% endfor %}
+							</ul>
+
+						{% endifequal %}
+					</div>
 					{% if not session.norole %}
 						<a class="button tiny" role="button" href="{% url "settings_view" %}" title="Settings">
 							<span class="glyphicons glyphicons-adjust-alt"></span> <span class="hide-for-small-only">Settings</span>
 						</a>
-					{% endif%}
+					{% endif %}
 					<a class="button tiny" role="button" href="{% url "login" %}" title="Logout">
 						<span class="glyphicons glyphicons-exit"></span>
 						<span class="hide-for-small-only">{% trans 'Logout' %}</span>
