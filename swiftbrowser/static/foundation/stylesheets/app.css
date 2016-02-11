@@ -9689,42 +9689,37 @@ table .icon {
 /* line 36, ../scss/_header.scss */
 #header .account-btns div.tenant-wrapper ul {
   background-color: black;
-  border-color: black;
 }
-/* line 39, ../scss/_header.scss */
-#header .account-btns div.tenant-wrapper ul:before {
-  border-color: black;
-}
-/* line 42, ../scss/_header.scss */
+/* line 38, ../scss/_header.scss */
 #header .account-btns div.tenant-wrapper ul li {
   display: block;
 }
-/* line 44, ../scss/_header.scss */
+/* line 40, ../scss/_header.scss */
 #header .account-btns div.tenant-wrapper ul li a {
-  color: white;
+  color: #FFFFFF;
 }
-/* line 52, ../scss/_header.scss */
+/* line 48, ../scss/_header.scss */
 #header .service-logo {
   padding-top: 10px;
   width: 40px;
 }
 
-/* line 58, ../scss/_header.scss */
+/* line 54, ../scss/_header.scss */
 .crumb-row {
   background-color: #363636;
   color: #FFFFFF;
   padding: 0px 0px 0px;
 }
-/* line 63, ../scss/_header.scss */
+/* line 59, ../scss/_header.scss */
 .crumb-row ul {
   margin-bottom: 0.2rem;
 }
-/* line 68, ../scss/_header.scss */
+/* line 64, ../scss/_header.scss */
 .crumb-row .breadcrumb ul {
   margin-left: 0;
   margin-top: 5px;
 }
-/* line 73, ../scss/_header.scss */
+/* line 69, ../scss/_header.scss */
 .crumb-row .breadcrumb li {
   float: left;
   font-size: 1.25rem;
@@ -9732,25 +9727,25 @@ table .icon {
   list-style-type: none;
   text-transform: none;
 }
-/* line 80, ../scss/_header.scss */
+/* line 76, ../scss/_header.scss */
 .crumb-row .breadcrumb li:focus, .crumb-row .breadcrumb li:hover {
   text-decoration: none;
 }
-/* line 85, ../scss/_header.scss */
+/* line 81, ../scss/_header.scss */
 .crumb-row .breadcrumb a {
   color: #FFFFFF;
   text-decoration: none;
 }
-/* line 89, ../scss/_header.scss */
+/* line 85, ../scss/_header.scss */
 .crumb-row .breadcrumb a:focus, .crumb-row .breadcrumb a:hover {
   color: #dbdbdb;
   text-decoration: none;
 }
-/* line 95, ../scss/_header.scss */
+/* line 91, ../scss/_header.scss */
 .crumb-row .breadcrumb:hover {
   text-decoration: none;
 }
-/* line 99, ../scss/_header.scss */
+/* line 95, ../scss/_header.scss */
 .crumb-row .breadcrumb .glyphicons {
   color: #fff;
   display: inherit;
@@ -9758,50 +9753,50 @@ table .icon {
   margin: 5px 5px 5px;
   width: 20px;
 }
-/* line 107, ../scss/_header.scss */
+/* line 103, ../scss/_header.scss */
 .crumb-row .breadcrumb .glyphicons-cloud {
   margin: 5px 5px 5px 0px;
 }
-/* line 112, ../scss/_header.scss */
+/* line 108, ../scss/_header.scss */
 .crumb-row .settings {
   padding-bottom: 11px;
 }
 
 @media only screen and (max-width: 40em) {
-  /* line 119, ../scss/_header.scss */
+  /* line 115, ../scss/_header.scss */
   #header button, #header .button {
     margin-bottom: 5px;
   }
-  /* line 123, ../scss/_header.scss */
+  /* line 119, ../scss/_header.scss */
   #header .columns {
     padding: 0;
   }
-  /* line 127, ../scss/_header.scss */
+  /* line 123, ../scss/_header.scss */
   #header .service-logo {
     padding-left: 5px;
     padding-top: 5px;
     width: 32px;
   }
 
-  /* line 134, ../scss/_header.scss */
+  /* line 130, ../scss/_header.scss */
   .crumb-row {
     padding-top: 0px;
   }
-  /* line 137, ../scss/_header.scss */
+  /* line 133, ../scss/_header.scss */
   .crumb-row .breadcrumb {
     padding: 0;
   }
-  /* line 140, ../scss/_header.scss */
+  /* line 136, ../scss/_header.scss */
   .crumb-row .breadcrumb li {
     font-size: 1rem;
   }
-  /* line 144, ../scss/_header.scss */
+  /* line 140, ../scss/_header.scss */
   .crumb-row .breadcrumb ul {
     margin-left: 5px;
     margin-top: 0px;
   }
 
-  /* line 151, ../scss/_header.scss */
+  /* line 147, ../scss/_header.scss */
   #pseudoContainer {
     padding-top: 4rem;
   }
