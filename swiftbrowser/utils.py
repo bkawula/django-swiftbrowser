@@ -687,3 +687,36 @@ def create_formpost_signature(swift_url, key):
         key.encode('ascii', 'ignore'), hmac_body, sha1).hexdigest()
 
     return signature
+
+
+def _get_total_objects(request, container, objectname):
+    """ Return the total number of objects under a pseudofolder. """
+
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    prefix = request.session.get('prefix')
+
+    if prefix:
+        prefix += objectname
+    else:
+        prefix = objectname
+
+    try:
+        if prefix:
+            meta, objects = client.get_container(
+                storage_url, auth_token, container,
+                prefix=prefix, full_listing=True,
+                headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
+
+        else:
+            meta, objects = client.get_container(
+                storage_url, auth_token, container,
+                headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')},
+                full_listing=True)
+
+    except client.ClientException:
+        return 0
+
+    pseudofolders, objs = pseudofolder_object_list(objects, prefix)
+
+    return len(objs)

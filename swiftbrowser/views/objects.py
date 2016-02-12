@@ -16,6 +16,7 @@ from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from swiftbrowser.forms import TimeForm
 from swiftbrowser.utils import *
+from swiftbrowser.utils import _get_total_objects
 from swiftbrowser.views.containers import containerview
 
 import swiftbrowser
@@ -357,33 +358,7 @@ def public_objectview(request, account, container, prefix=None):
 
 
 @session_valid
-def get_object_count(request, container, foldername):
-    """Returns total number of objects in the folder."""
-
-    # Check POST
-    if not (request.POST):
-        return HttpResponse("No POST in request.", status=500)
-
-    storage_url = request.session.get('storage_url', '')
-    auth_token = request.session.get('auth_token', '')
-
-    try:
-        _m, objects = client.get_container(
-            storage_url, auth_token, container, full_listing=True,
-            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
-    except client.ClientException, e:
-        return HttpResponse(e, status=500)
-
-    return JsonResponse({
-        'success': True,
-        "data": {
-            'object_count': object_count,
-        }
-    })
-
-
-@session_valid
-def get_total_objects(request, container, objectname):
+def get_total_objects(request, container, objectname=""):
     """ Return the total number of objects under as Json in an HTTP Response
     object. """
 
@@ -396,28 +371,33 @@ def get_total_objects(request, container, objectname):
 
 
 @session_valid
-def _get_total_objects(request, container, objectname):
-    """ Return the total number of objects under a pseudofolder. """
-
-    storage_url = request.session.get('storage_url', '')
-    auth_token = request.session.get('auth_token', '')
-    container = request.session.get('container')
-    prefix = request.session.get('prefix')
-    if prefix:
-        prefix += objectname
-    else:
-        prefix = objectname
+def delete_folder(request, container, objectname):
+    """ Delete the folder """
 
     try:
-        meta, objects = client.get_container(
-            storage_url, auth_token, container, delimiter='/', prefix=prefix,
-            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')},
-            full_listing=True)
+        delete_given_folder(request, container, objectname)
 
     except client.ClientException:
-        messages.add_message(request, messages.ERROR, _("Access denied."))
-        return redirect(containerview)
+        return HttpResponse(e, status=500)
 
-    pseudofolders, objs = pseudofolder_object_list(objects, prefix)
+    return JsonResponse({
+        'success': True,
+    })
 
-    return len(objs)
+
+@session_valid
+def delete_folder_form(request, container, objectname):
+    """ Display delete folder modal """
+
+    if objectname[-1] == '/':  # deleting a pseudofolder, move one level up
+        foldername = objectname[:-1].split("/")[-1]
+
+    return render_to_response(
+        'delete_folder.html',
+        {
+            'foldername': foldername,
+            'objectname': objectname,
+            'container': container,
+            'total_objects': _get_total_objects(request, container, objectname)
+        },
+        context_instance=RequestContext(request))
