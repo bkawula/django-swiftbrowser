@@ -12,6 +12,7 @@ from django.utils.translation import ugettext as _
 
 from swiftbrowser.forms import CreateContainerForm, UpdateACLForm
 from swiftbrowser.utils import *
+from swiftbrowser.utils import _get_total_objects
 
 
 @session_valid
@@ -103,11 +104,24 @@ def delete_container(request, container):
                 storage_url, auth_token, container, obj['name'],
                 headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
         client.delete_container(storage_url, auth_token, container,)
-        messages.add_message(request, messages.INFO, _("Container deleted."))
     except client.ClientException:
-        messages.add_message(request, messages.ERROR, _("Access denied."))
+        return HttpResponse(e, status=500)
 
-    return redirect(containerview)
+    return JsonResponse({
+        'success': True,
+    })
+
+@session_valid
+def delete_container_form(request, container):
+    """ Display delete container modal """
+
+    return render_to_response(
+        'delete_container.html',
+        {
+            'container': container,
+            'total_objects': _get_total_objects(request, container, "")
+        },
+        context_instance=RequestContext(request))
 
 
 @ajax_session_valid
@@ -141,7 +155,6 @@ def set_acls(request, container):
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
-
     headers = {'X-Container-Read': read_acl,
                'X-Container-Write': write_acl}
     try:
@@ -155,3 +168,4 @@ def set_acls(request, container):
         })
     except client.ClientException:
         return JsonResponse({'error': 'Error updating ACL.'})
+
