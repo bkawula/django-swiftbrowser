@@ -46,12 +46,9 @@ def objectview(request, container, prefix=None):
     request.session['prefix'] = prefix
     request.session["key"] = key
 
-    redirect_url = get_base_url(request)
-    redirect_url += reverse('objectview', kwargs={'container': container, })
-
     try:
-        meta, objects = client.get_container(
-            storage_url, auth_token, container, delimiter='/', prefix=prefix,
+        meta = client.head_container(
+            storage_url, auth_token, container,
             headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
 
     except client.ClientException:
@@ -83,7 +80,7 @@ def objectview(request, container, prefix=None):
             return redirect(containerview)
 
     prefixes = prefix_list(prefix)
-    pseudofolders, objs = pseudofolder_object_list(objects, prefix)
+
     base_url = get_base_url(request)
     account = storage_url.split('/')[-1]
 
@@ -96,7 +93,6 @@ def objectview(request, container, prefix=None):
     if prefix:
         swift_url += prefix
         swift_slo_url += prefix
-        redirect_url += prefix
 
     signature = create_formpost_signature(swift_url, key)
     slo_signature = create_formpost_signature(swift_slo_url, key)
@@ -111,10 +107,7 @@ def objectview(request, container, prefix=None):
             'swift_slo_url': swift_slo_url,
             'signature': signature,
             'slo_signature': slo_signature,
-            'redirect_url': redirect_url,
             'container': container,
-            'objects': objs,
-            'folders': pseudofolders,
             'session': request.session,
             'prefix': prefix,
             'prefixes': prefixes,
