@@ -194,4 +194,5 @@ app.applyTableEvents = function () {
       e.preventDefault();
     }
   });
+
 };
