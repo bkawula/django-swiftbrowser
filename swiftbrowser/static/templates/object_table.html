@@ -27,7 +27,8 @@
 				<br>
 				<ul id="opt{{$index}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
 					<li>
-						<a href="{{baseurl}}download_collection/{{container}}/{{folder[0]}}">
+						<a class="download-collection" href="{{baseurl}}download_collection/{{container}}/{{folder[0]}}"
+							data-status-url="{{baseurl}}download_collection_status/{{container}}/{{folder[0]}}">
 							<span class="glyphicons glyphicons-cloud-download"></span> Download
 						</a>
 					</li>

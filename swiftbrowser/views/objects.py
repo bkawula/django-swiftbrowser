@@ -2,9 +2,6 @@
 # -*- coding: utf-8 -*-
 #pylint:disable=E1101
 import time
-import urlparse
-import hmac
-from hashlib import sha1
 from swiftclient import client
 
 from django.shortcuts import render_to_response
@@ -13,7 +10,6 @@ from django.contrib import messages
 from django.conf import settings
 from django.http import JsonResponse
 from django.utils.translation import ugettext as _
-from django.core.urlresolvers import reverse
 from swiftbrowser.forms import TimeForm
 from swiftbrowser.utils import *
 from swiftbrowser.utils import _get_total_objects

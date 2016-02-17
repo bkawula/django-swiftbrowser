@@ -1,13 +1,11 @@
 """ Standalone webinterface for Openstack Swift. """
 # -*- coding: utf-8 -*-
 #pylint:disable=E0611, E1101
-import os
 import time
 import urlparse
 import hmac
 import logging
 import string
-import zipfile
 import random
 import re
 import Image
@@ -16,11 +14,10 @@ from hashlib import sha1
 
 from swiftclient import client
 
-from django.http import HttpResponse
+from django.http import StreamingHttpResponse
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.conf import settings
-
 
 from django.utils.translation import ugettext as _
 
@@ -29,6 +26,7 @@ from swiftbrowser.forms import TimeForm
 import swiftbrowser.views
 
 logger = logging.getLogger(__name__)
+from swiftbrowser.utilsalt.streaming_tarfile import StreamingTarFile
 
 
 def get_base_url(request):
@@ -469,30 +467,20 @@ def download_collection(request, container, prefix=None):
         else:  # Return user to the container view
             return redirect(swiftbrowser.views.containerview)
 
-    output = StringIO()
-    zipf = zipfile.ZipFile(output, 'w')
-    for o in objs:
-        name = o['name']
-        try:
-            x, content = client.get_object(
-                storage_url, auth_token, container, name,
-                headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
-        except client.ClientException:
-            return HttpResponseForbidden()
-
-        if prefix:
-            name = name[len(prefix):]
-        zipf.writestr(name, content)
-    zipf.close()
-
     if prefix:
         filename = prefix.split('/')[-2]
     else:
         filename = container
-    response = HttpResponse(output.getvalue(), 'application/zip')
-    response['Content-Disposition'] = 'attachment; filename="%s.zip"'\
+
+    stf = StreamingTarFile(
+        filename + '.tar.gz', [o['name'] for o in objs], storage_url,
+        auth_token, container)
+
+    response = StreamingHttpResponse(stf.generate())
+
+    response['Content-Disposition'] = 'attachment; mimetype="application/x-gzip"; filename="%s.tar.gz"'\
         % (filename)
-    output.close()
+
     return response
 
 
