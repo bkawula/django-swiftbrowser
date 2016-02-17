@@ -117,13 +117,13 @@ function upload_segments(data) {
 
                 //Update the progress bar.            done++;
                 var getPercent = (done/total_segments);
-                var getProgressWrapWidth = $('.css-progress-wrap').width();
+                var getProgressWrapWidth = $('#slo-upload .css-progress-wrap').width();
                 var progressTotal = getPercent * getProgressWrapWidth;
                 var animationLength = 500;
 
                 // on page load, animate percentage bar to data percentage length
                 // .stop() used to prevent animation queueing
-                $('.css-progress-bar').stop().animate({
+                $('#slo-upload .css-progress-bar').stop().animate({
                     left: progressTotal
                 }, animationLength);
 

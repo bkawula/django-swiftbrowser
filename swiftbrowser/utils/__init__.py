@@ -685,7 +685,16 @@ def calculate_segment_size(size):
     if size <= 1048576000:
         return 1048576
 
-    return int(math.ceil(size / 1000))
+    # By default, segment size should be the smallest it can be under the
+    # 1000 segment maximum.
+    min_segment_size = int(math.ceil(size / 1000))
+
+    # # If the file is greater than 5GB and min size is less than 5gb, up the
+    # # segment size to 5GB.
+    # if min_segment_size < 5368709120 and size > 5368709120:
+    #     return 5368709120
+
+    return min_segment_size
 
 
 def create_formpost_signature(swift_url, key):
