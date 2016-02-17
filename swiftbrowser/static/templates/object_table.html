@@ -60,6 +60,12 @@
 				</button>
 				<br>
 				<ul id="file-opt{{$index}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
+
+					<li>
+						<a href="{{baseurl}}download/{{container}}/{{key.name}}">
+							<span class="glyphicons glyphicons-cloud-download"></span> Download
+						</a>
+					</li>
 					<li>
 						<button type="button" data-reveal-id="tempurl" class="button dropdown-btn" data-reveal-ajax="{{baseurl}}tempurl/{{container}}/{{key.name}}">
 							<span class="glyphicons glyphicons-clock"></span>&nbsp;
