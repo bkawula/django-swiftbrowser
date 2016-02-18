@@ -31,10 +31,7 @@ def objectview(request, container, prefix=None):
 
     # Users with no role use container keys
     if request.session.get('norole'):
-
-        container_object = client.head_container(
-            storage_url, auth_token, container)
-        key = container_object.get('x-container-meta-temp-url-key', '')
+        key = request.session.get("keys")[container]
 
     # Regular users use account keys
     else:

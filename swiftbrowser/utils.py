@@ -339,24 +339,40 @@ def session_valid(fn):
         # If the following variables are available, attempt to get an
         # auth token
         if (storage_url and auth_token and username and password):
-            try:
-                client.head_account(storage_url, auth_token)
-                return fn(*args, **kw)
-            except:
+
+             # If the user has no role, head the container to valid the token
+            if args[0].session.get('norole'):
 
                 #Attempt to get a new auth token
                 try:
-                    auth_version = settings.SWIFT_AUTH_VERSION or 1
-                    (storage_url, auth_token) = client.get_auth(
-                        settings.SWIFT_AUTH_URL, username, password,
-                        auth_version=auth_version)
-                    args[0].session['auth_token'] = auth_token
-                    args[0].session['storage_url'] = storage_url
+                    client.head_container(
+                        storage_url, auth_token, args[0].session.get('user'))
                     return fn(*args, **kw)
                 except:
                     # Failure to get an auth token, tell the user the session
-                    # has expired.
+                    # has expiredself.
                     messages.error(args[0], _("Session expired."))
+
+            # A regular user's token is validated by heading the account.
+            else:
+                try:
+                    client.head_account(storage_url, auth_token)
+                    return fn(*args, **kw)
+                except:
+
+                    #Attempt to get a new auth token
+                    try:
+                        auth_version = settings.SWIFT_AUTH_VERSION or 1
+                        (storage_url, auth_token) = client.get_auth(
+                            settings.SWIFT_AUTH_URL, username, password,
+                            auth_version=auth_version)
+                        args[0].session['auth_token'] = auth_token
+                        args[0].session['storage_url'] = storage_url
+                        return fn(*args, **kw)
+                    except:
+                        # Failure to get an auth token, tell the user the
+                        # session has expired.
+                        messages.error(args[0], _("Session expired."))
         return redirect(swiftbrowser.views.login)
 
     return wrapper
@@ -374,24 +390,39 @@ def ajax_session_valid(fn):
         username = args[0].session.get('username', '')
         password = args[0].session.get('password', '')
 
-        try:
-            client.head_account(storage_url, auth_token)
-            return fn(*args, **kw)
-        except:
+        # If the user has no role, head the container to valid the token
+        if args[0].session.get('norole'):
 
             #Attempt to get a new auth token
             try:
-                auth_version = settings.SWIFT_AUTH_VERSION or 1
-                (storage_url, auth_token) = client.get_auth(
-                    settings.SWIFT_AUTH_URL, username, password,
-                    auth_version=auth_version)
-                args[0].session['auth_token'] = auth_token
-                args[0].session['storage_url'] = storage_url
-
+                client.head_container(
+                    storage_url, auth_token, args[0].session.get('user'))
                 return fn(*args, **kw)
             except:
+                # Failure to get an auth token, tell the user the session
+                # has expiredself.
                 messages.error(args[0], _("Session expired."))
-        return {'errors': 'true'}
+
+        # A regular user's token is validated by heading the account.
+        else:
+            try:
+                client.head_account(storage_url, auth_token)
+                return fn(*args, **kw)
+            except:
+
+                #Attempt to get a new auth token
+                try:
+                    auth_version = settings.SWIFT_AUTH_VERSION or 1
+                    (storage_url, auth_token) = client.get_auth(
+                        settings.SWIFT_AUTH_URL, username, password,
+                        auth_version=auth_version)
+                    args[0].session['auth_token'] = auth_token
+                    args[0].session['storage_url'] = storage_url
+
+                    return fn(*args, **kw)
+                except:
+                    messages.error(args[0], _("Session expired."))
+            return {'errors': 'true'}
 
     return wrapper
 
@@ -719,3 +750,25 @@ def _get_total_objects(request, container, objectname):
     pseudofolders, objs = pseudofolder_object_list(objects, prefix)
 
     return len(objs)
+
+
+def get_tenant_container_mapping(container_list):
+    '''Given tenant:container pairs in a string separated by commas,
+    return a dictionary that maps tenants to a list of containers.'''
+
+    mapping = {}
+
+    # Loop through the tenant:container pairs
+    for pair in container_list.split(","):
+
+        # Break up tenant:container pair
+        tenant, container = split_tenant_user_names(pair)
+
+        # If the tenant is not in the mapping, add a new list to the mapping.
+        if not tenant in mapping:
+            mapping[tenant] = [container]
+
+        else:
+            # If the tenant is already in the mapping, add this container to it
+            mapping[tenant].append(container)
+    return mapping

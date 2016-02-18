@@ -18,6 +18,8 @@ from swiftbrowser.forms import PseudoFolderForm, LoginForm, TimeForm
 from swiftbrowser.utils import *
 from swiftbrowser.views.containers import containerview
 from swiftbrowser.views.objects import objectview
+from swiftbrowser.views.limited_users import limited_users_login, \
+    limited_users_containerview
 
 from openstack_auth.utils import get_session
 import keystoneauth1.identity
@@ -88,6 +90,7 @@ def login(request):
                     client.head_account(storage_url, auth_token)
                 except:
                     request.session['norole'] = True
+                    return redirect(limited_users_login)
 
                 return redirect(containerview)
 
@@ -101,6 +104,7 @@ def login(request):
 
         # Login failure on invalid forms.
         else:
+            user = ""
             messages.error(request, _("Login failed."))
     else:
         form = LoginForm(None)
@@ -231,10 +235,12 @@ def get_version(request):
                               context_instance=RequestContext(request))
 
 
-@session_valid
-def switch_tenant(request, tenant):
+def switch_tenant(request, tenant, login=False):
     """ Switch the user to another tenant. Authenticate under the new tenant
-    and redirect to the container view. """
+    and redirect to the container view.
+
+    Redirect to login if login is True.
+    """
 
     user = request.session.get('user', '')
     password = request.session.get('password', '')
@@ -247,5 +253,11 @@ def switch_tenant(request, tenant):
     request.session['auth_token'] = auth_token
     request.session['storage_url'] = storage_url
     request.session['tenant_name'] = tenant
+
+    if 'norole' in request.session:
+        if login:
+            return redirect(limited_users_login)
+        else:
+            return redirect(limited_users_containerview)
 
     return redirect(containerview)

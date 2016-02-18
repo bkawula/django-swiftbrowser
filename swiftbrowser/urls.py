@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.conf.urls import patterns, include, url
+from django.conf.urls import patterns, url
 
 from swiftbrowser.views import *
 from swiftbrowser.utils import download_collection, set_default_temp_time
@@ -20,6 +20,8 @@ urlpatterns = patterns(
     url(r'^version.info/$', get_version, name="get_version"),
     url(r'^toggle_public/(?P<container>.+?)/$', toggle_public,
         name="toggle_public"),
+    url(r'^switch_tenant/(?P<tenant>.+?)/(?P<login>(.+)+)?$', switch_tenant,
+        name="switch_tenant"),
     url(r'^switch_tenant/(?P<tenant>.+?)$', switch_tenant,
         name="switch_tenant"),
 
@@ -91,5 +93,11 @@ urlpatterns = patterns(
     url(r'^get_users/$', get_users, name="get_users"),
     url(r'^create_user/$', create_user, name="create_user"),
     url(r'^delete_user/$', delete_user, name="delete_user"),
+
+    # limited_users.py
+    url(r'^limited_users_login/$', limited_users_login,
+        name="limited_users_login"),
+    url(r'^limited_users_containerview/$', limited_users_containerview,
+        name="limited_users_containerview"),
 
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

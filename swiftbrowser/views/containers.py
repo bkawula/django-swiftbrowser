@@ -19,21 +19,15 @@ from swiftbrowser.utils import _get_total_objects
 def containerview(request):
     """ Returns a list of all containers in current account. """
 
-    # Users with no role will not be able to list containers.
-    if request.session.get('norole'):
-        # Redirect them to the container that is their username.
-        return redirect(swiftbrowser.views.objects.objectview,
-                        request.session.get('user'))
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
     try:
         account_stat, containers = client.get_account(storage_url, auth_token)
     except client.ClientException:
-        return redirect(login)
+        return redirect(swiftbrowser.views.main.login)
 
     account_stat = replace_hyphens(account_stat)
-
     account = storage_url.split('/')[-1]
 
     return render_to_response('containerview.html', {
@@ -111,6 +105,7 @@ def delete_container(request, container):
         'success': True,
     })
 
+
 @session_valid
 def delete_container_form(request, container):
     """ Display delete container modal """
@@ -168,4 +163,3 @@ def set_acls(request, container):
         })
     except client.ClientException:
         return JsonResponse({'error': 'Error updating ACL.'})
-

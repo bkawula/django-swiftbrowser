@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load l10n %}
+{% load i18n %}
+{% load dateconv %}
+{% load lastpart %}
+{% block content %}
+	<div id="containerview">
+		{% include "messages.html" %}
+		<div class="row">
+			<div class="small-12 columns">
+			</div>
+		</div>
+		<div class="row content-body">
+			<div id="containertable" class="small-12 columns">
+				<table role="grid">
+					<thead>
+						<tr>
+							<th class="hide-for-small-only"></th>
+							<th class="hide-for-small-only">{% trans 'Name' %}</th>
+							<th class="hide-for-small-only">{% trans 'Objects' %}</th>
+							<th class="hide-for-small-only">{% trans 'Size' %}</th>
+							<th class="hide-for-small-only"></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for container in containers %}
+							<tr>
+								<td class="icon">
+									<span class="glyphicons glyphicons-cloud"></span>
+								</td>
+								<td>
+									<strong>
+										<a href="{% url "objectview" container=container.name %}">{{container.name}}</a>
+									</strong>
+								</td>
+								<td class="hide-for-small-only">{{container.count}}</td>
+								<td>{{container.bytes|filesizeformat}}</td>
+								<td>
+									<button type="button" data-dropdown="opt{{forloop.counter}}" aria-controls="opt{{forloop.counter}}" aria-expanded="false" class="button dropdown file-btn">
+										<span class="glyphicons glyphicons-cogwheel"></span>
+									</button>
+									<br>
+									<ul id="opt{{forloop.counter}}" data-dropdown-content class="f-dropdown right" aria-hidden="true">
+										<li>
+											<a href="{% url "download_collection" container=container.name %}">
+												<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download' %}
+											</a>
+										</li>
+										<li class="divider" />
+										<li>
+											<a class="delete-container-link" data-reveal-id="delete-container" data-container-name="{{container.name}}" data-reveal-ajax="{% url 'delete_container_form' container=container.name %}">
+												<span class="glyphicons glyphicons-fire"></span> {% trans 'Delete container' %}
+											</a>
+										</li>
+										<li>
+											<a href="" data-reveal-id="edit-acl" class="edit-acl" data-container-name="{{container.name}}">
+												<span class="glyphicons glyphicons-pencil"></span> {% trans 'Edit Access' %}
+											</a>
+										</li>
+									</ul>
+								</td>
+							</tr>
+						{% empty %}
+							<tr>
+								<td colspan="5">
+									<strong>
+										<center>{% trans 'There are no containers in this account yet. Create a new container by clicking the red button.' %}</center>
+									</strong>
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+{% endblock %}
