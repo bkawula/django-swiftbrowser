@@ -31,6 +31,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
   $scope.folders = items.folders;
   $scope.objects = items.objects;
   $scope.container = items.container;
+  $scope.incomplete_slo = items.incomplete_slo;
   $scope.baseurl = baseurl;
 
   $scope.$on('onRepeatLast', function () {
@@ -42,6 +43,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
       function (response) {
         $scope.folders = response.data.data.folders;
         $scope.objects = response.data.data.objects;
+        $scope.incomplete_slo = response.data.data.incomplete_slo;
       }
     );
   }
@@ -54,6 +56,51 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
 
   // Provide upload_form.js access to internal function
   $scope.MessagesHandler = MessagesHandler;
+
+  /*
+    Make a request to the server to delete the incomplete SLO.
+  */
+  $scope.delete_incomplete_slo = function (key) {
+
+    //Bind slo delete
+    $('#delete-slo-modal').foundation('reveal', 'open', {
+        close_on_background_click: false,
+    });
+
+    $("#slo-upload a.close-reveal-modal").click(function () {
+      location.reload();
+    });
+
+    var formData = {
+        csrfmiddlewaretoken  : $('input[name=csrfmiddlewaretoken]').val(),
+    };
+
+    $.ajax({
+        type        : 'POST',
+        url     : baseurl + "delete_incomplete_slo/" + $scope.container + "/" + key.name,
+        data        : formData,
+    })
+      .success(function (data) {
+        // Update message
+        MessagesHandler.newSuccessMessage(data);
+
+        // Refresh table.
+        $scope.refreshObjectTable();
+        $("#css-progress-wrap").toggle(false);
+
+        $('#delete-slo-modal').foundation('reveal', 'close', {
+            close_on_background_click: false,
+        });
+      })
+      .error(function (data) {
+
+        MessagesHandler.newErrorMessage(data);
+
+        $('#delete-slo-modal').foundation('reveal', 'close', {
+            close_on_background_click: false,
+        });
+      });
+  };
 
 })
 
@@ -193,6 +240,15 @@ app.applyTableEvents = function () {
     if (!confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
       e.preventDefault();
     }
+  });
+
+  /*
+      Bind SLO upload button
+  */
+  $("button.slo-upload-button").click(function () {
+      $('#slo-upload').foundation('reveal', 'open', {
+          close_on_background_click: false,
+      });
   });
 
 };

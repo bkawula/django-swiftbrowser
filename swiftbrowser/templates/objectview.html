@@ -14,7 +14,7 @@
 						<button type="button" data-reveal-id="fileForm" class="button upload">
 							<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Upload Files
 						</button>
-						<button type="button" data-reveal-id="slo-upload" class="button upload">
+						<button type="button" class="button upload slo-upload-button">
 							<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Large Upload
 						</button>
 						{% if false %}
@@ -80,6 +80,40 @@
 
 					{% endif%}
 				</div>
+				<div class="reveal-modal" id="slo-upload" data-reveal aria-hidden="true" role="dialog">
+					<a class="close-reveal-modal" aria-label="Close">×</a>
+					<h2>Static Large Objects</h2>
+					<p>
+						This upload option is for uploading large files (any file size will work but we recommend 5GB or more), that may experience network interruptions. With this upload option, you will be able to pick up where you left off if your upload is disconnected.
+					</p>
+					<div ng-if="incomplete_slo.length">
+						<ng-include src="'{% static 'templates/slo_table.html' %}'"></ng-include>
+					</div>
+				    <input type="file" file-model="myFile"/>
+				    {% if prefix %}
+				    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
+				    	data-initial-action="{% url "initialize_slo" container=container prefix=prefix %}"
+				    	data-create-manifest="{% url "create_manifest" container=container prefix=prefix %}"
+				    	>
+				    {% else %}
+				    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
+				    	data-initial-action="{% url "initialize_slo" container=container %}"
+				    	data-create-manifest="{% url "create_manifest" container=container %}" >
+				    {% endif %}
+			            <input type="hidden" name="max_file_size" value="{{ max_file_size }}">
+			            <input type="hidden" name="max_file_count" value="{{ max_file_count }}">
+			            <input type="hidden" name="expires" value="{{ expires }}">
+						<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+						<input type="hidden" class="swift_url" value="{{swift_slo_url}}">
+						<input type="hidden" name="signature" value="{{slo_signature}}">
+					    <button class="upload">Upload</button>
+					</form>
+					<div class="css-progress-wrap css-progress">
+					  <div class="css-progress-bar css-progress"></div>
+					</div>
+					<button class="cancel-slo-button">Cancel</button>
+					<div id="#slo-message"></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -91,32 +125,7 @@
 		{% endcomment %}
 		{% jfu 'upload_form.html' 'login'%}
 	</div>
-	<div class="reveal-modal" id="slo-upload" data-reveal aria-hidden="true" role="dialog">
-		<h2>Static Large Objects</h2>
-	    <input type="file" file-model="myFile"/>
-	    {% if prefix %}
-	    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
-	    	data-initial-action="{% url "initialize_slo" container=container prefix=prefix %}"
-	    	data-create-manifest="{% url "create_manifest" container=container prefix=prefix %}"
-	    	>
-	    {% else %}
-	    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
-	    	data-initial-action="{% url "initialize_slo" container=container %}"
-	    	data-create-manifest="{% url "create_manifest" container=container %}" >
-	    {% endif %}
-            <input type="hidden" name="max_file_size" value="{{ max_file_size }}">
-            <input type="hidden" name="max_file_count" value="{{ max_file_count }}">
-            <input type="hidden" name="expires" value="{{ expires }}">
-			<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
-			<input type="hidden" class="swift_url" value="{{swift_slo_url}}">
-			<input type="hidden" name="signature" value="{{slo_signature}}">
-		    <button class="upload">upload me</button>
-		</form>
-		<div class="css-progress-wrap css-progress">
-		  <div class="css-progress-bar css-progress"></div>
-		</div>
-		<div id="#slo-message"></div>
-	</div>
+
 	<div ng-controller="CreateFolderCtrl" class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
 		<h2 id="pseudoContainer-title">Create a new folder</h2>
 		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
@@ -142,6 +151,11 @@
 	<div class="reveal-modal" id="tempurl" data-reveal aria-labelledby="tempurl-title" aria-hidden="true" role="dialog"></div>
 	<div class="reveal-modal" id="object-expiry" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog"></div>
 	<div class="reveal-modal" id="delete-folder" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog"></div>
+	<div class="reveal-modal" id="delete-slo-modal" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog">
+		<div class="css-progress-wrap css-progress">
+		  <div class="css-progress-bar css-progress"></div>
+		</div>
+	</div>
 </div>
 {% endblock %}
 {% block jsadd %}

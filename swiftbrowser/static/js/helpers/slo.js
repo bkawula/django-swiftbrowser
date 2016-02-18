@@ -10,18 +10,57 @@ $('#slo-upload form').submit(function (e) {
 */
 $('#slo-upload button.upload').click(slo_upload);
 
+var xhrs = [];
+
+/*
+    Abort all the current xhr processes and clear the file input.
+*/
+function cancel_current_slo_upload() {
+
+
+    angular.element("#objecttable").scope().refreshObjectTable();
+
+    //Hide cancel button
+    $("#slo-upload button.cancel-slo-button").toggle(false);
+    $("#slo-upload input[type=file]").toggle(true);
+    $("#slo-upload button.upload").toggle(true);
+
+    //Hide progress bar.
+    $(".css-progress-wrap").toggle(false);
+
+    //Abort the latest xhr request to the first so we don't end up
+    //uploading i + c but not i.
+    for (var i = xhrs.length - 1; i >= 0; i--) {
+        xhrs[i].abort();
+    }
+
+    //Clear input
+    $("#slo-upload input")[0].value = "";
+}
+
+//Cancel Slo upload on modal close
+$("#slo-upload a.close-reveal-modal").click(cancel_current_slo_upload);
+
+
 /*
   Create a SLO from the selected file.
 */
 function slo_upload() {
 
-    //Display progress bar
-    $(".css-progress-wrap").toggle(true);
-
+    $("#slo-upload input[type=file]").toggle(false);
+    $("#slo-upload button.upload").toggle(false);
     var file = $("#slo-upload input")[0].files[0];
     if (!file) {
         return;
     }
+
+    //Display progress bar
+    $(".css-progress-wrap").toggle(true);
+
+    //Display and bind the cancel button.
+    $("#slo-upload button.cancel-slo-button")
+    .toggle(true)
+    .click(cancel_current_slo_upload);
 
     var file_name = file.name;
     var formData = {
@@ -51,8 +90,6 @@ function slo_upload() {
     .error(function(error) {
         console.log(error.responseText);
     });
-
-    //TODO: Create manifest
 }
 
 /*
@@ -137,6 +174,7 @@ function upload_segments(data) {
             }
         };
         xhr.send(fd);
+        xhrs.push(xhr);
 
         // Update the segment number, start and end position.
         segment_number++;
@@ -174,12 +212,18 @@ function create_manifest() {
     })
 
     .success(function (message)  {
+
+        $("#slo-upload input[type=file]").toggle(true);
+        $("#slo-upload button.upload").toggle(true);
         $('#fileForm').foundation('reveal', 'close');
         angular.element("#objecttable").scope().MessagesHandler.newSuccessMessage(message);
         angular.element("#objecttable").scope().refreshObjectTable();
     })
 
     .error(function(error) {
+
+        $("#slo-upload input[type=file]").toggle(true);
+        $("#slo-upload button.upload").toggle(true);
         $('#fileForm').foundation('reveal', 'close');
         angular.element("#objecttable").scope().MessagesHandler.newErrorMessage(error.responseText);
     });

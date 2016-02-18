@@ -36,7 +36,7 @@
         {
             action: 'validate',
             // Always trigger this action,
-            // even if the previous action was rejected: 
+            // even if the previous action was rejected:
             always: true,
             // Options taken from the global options map:
             acceptFileTypes: '@',
@@ -72,7 +72,7 @@
             messages: {
                 maxNumberOfFiles: 'Maximum number of files exceeded',
                 acceptFileTypes: 'File type not allowed',
-                maxFileSize: 'File is too large',
+                maxFileSize: 'File is too large. Use Large upload for files larger than 5GB.',
                 minFileSize: 'File is too small'
             }
         },

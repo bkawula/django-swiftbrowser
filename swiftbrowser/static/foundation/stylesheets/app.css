@@ -10045,7 +10045,18 @@ form#object-expiry-form input.submit {
   margin-right: 0.15em;
 }
 
-/* line 39, ../scss/_objectview.scss */
+/* line 40, ../scss/_objectview.scss */
+#slo-upload button.cancel-slo-button {
+  display: none;
+  background-color: red;
+  width: 100%;
+}
+/* line 44, ../scss/_objectview.scss */
+#slo-upload button.cancel-slo-button:hover {
+  background-color: #a80000;
+}
+
+/* line 50, ../scss/_objectview.scss */
 .dropdown-btn {
   background-color: transparent;
   color: #555555;
@@ -10055,10 +10066,48 @@ form#object-expiry-form input.submit {
   text-align: left;
   width: 100%;
 }
-/* line 48, ../scss/_objectview.scss */
+/* line 59, ../scss/_objectview.scss */
 .dropdown-btn:hover, .dropdown-btn:focus {
   color: #555555;
   background-color: #EEEEEE;
+}
+
+/* line 66, ../scss/_objectview.scss */
+.slo-table th.logo {
+  width: 1rem;
+}
+/* line 70, ../scss/_objectview.scss */
+.slo-table td.icon {
+  padding: 0rem 0.625rem 0rem 0rem;
+}
+/* line 74, ../scss/_objectview.scss */
+.slo-table .css-progress-wrap {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: block;
+}
+/* line 80, ../scss/_objectview.scss */
+.slo-table td {
+  padding-top: 0.7em;
+  padding-bottom: 0.7em;
+}
+/* line 85, ../scss/_objectview.scss */
+.slo-table button {
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  padding: 0.3em 1em 0.3em 1em;
+}
+/* line 90, ../scss/_objectview.scss */
+.slo-table button.cancel {
+  background-color: red;
+}
+/* line 92, ../scss/_objectview.scss */
+.slo-table button.cancel:hover {
+  background-color: #a80000;
+}
+/* line 97, ../scss/_objectview.scss */
+.slo-table th.button-column {
+  width: 10px;
 }
 
 /* line 1, ../scss/_containerview.scss */
@@ -10274,4 +10323,15 @@ form#object-expiry-form input.submit {
 /* line 42, ../scss/_messages.scss */
 .display-on {
   display: block !important;
+}
+
+/* line 2, ../scss/_slo.scss */
+.delete-slo-wrapper h2.delete-folder-title, .delete-slo-wrapper span.cancel-delete {
+  display: none;
+}
+/* line 5, ../scss/_slo.scss */
+.delete-slo-wrapper #css-progress-wrap {
+  display: block;
+  margin-top: 3em;
+  margin-bottom: 3em;
 }
