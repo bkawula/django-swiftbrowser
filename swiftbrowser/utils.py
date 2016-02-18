@@ -397,21 +397,20 @@ def ajax_session_valid(fn):
 
 
 @session_valid
-def download_collection(request, container, prefix=None, non_recursive=False):
+def download_collection(request, container, prefix=None):
     """ Download the content of an entire container/pseudofolder
     as a Zip file. """
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
-    delimiter = '/' if non_recursive else None
     try:
         x, objects = client.get_container(
             storage_url,
             auth_token,
             container,
             headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')},
-            delimiter=delimiter,
+            delimiter=None,
             prefix=prefix
         )
     except client.ClientException:

@@ -81,9 +81,6 @@ urlpatterns = patterns(
     # utils.py
     url(r'^download_collection/(?P<container>.+?)/(?P<prefix>.+)?$',
         download_collection, name="download_collection"),
-    url(r'^download_collection_nonrec/(?P<container>.+?)/(?P<prefix>.+)?$',
-        download_collection, {'non_recursive': True},
-        name="download_collection_nonrec"),
     url(r'^set_object_expiry_time/(?P<container>.+?)/(?P<objectname>.+?)$',
         set_object_expiry_time,
         name="set_object_expiry_time"),

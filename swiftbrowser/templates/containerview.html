@@ -74,11 +74,6 @@
 												<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download' %}
 											</a>
 										</li>
-										<li>
-											<a href="{% url "download_collection_nonrec" container=container.name %}">
-												<span class="glyphicons glyphicons-cloud-download"></span> {% trans 'Download nonrecursive' %}
-											</a>
-										</li>
 										<li class="divider" />
 										<li>
 											<a class="delete-container-link" data-reveal-id="delete-container" data-container-name="{{container.name}}" data-reveal-ajax="{% url 'delete_container_form' container=container.name %}">
