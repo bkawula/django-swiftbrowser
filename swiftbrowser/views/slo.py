@@ -46,11 +46,13 @@ def get_segment_number(request, file_name, container, prefix=None):
 def initialize_slo(request, container, prefix=None):
     '''Initiate a slo upload.
 
-    Create a segments container.
+    Create a segments container if one does not exist.
 
     Return the segment number the upload should start at.
     Return the size of the segments.
     Return swift_url
+
+    Create header SLO
     '''
 
     # Check POST
@@ -80,6 +82,52 @@ def initialize_slo(request, container, prefix=None):
         "next_segment": segment_number,
         "segment_size": calculate_segment_size(file_size),
     }
+
+    # Check for headers
+    storage_url = request.session.get('storage_url', '')
+    auth_token = request.session.get('auth_token', '')
+    try:
+        cont = client.head_container(storage_url, auth_token, container)
+    except client.ClientException, e:
+        return HttpResponse(e, status=500)
+
+    # Check header doesn't exist
+    path = (file_name if not prefix else prefix + "/" + file_name)
+
+    # Check headers to see if there are any existing SLO
+    if not "x-container-meta-slo" in cont:
+
+        # Create a new SLO header with the current path.
+        headers = {
+            "X-Container-Meta-slo": path,
+        }
+
+    else:
+
+        # Check to see if any of the existing SLO matches the current path.
+        slo = cont["x-container-meta-slo"]
+
+        matching_slo = False
+        for obj in slo.split(","):
+            if obj == path:
+                matching_slo = True
+
+        # If the current path is not in SLO, add it in by posting back to the
+        # container.
+        if not matching_slo:
+            headers = {
+                "x-container-meta-slo": slo + "," + path,
+            }
+        else:
+            headers = {
+                "x-container-meta-slo": slo,
+            }
+
+    try:
+        client.post_container(storage_url, auth_token, container, headers)
+
+    except client.ClientException:
+        return JsonResponse({'error': 'Error updating headers.'})
 
     return JsonResponse(response)
 
