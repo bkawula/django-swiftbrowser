@@ -67,6 +67,8 @@ function delete_folder() {
     })
 
     .success(function (data) {
+
+        console.log(data);
         // Close the modal, refresh the object table
         $('#delete-folder').foundation('reveal', 'close');
         angular.element("#objecttable").scope().refreshObjectTable();
@@ -75,6 +77,7 @@ function delete_folder() {
 
     .error(function(error) {
         console.log(error.responseText);
+        location.reload();
     });
 
     /* Recursively update the prorgess bar */

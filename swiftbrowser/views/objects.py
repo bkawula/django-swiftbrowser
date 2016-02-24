@@ -367,7 +367,10 @@ def delete_folder(request, container, objectname):
     try:
         delete_given_folder(request, container, objectname)
 
-    except client.ClientException:
+    except client.ClientException, e:
+        messages.add_message(
+            request, messages.ERROR,
+            _("Unable to delete folder {0}".format(objectname)))
         return HttpResponse(e, status=500)
 
     return JsonResponse({

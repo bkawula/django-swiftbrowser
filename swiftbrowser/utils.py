@@ -309,11 +309,13 @@ def delete_given_folder(request, container, foldername):
 
     # Delete the folder itself.
     try:
-        delete_given_object(request, container, foldername)
+        client.get_object(
+            storage_url, auth_token, container, foldername,
+            headers={"X-Forwarded-For": request.META.get('REMOTE_ADDR')})
     except:
-        #Except a failure to delete if the pseudo folder was not created
-        #manually.
+        # If folder does not exist, pass
         pass
+    delete_given_object(request, container, foldername)
 
 
 def replace_ip(domain, url):
