@@ -14,11 +14,15 @@
 				<div class="account-btns">
 					<span class="username">{{session.user}}</span>
 					<div class="tenant-wrapper">
-						<span class="button tiny tenant-name" data-dropdown="tenant-dropdown">
-							{{session.tenant_name}}
-						</span>
 						{% ifequal session.tenants|length  1 %}
+							<span class="button tiny tenant-name" data-dropdown="tenant-dropdown">
+								{{session.tenant_name}}
+							</span>
 						{% else %}
+							<span class="button tiny tenant-name" data-dropdown="tenant-dropdown">
+								{{session.tenant_name}}
+								<div class="arrow-down"></div>
+							</span>
 							<ul id="tenant-dropdown" data-dropdown-content class="f-dropdown left">
 								{% for alternative_tenant in session.tenants %}
 									{% if alternative_tenant != session.tenant_name %}
