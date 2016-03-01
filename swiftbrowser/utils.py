@@ -345,6 +345,9 @@ def session_valid(fn):
              # If the user has no role, head the container to valid the token
             if args[0].session.get('norole'):
 
+                storage_url = args[0].session.get('default_storage_url', '')
+                auth_token = args[0].session.get('default_auth_token', '')
+
                 #Attempt to get a new auth token
                 try:
                     client.head_container(
@@ -395,6 +398,8 @@ def ajax_session_valid(fn):
         # If the user has no role, head the container to valid the token
         if args[0].session.get('norole'):
 
+            storage_url = args[0].session.get('default_storage_url', '')
+            auth_token = args[0].session.get('default_auth_token', '')
             #Attempt to get a new auth token
             try:
                 client.head_container(

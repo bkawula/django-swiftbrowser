@@ -22,6 +22,12 @@ def limited_users_login(request):
     # user's username.
     try:
         meta = client.head_container(storage_url, auth_token, user)
+
+        # Save the storage_url and auth_token as the default
+        # These values will be the ones reused to validate the session in
+        # session_valid.
+        request.session["default_storage_url"] = storage_url
+        request.session["default_auth_token"] = auth_token
     except client.ClientException:
 
         # The user may belong to more than one tenant and so the user's
