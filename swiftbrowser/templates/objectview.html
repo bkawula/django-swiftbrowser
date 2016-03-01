@@ -7,34 +7,36 @@
 <div id="objectview">
 	<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">
 	<div class="crumb-row" data-magellan-expedition="fixed">
-		<div class="row" >
-			<div class="action-btns">
-				<div class="small-12 columns">
-					<button type="button" data-reveal-id="fileForm" class="button upload">
-						<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Upload Files
-					</button>
-					<button type="button" data-reveal-id="slo-upload" class="button upload">
-						<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Large Upload
-					</button>
-					{% if false %}
-					<button type="button" data-dropdown="drop2" aria-controls="drop2" aria-expanded="false" class="button share">
-						<span class="glyphicons glyphicons-share"></span>Share
-					</button>
-					{% endif %}
-					<button type="button" data-reveal-id="pseudoContainer" class="button folder">
-						<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
-						New Folder
-					</button>
-					{% if public %}
-					<div id="drop2" data-dropdown-content class="f-dropdown content" aria-hidden="true" tabindex="-1">
-						<strong>{% trans 'Public URL:' %}</strong>
-						<a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
-							{{ base_url }}{% url "public_objectview" account=account container=container %}
-						</a>
+		<div class="row">
+			{% if not session.norole %}
+				<div class="action-btns">
+					<div class="small-12 columns">
+						<button type="button" data-reveal-id="fileForm" class="button upload">
+							<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Upload Files
+						</button>
+						<button type="button" data-reveal-id="slo-upload" class="button upload">
+							<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Large Upload
+						</button>
+						{% if false %}
+						<button type="button" data-dropdown="drop2" aria-controls="drop2" aria-expanded="false" class="button share">
+							<span class="glyphicons glyphicons-share"></span>Share
+						</button>
+						{% endif %}
+						<button type="button" data-reveal-id="pseudoContainer" class="button folder">
+							<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
+							New Folder
+						</button>
+						{% if public %}
+						<div id="drop2" data-dropdown-content class="f-dropdown content" aria-hidden="true" tabindex="-1">
+							<strong>{% trans 'Public URL:' %}</strong>
+							<a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
+								{{ base_url }}{% url "public_objectview" account=account container=container %}
+							</a>
+						</div>
+						{% endif %}
 					</div>
-					{% endif %}
 				</div>
-			</div>
+			{% endif %}
 			<div class="small-12 medium-7 columns breadcrumb">
 				<ul>
 					<li>
@@ -71,7 +73,12 @@
 			        </div>
 				</div>
 				<div>
-					<ng-include src="'{% static 'templates/object_table.html' %}'"></ng-include>
+					{% if not session.norole %}
+						<ng-include src="'{% static 'templates/object_table.html' %}'"></ng-include>
+					{% else %}
+						<ng-include src="'{% static 'templates/object_table_readonly.html' %}'"></ng-include>
+
+					{% endif%}
 				</div>
 			</div>
 		</div>
