@@ -13,11 +13,16 @@ from django.utils.translation import ugettext as _
 from swiftbrowser.forms import CreateContainerForm, UpdateACLForm
 from swiftbrowser.utils import *
 from swiftbrowser.utils import _get_total_objects
+from swiftbrowser.views.limited_users import limited_users_containerview
 
 
 @session_valid
 def containerview(request):
     """ Returns a list of all containers in current account. """
+
+    # Redirect to limited_users_containerview if no role
+    if ('norole' in request.session):
+        return redirect(limited_users_containerview)
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
