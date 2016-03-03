@@ -31,6 +31,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
   $scope.folders = items.folders;
   $scope.objects = items.objects;
   $scope.container = items.container;
+  $scope.incomplete_slo = items.incomplete_slo;
   $scope.baseurl = baseurl;
 
   $scope.$on('onRepeatLast', function () {
@@ -42,6 +43,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
       function (response) {
         $scope.folders = response.data.data.folders;
         $scope.objects = response.data.data.objects;
+        $scope.incomplete_slo = response.data.data.incomplete_slo;
       }
     );
   }
@@ -54,6 +56,26 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
 
   // Provide upload_form.js access to internal function
   $scope.MessagesHandler = MessagesHandler;
+
+  /*
+    Make a request to the server to delete the incomplete SLO.
+  */
+  $scope.delete_incomplete_slo = function (key) {
+   $http({
+      method  : 'POST',
+      url     : baseurl + "delete_incomplete_slo/" + $scope.container + "/" + key.name,
+      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+    })
+      .success(function (data) {
+        // Update message
+
+        // Refresh table.
+        $scope.refreshObjectTable();
+      })
+      .error(function (data) {
+        console.log(data);
+      });
+  };
 
 })
 
@@ -176,6 +198,19 @@ angular.element(document).ready(get_object_table);
     After a table is loaded, new events need to be applied to the page.
 */
 app.applyTableEvents = function () {
+
+  //Updated the progress bar of incomplete SLO objects
+  $(".slo-table .css-progress-wrap").each(function() {
+
+    var getPercent = $(this).attr("data-progress") / 100;
+    var getProgressWrapWidth = $(this).width();
+    var progressTotal = getPercent * getProgressWrapWidth;
+    var animationLength = 500;
+
+    $(this).find('.css-progress-bar').stop().animate({
+        left: progressTotal
+    }, animationLength);
+  });
 
   //Re-apply foundation
   $(document).foundation();

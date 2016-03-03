@@ -1,3 +1,32 @@
+<table class="slo-table" ng-if="incomplete_slo.length">
+	<tr>
+		<th class="hide-for-small-only logo"></th>
+		<th class="hide-for-small-only">Name</th>
+		<th class="hide-for-small-only">File Size (Percentage complete)</th>
+		<th class="hide-for-small-only button-column"></th>
+		<th class="hide-for-small-only button-column"></th>
+	</tr>
+	<tr ng-repeat="key in incomplete_slo" on-last-repeat>
+		<td class="icon">
+			<span class="glyphicons glyphicons-file"></span>
+		</td>
+		<td>
+			{{key.name | formatFileName}}
+		</td>
+		<td>
+			{{key.file_size|formatByte}} ({{key.progress}}%)
+			<div class="css-progress-wrap css-progress" data-progress="{{key.progress}}">
+				<div class="css-progress-bar css-progress"></div>
+			</div>
+		</td>
+		<td>
+			<button>Continue</button>
+		</td>
+		<td>
+			<button ng-click="delete_incomplete_slo(key)" class="cancel">Cancel</button>
+		</td>
+	</tr>
+</table>
 <table>
 	<thead>
 		<tr>
@@ -8,7 +37,7 @@
 			<th class="hide-for-small-only"></th>
 		</tr>
 	</thead>
-	<tbody ng-if="objects.length || folders.length">
+	<tbody ng-if="objects.length || folders.length || incomplete_slo.length">
 		<tr ng-repeat="folder in folders" on-last-repeat>
 			<td class="icon">
 				<span class="glyphicons glyphicons-folder-closed"></span>
@@ -19,7 +48,7 @@
 				</a>
 			</td>
 			<td class="hide-for-small-only"></td>
-			<td ></td>
+			<td></td>
 			<td>
 				<button type="button" data-dropdown="opt{{$index}}" aria-controls="opt{{$index}}" aria-expanded="false" class="button dropdown file-btn">
 					<span class="glyphicons glyphicons-cogwheel"></span>
@@ -49,7 +78,7 @@
 				<a href="{{baseurl}}download/{{container}}/{{key.name}}" class="block">{{key.name | formatFileName}}</a>
 			</td>
 			<td class="hide-for-small-only">{{key.last_modified | date : 'medium' : '-1000'}}</td>
-			<td >{{key.bytes|formatByte}}</td>
+			<td>{{key.bytes|formatByte}}</td>
 			<td>
 				<button type="button" data-dropdown="file-opt{{$index}}" aria-controls="file-opt{{$index}}" aria-expanded="false" class="button dropdown file-btn">
 					<span class="glyphicons glyphicons-cogwheel"></span>

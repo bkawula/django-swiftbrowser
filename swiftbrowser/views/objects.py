@@ -16,6 +16,7 @@ from swiftbrowser.utils import _get_total_objects
 from swiftbrowser.views.containers import containerview
 
 import swiftbrowser
+from swiftbrowser.views.slo import calculate_segment_size, get_segment_number
 
 
 @session_valid
@@ -133,10 +134,10 @@ def get_object_table(request):
         messages.add_message(request, messages.ERROR, _("Access denied."))
         return redirect(containerview)
 
-    prefixes = prefix_list(prefix)
     pseudofolders, objs = pseudofolder_object_list(objects, prefix)
-    base_url = get_base_url(request)
-    account = storage_url.split('/')[-1]
+
+    incomplete_slo = check_incomplete_slo(
+        request, storage_url, auth_token, container, prefix)
 
     return JsonResponse({
         'success': True,
@@ -144,7 +145,8 @@ def get_object_table(request):
             'container': container,
             'objects': objs,
             'folders': pseudofolders,
-            'folder_prefix': prefix
+            'folder_prefix': prefix,
+            'incomplete_slo': incomplete_slo
         }
     })
 
@@ -171,7 +173,7 @@ def delete_object(request, container, objectname):
     try:
         delete_given_object(request, container, objectname)
         messages.add_message(request, messages.INFO, _("Object deleted."))
-    except client.ClientException, e:
+    except client.ClientException:
         messages.add_message(request, messages.ERROR, _("Access denied."))
 
     if objectname[-1] == '/':  # deleting a pseudofolder, move one level up
@@ -390,3 +392,71 @@ def delete_folder_form(request, container, objectname):
             'total_objects': _get_total_objects(request, container, objectname)
         },
         context_instance=RequestContext(request))
+
+
+def check_incomplete_slo(request, storage_url, auth_token, container,
+                         prefix=None):
+    '''Check the header 'x-container-meta-slo' for the names of SLO that are
+    incomplete. Return a list of the names of objects and the percentage
+    it is complete.'''
+
+    incomplete_slo = []
+
+    try:
+        headers = client.head_container(storage_url, auth_token, container)
+    except client.ClientException, e:
+        return HttpResponse(e, status=500)
+
+    if "x-container-meta-slo" in headers:
+        slo_objects = headers["x-container-meta-slo"].split(",")
+
+        for slo_object in slo_objects:
+
+            slo_name = slo_object.split(":")[0]
+            file_size = slo_object.split(":")[-1]
+
+            # Add the object if it's in the correct folder
+            if object_is_in_path(prefix, slo_name):
+
+                progress = get_slo_progress(
+                    request, storage_url, auth_token, container, slo_name,
+                    float(file_size))
+
+                #TODO Check for other information like progress
+                incomplete_slo.append({
+                    "name": slo_name,
+                    "progress": progress,
+                    "file_size": file_size
+                })
+
+    return incomplete_slo
+
+
+def get_slo_progress(
+        request, storage_url, auth_token, container, slo_name, file_size):
+    '''Return the percentage the file has been uploaded.'''
+
+    segment_size = calculate_segment_size(file_size)
+
+    segments = get_segment_number(
+        request, slo_name, container + "_segments", prefix=None)
+
+    return int((segment_size * segments / file_size) * 100)
+
+
+def object_is_in_path(prefix, slo_name):
+    ''' Return true if the given prefix is the path of the slo_name or if
+    prefix is none and there is no path.'''
+
+    path_name_split = slo_name.rsplit("/", 1)
+
+    # slo_name is in root directory.
+    if not prefix:
+        return len(path_name_split) == 1
+
+    path = path_name_split[0]
+
+    return path == prefix
+
+
+

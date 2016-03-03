@@ -66,6 +66,8 @@ urlpatterns = patterns(
         initialize_slo, name="initialize_slo"),
     url(r'^create_manifest/(?P<container>.+?)/(?P<prefix>(.+)+)?$',
         create_manifest, name="create_manifest"),
+    url(r'^delete_incomplete_slo/(?P<container>.+?)/(?P<objectname>.+?)$',
+        delete_incomplete_slo, name="delete_incomplete_slo"),
 
     # trashviews.py
     url(r'^move_to_trash/(?P<container>.+?)/(?P<objectname>.+?)$',

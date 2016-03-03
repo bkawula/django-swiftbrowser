@@ -50,3 +50,47 @@ form#object-expiry-form {
 		background-color: $smoke;
 	}
 }
+
+.slo-table {
+	th.logo {
+		width: 1rem;
+	}
+
+	td.icon {
+	    padding: 0rem 0.625rem 0rem 0rem;
+	}
+
+	.css-progress-wrap {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		display: block;
+	}
+
+	td {
+		padding-top: 0.7em;
+	}
+
+	.css-progress {
+		height: 10px;
+	}
+	tr td:nth-child(5) {
+		padding-top: 0.7em;
+	}
+
+	button {
+		margin-bottom: 0;
+		font-size: 0.875rem;
+		padding: 0.3em 1em 0.3em 1em;
+
+		&.cancel {
+			background-color: red;
+			&:hover {
+				background-color: #a80000;
+			}
+		}
+	}
+	th.button-column {
+		width: 10px;
+	}
+}
+
