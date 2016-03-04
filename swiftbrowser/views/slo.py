@@ -186,10 +186,13 @@ def create_manifest(request, container, prefix=None):
 
                 try:
 
+                    full_file_name = (prefix + file_name
+                                      if prefix else file_name)
+
                     #TODO: add prefix to file_name
                     client.put_object(
                         storage_url, auth_token,
-                        container.encode('ascii', 'ignore'), file_name, f,
+                        container.encode('ascii', 'ignore'), full_file_name, f,
                         query_string="multipart-manifest=put")
                 except Exception:
                     return HttpResponse("Failed to upload manifest.",
