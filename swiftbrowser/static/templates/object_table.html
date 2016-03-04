@@ -1,3 +1,6 @@
+<p ng-if="incomplete_slo.length">
+	The following is a list of incomplete uploads.
+</p>
 <table class="slo-table" ng-if="incomplete_slo.length">
 	<tr>
 		<th class="hide-for-small-only logo"></th>
@@ -15,12 +18,9 @@
 		</td>
 		<td>
 			{{key.file_size|formatByte}} ({{key.progress}}%)
-			<div class="css-progress-wrap css-progress" data-progress="{{key.progress}}">
-				<div class="css-progress-bar css-progress"></div>
-			</div>
 		</td>
 		<td>
-			<button>Continue</button>
+			<button data-reveal-id="slo-upload">Continue</button>
 		</td>
 		<td>
 			<button ng-click="delete_incomplete_slo(key)" class="cancel">Cancel</button>

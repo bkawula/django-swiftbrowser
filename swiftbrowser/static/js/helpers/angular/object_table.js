@@ -68,6 +68,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
     })
       .success(function (data) {
         // Update message
+        MessagesHandler.newSuccessMessage(data);
 
         // Refresh table.
         $scope.refreshObjectTable();

@@ -266,7 +266,10 @@ def remove_slo_header(storage_url, auth_token, container, objectname):
         # Rebuild the header without the slo that was deleted.
         for obj in slo_header.split(","):
             if obj.split(":")[0] != objectname:
-                new_slo_header += obj
+                new_slo_header += obj + ","
+
+        if len(new_slo_header) > 0 and new_slo_header[-1] == ",":
+            new_slo_header = new_slo_header[0:-1]
 
         headers = {
             "x-container-meta-slo": new_slo_header

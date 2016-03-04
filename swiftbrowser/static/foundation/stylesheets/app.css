@@ -10078,30 +10078,23 @@ form#object-expiry-form input.submit {
 /* line 69, ../scss/_objectview.scss */
 .slo-table td {
   padding-top: 0.7em;
+  padding-bottom: 0.7em;
 }
-/* line 73, ../scss/_objectview.scss */
-.slo-table .css-progress {
-  height: 10px;
-}
-/* line 76, ../scss/_objectview.scss */
-.slo-table tr td:nth-child(5) {
-  padding-top: 0.7em;
-}
-/* line 80, ../scss/_objectview.scss */
+/* line 74, ../scss/_objectview.scss */
 .slo-table button {
   margin-bottom: 0;
   font-size: 0.875rem;
   padding: 0.3em 1em 0.3em 1em;
 }
-/* line 85, ../scss/_objectview.scss */
+/* line 79, ../scss/_objectview.scss */
 .slo-table button.cancel {
   background-color: red;
 }
-/* line 87, ../scss/_objectview.scss */
+/* line 81, ../scss/_objectview.scss */
 .slo-table button.cancel:hover {
   background-color: #a80000;
 }
-/* line 92, ../scss/_objectview.scss */
+/* line 86, ../scss/_objectview.scss */
 .slo-table th.button-column {
   width: 10px;
 }
