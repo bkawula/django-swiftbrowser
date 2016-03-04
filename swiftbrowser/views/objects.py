@@ -422,7 +422,6 @@ def check_incomplete_slo(request, storage_url, auth_token, container,
                     request, storage_url, auth_token, container, slo_name,
                     float(file_size))
 
-                #TODO Check for other information like progress
                 incomplete_slo.append({
                     "name": slo_name,
                     "progress": progress,

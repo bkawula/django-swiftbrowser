@@ -135,7 +135,8 @@ def initialize_slo(request, container, prefix=None):
 
 def create_manifest(request, container, prefix=None):
     '''Given a file name, upload a manifest file assuming the segments are held
-    in a "<file_name>_segments" pseudo folder.
+    in a "<file_name>_segments" pseudo folder. Remove the slo header when the
+    manifest is successfuly uploaded.
 
     Return an error if the upload of the manifest fails.
 
@@ -198,6 +199,9 @@ def create_manifest(request, container, prefix=None):
                     return HttpResponse("Failed to upload manifest.",
                                         status=500)
 
+                remove_slo_header(
+                    storage_url, auth_token, container, full_file_name)
+
             return HttpResponse("Successfully uploaded " + file_name,
                                 status=201)
 
@@ -239,6 +243,16 @@ def delete_incomplete_slo(request, container, objectname):
         return HttpResponse("Failed to delete segments.", status=500)
 
     # Remove the object from SLO header.
+    remove_slo_header(storage_url, auth_token, container, objectname)
+
+    return HttpResponse(
+        "Successfully deleted incomplete static large object " + objectname,
+        status=201)
+
+
+def remove_slo_header(storage_url, auth_token, container, objectname):
+    '''Given a slo header value, remove it from the given container.'''
+
     try:
         headers = client.head_container(storage_url, auth_token, container)
     except client.ClientException, e:
@@ -262,7 +276,3 @@ def delete_incomplete_slo(request, container, objectname):
         client.post_container(storage_url, auth_token, container, headers)
     except client.ClientException:
         return JsonResponse({'error': 'Error updating headers.'})
-
-    return HttpResponse(
-        "Successfully deleted incomplete static large object " + objectname,
-        status=201)
