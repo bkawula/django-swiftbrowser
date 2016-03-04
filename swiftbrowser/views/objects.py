@@ -454,9 +454,6 @@ def object_is_in_path(prefix, slo_name):
     if not prefix:
         return len(path_name_split) == 1
 
-    path = path_name_split[0]
+    path = path_name_split[0] + "/"
 
     return path == prefix
-
-
-
