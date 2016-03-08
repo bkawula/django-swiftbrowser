@@ -10,6 +10,9 @@ $('#slo-upload form').submit(function (e) {
 */
 $('#slo-upload button.upload').click(slo_upload);
 
+
+var xhrs = [];
+
 /*
   Create a SLO from the selected file.
 */
@@ -17,6 +20,23 @@ function slo_upload() {
 
     //Display progress bar
     $(".css-progress-wrap").toggle(true);
+
+    //Display and bind the cancel button.
+    $("#slo-upload button.cancel-slo-button").toggle(true)
+    .click(function () {
+
+        //Hide cancel button
+        $(this).toggle(false);
+
+        //Hide progress bar.
+        $(".css-progress-wrap").toggle(false);
+
+        //Abort the latest xhr request to the first so we don't end up
+        //uploading i + c but not i.
+        for (var i = xhrs.length - 1; i >= 0; i--) {
+            xhrs[i].abort();
+        }
+    });
 
     var file = $("#slo-upload input")[0].files[0];
     if (!file) {
@@ -51,8 +71,6 @@ function slo_upload() {
     .error(function(error) {
         console.log(error.responseText);
     });
-
-    //TODO: Create manifest
 }
 
 /*
@@ -137,6 +155,7 @@ function upload_segments(data) {
             }
         };
         xhr.send(fd);
+        xhrs.push(xhr);
 
         // Update the segment number, start and end position.
         segment_number++;

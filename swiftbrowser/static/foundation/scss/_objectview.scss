@@ -36,6 +36,16 @@ form#object-expiry-form {
 	}
 }
 
+#slo-upload {
+	button.cancel-slo-button {
+		display: none;
+		background-color: red;
+		&:hover {
+			background-color: #a80000;
+		}
+	}
+}
+
 .dropdown-btn {
 	background-color: transparent;
 	color: $charcoal;

@@ -231,4 +231,12 @@ app.applyTableEvents = function () {
     }
   });
 
+  /*
+      Bind SLO upload button
+  */
+  $("button.slo-upload-button").click(function () {
+      $('#slo-upload').foundation('reveal', 'open', {
+          close_on_background_click: false,
+      });
+  });
 };

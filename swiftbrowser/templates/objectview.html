@@ -14,7 +14,7 @@
 						<button type="button" data-reveal-id="fileForm" class="button upload">
 							<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Upload Files
 						</button>
-						<button type="button" data-reveal-id="slo-upload" class="button upload">
+						<button type="button" class="button upload slo-upload-button">
 							<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Large Upload
 						</button>
 						{% if false %}
@@ -107,6 +107,7 @@
 						<input type="hidden" name="signature" value="{{slo_signature}}">
 					    <button class="upload">Upload</button>
 					</form>
+					<button class="cancel-slo-button">Cancel</button>
 					<div class="css-progress-wrap css-progress">
 					  <div class="css-progress-bar css-progress"></div>
 					</div>

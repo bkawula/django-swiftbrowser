@@ -10045,7 +10045,17 @@ form#object-expiry-form input.submit {
   margin-right: 0.15em;
 }
 
-/* line 39, ../scss/_objectview.scss */
+/* line 40, ../scss/_objectview.scss */
+#slo-upload button.cancel-slo-button {
+  display: none;
+  background-color: red;
+}
+/* line 43, ../scss/_objectview.scss */
+#slo-upload button.cancel-slo-button:hover {
+  background-color: #a80000;
+}
+
+/* line 49, ../scss/_objectview.scss */
 .dropdown-btn {
   background-color: transparent;
   color: #555555;
@@ -10055,46 +10065,46 @@ form#object-expiry-form input.submit {
   text-align: left;
   width: 100%;
 }
-/* line 48, ../scss/_objectview.scss */
+/* line 58, ../scss/_objectview.scss */
 .dropdown-btn:hover, .dropdown-btn:focus {
   color: #555555;
   background-color: #EEEEEE;
 }
 
-/* line 55, ../scss/_objectview.scss */
+/* line 65, ../scss/_objectview.scss */
 .slo-table th.logo {
   width: 1rem;
 }
-/* line 59, ../scss/_objectview.scss */
+/* line 69, ../scss/_objectview.scss */
 .slo-table td.icon {
   padding: 0rem 0.625rem 0rem 0rem;
 }
-/* line 63, ../scss/_objectview.scss */
+/* line 73, ../scss/_objectview.scss */
 .slo-table .css-progress-wrap {
   margin-top: 10px;
   margin-bottom: 10px;
   display: block;
 }
-/* line 69, ../scss/_objectview.scss */
+/* line 79, ../scss/_objectview.scss */
 .slo-table td {
   padding-top: 0.7em;
   padding-bottom: 0.7em;
 }
-/* line 74, ../scss/_objectview.scss */
+/* line 84, ../scss/_objectview.scss */
 .slo-table button {
   margin-bottom: 0;
   font-size: 0.875rem;
   padding: 0.3em 1em 0.3em 1em;
 }
-/* line 79, ../scss/_objectview.scss */
+/* line 89, ../scss/_objectview.scss */
 .slo-table button.cancel {
   background-color: red;
 }
-/* line 81, ../scss/_objectview.scss */
+/* line 91, ../scss/_objectview.scss */
 .slo-table button.cancel:hover {
   background-color: #a80000;
 }
-/* line 86, ../scss/_objectview.scss */
+/* line 96, ../scss/_objectview.scss */
 .slo-table th.button-column {
   width: 10px;
 }
