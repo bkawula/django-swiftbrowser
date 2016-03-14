@@ -61,7 +61,13 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
     Make a request to the server to delete the incomplete SLO.
   */
   $scope.delete_incomplete_slo = function (key) {
-   $http({
+
+    //Bind slo delete
+    $('#cancel-slo-modal').foundation('reveal', 'open', {
+        close_on_background_click: false,
+    });
+
+    $http({
       method  : 'POST',
       url     : baseurl + "delete_incomplete_slo/" + $scope.container + "/" + key.name,
       headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
@@ -239,4 +245,6 @@ app.applyTableEvents = function () {
           close_on_background_click: false,
       });
   });
+
 };
+

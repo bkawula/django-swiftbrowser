@@ -23,7 +23,7 @@
 			<button class="slo-upload-button">Continue</button>
 		</td>
 		<td>
-			<button ng-click="delete_incomplete_slo(key)" class="cancel">Cancel</button>
+			<button class="cancel" data-reveal-id="delete-slo-modal"  data-reveal-ajax="{{baseurl}}delete_slo_form/{{container}}/{{key.name}}">Delete</button>
 		</td>
 	</tr>
 </table>

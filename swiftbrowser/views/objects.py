@@ -380,8 +380,8 @@ def delete_folder(request, container, objectname):
 def delete_folder_form(request, container, objectname):
     """ Display delete folder modal """
 
-    if objectname[-1] == '/':  # deleting a pseudofolder, move one level up
-        foldername = objectname[:-1].split("/")[-1]
+    #deleting a pseudofolder, move one level up
+    foldername = objectname[:-1].split("/")[-1]
 
     return render_to_response(
         'delete_folder.html',

@@ -4,11 +4,14 @@ from tempfile import NamedTemporaryFile
 
 from django.conf import settings
 from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 
 from swiftclient import client
 from swiftbrowser.forms import StartSloForm
 from swiftbrowser.utils import pseudofolder_object_list, \
-    get_first_nonconsecutive, calculate_segment_size, delete_given_folder
+    get_first_nonconsecutive, calculate_segment_size, delete_given_folder, \
+    _get_total_objects
 
 
 def get_segment_number(request, file_name, container, prefix=None):
@@ -279,3 +282,25 @@ def remove_slo_header(storage_url, auth_token, container, objectname):
         client.post_container(storage_url, auth_token, container, headers)
     except client.ClientException:
         return JsonResponse({'error': 'Error updating headers.'})
+
+
+def delete_slo_form(request, container, objectname):
+    """ Display delete slo modal """
+
+    slo_name = objectname
+    objectname += "_segments"  # Objectname is the object to delete which is
+    # the segments folder.
+
+    container += "_segments"
+
+    return render_to_response(
+        'delete_folder.html',
+        {
+            'slo_name': slo_name,
+            'objectname': objectname,
+            'container': container,
+            'total_objects': _get_total_objects(
+                request, container, objectname),
+            'delete_slo': True,
+        },
+        context_instance=RequestContext(request))
