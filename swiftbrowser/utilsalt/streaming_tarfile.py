@@ -57,7 +57,7 @@ class StreamingTarFile(object):
             self, out_filename, files, storage_url, auth_token, container):
         """Set constants, output filename and list of files to tarball."""
         self.MODE = 0644
-        self.BLOCK_SIZE = 4096
+        self.BLOCK_SIZE = 1048576
         self.out_filename = out_filename
         self.files = files
         self.storage_url = storage_url
@@ -81,21 +81,33 @@ class StreamingTarFile(object):
 
             yield
             meta, content = client.get_object(
-                self.storage_url, self.auth_token, self.container, name)
+                self.storage_url, self.auth_token, self.container, name,
+                resp_chunk_size=1048576)
 
             tar_info = self.build_tar_info(meta, name)
             tar.addfile(tar_info)
 
-            tar.fileobj.write(content)
+            # Write pieces of content at a time
+            piece = content.next()
+            while (piece):
+                tar.fileobj.write(piece)
+                yield
+
+                try:
+                    piece = content.next()
+                except StopIteration:
+                    break
 
             # Write nulls at the end of the file so that the total amount
             # written to the stream is a multiple of BLOCKSIZE
             blocks, remainder = divmod(tar_info.size, tarfile.BLOCKSIZE)
-            if remainder > 0:
-                tar.fileobj.write(tarfile.NUL * (tarfile.BLOCKSIZE - remainder))
 
-            blocks += 1
+            if remainder:
+                tar.fileobj.write(
+                    tarfile.NUL * (tarfile.BLOCKSIZE - remainder))
+                blocks += 1
 
+            # Update the tarfile's offset
             tar.offset += blocks * tarfile.BLOCKSIZE
 
         tar.close()

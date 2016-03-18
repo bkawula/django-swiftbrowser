@@ -14,7 +14,7 @@ from hashlib import sha1
 
 from swiftclient import client
 
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse, HttpResponse
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.conf import settings
@@ -450,7 +450,7 @@ def download_collection(request, container, prefix=None):
             prefix=prefix
         )
     except client.ClientException:
-        return HttpResponseForbidden()
+        return HttpResponse(e, status=500)
 
     x, objs = pseudofolder_object_list(objects, prefix)
 
