@@ -4,4 +4,4 @@ recursive-include swiftbrowser/static *
 recursive-include swiftbrowser/templates *
 recursive-include swiftbrowser/templatetags *
 recursive-include swiftbrowser/views *
-recursive-include swiftbrowser/utilsalt *
+recursive-include swiftbrowser/utils *
