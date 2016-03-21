@@ -1,3 +1,4 @@
+from .streaming_tarfile import *
 """ Standalone webinterface for Openstack Swift. """
 # -*- coding: utf-8 -*-
 #pylint:disable=E0611, E1101
@@ -26,7 +27,7 @@ from swiftbrowser.forms import TimeForm
 import swiftbrowser.views
 
 logger = logging.getLogger(__name__)
-from swiftbrowser.utilsalt.streaming_tarfile import StreamingTarFile
+from swiftbrowser.utils.streaming_tarfile import StreamingTarFile
 
 
 def get_base_url(request):
