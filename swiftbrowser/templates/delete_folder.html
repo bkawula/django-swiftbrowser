@@ -23,6 +23,15 @@
 <div id="css-progress-wrap" class="css-progress-wrap css-progress">
 	<div class="css-progress-bar css-progress"></div>
 </div>
-<span class="cancel-delete button expand">{% trans 'Cancel' %}</span>
+{% if not delete_slo %}
+	<span class="cancel-delete button expand">{% trans 'Cancel' %}</span>
+{% endif %}
+
+{% if delete_slo %}
+	<script>
+		delete_folder();
+	</script>
+{% endif%}
+
 
 {% endblock %}

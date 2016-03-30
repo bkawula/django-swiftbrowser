@@ -299,6 +299,7 @@ def delete_slo_form(request, container, objectname):
             'slo_name': slo_name,
             'objectname': objectname,
             'container': container,
+            'foldername': objectname,
             'total_objects': _get_total_objects(
                 request, container, objectname),
             'delete_slo': True,
