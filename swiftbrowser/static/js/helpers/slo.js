@@ -17,6 +17,8 @@ var xhrs = [];
 */
 function cancel_current_slo_upload() {
 
+    angular.element("#objecttable").scope().refreshObjectTable();
+
     //Hide cancel button
     $("#slo-upload button.cancel-slo-button").toggle(false);
 
