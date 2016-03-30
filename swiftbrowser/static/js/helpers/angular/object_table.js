@@ -63,7 +63,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
   $scope.delete_incomplete_slo = function (key) {
 
     //Bind slo delete
-    $('#cancel-slo-modal').foundation('reveal', 'open', {
+    $('#delete-slo-modal').foundation('reveal', 'open', {
         close_on_background_click: false,
     });
 
