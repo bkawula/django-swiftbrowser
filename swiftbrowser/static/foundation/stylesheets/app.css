@@ -10323,3 +10323,14 @@ form#object-expiry-form input.submit {
 .display-on {
   display: block !important;
 }
+
+/* line 2, ../scss/_slo.scss */
+.delete-slo-wrapper h2.delete-folder-title, .delete-slo-wrapper span.cancel-delete {
+  display: none;
+}
+/* line 5, ../scss/_slo.scss */
+.delete-slo-wrapper #css-progress-wrap {
+  display: block;
+  margin-top: 3em;
+  margin-bottom: 3em;
+}

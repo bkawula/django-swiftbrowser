@@ -67,10 +67,27 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
         close_on_background_click: false,
     });
 
-    $http({
-      method  : 'POST',
+    $("#slo-upload a.close-reveal-modal").click(function () {
+      location.reload();
+    });
+
+    var formData = {
+        csrfmiddlewaretoken  : $('input[name=csrfmiddlewaretoken]').val(),
+    };
+
+    // $.ajax({
+    //     type        : 'POST',
+    //     url         : $("#delete-container-form").attr("data-delete-container-url"),
+    //     data        : formData,
+    //     dataType    : 'html',
+    //     encode      : true,
+    //     asych       : true,
+    // })
+
+    $.ajax({
+        type        : 'POST',
       url     : baseurl + "delete_incomplete_slo/" + $scope.container + "/" + key.name,
-      headers : { 'Content-Type': 'application/x-www-form-urlencoded' }  // set the headers so angular passing info as form data (not request payload)
+        data        : formData,
     })
       .success(function (data) {
         // Update message
@@ -78,9 +95,18 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
 
         // Refresh table.
         $scope.refreshObjectTable();
+        $("#css-progress-wrap").toggle(false);
+
+        $('#delete-slo-modal').foundation('reveal', 'close', {
+            close_on_background_click: false,
+        });
       })
       .error(function (data) {
         console.log(data);
+
+        // $('#delete-slo-modal').foundation('reveal', 'close', {
+        //     close_on_background_click: false,
+        // });
       });
   };
 
@@ -206,19 +232,6 @@ angular.element(document).ready(get_object_table);
 */
 app.applyTableEvents = function () {
 
-  //Updated the progress bar of incomplete SLO objects
-  $(".slo-table .css-progress-wrap").each(function() {
-
-    var getPercent = $(this).attr("data-progress") / 100;
-    var getProgressWrapWidth = $(this).width();
-    var progressTotal = getPercent * getProgressWrapWidth;
-    var animationLength = 500;
-
-    $(this).find('.css-progress-bar').stop().animate({
-        left: progressTotal
-    }, animationLength);
-  });
-
   //Re-apply foundation
   $(document).foundation();
 
@@ -247,4 +260,3 @@ app.applyTableEvents = function () {
   });
 
 };
-

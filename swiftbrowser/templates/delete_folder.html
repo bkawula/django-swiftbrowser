@@ -6,10 +6,11 @@
 {% load static %}
 {% block content %}
 
-<script src="{% static "js/helpers/delete_folder.js" %}"></script>
-{% if not delete_slo %}
-	<h2>Delete Folder</h2>
+{% if delete_slo %}
+	<div class="delete-slo-wrapper">
 {% endif %}
+<script src="{% static "js/helpers/delete_folder.js" %}"></script>
+<h2 class="delete-folder-title">Delete Folder</h2>
 <a class="close-reveal-modal" aria-label="Close">&#215;</a>
 <form id="delete-folder-form" method="POST" action="" data-delete-form-url="{% url "delete_folder_form" container=container objectname=objectname %}" data-delete-url="{% url "delete_folder" container=container objectname=objectname %}" data-count-url="{% url "get_total_objects" container=container objectname=objectname %}">
 	{% if not delete_slo %}
@@ -20,11 +21,15 @@
     {% csrf_token %}
     <input id="folder-total" type="hidden" data-total-objects="{{total_objects}}" />
 </form>
+
 <div id="css-progress-wrap" class="css-progress-wrap css-progress">
 	<div class="css-progress-bar css-progress"></div>
 </div>
-{% if not delete_slo %}
-	<span class="cancel-delete button expand">{% trans 'Cancel' %}</span>
-{% endif %}
 
+<span class="cancel-delete button expand">{% trans 'Cancel' %}</span>
+
+{% if delete_slo %}
+	</div>
+	<script src="{% static "js/helpers/delete_slo.js" %}"></script>
+{% endif %}
 {% endblock %}

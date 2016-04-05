@@ -1,0 +1,10 @@
+.delete-slo-wrapper {
+	h2.delete-folder-title, span.cancel-delete {
+		display: none;
+	}
+	#css-progress-wrap {
+		display: block;
+		margin-top: 3em;
+		margin-bottom: 3em;
+	}
+}
