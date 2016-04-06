@@ -19,7 +19,7 @@
 			{{key.file_size|formatByte}} ({{key.progress}}%)
 		</td>
 		<td>
-			<button ng-click="delete_incomplete_slo(key)" class="cancel">Delete</button>
+			<button class="cancel" data-reveal-id="delete-slo-modal" ng-click="delete_incomplete_slo(key)" data-reveal-ajax="{{baseurl}}delete_slo_form/{{container}}/{{key.name}}">Delete</button>
 		</td>
 	</tr>
 </table>

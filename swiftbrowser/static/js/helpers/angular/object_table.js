@@ -75,18 +75,9 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
         csrfmiddlewaretoken  : $('input[name=csrfmiddlewaretoken]').val(),
     };
 
-    // $.ajax({
-    //     type        : 'POST',
-    //     url         : $("#delete-container-form").attr("data-delete-container-url"),
-    //     data        : formData,
-    //     dataType    : 'html',
-    //     encode      : true,
-    //     asych       : true,
-    // })
-
     $.ajax({
         type        : 'POST',
-      url     : baseurl + "delete_incomplete_slo/" + $scope.container + "/" + key.name,
+        url     : baseurl + "delete_incomplete_slo/" + $scope.container + "/" + key.name,
         data        : formData,
     })
       .success(function (data) {
@@ -102,11 +93,12 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
         });
       })
       .error(function (data) {
-        console.log(data);
 
-        // $('#delete-slo-modal').foundation('reveal', 'close', {
-        //     close_on_background_click: false,
-        // });
+        MessagesHandler.newErrorMessage(data);
+
+        $('#delete-slo-modal').foundation('reveal', 'close', {
+            close_on_background_click: false,
+        });
       });
   };
 
