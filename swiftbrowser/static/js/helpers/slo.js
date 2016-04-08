@@ -17,10 +17,13 @@ var xhrs = [];
 */
 function cancel_current_slo_upload() {
 
+
     angular.element("#objecttable").scope().refreshObjectTable();
 
     //Hide cancel button
     $("#slo-upload button.cancel-slo-button").toggle(false);
+    $("#slo-upload input[type=file]").toggle(true);
+    $("#slo-upload button.upload").toggle(true);
 
     //Hide progress bar.
     $(".css-progress-wrap").toggle(false);
@@ -44,6 +47,8 @@ $("#slo-upload a.close-reveal-modal").click(cancel_current_slo_upload);
 */
 function slo_upload() {
 
+    $("#slo-upload input[type=file]").toggle(false);
+    $("#slo-upload button.upload").toggle(false);
     var file = $("#slo-upload input")[0].files[0];
     if (!file) {
         return;
@@ -207,12 +212,18 @@ function create_manifest() {
     })
 
     .success(function (message)  {
+
+        $("#slo-upload input[type=file]").toggle(true);
+        $("#slo-upload button.upload").toggle(true);
         $('#fileForm').foundation('reveal', 'close');
         angular.element("#objecttable").scope().MessagesHandler.newSuccessMessage(message);
         angular.element("#objecttable").scope().refreshObjectTable();
     })
 
     .error(function(error) {
+
+        $("#slo-upload input[type=file]").toggle(true);
+        $("#slo-upload button.upload").toggle(true);
         $('#fileForm').foundation('reveal', 'close');
         angular.element("#objecttable").scope().MessagesHandler.newErrorMessage(error.responseText);
     });

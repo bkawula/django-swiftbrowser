@@ -40,6 +40,7 @@ form#object-expiry-form {
 	button.cancel-slo-button {
 		display: none;
 		background-color: red;
+		width: 100%;
 		&:hover {
 			background-color: #a80000;
 		}

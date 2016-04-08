@@ -35,6 +35,7 @@ function update_progress_bar(total) {
         $('.delete-slo-wrapper .css-progress-bar').stop().animate({
             left: progressTotal
         }, animationLength);
+
         if (getPercent !== 1) {
             update_progress_bar(total);
         }
