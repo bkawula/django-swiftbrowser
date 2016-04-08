@@ -1,3 +1,9 @@
+$("button.slo-upload-button").click(function () {
+    $('#slo-upload').foundation('reveal', 'open', {
+        close_on_background_click: false,
+    });
+});
+
 var app = angular.module('object-table', ['messages']);
 
 /*
