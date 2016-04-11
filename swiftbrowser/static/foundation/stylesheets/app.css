@@ -9530,11 +9530,11 @@ table .icon {
 }
 /* line 88, ../scss/_general.scss */
 .action-btns .folder {
-  background-color: #767676;
+  background-color: #565656;
 }
 /* line 91, ../scss/_general.scss */
 .action-btns .folder:focus, .action-btns .folder:hover {
-  background-color: #656565;
+  background-color: #4a4a4a;
 }
 /* line 96, ../scss/_general.scss */
 .action-btns .share {
@@ -10045,18 +10045,7 @@ form#object-expiry-form input.submit {
   margin-right: 0.15em;
 }
 
-/* line 40, ../scss/_objectview.scss */
-#slo-upload button.cancel-slo-button {
-  display: none;
-  background-color: red;
-  width: 100%;
-}
-/* line 44, ../scss/_objectview.scss */
-#slo-upload button.cancel-slo-button:hover {
-  background-color: #a80000;
-}
-
-/* line 50, ../scss/_objectview.scss */
+/* line 39, ../scss/_objectview.scss */
 .dropdown-btn {
   background-color: transparent;
   color: #555555;
@@ -10066,46 +10055,46 @@ form#object-expiry-form input.submit {
   text-align: left;
   width: 100%;
 }
-/* line 59, ../scss/_objectview.scss */
+/* line 48, ../scss/_objectview.scss */
 .dropdown-btn:hover, .dropdown-btn:focus {
   color: #555555;
   background-color: #EEEEEE;
 }
 
-/* line 66, ../scss/_objectview.scss */
+/* line 55, ../scss/_objectview.scss */
 .slo-table th.logo {
   width: 1rem;
 }
-/* line 70, ../scss/_objectview.scss */
+/* line 59, ../scss/_objectview.scss */
 .slo-table td.icon {
   padding: 0rem 0.625rem 0rem 0rem;
 }
-/* line 74, ../scss/_objectview.scss */
+/* line 63, ../scss/_objectview.scss */
 .slo-table .css-progress-wrap {
   margin-top: 10px;
   margin-bottom: 10px;
   display: block;
 }
-/* line 80, ../scss/_objectview.scss */
+/* line 69, ../scss/_objectview.scss */
 .slo-table td {
   padding-top: 0.7em;
   padding-bottom: 0.7em;
 }
-/* line 85, ../scss/_objectview.scss */
+/* line 74, ../scss/_objectview.scss */
 .slo-table button {
   margin-bottom: 0;
   font-size: 0.875rem;
   padding: 0.3em 1em 0.3em 1em;
 }
-/* line 90, ../scss/_objectview.scss */
+/* line 79, ../scss/_objectview.scss */
 .slo-table button.cancel {
-  background-color: red;
+  background-color: #aa240c;
 }
-/* line 92, ../scss/_objectview.scss */
+/* line 81, ../scss/_objectview.scss */
 .slo-table button.cancel:hover {
-  background-color: #a80000;
+  background-color: #8e1e0a;
 }
-/* line 97, ../scss/_objectview.scss */
+/* line 86, ../scss/_objectview.scss */
 .slo-table th.button-column {
   width: 10px;
 }
@@ -10292,13 +10281,13 @@ form#object-expiry-form input.submit {
 }
 /* line 15, ../scss/_messages.scss */
 .angular-alert-box.success {
-  background-color: #3B862F;
-  border-color: #337328;
+  background-color: #26561e;
+  border-color: #26561e;
 }
 /* line 19, ../scss/_messages.scss */
 .angular-alert-box.alert {
-  background-color: #f04124;
-  border-color: #de2d0f;
+  background-color: #aa240c;
+  border-color: #aa240c;
 }
 /* line 23, ../scss/_messages.scss */
 .angular-alert-box .close {
@@ -10326,12 +10315,40 @@ form#object-expiry-form input.submit {
 }
 
 /* line 2, ../scss/_slo.scss */
+#slo-upload button.cancel-slo-button {
+  display: none;
+  background-color: #aa240c;
+  width: 100%;
+}
+/* line 6, ../scss/_slo.scss */
+#slo-upload button.cancel-slo-button:hover {
+  background-color: #8e1e0a;
+}
+/* line 10, ../scss/_slo.scss */
+#slo-upload input[type=file] {
+  font-size: 1em;
+}
+/* line 13, ../scss/_slo.scss */
+#slo-upload .upload-message {
+  display: none;
+}
+
+/* line 19, ../scss/_slo.scss */
 .delete-slo-wrapper h2.delete-folder-title, .delete-slo-wrapper span.cancel-delete {
   display: none;
 }
-/* line 5, ../scss/_slo.scss */
+/* line 22, ../scss/_slo.scss */
 .delete-slo-wrapper #css-progress-wrap {
   display: block;
   margin-top: 3em;
   margin-bottom: 3em;
+}
+/* line 28, ../scss/_slo.scss */
+.delete-slo-wrapper h3.deleting-message {
+  display: block;
+}
+
+/* line 33, ../scss/_slo.scss */
+h3.deleting-message {
+  display: none;
 }

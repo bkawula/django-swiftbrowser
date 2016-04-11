@@ -86,10 +86,10 @@ table {
 	}
 
 	.folder {
-		background-color: #767676;
+		background-color: #565656;
 
 		&:focus, &:hover {
-			background-color: scale-color(#767676, $lightness: -14%);
+			background-color: scale-color(#565656, $lightness: -14%);
 		}
 	}
 

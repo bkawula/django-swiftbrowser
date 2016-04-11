@@ -1,3 +1,20 @@
+#slo-upload {
+	button.cancel-slo-button {
+		display: none;
+		background-color: #aa240c;
+		width: 100%;
+		&:hover {
+			background-color: #8e1e0a;
+		}
+	}
+	input[type=file] {
+		font-size: 1em;
+	}
+	.upload-message {
+		display: none;
+	}
+}
+
 .delete-slo-wrapper {
 	h2.delete-folder-title, span.cancel-delete {
 		display: none;
@@ -7,4 +24,12 @@
 		margin-top: 3em;
 		margin-bottom: 3em;
 	}
+
+	h3.deleting-message {
+		display: block;
+	}
+}
+
+h3.deleting-message {
+	display: none;
 }

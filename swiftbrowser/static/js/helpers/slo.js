@@ -24,6 +24,7 @@ function cancel_current_slo_upload() {
     $("#slo-upload button.cancel-slo-button").toggle(false);
     $("#slo-upload input[type=file]").toggle(true);
     $("#slo-upload button.upload").toggle(true);
+    $("#slo-upload .upload-message").toggle(false);
 
     //Hide progress bar.
     $(".css-progress-wrap").toggle(false);
@@ -47,12 +48,14 @@ $("#slo-upload a.close-reveal-modal").click(cancel_current_slo_upload);
 */
 function slo_upload() {
 
-    $("#slo-upload input[type=file]").toggle(false);
-    $("#slo-upload button.upload").toggle(false);
     var file = $("#slo-upload input")[0].files[0];
     if (!file) {
         return;
     }
+
+    $("#slo-upload input[type=file]").toggle(false);
+    $("#slo-upload button.upload").toggle(false);
+    $("#slo-upload .upload-message").toggle(true);
 
     //Display progress bar
     $(".css-progress-wrap").toggle(true);

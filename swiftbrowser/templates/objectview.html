@@ -82,7 +82,7 @@
 				</div>
 				<div class="reveal-modal" id="slo-upload" data-reveal aria-hidden="true" role="dialog">
 					<a class="close-reveal-modal" aria-label="Close">×</a>
-					<h2>Static Large Objects</h2>
+					<h2>Large Upload</h2>
 					<p>
 						This upload option is for uploading large files (any file size will work but we recommend 5GB or more), that may experience network interruptions. With this upload option, you will be able to pick up where you left off if your upload is disconnected.
 					</p>
@@ -108,11 +108,14 @@
 						<input type="hidden" name="signature" value="{{slo_signature}}">
 					    <button class="upload">Upload</button>
 					</form>
+					<div class="upload-message">
+						<h3>Uploading ...</h3>
+						<p>Keep the window open while the upload is in process. Closing the window will terminate the upload.</p>
+					</div>
 					<div class="css-progress-wrap css-progress">
 					  <div class="css-progress-bar css-progress"></div>
 					</div>
 					<button class="cancel-slo-button">Cancel</button>
-					<div id="#slo-message"></div>
 				</div>
 			</div>
 		</div>
