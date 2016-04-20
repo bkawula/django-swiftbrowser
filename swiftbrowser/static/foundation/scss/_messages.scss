@@ -1,3 +1,7 @@
+/*
+	The rules on this page will be reflected in the template file:
+	-messages.html
+*/
 .angular-alert-box {
     background-color: #0074be;
     border-color: #0064a3;
@@ -16,10 +20,12 @@
 	    background-color: #26561e;
 	    border-color: #26561e;
 	}
+
 	&.alert {
 	    background-color: #aa240c;
 	    border-color: #aa240c;
 	}
+
 	.close {
 	    background: inherit;
 	    color: #333333;
@@ -34,11 +40,11 @@
 	}
 }
 
+.display-on {
+    display: block !important;
+}
+
 .header-alert {
 	margin-bottom: 0px;
 	padding: 0.875rem 0rem 0.875rem 0rem;
-}
-
-.display-on {
-    display: block !important;
 }

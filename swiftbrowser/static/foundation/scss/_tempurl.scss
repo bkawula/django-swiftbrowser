@@ -1,12 +1,16 @@
+/*
+	The rules on this page will be reflected in the template file:
+	-tempurl.html
+*/
 form#custom-temp-url {
 	input.submit {
 		background-color: black;
 		border: none;
 		color: white;
 		font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-		line-height: normal;
 		font-size: 1rem;
 		font-weight: normal;
+		line-height: normal;
 		margin-bottom: 1rem;
  		padding: 1rem 2rem 1.0625rem 2rem;
 		width: 100%;

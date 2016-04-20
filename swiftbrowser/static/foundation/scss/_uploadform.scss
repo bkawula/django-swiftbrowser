@@ -1,3 +1,7 @@
+/*
+	The rules on this page will be reflected in the template file:
+	-upload_form.html
+*/
 body.chrome {
 	.chrome-txt, span.directory-input {
 		display: inline-block;
@@ -27,14 +31,15 @@ body.chrome {
 		}
 	}
 
-	.fileupload-progress {
-		display:none;
-	}
-
 	.fileinput-button input {
 		font-size: 50px;
 
 	}
+
+	.fileupload-progress {
+		display:none;
+	}
+
 
 	.file-progress {
 		display:none;
@@ -47,16 +52,17 @@ body.chrome {
 		.filerowbtns {
 			text-align: right;
 			padding-top: 5px;
+
 			button, .button {
 				margin-bottom: 10px;
 			}
 		}
 
 		.filerowtext {
-			position: relative;
-			margin-left: 30px;
 			float: left;
+			margin-left: 30px;
 			padding-top: 10px;
+			position: relative;
 		}
 
 		.file-progress {
@@ -78,6 +84,12 @@ body.chrome {
 			width: 45px;
 		}
 
+		.name {
+			font-size: 0.875rem;
+			font-weight: bold;
+			padding-top: 10px;
+		}
+
 		.preview {
 			float: left;
 			height: 40px;
@@ -88,9 +100,9 @@ body.chrome {
 		}
 
 		.progress {
+			background-color: $white;
 			border: 0px;
 			padding: 0;
-			background-color: $white;
 
 			.meter {
 				background: $primary-color;
@@ -105,12 +117,6 @@ body.chrome {
 			div:nth-child(4) {
 				padding-right: 0rem;
 			}
-		}
-
-		.name {
-			font-size: 0.875rem;
-			font-weight: bold;
-			padding-top: 10px;
 		}
 
 		.size {

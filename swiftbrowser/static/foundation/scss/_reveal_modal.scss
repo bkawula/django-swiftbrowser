@@ -1,5 +1,15 @@
+/*
+	The rules on this page will be reflected on pages that use the foundation
+	modal.
+*/
 .reveal-modal {
 	padding: 0.5rem 1.875rem;
+
+	button.confirm-delete {
+		background-color: red;
+		display: none;
+		width: 100%;
+	}
 
 	h2 {
 		font-weight: bold;
@@ -9,6 +19,10 @@
 		font-size: 0.875rem;
 	}
 
+	span.container-name-holder, span.folder-name-holder {
+		color: red;
+	}
+
 	.close {
 		background-color: $black;
 		float: right;
@@ -16,16 +30,5 @@
 		&:focus, &:hover {
 			background-color: scale-color($black, $lightness: +14%);
 		}
-	}
-
-
-	button.confirm-delete {
-		background-color: red;
-		display: none;
-		width: 100%;
-	}
-
-	span.container-name-holder, span.folder-name-holder {
-		color: red;
 	}
 }

@@ -1,3 +1,6 @@
+/*
+	This page is a page to import styles from foundation.
+*/
 /* line 364, ../bower_components/foundation/scss/foundation/components/_global.scss */
 meta.foundation-version {
   font-family: "/5.5.2/";
@@ -9439,87 +9442,91 @@ th.hide-for-touch {
     display: none !important;
   }
 }
-/* line 1, ../scss/_general.scss */
+/*
+	The rules on this page will be reflected everywhere as they style general
+	html elements.
+*/
+/* line 5, ../scss/_general.scss */
 h1, h2, h3, h4, h5 {
   font-weight: bold;
 }
 
-/* line 5, ../scss/_general.scss */
+/* line 9, ../scss/_general.scss */
 label {
   font-weight: bold;
 }
 
-/* line 9, ../scss/_general.scss */
+/* line 13, ../scss/_general.scss */
 table {
   border: 0px;
   border-collapse: collapse;
   width: 100%;
 }
-/* line 14, ../scss/_general.scss */
+/* line 18, ../scss/_general.scss */
 table thead {
   background: transparent;
 }
-/* line 18, ../scss/_general.scss */
+/* line 22, ../scss/_general.scss */
 table thead tr th {
   font-size: 1.15rem;
   padding-bottom: 1.25rem;
 }
-/* line 22, ../scss/_general.scss */
+/* line 26, ../scss/_general.scss */
 table thead tr th:nth-child(1) {
   width: 1rem;
 }
-/* line 26, ../scss/_general.scss */
+/* line 30, ../scss/_general.scss */
 table thead tr th:nth-child(3) {
   width: 12rem;
 }
-/* line 30, ../scss/_general.scss */
+/* line 34, ../scss/_general.scss */
 table thead tr th:nth-child(4) {
   width: 6rem;
 }
-/* line 34, ../scss/_general.scss */
+/* line 38, ../scss/_general.scss */
 table thead tr th:nth-child(5) {
   width: 1rem;
 }
-/* line 41, ../scss/_general.scss */
+/* line 45, ../scss/_general.scss */
 table tr {
   border-bottom: 1px solid #EEEEEE;
 }
-/* line 44, ../scss/_general.scss */
+/* line 48, ../scss/_general.scss */
 table tr td {
   padding: 0rem 0.625rem;
 }
-/* line 47, ../scss/_general.scss */
+/* line 51, ../scss/_general.scss */
 table tr td:nth-child(1) {
   padding: 0rem 0.625rem 0rem 0rem;
 }
-/* line 51, ../scss/_general.scss */
+/* line 55, ../scss/_general.scss */
 table tr td:nth-child(5) {
   padding: 0;
 }
-/* line 56, ../scss/_general.scss */
+/* line 60, ../scss/_general.scss */
 table tr .alt {
   background-color: transparent;
 }
-/* line 60, ../scss/_general.scss */
+/* line 64, ../scss/_general.scss */
 table tr .even {
   background-color: transparent;
 }
-/* line 64, ../scss/_general.scss */
+/* line 68, ../scss/_general.scss */
 table tr:nth-of-type(even) {
   background-color: transparent;
 }
-/* line 69, ../scss/_general.scss */
+/* line 73, ../scss/_general.scss */
 table .icon {
   font-size: 24px;
 }
 
-/* line 74, ../scss/_general.scss */
+/* line 78, ../scss/_general.scss */
 .action-btns {
   float: right;
   margin-bottom: 5px;
   text-align: right;
 }
-/* line 79, ../scss/_general.scss */
+/* line 83, ../scss/_general.scss */
 .action-btns button, .action-btns .button {
   font-size: 0.85rem;
   margin-bottom: 0;
@@ -9528,70 +9535,74 @@ table .icon {
   padding-bottom: 0.85rem;
   padding-left: 1.25rem;
 }
-/* line 88, ../scss/_general.scss */
+/* line 92, ../scss/_general.scss */
 .action-btns .folder {
   background-color: #565656;
 }
-/* line 91, ../scss/_general.scss */
+/* line 95, ../scss/_general.scss */
 .action-btns .folder:focus, .action-btns .folder:hover {
   background-color: #4a4a4a;
 }
-/* line 96, ../scss/_general.scss */
+/* line 100, ../scss/_general.scss */
 .action-btns .share {
   background-color: #3B862F;
 }
-/* line 99, ../scss/_general.scss */
+/* line 103, ../scss/_general.scss */
 .action-btns .share:focus, .action-btns .share:hover {
   background-color: #337328;
 }
 
-/* line 105, ../scss/_general.scss */
+/* line 109, ../scss/_general.scss */
 .content-body {
   margin-top: 1rem;
 }
 
 @media only screen and (max-width: 40em) {
-  /* line 111, ../scss/_general.scss */
+  /* line 115, ../scss/_general.scss */
   .action-btns {
     float: left;
     margin-bottom: 0px;
     width: 100%;
   }
-  /* line 116, ../scss/_general.scss */
+  /* line 120, ../scss/_general.scss */
   .action-btns .columns {
     padding: 0;
   }
-  /* line 119, ../scss/_general.scss */
+  /* line 123, ../scss/_general.scss */
   .action-btns .columns .button {
     float: left;
     width: 50%;
   }
-  /* line 124, ../scss/_general.scss */
+  /* line 128, ../scss/_general.scss */
   .action-btns .columns .new-container {
     width: 100%;
   }
 
-  /* line 131, ../scss/_general.scss */
+  /* line 135, ../scss/_general.scss */
   .content-body .columns {
     padding: 0px;
   }
 
-  /* line 137, ../scss/_general.scss */
+  /* line 141, ../scss/_general.scss */
   .icon .filetypes, .icon .glyphicons {
-    padding-left: 5px;
     font-size: 24px;
+    padding-left: 5px;
   }
 }
-/* line 1, ../scss/_login.scss */
+/*
+	The rules on this page will be reflected in the template file:
+	-login.html
+*/
+/* line 5, ../scss/_login.scss */
 #login {
   background: url("../../img/background.jpg") no-repeat center center fixed;
-  background-size: cover;
   background-color: #666666;
+  background-size: cover;
   height: 100%;
   position: absolute;
   width: 100%;
 }
-/* line 9, ../scss/_login.scss */
+/* line 13, ../scss/_login.scss */
 #login #login-form {
   background: url("../../img/olrc-logo-lg.png") no-repeat fixed;
   background-size: 350px;
@@ -9601,12 +9612,12 @@ table .icon {
   position: absolute;
   width: 100%;
 }
-/* line 18, ../scss/_login.scss */
+/* line 22, ../scss/_login.scss */
 #login #login-form .login-alert {
   color: #FFFFFF;
   padding-bottom: 1rem;
 }
-/* line 23, ../scss/_login.scss */
+/* line 27, ../scss/_login.scss */
 #login #login-form .login-form-box {
   background-color: rgba(0, 0, 0, 0.65);
   padding: 50px 200px 10px;
@@ -9614,112 +9625,118 @@ table .icon {
   top: 40%;
   width: 100%;
 }
-/* line 30, ../scss/_login.scss */
+/* line 34, ../scss/_login.scss */
 #login #login-form .login-form-box .columns {
   padding-left: 0;
 }
-/* line 34, ../scss/_login.scss */
+/* line 38, ../scss/_login.scss */
 #login #login-form .login-form-box .login-btn {
   width: 100%;
 }
-/* line 39, ../scss/_login.scss */
+/* line 43, ../scss/_login.scss */
 #login #login-form .olrclogo {
   width: 100%;
 }
-/* line 43, ../scss/_login.scss */
+/* line 47, ../scss/_login.scss */
 #login #login-form .olrctext {
   padding-bottom: 15px;
   width: 400px;
 }
 
 @media only screen and (max-width: 40em) {
-  /* line 52, ../scss/_login.scss */
+  /* line 56, ../scss/_login.scss */
   #login #login-form {
     background-position: 10px 10px;
     background-size: 500px;
   }
-  /* line 56, ../scss/_login.scss */
+  /* line 60, ../scss/_login.scss */
   #login #login-form .login-form-box {
     padding: 15px 10px 10px;
     top: 22%;
   }
-  /* line 60, ../scss/_login.scss */
+  /* line 64, ../scss/_login.scss */
   #login #login-form .login-form-box .columns {
     padding-right: 0;
   }
 }
-/* line 1, ../scss/_header.scss */
+/*
+	The rules on this page will be reflected in the template file:
+	-base.html
+	-containerview.html
+	-objectview.html
+*/
+/* line 7, ../scss/_header.scss */
 #header {
   background-color: #363636;
 }
-/* line 4, ../scss/_header.scss */
+/* line 10, ../scss/_header.scss */
 #header .account-btns {
   text-align: right;
 }
-/* line 7, ../scss/_header.scss */
+/* line 13, ../scss/_header.scss */
 #header .account-btns .user button, #header .account-btns .button {
   background-color: #000000;
 }
-/* line 10, ../scss/_header.scss */
+/* line 16, ../scss/_header.scss */
 #header .account-btns .user button:focus, #header .account-btns .user button:hover, #header .account-btns .button:focus, #header .account-btns .button:hover {
   background-color: #242424;
 }
-/* line 16, ../scss/_header.scss */
+/* line 22, ../scss/_header.scss */
 #header .account-btns .username {
   color: #FFFFFF;
   font-size: 0.6875rem;
-  padding-top: 0.625rem;
-  padding-right: 0.8rem;
   padding-bottom: 0.6875rem;
   padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  padding-top: 0.625rem;
 }
-/* line 25, ../scss/_header.scss */
+/* line 31, ../scss/_header.scss */
 #header .account-btns div.tenant-wrapper {
   display: inline-block;
 }
-/* line 28, ../scss/_header.scss */
+/* line 34, ../scss/_header.scss */
 #header .account-btns div.tenant-wrapper span, #header .account-btns div.tenant-wrapper li {
   color: #FFFFFF;
   font-size: 0.6875rem;
-  padding-top: 0.625rem;
-  padding-right: 0.8rem;
   padding-bottom: 0.6875rem;
   padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  padding-top: 0.625rem;
 }
-/* line 36, ../scss/_header.scss */
+/* line 43, ../scss/_header.scss */
 #header .account-btns div.tenant-wrapper ul {
   background-color: black;
 }
-/* line 38, ../scss/_header.scss */
+/* line 46, ../scss/_header.scss */
 #header .account-btns div.tenant-wrapper ul li {
   display: block;
 }
-/* line 40, ../scss/_header.scss */
+/* line 49, ../scss/_header.scss */
 #header .account-btns div.tenant-wrapper ul li a {
   color: #FFFFFF;
 }
-/* line 48, ../scss/_header.scss */
+/* line 57, ../scss/_header.scss */
 #header .service-logo {
   padding-top: 10px;
   width: 40px;
 }
 
-/* line 54, ../scss/_header.scss */
+/* line 63, ../scss/_header.scss */
 .crumb-row {
   background-color: #363636;
   color: #FFFFFF;
   padding: 0px 0px 0px;
 }
-/* line 59, ../scss/_header.scss */
+/* line 68, ../scss/_header.scss */
 .crumb-row ul {
   margin-bottom: 0.2rem;
 }
-/* line 64, ../scss/_header.scss */
+/* line 73, ../scss/_header.scss */
 .crumb-row .breadcrumb ul {
   margin-left: 0;
   margin-top: 5px;
 }
-/* line 69, ../scss/_header.scss */
+/* line 78, ../scss/_header.scss */
 .crumb-row .breadcrumb li {
   float: left;
   font-size: 1.25rem;
@@ -9727,25 +9744,25 @@ table .icon {
   list-style-type: none;
   text-transform: none;
 }
-/* line 76, ../scss/_header.scss */
+/* line 85, ../scss/_header.scss */
 .crumb-row .breadcrumb li:focus, .crumb-row .breadcrumb li:hover {
   text-decoration: none;
 }
-/* line 81, ../scss/_header.scss */
+/* line 90, ../scss/_header.scss */
 .crumb-row .breadcrumb a {
   color: #FFFFFF;
   text-decoration: none;
 }
-/* line 85, ../scss/_header.scss */
+/* line 94, ../scss/_header.scss */
 .crumb-row .breadcrumb a:focus, .crumb-row .breadcrumb a:hover {
   color: #dbdbdb;
   text-decoration: none;
 }
-/* line 91, ../scss/_header.scss */
+/* line 100, ../scss/_header.scss */
 .crumb-row .breadcrumb:hover {
   text-decoration: none;
 }
-/* line 95, ../scss/_header.scss */
+/* line 104, ../scss/_header.scss */
 .crumb-row .breadcrumb .glyphicons {
   color: #fff;
   display: inherit;
@@ -9753,175 +9770,187 @@ table .icon {
   margin: 5px 5px 5px;
   width: 20px;
 }
-/* line 103, ../scss/_header.scss */
+/* line 112, ../scss/_header.scss */
 .crumb-row .breadcrumb .glyphicons-cloud {
   margin: 5px 5px 5px 0px;
 }
-/* line 108, ../scss/_header.scss */
+/* line 117, ../scss/_header.scss */
 .crumb-row .settings {
   padding-bottom: 11px;
 }
 
 @media only screen and (max-width: 40em) {
-  /* line 115, ../scss/_header.scss */
+  /* line 124, ../scss/_header.scss */
   #header button, #header .button {
     margin-bottom: 5px;
   }
-  /* line 119, ../scss/_header.scss */
+  /* line 128, ../scss/_header.scss */
   #header .columns {
     padding: 0;
   }
-  /* line 123, ../scss/_header.scss */
+  /* line 132, ../scss/_header.scss */
   #header .service-logo {
     padding-left: 5px;
     padding-top: 5px;
     width: 32px;
   }
 
-  /* line 130, ../scss/_header.scss */
+  /* line 139, ../scss/_header.scss */
   .crumb-row {
     padding-top: 0px;
   }
-  /* line 133, ../scss/_header.scss */
+  /* line 142, ../scss/_header.scss */
   .crumb-row .breadcrumb {
     padding: 0;
   }
-  /* line 136, ../scss/_header.scss */
+  /* line 145, ../scss/_header.scss */
   .crumb-row .breadcrumb li {
     font-size: 1rem;
   }
-  /* line 140, ../scss/_header.scss */
+  /* line 149, ../scss/_header.scss */
   .crumb-row .breadcrumb ul {
     margin-left: 5px;
     margin-top: 0px;
   }
 
-  /* line 147, ../scss/_header.scss */
+  /* line 156, ../scss/_header.scss */
   #pseudoContainer {
     padding-top: 4rem;
   }
 }
-/* line 153, ../scss/_header.scss */
+/* line 162, ../scss/_header.scss */
 .arrow-down {
-  width: 0;
-  height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
   border-top: 5px solid #fff;
   display: inline-block;
+  height: 0;
   margin-left: 1em;
+  width: 0;
 }
 
-/* line 1, ../scss/_reveal_modal.scss */
+/*
+	The rules on this page will be reflected on pages that use the foundation
+	modal.
+*/
+/* line 5, ../scss/_reveal_modal.scss */
 .reveal-modal {
   padding: 0.5rem 1.875rem;
 }
-/* line 4, ../scss/_reveal_modal.scss */
-.reveal-modal h2 {
-  font-weight: bold;
-}
 /* line 8, ../scss/_reveal_modal.scss */
-.reveal-modal p {
-  font-size: 0.875rem;
-}
-/* line 12, ../scss/_reveal_modal.scss */
-.reveal-modal .close {
-  background-color: #000000;
-  float: right;
-}
-/* line 16, ../scss/_reveal_modal.scss */
-.reveal-modal .close:focus, .reveal-modal .close:hover {
-  background-color: #242424;
-}
-/* line 22, ../scss/_reveal_modal.scss */
 .reveal-modal button.confirm-delete {
   background-color: red;
   display: none;
   width: 100%;
 }
-/* line 28, ../scss/_reveal_modal.scss */
+/* line 14, ../scss/_reveal_modal.scss */
+.reveal-modal h2 {
+  font-weight: bold;
+}
+/* line 18, ../scss/_reveal_modal.scss */
+.reveal-modal p {
+  font-size: 0.875rem;
+}
+/* line 22, ../scss/_reveal_modal.scss */
 .reveal-modal span.container-name-holder, .reveal-modal span.folder-name-holder {
   color: red;
 }
+/* line 26, ../scss/_reveal_modal.scss */
+.reveal-modal .close {
+  background-color: #000000;
+  float: right;
+}
+/* line 30, ../scss/_reveal_modal.scss */
+.reveal-modal .close:focus, .reveal-modal .close:hover {
+  background-color: #242424;
+}
 
-/* line 2, ../scss/_tempurl.scss */
+/*
+	The rules on this page will be reflected in the template file:
+	-tempurl.html
+*/
+/* line 6, ../scss/_tempurl.scss */
 form#custom-temp-url input.submit {
   background-color: black;
   border: none;
   color: white;
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-  line-height: normal;
   font-size: 1rem;
   font-weight: normal;
+  line-height: normal;
   margin-bottom: 1rem;
   padding: 1rem 2rem 1.0625rem 2rem;
   width: 100%;
 }
 
-/* line 16, ../scss/_tempurl.scss */
+/* line 20, ../scss/_tempurl.scss */
 #close-tempurl {
   margin: 0 0 1.25rem;
 }
 
-/* line 2, ../scss/_uploadform.scss */
+/*
+	The rules on this page will be reflected in the template file:
+	-upload_form.html
+*/
+/* line 6, ../scss/_uploadform.scss */
 body.chrome .chrome-txt, body.chrome span.directory-input {
   display: inline-block;
 }
 
-/* line 9, ../scss/_uploadform.scss */
+/* line 13, ../scss/_uploadform.scss */
 #fileForm #fileupload #preloadmsg {
   background: url("../../img/upload-bkg.png") no-repeat center center;
   text-align: center;
 }
-/* line 13, ../scss/_uploadform.scss */
+/* line 17, ../scss/_uploadform.scss */
 #fileForm #fileupload #preloadmsg .chrome {
   font-size: 0.8rem;
   padding-top: 8rem;
 }
-/* line 17, ../scss/_uploadform.scss */
+/* line 21, ../scss/_uploadform.scss */
 #fileForm #fileupload #preloadmsg .chrome img {
   width: 40px;
 }
-/* line 22, ../scss/_uploadform.scss */
+/* line 26, ../scss/_uploadform.scss */
 #fileForm #fileupload #preloadmsg .preloadmsg-txt {
   font-size: 1.5rem;
   font-weight: bold;
   padding-top: 12rem;
-}
-/* line 30, ../scss/_uploadform.scss */
-#fileForm .fileupload-progress {
-  display: none;
 }
 /* line 34, ../scss/_uploadform.scss */
 #fileForm .fileinput-button input {
   font-size: 50px;
 }
 /* line 39, ../scss/_uploadform.scss */
+#fileForm .fileupload-progress {
+  display: none;
+}
+/* line 44, ../scss/_uploadform.scss */
 #fileForm .file-progress {
   display: none;
 }
-/* line 43, ../scss/_uploadform.scss */
+/* line 48, ../scss/_uploadform.scss */
 #fileForm .file-row {
   border-bottom: 1px solid #EEEEEE;
   position: relative;
 }
-/* line 47, ../scss/_uploadform.scss */
+/* line 52, ../scss/_uploadform.scss */
 #fileForm .file-row .filerowbtns {
   text-align: right;
   padding-top: 5px;
 }
-/* line 50, ../scss/_uploadform.scss */
+/* line 56, ../scss/_uploadform.scss */
 #fileForm .file-row .filerowbtns button, #fileForm .file-row .filerowbtns .button {
   margin-bottom: 10px;
 }
-/* line 55, ../scss/_uploadform.scss */
+/* line 61, ../scss/_uploadform.scss */
 #fileForm .file-row .filerowtext {
-  position: relative;
-  margin-left: 30px;
   float: left;
+  margin-left: 30px;
   padding-top: 10px;
+  position: relative;
 }
-/* line 62, ../scss/_uploadform.scss */
+/* line 68, ../scss/_uploadform.scss */
 #fileForm .file-row .file-progress {
   bottom: 0px;
   height: 5px;
@@ -9930,7 +9959,7 @@ body.chrome .chrome-txt, body.chrome span.directory-input {
   width: 100%;
   z-index: 0;
 }
-/* line 71, ../scss/_uploadform.scss */
+/* line 77, ../scss/_uploadform.scss */
 #fileForm .file-row .icon {
   float: left;
   font-size: 24px;
@@ -9940,7 +9969,13 @@ body.chrome .chrome-txt, body.chrome span.directory-input {
   position: relative;
   width: 45px;
 }
-/* line 81, ../scss/_uploadform.scss */
+/* line 87, ../scss/_uploadform.scss */
+#fileForm .file-row .name {
+  font-size: 0.875rem;
+  font-weight: bold;
+  padding-top: 10px;
+}
+/* line 93, ../scss/_uploadform.scss */
 #fileForm .file-row .preview {
   float: left;
   height: 40px;
@@ -9949,36 +9984,30 @@ body.chrome .chrome-txt, body.chrome span.directory-input {
   position: relative;
   width: 60px;
 }
-/* line 90, ../scss/_uploadform.scss */
+/* line 102, ../scss/_uploadform.scss */
 #fileForm .file-row .progress {
+  background-color: #FFFFFF;
   border: 0px;
   padding: 0;
-  background-color: #FFFFFF;
 }
-/* line 95, ../scss/_uploadform.scss */
+/* line 107, ../scss/_uploadform.scss */
 #fileForm .file-row .progress .meter {
   background: #0074be;
 }
-/* line 101, ../scss/_uploadform.scss */
+/* line 113, ../scss/_uploadform.scss */
 #fileForm .file-row .row div:nth-child(1) {
   padding-left: 0rem;
 }
-/* line 105, ../scss/_uploadform.scss */
+/* line 117, ../scss/_uploadform.scss */
 #fileForm .file-row .row div:nth-child(4) {
   padding-right: 0rem;
 }
-/* line 110, ../scss/_uploadform.scss */
-#fileForm .file-row .name {
-  font-size: 0.875rem;
-  font-weight: bold;
-  padding-top: 10px;
-}
-/* line 116, ../scss/_uploadform.scss */
+/* line 122, ../scss/_uploadform.scss */
 #fileForm .file-row .size {
   font-size: 0.875rem;
   padding-top: 10px;
 }
-/* line 122, ../scss/_uploadform.scss */
+/* line 128, ../scss/_uploadform.scss */
 #fileForm .progress {
   background-color: #FFFFFF;
   border: 0;
@@ -9986,66 +10015,70 @@ body.chrome .chrome-txt, body.chrome span.directory-input {
   margin-top: 10px;
   padding: 0;
 }
-/* line 130, ../scss/_uploadform.scss */
+/* line 136, ../scss/_uploadform.scss */
 #fileForm .progress-extended {
   font-size: 0.875rem;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-/* line 137, ../scss/_uploadform.scss */
+/* line 143, ../scss/_uploadform.scss */
 .chrome-txt, span.directory-input {
   display: none;
 }
 
-/* line 141, ../scss/_uploadform.scss */
+/* line 147, ../scss/_uploadform.scss */
 .fileinput-button {
   overflow: inherit !important;
 }
 
-/* line 146, ../scss/_uploadform.scss */
+/* line 152, ../scss/_uploadform.scss */
 .template-upload strong.error.text-danger {
   color: red;
 }
 
-/* line 2, ../scss/_objectview.scss */
+/*
+	The rules on this page will be reflected in the template file:
+	-objectview.html
+*/
+/* line 6, ../scss/_objectview.scss */
 form#object-expiry-form input.submit {
-  border: none;
   background-color: black;
+  border: none;
   color: white;
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-  line-height: normal;
   font-size: 1rem;
   font-weight: normal;
+  line-height: normal;
   margin-bottom: 1rem;
   padding: 1rem 2rem 1.0625rem 2rem;
   width: 100%;
 }
 
-/* line 16, ../scss/_objectview.scss */
+/* line 20, ../scss/_objectview.scss */
 #objectview {
   padding-bottom: 5rem;
 }
-/* line 20, ../scss/_objectview.scss */
+/* line 24, ../scss/_objectview.scss */
 #objectview #objecttable .dropdown.button::after {
   border-color: #000000 transparent transparent transparent;
 }
-/* line 24, ../scss/_objectview.scss */
+/* line 28, ../scss/_objectview.scss */
 #objectview #objecttable .file-btn {
   background-color: transparent;
   color: #000000;
   margin: 0px;
 }
-/* line 29, ../scss/_objectview.scss */
+/* line 33, ../scss/_objectview.scss */
 #objectview #objecttable .file-btn:hover, #objectview #objecttable .file-btn:focus {
   background-color: #EEEEEE;
 }
-/* line 33, ../scss/_objectview.scss */
+/* line 38, ../scss/_objectview.scss */
 #objectview #objecttable .glyphicons-cloud-download:before, #objectview #objecttable .glyphicons-fire:before {
   margin-right: 0.15em;
 }
 
-/* line 39, ../scss/_objectview.scss */
+/* line 44, ../scss/_objectview.scss */
 .dropdown-btn {
   background-color: transparent;
   color: #555555;
@@ -10055,69 +10088,73 @@ form#object-expiry-form input.submit {
   text-align: left;
   width: 100%;
 }
-/* line 48, ../scss/_objectview.scss */
+/* line 53, ../scss/_objectview.scss */
 .dropdown-btn:hover, .dropdown-btn:focus {
   color: #555555;
   background-color: #EEEEEE;
 }
 
-/* line 55, ../scss/_objectview.scss */
+/* line 60, ../scss/_objectview.scss */
 .slo-table th.logo {
   width: 1rem;
 }
-/* line 59, ../scss/_objectview.scss */
+/* line 64, ../scss/_objectview.scss */
 .slo-table td.icon {
   padding: 0rem 0.625rem 0rem 0rem;
 }
-/* line 63, ../scss/_objectview.scss */
+/* line 68, ../scss/_objectview.scss */
 .slo-table .css-progress-wrap {
   margin-top: 10px;
   margin-bottom: 10px;
   display: block;
 }
-/* line 69, ../scss/_objectview.scss */
+/* line 74, ../scss/_objectview.scss */
 .slo-table td {
   padding-top: 0.7em;
   padding-bottom: 0.7em;
 }
-/* line 74, ../scss/_objectview.scss */
+/* line 79, ../scss/_objectview.scss */
 .slo-table button {
   margin-bottom: 0;
   font-size: 0.875rem;
   padding: 0.3em 1em 0.3em 1em;
 }
-/* line 79, ../scss/_objectview.scss */
+/* line 84, ../scss/_objectview.scss */
 .slo-table button.cancel {
   background-color: #aa240c;
 }
-/* line 81, ../scss/_objectview.scss */
+/* line 86, ../scss/_objectview.scss */
 .slo-table button.cancel:hover {
   background-color: #8e1e0a;
 }
-/* line 86, ../scss/_objectview.scss */
+/* line 92, ../scss/_objectview.scss */
 .slo-table th.button-column {
   width: 10px;
 }
 
-/* line 1, ../scss/_containerview.scss */
+/*
+	The rules on this page will be reflected in the template file:
+	-containerview.html
+*/
+/* line 5, ../scss/_containerview.scss */
 #containerview {
   padding-bottom: 5rem;
 }
-/* line 5, ../scss/_containerview.scss */
+/* line 9, ../scss/_containerview.scss */
 #containerview #containertable .dropdown.button::after {
   border-color: #000000 transparent transparent transparent;
 }
-/* line 9, ../scss/_containerview.scss */
+/* line 13, ../scss/_containerview.scss */
 #containerview #containertable .file-btn {
   background-color: transparent;
   color: #000000;
   margin: 0px;
 }
-/* line 14, ../scss/_containerview.scss */
+/* line 18, ../scss/_containerview.scss */
 #containerview #containertable .file-btn:hover, #containerview #containertable .file-btn:focus {
   background-color: #EEEEEE;
 }
-/* line 20, ../scss/_containerview.scss */
+/* line 24, ../scss/_containerview.scss */
 #containerview .usage {
   color: #FFFFFF;
   font-size: 0.65rem;
@@ -10125,70 +10162,68 @@ form#object-expiry-form input.submit {
   vertical-align: super;
 }
 
-/* line 28, ../scss/_containerview.scss */
+/* line 32, ../scss/_containerview.scss */
 .progress {
   background-color: white;
   height: 4em;
 }
 
-/* line 34, ../scss/_containerview.scss */
+/* line 38, ../scss/_containerview.scss */
 #edit-acl input[type="text"] {
   width: 90%;
   display: inline;
 }
-/* line 38, ../scss/_containerview.scss */
+/* line 42, ../scss/_containerview.scss */
 #edit-acl span.glyphicons {
   top: 10px;
   left: 7px;
 }
-/* line 41, ../scss/_containerview.scss */
+/* line 45, ../scss/_containerview.scss */
 #edit-acl span.glyphicons.glyphicons-remove-2 {
   color: #ADADAD;
 }
 
-/* line 2, ../scss/_settings_page.scss */
+/*
+	The rules on this page will be reflected in the template file:
+	-settings.html
+*/
+/* line 6, ../scss/_settings_page.scss */
 #delete-user-form button#delete-user-submit {
   background-color: red;
   width: 100%;
 }
-/* line 7, ../scss/_settings_page.scss */
+/* line 11, ../scss/_settings_page.scss */
 #delete-user-form span.user-name-holder {
   color: red;
 }
 
-/* line 13, ../scss/_settings_page.scss */
+/* line 17, ../scss/_settings_page.scss */
 #settingsview p {
   line-height: 1rem;
 }
-/* line 17, ../scss/_settings_page.scss */
+/* line 21, ../scss/_settings_page.scss */
 #settingsview h2 {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
 @media only screen and (max-width: 40em) {
-  /* line 25, ../scss/_settings_page.scss */
+  /* line 29, ../scss/_settings_page.scss */
   #settingsview .row .row {
     margin: 0 5px;
   }
 }
-/* line 1, ../scss/_loader.scss */
+/*
+    The rules on this page will be reflect the styles of the loader animation
+    used to notify the user that their action occured but it is taking
+    some time to load.
+*/
+/* line 6, ../scss/_loader.scss */
 #progress {
   display: none;
 }
 
-/* line 5, ../scss/_loader.scss */
-.loader:before, .loader:after, .loader {
-  animation: load7 1.8s infinite ease-in-out;
-  animation-fill-mode: both;
-  border-radius: 50%;
-  height: 2.5em;
-  width: 2.5em;
-  -webkit-animation-fill-mode: both;
-  -webkit-animation: load7 1.8s infinite ease-in-out;
-}
-
-/* line 15, ../scss/_loader.scss */
+/* line 10, ../scss/_loader.scss */
 .loader {
   animation-delay: -0.16s;
   font-size: 10px;
@@ -10201,23 +10236,34 @@ form#object-expiry-form input.submit {
   -webkit-transform: translateZ(0);
 }
 
-/* line 27, ../scss/_loader.scss */
+/* line 22, ../scss/_loader.scss */
 .loader:after {
   left: 3.5em;
 }
 
-/* line 31, ../scss/_loader.scss */
+/* line 26, ../scss/_loader.scss */
 .loader:before {
   animation-delay: -0.32s;
   left: -3.5em;
   -webkit-animation-delay: -0.32s;
 }
 
-/* line 37, ../scss/_loader.scss */
+/* line 32, ../scss/_loader.scss */
 .loader:before, .loader:after {
   content: '';
   position: absolute;
   top: 0;
+}
+
+/* line 38, ../scss/_loader.scss */
+.loader:before, .loader:after, .loader {
+  animation: load7 1.8s infinite ease-in-out;
+  animation-fill-mode: both;
+  border-radius: 50%;
+  height: 2.5em;
+  width: 2.5em;
+  -webkit-animation-fill-mode: both;
+  -webkit-animation: load7 1.8s infinite ease-in-out;
 }
 
 @-webkit-keyframes load7 {
@@ -10236,19 +10282,22 @@ form#object-expiry-form input.submit {
     box-shadow: 0 2.5em 0 0 #0074be;
   }
 }
-/* line 63, ../scss/_loader.scss */
+/* line 68, ../scss/_loader.scss */
 #angular-loader #progress {
   display: block;
 }
 
-/* CSS progress bar used in SLO and delete folder. */
-/* line 2, ../scss/_css_progress_bar.scss */
+/*
+	The rules in this file will affect the CSS progress bar which used in
+	multiple locations including: SLO and delete folder.
+*/
+/* line 5, ../scss/_css_progress_bar.scss */
 .css-progress {
   width: 100%;
   height: 50px;
 }
 
-/* line 6, ../scss/_css_progress_bar.scss */
+/* line 9, ../scss/_css_progress_bar.scss */
 .css-progress-wrap {
   display: none;
   background: #0074be;
@@ -10256,7 +10305,7 @@ form#object-expiry-form input.submit {
   overflow: hidden;
   position: relative;
 }
-/* line 12, ../scss/_css_progress_bar.scss */
+/* line 15, ../scss/_css_progress_bar.scss */
 .css-progress-wrap .css-progress-bar {
   background: #ddd;
   left: 0;
@@ -10264,7 +10313,11 @@ form#object-expiry-form input.submit {
   top: 0;
 }
 
-/* line 1, ../scss/_messages.scss */
+/*
+	The rules on this page will be reflected in the template file:
+	-messages.html
+*/
+/* line 5, ../scss/_messages.scss */
 .angular-alert-box {
   background-color: #0074be;
   border-color: #0064a3;
@@ -10279,17 +10332,17 @@ form#object-expiry-form input.submit {
   position: relative;
   transition: opacity 300ms ease-out;
 }
-/* line 15, ../scss/_messages.scss */
+/* line 19, ../scss/_messages.scss */
 .angular-alert-box.success {
   background-color: #26561e;
   border-color: #26561e;
 }
-/* line 19, ../scss/_messages.scss */
+/* line 24, ../scss/_messages.scss */
 .angular-alert-box.alert {
   background-color: #aa240c;
   border-color: #aa240c;
 }
-/* line 23, ../scss/_messages.scss */
+/* line 29, ../scss/_messages.scss */
 .angular-alert-box .close {
   background: inherit;
   color: #333333;
@@ -10303,52 +10356,57 @@ form#object-expiry-form input.submit {
   top: 50%;
 }
 
-/* line 37, ../scss/_messages.scss */
+/* line 43, ../scss/_messages.scss */
+.display-on {
+  display: block !important;
+}
+
+/* line 47, ../scss/_messages.scss */
 .header-alert {
   margin-bottom: 0px;
   padding: 0.875rem 0rem 0.875rem 0rem;
 }
 
-/* line 42, ../scss/_messages.scss */
-.display-on {
-  display: block !important;
-}
-
-/* line 2, ../scss/_slo.scss */
+/*
+	The rules on this page will be reflected in the template file:
+	-objectview.html
+	-slo_table.html
+*/
+/* line 7, ../scss/_slo.scss */
 #slo-upload button.cancel-slo-button {
-  display: none;
   background-color: #aa240c;
+  display: none;
   width: 100%;
 }
-/* line 6, ../scss/_slo.scss */
+/* line 12, ../scss/_slo.scss */
 #slo-upload button.cancel-slo-button:hover {
   background-color: #8e1e0a;
 }
-/* line 10, ../scss/_slo.scss */
+/* line 17, ../scss/_slo.scss */
 #slo-upload input[type=file] {
   font-size: 1em;
 }
-/* line 13, ../scss/_slo.scss */
+/* line 21, ../scss/_slo.scss */
 #slo-upload .upload-message {
   display: none;
 }
 
-/* line 19, ../scss/_slo.scss */
+/* line 27, ../scss/_slo.scss */
 .delete-slo-wrapper h2.delete-folder-title, .delete-slo-wrapper span.cancel-delete {
   display: none;
 }
-/* line 22, ../scss/_slo.scss */
+/* line 31, ../scss/_slo.scss */
+.delete-slo-wrapper h3.deleting-message {
+  display: block;
+}
+/* line 35, ../scss/_slo.scss */
 .delete-slo-wrapper #css-progress-wrap {
   display: block;
   margin-top: 3em;
   margin-bottom: 3em;
 }
-/* line 28, ../scss/_slo.scss */
-.delete-slo-wrapper h3.deleting-message {
-  display: block;
-}
 
-/* line 33, ../scss/_slo.scss */
+/* line 43, ../scss/_slo.scss */
 h3.deleting-message {
   display: none;
 }

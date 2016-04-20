@@ -1,12 +1,16 @@
+/*
+	The rules on this page will be reflected in the template file:
+	-objectview.html
+*/
 form#object-expiry-form {
 	input.submit {
-		border: none;
 		background-color: black;
+		border: none;
 		color: white;
 		font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-		line-height: normal;
 		font-size: 1rem;
 		font-weight: normal;
+		line-height: normal;
 		margin-bottom: 1rem;
  		padding: 1rem 2rem 1.0625rem 2rem;
 		width: 100%;
@@ -30,6 +34,7 @@ form#object-expiry-form {
 				background-color: $smoke;
 			}
 		}
+
 		.glyphicons-cloud-download:before, .glyphicons-fire:before {
 			margin-right: 0.15em;
 		}
@@ -83,6 +88,7 @@ form#object-expiry-form {
 			}
 		}
 	}
+
 	th.button-column {
 		width: 10px;
 	}

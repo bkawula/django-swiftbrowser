@@ -1,3 +1,7 @@
+/*
+	The rules on this page will be reflected everywhere as they style general
+	html elements.
+*/
 h1, h2, h3, h4, h5 {
 	font-weight: bold;
 }
@@ -135,8 +139,8 @@ table {
 
 	.icon {
 		.filetypes, .glyphicons {
-			padding-left: 5px;
 			font-size: 24px;
+			padding-left: 5px;
 		}
 	}
 }

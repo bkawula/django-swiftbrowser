@@ -1,15 +1,10 @@
+/*
+    The rules on this page will be reflect the styles of the loader animation
+    used to notify the user that their action occured but it is taking
+    some time to load.
+*/
 #progress {
 	display:none;
-}
-
-.loader:before, .loader:after, .loader {
-    animation: load7 1.8s infinite ease-in-out;
-    animation-fill-mode: both;
-    border-radius: 50%;
-    height: 2.5em;
-    width: 2.5em;
-    -webkit-animation-fill-mode: both;
-    -webkit-animation: load7 1.8s infinite ease-in-out;
 }
 
 .loader {
@@ -38,6 +33,16 @@
     content: '';
     position: absolute;
     top: 0;
+}
+
+.loader:before, .loader:after, .loader {
+    animation: load7 1.8s infinite ease-in-out;
+    animation-fill-mode: both;
+    border-radius: 50%;
+    height: 2.5em;
+    width: 2.5em;
+    -webkit-animation-fill-mode: both;
+    -webkit-animation: load7 1.8s infinite ease-in-out;
 }
 
 @-webkit-keyframes load7 {
