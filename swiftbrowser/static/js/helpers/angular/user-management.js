@@ -1,3 +1,13 @@
+/*
+  This angular module faciltates user management in user_management.html which
+  is imported by settings.html. It is currently commented out until domains
+  are implemented.
+
+  This code is only applicable to keystone users who are admins. Right now
+  without domains, anyone with admin access can create and edit users of
+  any tenant. With domains, we can restrict admin access to a tenant or a group
+  of tenants.
+*/
 var app = angular.module('userManagement', ['messages']);
 
 app.controller('UserManagementCtrl', function ($scope, $http, users, MessagesHandler) {
@@ -14,19 +24,20 @@ app.controller('UserManagementCtrl', function ($scope, $http, users, MessagesHan
    */
   $scope.createUser = function () {
 
-    //Submit the form
+    /* Submit the post to the server to create the user. */
     $http({
       method  : 'POST',
       url     : '/create_user/',
       data    : $.param($scope.createUserFormData),  // pass in data as strings
       headers : { 'Content-Type': 'application/x-www-form-urlencoded' }
     })
+
+    /* On success, send success message to the user and update the user data. */
     .success(function (data) {
       if (data.success) {
         MessagesHandler.newSuccessMessage(data.success);
         $http.get('/get_users').then(
           function (response) {
-
             $scope.users = response.data.users;
           });
       } else {
@@ -34,7 +45,6 @@ app.controller('UserManagementCtrl', function ($scope, $http, users, MessagesHan
       }
     })
     .error(function (data, status, headers, config) {
-      // MessagesHandler.newErrorMessage(data);
       $("html").html(data);
     });
   };
@@ -54,6 +64,8 @@ app.controller('UserManagementCtrl', function ($scope, $http, users, MessagesHan
     deleted user.
   */
   $scope.deleteUser = function () {
+
+    /* Submit a post to the server to delete the user. */
     $http({
       method  : 'POST',
       url     : '/delete_user/',
@@ -64,9 +76,10 @@ app.controller('UserManagementCtrl', function ($scope, $http, users, MessagesHan
     .success(function (data) {
       if (data.success) {
         MessagesHandler.newSuccessMessage(data.success);
+
+        //On success, update the user list
         $http.get('/get_users').then(
           function (response) {
-
             $scope.users = response.data.users;
           });
       } else {
@@ -77,6 +90,7 @@ app.controller('UserManagementCtrl', function ($scope, $http, users, MessagesHan
       MessagesHandler.newErrorMessage(data);
     });
 
+    //Clear the delete_user input and close the modal
     $scope.confirm_delete_user = "";
     $('#delete-user').foundation('reveal', 'close');
   };
@@ -115,5 +129,8 @@ function user_management_init() {
   );
 }
 
-/* Init of angular*/
+/*
+  This is the entry point for the page. We start by calling the
+  user_manage_init function to load the inital data.
+*/
 angular.element(document).ready(user_management_init);

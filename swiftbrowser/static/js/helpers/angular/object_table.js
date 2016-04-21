@@ -1,3 +1,13 @@
+/*
+  This files is loaded by objectview.html and applies to the object_table.html
+  and object_table_readonly.html templates. In contains logic for events
+  managed in these templates such as creating folders and managing incomplete
+  SLO uploads.
+*/
+
+/*
+  Bind the slo button with foundation's modal for SLO upload.
+*/
 $("button.slo-upload-button").click(function () {
     $('#slo-upload').foundation('reveal', 'open', {
         close_on_background_click: false,
@@ -14,7 +24,7 @@ app.config(["$provide", function ($provide) {
 }]);
 
 /**
-  * Initiate object table data for the controller.
+  * Initiates object table for the controller. Get object data from the server.
  */
 function get_object_table() {
   var initInjector = angular.injector(['ng']);
@@ -22,28 +32,39 @@ function get_object_table() {
   $http.get($("#baseurl").attr("href") + 'get_object_table/').then(
     function (response) {
 
-      //Store data in constant called items
+      //Store data in a constant called items
       app.constant('items', response.data.data);
 
-      //Init the controller
+      //Initialize the controller
       angular.bootstrap(document, ['object-table']);
     }
   );
 }
 
+/*
+  This is triggered when the get in get_object_table is successful.
+  This controller handles the displaying of object information from the server.
+  It affects object_table.html and object_table_readonly.html
+*/
 app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandler, baseurl) {
 
-  //This function is called after angular.element is finished.
-  $scope.folders = items.folders;
-  $scope.objects = items.objects;
-  $scope.container = items.container;
+  $scope.folders = items.folders; /* Folder objects in the container. */
+  $scope.objects = items.objects; /* Regular objects in the container. */
+  $scope.container = items.container; /* Container being displayed. */
+
+  /* A list of incomplete SLO objects */
   $scope.incomplete_slo = items.incomplete_slo;
   $scope.baseurl = baseurl;
 
+  /* This triggers applyTableEvents once angular finishes looping through
+  the object table. */
   $scope.$on('onRepeatLast', function () {
     app.applyTableEvents();
   });
 
+  /*
+    Get updated object table data.
+  */
   function refreshObjectTable() {
     $http.get(baseurl + 'get_object_table/').then(
       function (response) {
@@ -53,6 +74,8 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
       }
     );
   }
+  /* This binding allows javascript outside of this controller to call this
+  refreshObjectTable function. */
   $scope.refreshObjectTable = refreshObjectTable;
 
   // Provide upload_form.js access to internal function
@@ -68,11 +91,12 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
   */
   $scope.delete_incomplete_slo = function (key) {
 
-    //Bind slo delete
+    // Launch the foundation modal
     $('#delete-slo-modal').foundation('reveal', 'open', {
         close_on_background_click: false,
     });
 
+    // Refresh the page when the user closes the modal
     $("#slo-upload a.close-reveal-modal").click(function () {
       location.reload();
     });
@@ -81,19 +105,24 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
         csrfmiddlewaretoken  : $('input[name=csrfmiddlewaretoken]').val(),
     };
 
+    /*
+      Submit a request to the server to delete the corresponding incomplete
+      SLO.
+    */
     $.ajax({
-        type        : 'POST',
-        url     : baseurl + "delete_incomplete_slo/" + $scope.container + "/" + key.name,
-        data        : formData,
+        type: 'POST',
+        url: baseurl + "delete_incomplete_slo/" + $scope.container + "/" + key.name,
+        data: formData,
     })
       .success(function (data) {
         // Update message
         MessagesHandler.newSuccessMessage(data);
 
-        // Refresh table.
+        // Refresh the table
         $scope.refreshObjectTable();
         $("#css-progress-wrap").toggle(false);
 
+        // Close the modal
         $('#delete-slo-modal').foundation('reveal', 'close', {
             close_on_background_click: false,
         });
@@ -102,6 +131,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
 
         MessagesHandler.newErrorMessage(data);
 
+        // Close the modal
         $('#delete-slo-modal').foundation('reveal', 'close', {
             close_on_background_click: false,
         });
@@ -110,13 +140,15 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
 
 })
 
-  //Controller for new folder form.
+  //Controller for new folder form in objectview.html
   .controller('CreateFolderCtrl', function ($scope, $http, $rootScope, items, baseurl) {
 
     $scope.showForm = 1; /* Variable for toggling the form after submission. */
     $scope.showLoader = 0; /* Variable for toggling the loader. */
     $scope.formData = {}; /* Holder for form data. */
 
+    /* Add baseurl as swiftbrowser may not be installed in the root directory
+    of the domain */
     var create_folder_url = baseurl + "create_pseudofolder/" + items.container + "/";
 
     //Add prefix for new folders that will be in existing folders.
@@ -131,7 +163,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
       $scope.showForm = 0;
       $scope.showLoader = 1;
 
-      //Submit the form
+      /* Submit a post to the server  */
       $http({
         method  : 'POST',
         url     : create_folder_url,
@@ -140,6 +172,10 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
       })
         .success(function () {
 
+          /*
+            Close the modal, refresh the object table, hide the loader and
+            reset the foldername.
+          */
           $('#pseudoContainer').foundation('reveal', 'close');
           $rootScope.$broadcast('refreshObjectTable');
           $scope.showForm = 1;
@@ -148,12 +184,14 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
         })
         .error(function () {
           //TODO: Display error message
-          console.log($scope.formData);
         });
     };
   })
 
-  //Filter to display the file size in a compact way. Ex. 3GB or 100Bytes
+  /*
+    Filter to display the file size in an appropriate
+    Ex. 3GB or 100Bytes
+  */
   .filter('formatByte', function () {
     'use strict';
 
@@ -168,7 +206,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
   })
 
   /*
-  Format the pseudo folder:
+    Format the pseudo folder:
     from "folder/name/"
     to "name"
   */
@@ -184,7 +222,7 @@ app.controller('ObjectTableCtrl', function ($scope, $http, items, MessagesHandle
   })
 
   /*
-  Format filename
+    Format filename
     from "folder/name/file.mp4"
     to "file.mp4"
   */
@@ -222,11 +260,12 @@ app.config(function ($httpProvider) {
   $httpProvider.defaults.headers.post['X-CSRFToken'] = $('input[name=csrfmiddlewaretoken]').val();
 });
 
+//On page load, launch get_object_table to initialize the page.
 angular.element(document).ready(get_object_table);
 
 
 /*
-    After a table is loaded, new events need to be applied to the page.
+    After a table is loaded, bind events to the rendered table.
 */
 app.applyTableEvents = function () {
 
@@ -242,19 +281,15 @@ app.applyTableEvents = function () {
   $("a.delete-object").off("click");
   $("a.delete-object").on("click", function (e) {
     //Prompt user to confirm.
-    /*global confirm: true*/
     if (!confirm("Are you sure you want to delete " + $(this).attr("data-name") + "?")) {
       e.preventDefault();
     }
   });
 
-  /*
-      Bind SLO upload button
-  */
+  // Bind SLO upload button
   $("button.slo-upload-button").click(function () {
       $('#slo-upload').foundation('reveal', 'open', {
           close_on_background_click: false,
       });
   });
-
 };
