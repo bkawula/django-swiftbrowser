@@ -1,3 +1,6 @@
+/*
+  This file helps manage the file uploading process in upload_form.html
+*/
 var files_added = 0; /* Track files added to the upload. */
 var files_processed = 0; /* Track files that are processed.*/
 var files_uploaded = 0; /* Track successful uploads. */
@@ -40,12 +43,13 @@ function closeForm() {
     angular.element("#objecttable").scope().MessagesHandler.newSuccessMessage(success_message);
   }
 
+  /* Reset the counters */
   files_uploaded = 0;
   files_added = 0;
   files_processed = 0;
 }
 
-
+/* Bind close button on the upload form. */
 $('#close-upload').on('click', function () {
   $('#fileForm').foundation('reveal', 'close');
 });
@@ -55,17 +59,13 @@ $(function () {
 
   /*
       Initialize the jQuery File Upload widget.
-
-      Default options are defined by the package,
-      however users may extend and define their
-      own options.
   */
 
   var formData = $('#fileupload').serializeArray();
   formData.push(
     {name: "redirect", value: ""}
   );
-  /*jslint unparam: true*/
+
   $('#fileupload').fileupload({
     formData: formData,
     url: $(this).attr('action'),
@@ -91,6 +91,7 @@ $(function () {
       files_uploaded += 1;
     })
 
+    //Called when upload starts
     .bind('fileuploadprocessstart', function () {
       $('#preloadmsg').hide();
       $('.fileupload-progress').show();
@@ -98,6 +99,7 @@ $(function () {
       $('#cancel-upload').removeClass('disabled');
     })
 
+    //Called when an individual upload has finished
     .bind('fileuploadprocessdone', function () {
       if (files_added > 1) {
         $('.file-progress').show();
@@ -105,7 +107,6 @@ $(function () {
     })
 
     .bind('fileuploadsend', function (e, data) {
-      /*global Foundation: true*/
       Foundation.libs.reveal.settings.close_on_background_click = false;
       $('#close-upload').off().addClass('disabled');
       $.each(data.files, function () {
@@ -145,19 +146,23 @@ $(function () {
     })
 
     .addClass('fileupload-processing');
-  /*jslint unparam: false*/
-
 });
 
+/*
+  Bind events for cancelling an upload.
+*/
 $('#cancel-upload').click(function () {
   $('#fileForm').foundation(
     {reveal: {close_on_background_click: true, close_on_esc: true}}
   );
   $('#preloadmsg').show();
   $('.fileupload-progress').hide();
+
+  //Reset the counters
   files_uploaded = 0;
   files_added = 0;
   files_processed = 0;
+
   $('#start-upload').addClass('disabled');
   $('#cancel-upload').addClass('disabled');
   $('#close-upload').on('click', function () {
@@ -166,12 +171,10 @@ $('#cancel-upload').click(function () {
 });
 
 //Add a special class for chrome
-/*global navigator: true*/
 if (navigator.userAgent.toLowerCase().match('chrome')) {
   $("body").addClass("chrome");
 }
 
-/*global File: true*/
 /*
     Modify jquery fileupload's onAdd method. This method recreates
     the file object pointer and changes the name. The name change allows

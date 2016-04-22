@@ -1,3 +1,11 @@
+/*
+    This file is used in the delete_folder.html file and facilitates the
+    confirmation of deleting a folder and displaying a progress bar. It is a
+    copy of delete_container.
+
+    TODO: merge delete_folder.js and delete_container.js
+*/
+
 //Bind the cancel button to the modal closing delete folder modal
 $('.cancel-delete').on('click', function() {
     $('#delete-folder').foundation('reveal', 'close');

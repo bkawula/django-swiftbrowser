@@ -1,3 +1,8 @@
+/*
+	This file is pulled into containerview.html and applies events to the
+	entire page.
+*/
+
 $(document).foundation();
 
 /*

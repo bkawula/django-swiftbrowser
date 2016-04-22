@@ -1,3 +1,7 @@
+/*
+    This file is loaded in delete_folder.html which handles the updating of the
+    progress bar when an incomplete slo is deleted.
+*/
 $("#slo-upload a.close-reveal-modal").click(function () {
   location.reload();
 });

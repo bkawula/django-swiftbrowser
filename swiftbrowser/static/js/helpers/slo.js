@@ -1,4 +1,20 @@
 /*
+    This file is loaded in objectview.html template. It allows users to upload
+    SLO (Static Large Objects) onto swift. SLOs are large files uploaded in
+    segments along with a manifest file that maps the location of all the segments.
+    The advantage of uploading SLO is that if you need to upload a
+    really large file, you can stop the upload (or get disconnected) and resume
+    it while having to start from the beginning.
+
+    When a user selects a file to upload the following steps are followed:
+    * submit a post to the server to see if this is a continuation of
+      an existing SLO upload
+    * segments are created and asychronously uploaded directly to swift
+    * when all segments have been uploaded, submit a post to server to create
+      the manifest file
+*/
+
+/*
     Disable form in favour of using Javascript to handle it.
 */
 $('#slo-upload form').submit(function (e) {
@@ -10,7 +26,7 @@ $('#slo-upload form').submit(function (e) {
 */
 $('#slo-upload button.upload').click(slo_upload);
 
-var xhrs = [];
+var xhrs = []; //Array of xhr objects created to upload a segment
 
 /*
     Abort all the current xhr processes and clear the file input.
@@ -49,10 +65,13 @@ $("#slo-upload a.close-reveal-modal").click(cancel_current_slo_upload);
 function slo_upload() {
 
     var file = $("#slo-upload input")[0].files[0];
+
+    // Do not do anything unless a file is selected.
     if (!file) {
         return;
     }
 
+    // Hide the upload butotns and display the upload message
     $("#slo-upload input[type=file]").toggle(false);
     $("#slo-upload button.upload").toggle(false);
     $("#slo-upload .upload-message").toggle(true);

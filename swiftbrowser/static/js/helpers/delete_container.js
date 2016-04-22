@@ -1,3 +1,9 @@
+/*
+    This file is loaded into delte_container.html and manages the lgoic for
+    deleting containers including verifying the container name before deleting
+    and displaying a progress bar for deleting containers.
+*/
+
 //Bind the cancel button to the modal closing delete container modal
 $('.cancel-delete').on('click', function() {
     $('#delete-container').foundation('reveal', 'close');
@@ -83,7 +89,8 @@ function delete_container() {
 
 /*
     Make a post to the server to get the remaining number of objects in the
-    container.
+    container. Update the progress bar and recursively call itself until the
+    container is empty.
 */
 function update_progress_bar(total) {
 
@@ -110,6 +117,8 @@ function update_progress_bar(total) {
         $('.css-progress-bar').stop().animate({
             left: progressTotal
         }, animationLength);
+
+        // Stop the recursive call once the container is empty.
         if (getPercent !== 1) {
             update_progress_bar(total);
         }
