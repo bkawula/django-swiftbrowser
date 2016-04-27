@@ -4,166 +4,165 @@
 {% load dateconv %}
 {% load staticfiles %}
 {% block content %}
-<div id="objectview">
-	<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">
-	<div class="crumb-row" data-magellan-expedition="fixed">
-		<div class="row">
-			{% if not session.norole %}
-				<div class="action-btns">
-					<div class="small-12 columns">
-						<button type="button" data-reveal-id="fileForm" class="button upload">
-							<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Upload Files
-						</button>
-						<button type="button" class="button upload slo-upload-button">
-							<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Large Upload
-						</button>
-						{% if false %}
-						<button type="button" data-dropdown="drop2" aria-controls="drop2" aria-expanded="false" class="button share">
-							<span class="glyphicons glyphicons-share"></span>Share
-						</button>
-						{% endif %}
-						<button type="button" data-reveal-id="pseudoContainer" class="button folder">
-							<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
-							New Folder
-						</button>
-						{% if public %}
-						<div id="drop2" data-dropdown-content class="f-dropdown content" aria-hidden="true" tabindex="-1">
-							<strong>{% trans 'Public URL:' %}</strong>
-							<a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
-								{{ base_url }}{% url "public_objectview" account=account container=container %}
-							</a>
+	<div id="objectview">
+		<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">
+		<div class="crumb-row" data-magellan-expedition="fixed">
+			<div class="row">
+				{# Users with no role are readyonly uesrs. They are not able tp upload or create folders. #}
+				{% if not session.norole %}
+					<div class="action-btns">
+						<div class="small-12 columns">
+							<button type="button" data-reveal-id="fileForm" class="button upload">
+								<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Upload Files
+							</button>
+							<button type="button" class="button upload slo-upload-button">
+								<span class="glyphicons glyphicons-cloud-upload"></span>&nbsp;Large Upload
+							</button>
+							{% if false %}
+								<button type="button" data-dropdown="drop2" aria-controls="drop2" aria-expanded="false" class="button share">
+									<span class="glyphicons glyphicons-share"></span>Share
+								</button>
+							{% endif %}
+							<button type="button" data-reveal-id="pseudoContainer" class="button folder">
+								<span class="glyphicons glyphicons-folder-plus"></span>&nbsp;
+								New Folder
+							</button>
+							{% if public %}
+								<div id="drop2" data-dropdown-content class="f-dropdown content" aria-hidden="true" tabindex="-1">
+									<strong>{% trans 'Public URL:' %}</strong>
+									<a href="{{ base_url }}{% url "public_objectview" account=account container=container %}" target="new">
+										{{ base_url }}{% url "public_objectview" account=account container=container %}
+									</a>
+								</div>
+							{% endif %}
 						</div>
-						{% endif %}
 					</div>
+				{% endif %}
+				<div class="small-12 medium-7 columns breadcrumb">
+					<ul>
+						<li>
+							<span class="glyphicons glyphicons-cloud"></span>
+							<a href="{% url "objectview" container=container %}">
+								{{container}}
+							</a>
+						</li>
+						{% for prefix in prefixes %}
+							<li>
+								<span class="glyphicons glyphicons-chevron-right"></span>
+								<a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
+							</li>
+						{% endfor %}
+					</ul>
 				</div>
-			{% endif %}
-			<div class="small-12 medium-7 columns breadcrumb">
-				<ul>
-					<li>
-						<span class="glyphicons glyphicons-cloud"></span>
-						<a href="{% url "objectview" container=container %}">
-							{{container}}
-						</a>
-					</li>
-					{% for prefix in prefixes %}
-					<li>
-						<span class="glyphicons glyphicons-chevron-right"></span>
-						<a href="{% url "objectview" container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
-					</li>
-					{% endfor %}
-				</ul>
+			</div>
+			<div id="messages">
+				{% include "messages.html" %}
 			</div>
 		</div>
-		<div id="messages">
-			{% include "messages.html" %}
+		<div ng-controller="MessagesCtrl">
+			<ng-include src="'{% static 'templates/messages.html' %}'"></ng-include>
+	    </div>
+		<div class="row">
+			<div class="small-12 columns"></div>
 		</div>
-	</div>
-	<div ng-controller="MessagesCtrl">
-		<ng-include src="'{% static 'templates/messages.html' %}'"></ng-include>
-    </div>
-	<div class="row">
-		<div class="small-12 columns"></div>
-	</div>
-	<div class="row content-body">
-		<div class="small-12 columns">
-			<div id="objecttable" ng-controller="ObjectTableCtrl">
-				<div id="angular-loader" ng-show="loading">
-				    <div id="progress" class="center-progress">
-			            <div class="loader">Loading...</div>
-			        </div>
+		<div class="row content-body">
+			<div class="small-12 columns">
+				<div id="objecttable" ng-controller="ObjectTableCtrl">
+					<div id="angular-loader" ng-show="loading">
+					    <div id="progress" class="center-progress">
+				            <div class="loader">Loading...</div>
+				        </div>
+					</div>
+					<div>
+						{% if not session.norole %}
+							<ng-include src="'{% static 'templates/object_table.html' %}'"></ng-include>
+						{% else %}
+							<ng-include src="'{% static 'templates/object_table_readonly.html' %}'"></ng-include>
+						{% endif%}
+					</div>
+					<div class="reveal-modal" id="slo-upload" data-reveal aria-hidden="true" role="dialog">
+						<a class="close-reveal-modal" aria-label="Close">×</a>
+						<h2>Large Upload</h2>
+						<p>
+							This upload option is for uploading large files (any file size will work but we recommend 5GB or more), that may experience network interruptions. With this upload option, you will be able to pick up where you left off if your upload is disconnected.
+						</p>
+						<div ng-if="incomplete_slo.length">
+							<ng-include src="'{% static 'templates/slo_table.html' %}'"></ng-include>
+						</div>
+					    <input type="file" file-model="myFile"/>
+					    {% if prefix %}
+					    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
+					    	data-initial-action="{% url "initialize_slo" container=container prefix=prefix %}"
+					    	data-create-manifest="{% url "create_manifest" container=container prefix=prefix %}"
+					    	>
+					    {% else %}
+					    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
+					    	data-initial-action="{% url "initialize_slo" container=container %}"
+					    	data-create-manifest="{% url "create_manifest" container=container %}" >
+					    {% endif %}
+				            <input type="hidden" name="max_file_size" value="{{ max_file_size }}">
+				            <input type="hidden" name="max_file_count" value="{{ max_file_count }}">
+				            <input type="hidden" name="expires" value="{{ expires }}">
+							<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+							<input type="hidden" class="swift_url" value="{{swift_slo_url}}">
+							<input type="hidden" name="signature" value="{{slo_signature}}">
+						    <button class="upload">Upload</button>
+						</form>
+						<div class="upload-message">
+							<h3>Uploading ...</h3>
+							<p>Keep the window open while the upload is in process. Closing the window will terminate the upload.</p>
+						</div>
+						<div class="css-progress-wrap css-progress">
+							<div class="css-progress-bar css-progress"></div>
+						</div>
+						<button class="cancel-slo-button">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="reveal-modal" id="fileForm" data-reveal aria-labelledby="fileForm-title" aria-hidden="true" role="dialog">
+			<h2 id="fileForm-title">Add Files</h2>
+			{% load jfutags %}
+			{% comment %}
+				Passing in 'login' as arbitrary upload handler since no server side upload handler is actually used.
+			{% endcomment %}
+			{% jfu 'upload_form.html' 'login'%}
+		</div>
+		<div ng-controller="CreateFolderCtrl" class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
+			<h2 id="pseudoContainer-title">Create a new folder</h2>
+			<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+			<form ng-show="showForm" method="POST" id="create-pseudofolder" ng-submit="createFolder()">
+				<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
+				<div>
+					<label for="foldername">
+						{% trans "Enter your folder name here." %}
+						{% trans "Please note that you can not rename it afterwards." %}
+					</label>
+					<div>
+						<input ng-model="formData.foldername" id="foldername" name="foldername" class="input-xlarge" type="text" placeholder="{% trans "Folder Name" %}">
+					</div>
 				</div>
 				<div>
-					{% if not session.norole %}
-						<ng-include src="'{% static 'templates/object_table.html' %}'"></ng-include>
-					{% else %}
-						<ng-include src="'{% static 'templates/object_table_readonly.html' %}'"></ng-include>
-
-					{% endif%}
+					<button type="submit" class="button expand">{% trans 'Create' %}</button>
 				</div>
-				<div class="reveal-modal" id="slo-upload" data-reveal aria-hidden="true" role="dialog">
-					<a class="close-reveal-modal" aria-label="Close">×</a>
-					<h2>Large Upload</h2>
-					<p>
-						This upload option is for uploading large files (any file size will work but we recommend 5GB or more), that may experience network interruptions. With this upload option, you will be able to pick up where you left off if your upload is disconnected.
-					</p>
-					<div ng-if="incomplete_slo.length">
-						<ng-include src="'{% static 'templates/slo_table.html' %}'"></ng-include>
-					</div>
-				    <input type="file" file-model="myFile"/>
-				    {% if prefix %}
-				    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
-				    	data-initial-action="{% url "initialize_slo" container=container prefix=prefix %}"
-				    	data-create-manifest="{% url "create_manifest" container=container prefix=prefix %}"
-				    	>
-				    {% else %}
-				    	<form id="slo-form" method="POST" action="{{swift_url}}" enctype="multipart/form-data"
-				    	data-initial-action="{% url "initialize_slo" container=container %}"
-				    	data-create-manifest="{% url "create_manifest" container=container %}" >
-				    {% endif %}
-			            <input type="hidden" name="max_file_size" value="{{ max_file_size }}">
-			            <input type="hidden" name="max_file_count" value="{{ max_file_count }}">
-			            <input type="hidden" name="expires" value="{{ expires }}">
-						<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
-						<input type="hidden" class="swift_url" value="{{swift_slo_url}}">
-						<input type="hidden" name="signature" value="{{slo_signature}}">
-					    <button class="upload">Upload</button>
-					</form>
-					<div class="upload-message">
-						<h3>Uploading ...</h3>
-						<p>Keep the window open while the upload is in process. Closing the window will terminate the upload.</p>
-					</div>
-					<div class="css-progress-wrap css-progress">
-					  <div class="css-progress-bar css-progress"></div>
-					</div>
-					<button class="cancel-slo-button">Cancel</button>
-				</div>
+			</form>
+			<div ng-show="showLoader">
+				<div class="loader">Loading...</div>
+			</div>
+		</div>
+		<div class="reveal-modal" id="tempurl" data-reveal aria-labelledby="tempurl-title" aria-hidden="true" role="dialog"></div>
+		<div class="reveal-modal" id="object-expiry" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog"></div>
+		<div class="reveal-modal" id="delete-folder" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog"></div>
+		<div class="reveal-modal" id="delete-slo-modal" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog">
+			<div class="css-progress-wrap css-progress">
+			  <div class="css-progress-bar css-progress"></div>
 			</div>
 		</div>
 	</div>
-	<div class="reveal-modal" id="fileForm" data-reveal aria-labelledby="fileForm-title" aria-hidden="true" role="dialog">
-		<h2 id="fileForm-title">Add Files</h2>
-		{% load jfutags %}
-		{% comment %}
-		Passing in login as arbitrary upload handler since no server side upload handler is actually used.
-		{% endcomment %}
-		{% jfu 'upload_form.html' 'login'%}
-	</div>
-
-	<div ng-controller="CreateFolderCtrl" class="reveal-modal" id="pseudoContainer" data-reveal aria-labelledby="pseudoContainer-title" aria-hidden="true" role="dialog">
-		<h2 id="pseudoContainer-title">Create a new folder</h2>
-		<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-		<form ng-show="showForm" method="POST" id="create-pseudofolder" ng-submit="createFolder()">
-			<input type="hidden" name="csrfmiddlewaretoken" value="{{csrf_token}}">
-			<div>
-				<label for="foldername">
-					{% trans "Enter your folder name here." %}
-					{% trans "Please note that you can not rename it afterwards." %}
-				</label>
-				<div>
-					<input ng-model="formData.foldername" id="foldername" name="foldername" class="input-xlarge" type="text" placeholder="{% trans "Folder Name" %}">
-				</div>
-			</div>
-			<div>
-				<button type="submit" class="button expand">{% trans 'Create' %}</button>
-			</div>
-		</form>
-		<div ng-show="showLoader">
-			<div class="loader">Loading...</div>
-		</div>
-	</div>
-	<div class="reveal-modal" id="tempurl" data-reveal aria-labelledby="tempurl-title" aria-hidden="true" role="dialog"></div>
-	<div class="reveal-modal" id="object-expiry" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog"></div>
-	<div class="reveal-modal" id="delete-folder" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog"></div>
-	<div class="reveal-modal" id="delete-slo-modal" data-reveal aria-labelledby="expiry-title" aria-hidden="true" role="dialog">
-		<div class="css-progress-wrap css-progress">
-		  <div class="css-progress-bar css-progress"></div>
-		</div>
-	</div>
-</div>
 {% endblock %}
 {% block jsadd %}
-<script src="{{STATIC_URL}}foundation/bower_components/angular/angular.min.js" type="text/javascript"></script>
-<script src="{{STATIC_URL}}js/helpers/angular/messages.js" type="text/javascript"></script>
-<script src="{{STATIC_URL}}js/helpers/angular/object_table.js" type="text/javascript"></script>
-<script src="{{STATIC_URL}}js/helpers/slo.js" type="text/javascript"></script>
+	<script src="{{STATIC_URL}}foundation/bower_components/angular/angular.min.js" type="text/javascript"></script>
+	<script src="{{STATIC_URL}}js/helpers/angular/messages.js" type="text/javascript"></script>
+	<script src="{{STATIC_URL}}js/helpers/angular/object_table.js" type="text/javascript"></script>
+	<script src="{{STATIC_URL}}js/helpers/slo.js" type="text/javascript"></script>
 {% endblock %}

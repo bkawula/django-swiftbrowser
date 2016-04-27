@@ -22,21 +22,19 @@
 							<span class="usage">
 								{{account_stat.x_account_bytes_used|filesizeformat}}
 								{% if account_stat.x_account_meta_quota_bytes %}
-								{% trans 'of' %}
-								{{account_stat.x_account_meta_quota_bytes|filesizeformat}}
+									{% trans 'of' %}
+									{{account_stat.x_account_meta_quota_bytes|filesizeformat}}
 								{% endif %}
 								{% trans 'used' %}
 							</span>
 						</li>
 					</ul>
 				</div>
-
 			</div>
 		</div>
 		{% include "messages.html" %}
 		<div class="row">
-			<div class="small-12 columns">
-			</div>
+			<div class="small-12 columns"></div>
 		</div>
 		<div class="row content-body">
 			<div id="containertable" class="small-12 columns">
@@ -86,7 +84,9 @@
 											</a>
 										</li>
 										{% comment %}
-										{% <li>
+										{%
+										We've temporarily disabled the Move to trash feature. It may be safe to fully remove it.
+										<li>
 											<a href="{% url "move_collection_to_trash" container=container.name  %}"  ><span class="glyphicons glyphicons-bin"></span> {% trans 'Move to trash' %}
 											</a>
 										</li> %}
@@ -135,9 +135,7 @@
 				<div class="loader">Loading...</div>
 			</div>
 		</div>
-		<div class="reveal-modal" id="delete-container" data-reveal aria-labelledby="container-title" aria-hidden="true" role="dialog">
-
-		</div>
+		<div class="reveal-modal" id="delete-container" data-reveal aria-labelledby="container-title" aria-hidden="true" role="dialog"></div>
 		{% include "acl.html" %}
 	</div>
     <script src="{{STATIC_URL}}js/helpers/containerview.js" type="text/javascript"></script>

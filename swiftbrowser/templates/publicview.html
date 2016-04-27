@@ -12,14 +12,13 @@
                 <span class="divider">/</span>
                 <a class="u" href="{% url "public_objectview" account=account container=container %}">{{container}}</a>
             </li>
-
             {% for prefix in prefixes %}
                 <li>
                     <span class="divider">/</span>
                     <a href="{% url "public_objectview" account=account container=container prefix=prefix.full_name %}">{{prefix.display_name}}</a>
                 </li>
             {% endfor %}
-       </ul>
+        </ul>
         <div class="alert alert-info">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <p>To download all objects using wget:</p>
@@ -52,7 +51,6 @@
                             <td class="hidden-phone"></td>
                         </tr>
                     {% endfor %}
-
                     {% for key in objects %}
                         <tr>
                             <td class="hidden-phone">
@@ -85,7 +83,6 @@
         </table>
     </div>
 {% endblock %}
-
 {% block jsadd %}
     <script src="{{STATIC_URL}}js/helpers/plublicview.js" type="text/javascript"></script>
 {% endblock %}

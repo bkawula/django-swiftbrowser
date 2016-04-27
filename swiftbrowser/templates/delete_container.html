@@ -1,27 +1,24 @@
-
 {% load l10n %}
 {% load i18n %}
 {% load dateconv %}
 {% load lastpart %}
 {% load static %}
 {% block content %}
-
-<script src="{% static "js/helpers/delete_container.js" %}"></script>
-<h2 id="container-title">Delete Container</h2>
-<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-<form id="delete-container-form" method="POST" action=""
-	data-delete-container-url="{% url "delete_container" container=container %}"
-	data-container-count-url="{% url "get_total_objects_container" container=container %}">
-    {% csrf_token %}
-    <label for="containername">This will permanently delete the container <span class="container-name-holder">{{container}}</span>. Type in the container name to delete the container.</label>
-    <input id="delete-container-name" name="containername" autocomplete="off" class="enter-container-name input-xlarge" type="text" placeholder="{% trans "Container Name" %}">
-	<button class="confirm-delete" type="submit">I understand the consequences, Delete this container.</button>
-    {% csrf_token %}
-    <input id="container-total" type="hidden" data-total-objects="{{total_objects}}" />
-</form>
-<div id="css-progress-wrap" class="css-progress-wrap css-progress">
-	<div class="css-progress-bar css-progress"></div>
-</div>
-<span class="cancel-delete button expand">{% trans 'Cancel' %}</span>
-
+	<script src="{% static "js/helpers/delete_container.js" %}"></script>
+	<h2 id="container-title">Delete Container</h2>
+	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
+	<form id="delete-container-form" method="POST" action=""
+		data-delete-container-url="{% url "delete_container" container=container %}"
+		data-container-count-url="{% url "get_total_objects_container" container=container %}">
+	    {% csrf_token %}
+	    <label for="containername">This will permanently delete the container <span class="container-name-holder">{{container}}</span>. Type in the container name to delete the container.</label>
+	    <input id="delete-container-name" name="containername" autocomplete="off" class="enter-container-name input-xlarge" type="text" placeholder="{% trans "Container Name" %}">
+		<button class="confirm-delete" type="submit">I understand the consequences, Delete this container.</button>
+	    {% csrf_token %}
+	    <input id="container-total" type="hidden" data-total-objects="{{total_objects}}" />
+	</form>
+	<div id="css-progress-wrap" class="css-progress-wrap css-progress">
+		<div class="css-progress-bar css-progress"></div>
+	</div>
+	<span class="cancel-delete button expand">{% trans 'Cancel' %}</span>
 {% endblock %}

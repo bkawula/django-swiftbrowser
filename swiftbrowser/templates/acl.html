@@ -1,6 +1,7 @@
+{# Users with norole do not have access to edit ACLs. #}
 {% if not session.norole %}
 	<div ng-app="acl">
-		<div class="reveal-modal" id="edit-acl" data-reveal aria-labelledby="container-title" aria-hidden="true" role="dialog" ng-controller="AclCtrl">
+		<div ng-controller="AclCtrl" class="reveal-modal" id="edit-acl" data-reveal aria-labelledby="container-title" aria-hidden="true" role="dialog">
 			<h2 id="container-title">Edit Access</h2>
 		    <div ng-controller="MessagesCtrl">
 	            <ng-include src="'{{STATIC_URL}}templates/messages.html'"></ng-include>
@@ -64,10 +65,8 @@
 				    	</a>
 					</form>
 				</div>
-				<div class="columns small-4">
-				</div>
-				<div class="columns small-4">
-				</div>
+				<div class="columns small-4"></div>
+				<div class="columns small-4"></div>
 			</div>
 			<form id="edit-access-form" method="POST" id="create-container" ng-submit="setACLs()">
 			    {% csrf_token %}
