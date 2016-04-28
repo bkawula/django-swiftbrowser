@@ -8,7 +8,9 @@
 		<link href="{% static "glyphicons/css/glyphicons-filetypes.css" %}" rel="stylesheet">
 		<div class="crumb-row" data-magellan-expedition="fixed">
 			<div class="row">
-				{# Users with no role are readyonly uesrs. They are not able tp upload or create folders. #}
+				{% comment %}
+				Users with no role are readyonly uesrs. They are not able tp upload or create folders.
+				{% endcomment %}
 				{% if not session.norole %}
 					<div class="action-btns">
 						<div class="small-12 columns">

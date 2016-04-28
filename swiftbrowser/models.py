@@ -1,7 +1,7 @@
+
 # -*- coding: utf-8 -*-
 import os
 from django.db import models
-from myproj.settings import MEDIA_ROOT
 
 
 def get_file_path(instance, filename):

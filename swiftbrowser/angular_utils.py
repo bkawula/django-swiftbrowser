@@ -1,4 +1,5 @@
-""" Utility functions for angular operations."""
+""" Utility functions for angular operations, particularly for user
+management"""
 from django.conf import settings
 import keystoneclient.v2_0.client
 from django.shortcuts import redirect

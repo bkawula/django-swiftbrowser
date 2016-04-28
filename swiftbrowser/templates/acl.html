@@ -1,4 +1,6 @@
-{# Users with norole do not have access to edit ACLs. #}
+{% comment %}
+Users with norole do not have access to edit ACLs.
+{% endcomment %}
 {% if not session.norole %}
 	<div ng-app="acl">
 		<div ng-controller="AclCtrl" class="reveal-modal" id="edit-acl" data-reveal aria-labelledby="container-title" aria-hidden="true" role="dialog">

@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 #pylint:disable=R0924
 from django import forms
-from django.conf import settings
 
 
 class CreateContainerForm(forms.Form):

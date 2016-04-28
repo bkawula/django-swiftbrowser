@@ -1,3 +1,4 @@
+""" This file holds the trashview functions that is not currently being used."""
 def trashview(request, account):
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')

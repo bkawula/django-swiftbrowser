@@ -1,16 +1,18 @@
+"""
+This file contains user management functions that get called directly from the
+browser through angular.
+"""
 import string
 import random
 from django.conf import settings
-from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import redirect
 
 from swiftclient import client
-from swiftbrowser.utils import ajax_session_valid, get_base_url, prefix_list, \
-    pseudofolder_object_list, split_tenant_user_names
+from swiftbrowser.utils import ajax_session_valid, split_tenant_user_names
 from swiftbrowser.views import containerview
 from swiftbrowser.angular_utils import *
-from swiftbrowser.forms import CreateUserForm, DeleteUserForm, UpdateACLForm
+from swiftbrowser.forms import CreateUserForm, DeleteUserForm
 import keystoneclient.v2_0.client
 
 
@@ -29,8 +31,7 @@ def get_users(request):
 
         keystone_usermanager = keystone_client.users
 
-    except Exception, e:
-        print(e)
+    except Exception:
         return redirect(containerview)
 
     # Get tenant id from list of tenants
