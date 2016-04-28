@@ -1,4 +1,7 @@
-""" Standalone webinterface for Openstack Swift. """
+"""
+This file contains general functions for swiftbrowser that don't merit their
+own file.
+"""
 # -*- coding: utf-8 -*-
 #pylint:disable=E1101
 import os
@@ -39,8 +42,10 @@ def login(request):
         if form.is_valid():
             user = form.cleaned_data['username']
             password = form.cleaned_data['password']
+
             try:
 
+                # Users can login with "username" or "tenant:username"
                 tenant_specified = user.find(":") > 0
                 if tenant_specified:
                     # The user has specifed the tenant they want to login to
@@ -59,7 +64,7 @@ def login(request):
                 tenant_manager = keystoneclient.tenants
                 projects = tenant_manager.list()
 
-                # Save tenants the user is part of.
+                # Save the tenants the user is part of.
                 request.session["tenants"] = \
                     [project.name for project in projects]
 
@@ -185,22 +190,9 @@ def create_pseudofolder(request, container, prefix=None):
 
 
 @session_valid
-@require_POST
-def upload_delete(request, pk):
-    success = True
-    try:
-        instance = Photo.objects.get(pk=pk)
-        os.unlink(instance.file.path)
-        instance.delete()
-    except Photo.DoesNotExist:
-        success = False
-
-    return JFUResponse(request, success)
-
-
-@session_valid
 def settings_view(request):
-    """ Returns list of all objects in current container. """
+    """ Render the settings page with options to update the tenants default
+    tempurl time. """
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
@@ -231,6 +223,7 @@ def settings_view(request):
 
 
 def get_version(request):
+    """ Render the verison information page as found on version.info. """
     return render_to_response('version.html',
                               context_instance=RequestContext(request))
 

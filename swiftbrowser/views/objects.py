@@ -1,4 +1,6 @@
-""" Standalone webinterface for Openstack Swift. """
+"""
+This file contains all the functions related to managing objects on swift.
+"""
 # -*- coding: utf-8 -*-
 #pylint:disable=E1101
 import time
@@ -82,12 +84,15 @@ def objectview(request, container, prefix=None):
     public = False
     required_acl = ['.r:*', '.rlistings']
 
+    # The swifturl is the URL that the browser can send posts to upload files.
     swift_url = storage_url + '/' + container + '/'
     swift_slo_url = storage_url + '/' + container + '_segments/'
     if prefix:
         swift_url += prefix
         swift_slo_url += prefix
 
+    # Posts from the browser to swift need a valid signature that's created
+    # from the tempurl key
     signature = create_formpost_signature(swift_url, key)
     slo_signature = create_formpost_signature(swift_slo_url, key)
 
@@ -136,6 +141,8 @@ def get_object_table(request):
 
     pseudofolders, objs = pseudofolder_object_list(objects, prefix)
 
+    # Check for incomplete SLO uploads. The object table will display them
+    # allowing the user to continue uploading or delete them.
     incomplete_slo = check_incomplete_slo(
         request, storage_url, auth_token, container, prefix)
 
@@ -153,7 +160,7 @@ def get_object_table(request):
 
 @session_valid
 def download(request, container, objectname):
-    """ Download an object from Swift """
+    """ Download an object from Swift by generating a tempurl for it. """
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
@@ -169,7 +176,7 @@ def download(request, container, objectname):
 
 @session_valid
 def delete_object(request, container, objectname):
-    """ Deletes an object """
+    """ Delete the given object. """
     try:
         delete_given_object(request, container, objectname)
         messages.add_message(request, messages.INFO, _("Object deleted."))
@@ -186,7 +193,7 @@ def delete_object(request, container, objectname):
 
 @session_valid
 def tempurl(request, container, objectname):
-    """ Displays a temporary URL for a given container object. Provide a form
+    """ Displays a temporary URL for a given object. Provide a form
     to request a custom temporary URL. """
 
     # Check if tenant has a default temp time.
@@ -274,6 +281,7 @@ def object_expiry(request, container, objectname):
         container,
         objectname)
 
+    # Calculate the time in days and hours of expiry
     if object_expiry_time:
         expiry_status = "This object is set to expire at " + time.strftime(
             '%A, %B %-d, %Y at %-I:%M%p',
@@ -285,6 +293,8 @@ def object_expiry(request, container, objectname):
         hours_to_expiry = (
             (int(object_expiry_time) - int(time.time())) % (24 * 3600)
         ) / 3600
+
+    # If not set, the default is 0.
     else:
         expiry_status = "false"
         days_to_expiry = 0
@@ -360,7 +370,8 @@ def get_total_objects(request, container, objectname=""):
 
 @session_valid
 def delete_folder(request, container, objectname):
-    """ Delete the folder """
+    """ Delete all the objects in the given folder and delete the folder
+    itself. """
 
     try:
         delete_given_folder(request, container, objectname)
@@ -378,7 +389,7 @@ def delete_folder(request, container, objectname):
 
 @session_valid
 def delete_folder_form(request, container, objectname):
-    """ Display delete folder modal """
+    """ Display delete folder form template for the modal. """
 
     #deleting a pseudofolder, move one level up
     foldername = objectname[:-1].split("/")[-1]
@@ -410,6 +421,8 @@ def check_incomplete_slo(request, storage_url, auth_token, container,
     if "x-container-meta-slo" in headers:
         slo_objects = headers["x-container-meta-slo"].split(",")
 
+        # Loop through the different slo entries, break it down and add it to
+        # the list as a dictionary.
         for slo_object in slo_objects:
 
             slo_name = slo_object.split(":")[0]
@@ -433,7 +446,7 @@ def check_incomplete_slo(request, storage_url, auth_token, container,
 
 def get_slo_progress(
         request, storage_url, auth_token, container, slo_name, file_size):
-    '''Return the percentage the file has been uploaded.'''
+    '''Return the percentage the SLO has been uploaded.'''
 
     segment_size = calculate_segment_size(file_size)
 

@@ -1,5 +1,11 @@
+"""
+The utils directory was created because a single utils.py file was growing too
+large. This file can be broken up into smaller files. The functions here
+are helper functions to support functions in the "views" directory and a few
+functions are also called directly by the client side code.
+"""
+
 from .streaming_tarfile import *
-""" Standalone webinterface for Openstack Swift. """
 # -*- coding: utf-8 -*-
 #pylint:disable=E0611, E1101
 import time
@@ -31,6 +37,8 @@ from swiftbrowser.utils.streaming_tarfile import StreamingTarFile
 
 
 def get_base_url(request):
+    """ Return the base url swiftbrowser is hosted on as found in settings but
+    prepend the appropriate http or https. """
     base_url = getattr(settings, 'BASE_URL', None)
     if base_url:
         return base_url
@@ -53,6 +61,8 @@ def replace_hyphens(olddict):
 
 
 def prefix_list(prefix):
+    """ Return a list of dictionaries that contain each directory in a path
+    and the full path to that directory. """
     prefixes = []
 
     if prefix:
@@ -67,6 +77,11 @@ def prefix_list(prefix):
 
 
 def pseudofolder_object_list(objects, prefix):
+    """ Return a tuple of a list of pseudofolders and objects. Swift returns
+    a whole list of objects and this function determines of those objects,
+    which are part of a pseudofolder and which are in the current pseudofolder
+    as determined by the prefix."""
+
     pseudofolders = []
     objs = []
 
@@ -115,6 +130,9 @@ def pseudofolder_object_list(objects, prefix):
 
 
 def redirect_to_objectview_after_delete(objectname, container):
+    """ This function is used only in trashview. If trashview is removed,
+    this function can be removed. """
+
     if objectname[-1] == '/':  # deleting a pseudofolder, move one level up
         objectname = objectname[:-1]
     prefix = '/'.join(objectname.split('/')[:-1])
@@ -124,6 +142,9 @@ def redirect_to_objectview_after_delete(objectname, container):
 
 
 def get_original_account(storage_url, auth_token, container):
+    """ This function is used only in trashview. If trashview is removed,
+    this function can be removed. """
+
     try:
         headers = client.head_container(storage_url, auth_token, container)
         msp = headers.get('x-container-meta-storage-path')
@@ -143,6 +164,9 @@ def get_original_account(storage_url, auth_token, container):
 
 def create_pseudofolder_from_prefix(storage_url, auth_token, container,
                                     prefix, prefixlist):
+    """ This function is used only in trashview. If trashview is removed,
+    this function can be removed. """
+
     #Recursively creates pseudofolders from a given prefix, if the
     #prefix is not included in the prefixlist
     subprefix = '/'.join(prefix.split('/')[0:-1])
@@ -173,7 +197,7 @@ def create_pseudofolder_from_prefix(storage_url, auth_token, container,
 
 def get_temp_key(storage_url, auth_token, container):
     """ Tries to get meta-temp-url key from account.
-    If not set, generate tempurl and save it to acocunt.
+    If not set, generate tempurl key and save it to account.
     This requires at least account owner rights. """
 
     try:
@@ -204,13 +228,14 @@ def get_temp_key(storage_url, auth_token, container):
 
 def get_temp_url(storage_url, auth_token, container, objectname, key,
                  expires=600):
-    '''Get the temp url for the object.'''
+    """Create and return the temp url for the object. If no key is provided and
+    a key cannot be obtained or created, it is not possible to create a tempurl
+    and None is returned."""
 
-    # Check to see if key already exists. If not get a new key.
+    # Check to see if a key already exists. If not get a new key.
     if not key:
         key = get_temp_key(storage_url, auth_token, container)
 
-    # If new key could not be obtain, return
     if not key:
         return None
 
@@ -227,7 +252,10 @@ def get_temp_url(storage_url, auth_token, container, objectname, key,
 
 def create_thumbnail(request, account, original_container_name, container,
                      objectname):
-    """ Creates a thumbnail for an image. """
+    """ Creates a thumbnail for an image.
+
+    This function is no longer used, safe to delete."""
+
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
@@ -276,7 +304,7 @@ def create_thumbnail(request, account, original_container_name, container,
 
 
 def delete_given_object(request, container, objectname):
-    '''Delete the given object. '''
+    """Delete the given object. """
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
@@ -287,6 +315,8 @@ def delete_given_object(request, container, objectname):
 
 
 def delete_given_folder(request, container, foldername):
+    """ Recursively delete all the objects in the given folder and then
+    delete the folder itself. """
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
@@ -479,14 +509,16 @@ def download_collection(request, container, prefix=None):
 
     response = StreamingHttpResponse(stf.generate())
 
-    response['Content-Disposition'] = 'attachment; mimetype="application/x-gzip"; filename="%s.tar.gz"'\
+    response['Content-Disposition'] = \
+        'attachment; mimetype="application/x-gzip"; filename="%s.tar.gz"' \
         % (filename)
 
     return response
 
 
 def remove_duplicates_from_acl(acls):
-    """ Removes possible duplicates from a comma-separated list. """
+    """ Removes possible duplicates from acls which is string with
+    comma-separated values. """
     entries = acls.split(',')
     cleaned_entries = list(set(entries))
     acls = ','.join(cleaned_entries)
@@ -534,7 +566,7 @@ def set_default_temp_time(request):
                 request,
                 messages.INFO,
                 _("Default Temp Url Time updated!"))
-        except Exception, e:
+        except Exception:
             messages.error(request, "Error updating default temp url time")
     else:
         messages.error(request, "Invalid form.")

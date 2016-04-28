@@ -1,4 +1,6 @@
-""" Standalone webinterface for Openstack Swift. """
+"""
+This file contains functions that handle interaction with swift containers.
+"""
 # -*- coding: utf-8 -*-
 #pylint:disable=E1101
 from swiftclient import client
@@ -45,11 +47,13 @@ def containerview(request):
 
 @session_valid
 def create_container(request):
-    """ Creates a container (empty object of type application/directory) """
+    """ Creates a container on swift. """
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
 
+    # We need the CORS header set to the base url of this instance of
+    # swiftbrowser. Otherwise posts from the browser to swift will not work.
     headers = {
         'X-Container-Meta-Access-Control-Expose-Headers':
         'Access-Control-Allow-Origin',
@@ -89,7 +93,8 @@ def create_container(request):
 
 @session_valid
 def delete_container(request, container):
-    """ Deletes a container """
+    """ Delete all the objects in the given container and delete the container
+    itself. Return a JsonResponse if successful or 500 error. """
 
     storage_url = request.session.get('storage_url', '')
     auth_token = request.session.get('auth_token', '')
@@ -113,7 +118,7 @@ def delete_container(request, container):
 
 @session_valid
 def delete_container_form(request, container):
-    """ Display delete container modal """
+    """ Display the delete container template for the modal. """
 
     return render_to_response(
         'delete_container.html',
@@ -143,7 +148,7 @@ def get_acls(request, container):
 
 @ajax_session_valid
 def set_acls(request, container):
-    """For the given container, set the ACLs. """
+    """For the given container, set the read and write ACLs. """
 
     form = UpdateACLForm(request.POST)
 

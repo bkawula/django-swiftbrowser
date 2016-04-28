@@ -1,3 +1,7 @@
+"""
+This file contains functions to facilitate the uploading of Static Large
+Objects (SLO).
+"""
 import os
 import json
 from tempfile import NamedTemporaryFile
@@ -55,7 +59,9 @@ def initialize_slo(request, container, prefix=None):
     Return the size of the segments.
     Return swift_url
 
-    Create header SLO
+    When SLO are created, we store information about the SLO in the header of
+    the container. This allows us to continue the upload of a SLO if a user
+    is disconnected.
     '''
 
     # Check POST
@@ -127,6 +133,7 @@ def initialize_slo(request, container, prefix=None):
                 "x-container-meta-slo": slo,
             }
 
+    # Update the headers.
     try:
         client.post_container(storage_url, auth_token, container, headers)
 
@@ -184,12 +191,12 @@ def create_manifest(request, container, prefix=None):
 
             manifest = sorted(manifest, key=lambda k: k['path'])
 
+            # Create the manifest in a temp file and upload it
             with NamedTemporaryFile() as f:
                 json.dump(manifest, f)
                 f.seek(0)
 
                 try:
-
                     full_file_name = (prefix + file_name
                                       if prefix else file_name)
 
@@ -278,6 +285,7 @@ def remove_slo_header(storage_url, auth_token, container, objectname):
             "x-container-meta-slo": new_slo_header
         }
 
+    # Update the header
     try:
         client.post_container(storage_url, auth_token, container, headers)
     except client.ClientException:
@@ -285,7 +293,7 @@ def remove_slo_header(storage_url, auth_token, container, objectname):
 
 
 def delete_slo_form(request, container, objectname):
-    """ Display delete slo modal """
+    """ Display delete slo template for the modal. """
 
     slo_name = objectname
     objectname += "_segments"  # Objectname is the object to delete which is

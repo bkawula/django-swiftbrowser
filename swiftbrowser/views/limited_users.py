@@ -1,4 +1,7 @@
-""" Standalone webinterface for Openstack Swift. """
+"""
+This file was created temporarily to accommodate read only users. It copies
+some functions from other files.
+"""
 # -*- coding: utf-8 -*-
 #pylint:disable=E1101
 from swiftclient import client
