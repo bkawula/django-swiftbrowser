@@ -91,7 +91,6 @@ LOGGING = {
 
 SWIFT_AUTH_URL = 'http://127.0.0.1:5000/v2.0/'
 SWIFT_AUTH_VERSION = 2 # 2 for keystone
-STORAGE_URL = 'http://127.0.0.1:8080/v1/'
 BASE_URL = 'http://127.0.0.1:8080'
 STATIC_DIR = 'swiftbrowser/static'
 
