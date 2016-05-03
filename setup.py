@@ -24,6 +24,12 @@ setup(
         'PIL',
         'keystoneauth1>=2.2.0',
         'django-openstack-auth>=2.1.1',
+        'oslo.config>=3.7.0',
+        'oslo.i18n>=3.6.0',
+        "oslo.policy>=1.6.0",
+        "oslo.serialization>=1.10.0",
+        "oslo.utils>=3.5.0",
+        "pbr==1.8.1",
     ],
     zip_safe=False,
     classifiers=[

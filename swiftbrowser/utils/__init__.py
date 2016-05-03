@@ -15,7 +15,7 @@ import logging
 import string
 import random
 import re
-import Image
+from PIL import Image
 import math
 from hashlib import sha1
 
