@@ -2,18 +2,21 @@
 
 ## Requirements
 * virtualenv
-* python >= 2.7.10
+* python == 2.7.10
 * Pillow 3.2.0 ```pip install Pillow==3.2.0```
 
 ## Installation steps
 
 1. Set up a virtual environment
     1. Create a virtual environment
+
         ```bash
         virtualenv swiftbrowserenv
         cd swiftbrowserenv
         ```
+
     2. Activate the virtual environment
+
         ```bash
         source bin/activate
         ```
@@ -37,7 +40,7 @@
         cp ../example/settings.py myproj/settings.py
         ```
 
-    3. Adopt myproj/settings.py to your needs, specifically settings for Swift such as ```SWIFT_AUTH_URL```, ```SWIFT_AUTH_VERSION```, ```BASE_URL``` and ```STATIC_DIR```. The following an example used in development:
+    3. Adopt ```myproj/settings.py``` to your needs, specifically settings for Swift such as ```SWIFT_AUTH_URL```, ```SWIFT_AUTH_VERSION```, ```BASE_URL``` and ```STATIC_DIR```. The following is an example used in development:
         ```python
         SWIFT_AUTH_URL = 'https://yourswiftserver.com:5000/v2.0/'
         SWIFT_AUTH_VERSION = 2  # 2 for keystone
@@ -56,13 +59,13 @@
         ln -s ../swiftbrowser swiftbrowser
         ```
 
-    6. As mentioned earlier, "myproj" in a way "imports" swiftbrowser as an app. This is done by adding it into the myproj/urls.py file. The urls.py file is Django's file to route requests to different functions.
-        1. Update the myproj/urls.py by adding the following to the top of your file:
+    6. As mentioned earlier, "myproj" in a way "imports" swiftbrowser as an app. This is done by adding it into the ```myproj/urls.py``` file. This is Django's file to route requests to different functions.
+        1. Update the ```myproj/urls.py``` by adding the following to the top of your file:
             ```python
             import swiftbrowser.urls
             ```
 
-        2. Add swiftbrowser.urls to your urlpatterns. Your urlpatterns will look something like this:
+        2. Edit your urlpatterns by adding ```url(r'^', include(swiftbrowser.urls))```. Once done, your urlpatterns will look something like this:
             ```python
             urlpatterns = [
                 # Examples:
@@ -70,7 +73,7 @@
                 # url(r'^blog/', include('blog.urls')),
 
                 url(r'^admin/', include(admin.site.urls)),
-                url(r'^', include(swiftbrowser.urls)),
+                url(r'^', include(swiftbrowser.urls)), # Add this line
             ]
             ````
 
@@ -95,7 +98,7 @@ If you're planning to do any front end changes, specifically any css changes, be
 ### Extra step for Scholars Portal Staff
 At Scholars Portal, we have access to a paid library of icons from [Glyphicons](http://glyphicons.com/). Our copy is held on gitlab - so ask someone on the systems team to give you access to the "fonts" repository under "Bartek Kawula". To add this library to the repo, follow these steps:
 
-1. cd into your django-swiftbrowser repository.
+1. Change directories to your django-swiftbrowser repository.
     ```bash
     cd django-swiftbrowser
     ```

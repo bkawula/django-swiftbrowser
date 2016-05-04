@@ -10,12 +10,12 @@ Detailed installation guide.
 ##[Compiling the CSS (Foundation)](docs/foundation.md)
 Swiftbrowser uses Zurb's Foundation, this is a small guide to getting set up with it and compiling the CSS from Sass.
 
-##[Understanding the Codebase](docs/codebase.md)
-Understanding the way the code base is organized and the flow of a request.
+##[General Docs](docs/general.md)
+General information about the codebase that will be helpful such as running it in production, code execution flow and debugging.
 
 ##[CORS](docs/codebase/cors.md)
 A important notes on Cross Origin Resource Sharing, Swift and Swiftbrowser.
 
-##[Helpful Tools](docs/tools.md)
-A few helpful tools that will make working with swiftbrowser convenient
+##[Helpful shortcuts](docs/shortcuts.md)
+A few helpful shortcuts that will make working with swiftbrowser convenient
 

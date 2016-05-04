@@ -29,4 +29,4 @@ Swiftbrowser uses [Zurb Foundation](http://foundation.zurb.com/sites/docs/) as a
 	compass watch
 	```
 
-Now anytime you save files within swiftbrowser/static/foundation/scss/, compass will compile it into swiftbrowser/static/foundation/stylesheets/app.css which is used on every page in Swiftbrowser.
+Now anytime you save files within ```swiftbrowser/static/foundation/scss/```, compass will compile it into ```swiftbrowser/static/foundation/stylesheets/app.css``` which is used on every page in Swiftbrowser.
