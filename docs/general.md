@@ -16,7 +16,7 @@ Files in the ```swiftbrowser/templates/``` "import" or "include" files found in 
 
 The following diagram shows the flow of communication between the Web Browser, Swiftbrowser and Swift.
 
-![Execution flow](docs/images/flow.png "Swiftbrowser execution flow")
+![Execution flow](images/flow.png "Swiftbrowser execution flow")
 
 For most interactions with Swiftbrowser, requests are sent from the Browser to Swiftbrowser. Swiftbrowser then communicates with the Swift cluster directly. This communication is all possible because of [python-swiftclient](https://github.com/openstack/python-swiftclient). Swiftbrowser then collects information and does some manipulation (all within some function within ```swiftbrowser/views/```) before returning it to the browser.
 
@@ -24,7 +24,7 @@ There are a couple of instances where the Browser directly communicates to the S
 
 
 ## Temp-Url-Keys
-The ```Temp-URL-Key``` is meta data that can be set for tenants and containers. Setting a tenant temp-ur-key is a requirement for Swiftbrowser to work. Uploading and downloading is only possible when the ```temp-url-key``` is set on the tenant. Swiftbrowser uses this key to create an auth url and signature that the browser can use to make direct posts to Swift.
+The ```Temp-URL-Key``` is header meta data that can be set for tenants and containers. Setting a tenant temp-ur-key is a requirement for Swiftbrowser to work. Uploading and downloading is only possible when the ```temp-url-key``` is set on the tenant. Swiftbrowser uses this key to create an auth url and signature that the browser can use to make direct posts to Swift.
 
 **Make sure the ```temp-url-key``` is set when you create new tenants**
 

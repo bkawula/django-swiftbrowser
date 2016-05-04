@@ -13,7 +13,7 @@ Swiftbrowser uses Zurb's Foundation, this is a small guide to getting set up wit
 ##[General Docs](docs/general.md)
 General information about the codebase that will be helpful such as running it in production, code execution flow and debugging.
 
-##[CORS](docs/codebase/cors.md)
+##[CORS](docs/cors.md)
 A important notes on Cross Origin Resource Sharing, Swift and Swiftbrowser.
 
 ##[Helpful shortcuts](docs/shortcuts.md)
