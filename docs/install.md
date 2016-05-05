@@ -29,7 +29,7 @@
     ```
 
 3. Setup your Django project. Django projects are made up of modules which are called apps.
-    1. Initiate a new app called "myproj". It will be the main app within your Django project that "imports" swiftbrowser as an app.
+    1. Initiate a new app called ```myproj``` (or your name of choice). It will be the main app within your Django project that "imports" swiftbrowser as an app.
         ```bash
         django-admin.py startproject myproj
         cd myproj
@@ -65,7 +65,7 @@
             import swiftbrowser.urls
             ```
 
-        2. Edit your urlpatterns by adding ```url(r'^', include(swiftbrowser.urls))```. Once done, your urlpatterns will look something like this:
+        2. Edit your ```urlpatterns``` variable by adding ```url(r'^', include(swiftbrowser.urls))```. Once done, your urlpatterns will look something like this:
             ```python
             urlpatterns = [
                 # Examples:
@@ -78,7 +78,7 @@
             ````
 
 4. Setup the Django app for development.
-    1. Django manages database queries through classes. The following step ensures that any database requirements have been applied to the database. Swiftbrowser doesn't use a database as it's simply a gateway to a Swift cluster but for development purposes this step is required. You'll be asked to create an admin user but you'll never need to use it.
+    1. Django manages database queries through classes (in ```models.py```). The following step ensures that any database requirements have been applied to the database. Swiftbrowser doesn't use a database as it's simply a gateway to a Swift cluster but for development purposes this step is required. You'll be asked to create an admin user but you'll never need to use it.
         ```bash
         python manage.py syncdb
         ```
@@ -93,7 +93,7 @@
         python manage.py runserver
         ```
 
-If you're planning to do any front end changes, specifically any css changes, be sure to read the [Compiling the CSS (Foundation)](foundation.md).
+If you're planning to do any front end changes, specifically any CSS changes, be sure to read the [Compiling the CSS (Foundation)](foundation.md).
 
 ### Extra step for Scholars Portal Staff
 At Scholars Portal, we have access to a paid library of icons from [Glyphicons](http://glyphicons.com/). Our copy is held on gitlab - so ask someone on the systems team to give you access to the "fonts" repository under "Bartek Kawula". To add this library to the repo, follow these steps:
